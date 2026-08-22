@@ -10,24 +10,24 @@ you can `GET`/`SET`, `SCENE PAUSE`/`REVERSE`/`RESET`, or extend the
 session — the loaded cells keep their `In[n]` numbers and your next
 command continues the numbering.
 
-Launch any of them by bare name with `tools/posim_notebook`, or with
-cargo directly. The launcher resolves the name against this directory,
-works from any working directory, and takes `--list` to enumerate what
-is here. To get the bare `posim_notebook` form, put it on your PATH:
+Launch any of them by bare name with `tools\posim_notebook.cmd` (the
+Windows launcher; `tools/posim_notebook` is its bash twin for Git
+Bash), or with cargo directly. The launcher resolves the name against
+this directory, works from any working directory, and takes `--list`
+to enumerate what is here:
 
-```bash
-ln -s "$PWD/tools/posim_notebook" /usr/local/bin/posim_notebook
+```powershell
+tools\posim_notebook.cmd kepler_orbit
 ```
 
-Then either form works:
-
-```bash
-posim_notebook kepler_orbit
-```
-
-```bash
+```powershell
 cargo run -p posim --release -- --notebook dynamic_notebooks/kepler_orbit.posim
 ```
+
+(To get the bare `posim_notebook` form, add the repository's `tools`
+directory to your user `PATH`; from Git Bash the symlink form
+`ln -s "$PWD/tools/posim_notebook" /usr/local/bin/posim_notebook`
+also works.)
 
 Every notebook was executed and verified: it loads with zero failing
 cells, its baseline outputs match the documented analytic values, and

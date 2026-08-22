@@ -1,0 +1,257 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(SolveIt.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefineke
+ys.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.s
+ty)) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty)
+
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro.s
+ty) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitle
+string.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty))
+) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.s
+ty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilec
+heck.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecou
+nter.sty)))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdfte
+x.def) (SolveIt.aux)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (SolveIt.out) (SolveIt.out)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
+(SolveIt.toc (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
+) [1{C:/Users/nsh/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/ns
+h/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/nsh/AppD
+ata/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/nsh/AppDat
+a/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}]) [2] [3{C:/Users/nsh
+/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}]
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
+[]|\T1/lmr/m/n/10.95 interactive note-
+
+Underfull \hbox (badness 10000) in paragraph at lines 142--142
+[]|\T1/lmtt/m/n/10.95 cargo run -p posim -- --script
+
+Underfull \hbox (badness 2213) in paragraph at lines 143--144
+[]|\T1/lmr/m/n/10.95 you want it re-pro-
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--145
+[]|\T1/lmtt/m/n/10.95 cargo run -p posim
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--145
+\T1/lmtt/m/n/10.95 --release -- --notebook
+
+Underfull \hbox (badness 2753) in paragraph at lines 147--149
+[]|\T1/lmr/m/n/10.95 another pro-gram is
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\uppercase' on input line 163.
+
+[4]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 207.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 207.
+
+
+Overfull \hbox (6.67975pt too wide) in paragraph at lines 228--228
+[]|\T1/lmtt/m/n/10.95 special_functions| 
+[5] [6]
+Overfull \hbox (99.44572pt too wide) in paragraph at lines 310--319
+ [] 
+[7] [8] [9] [10{C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/l
+m-mathex.enc}] [11] [12] [13] [14] [15] [16] [17] [18] [19] [20]
+Overfull \hbox (6.79585pt too wide) in paragraph at lines 1190--1190
+[]|\T1/lmtt/m/n/10.95 kepler_ellipse.html| 
+
+Underfull \hbox (badness 3884) in paragraph at lines 1191--1193
+[]|$\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 dE\OMS/lmsy/m/n/10.95 j\OML/lmm/m/
+it/10.95 =E \OT1/lmr/m/n/10.95 = 9\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 8 \OM
+S/lmsy/m/n/10.95 ^^B \OT1/lmr/m/n/10.95 10[]$\T1/lmr/m/n/10.95 ,
+
+Overfull \hbox (12.54459pt too wide) in paragraph at lines 1193--1193
+[]|\T1/lmtt/m/n/10.95 tumbling_racket.html| 
+
+Underfull \hbox (badness 1762) in paragraph at lines 1194--1195
+[]|$\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 d\OMS/lmsy/m/n/10.95 j\OML/lmm/m/i
+t/10.95 L\OMS/lmsy/m/n/10.95 jj\OML/lmm/m/it/10.95 =\OMS/lmsy/m/n/10.95 j\OML/l
+mm/m/it/10.95 L\OMS/lmsy/m/n/10.95 j \OT1/lmr/m/n/10.95 = 0$ \T1/lmr/bx/n/10.95
+ ex-actly\T1/lmr/m/n/10.95 ;
+
+Overfull \hbox (1.04712pt too wide) in paragraph at lines 1195--1195
+[]|\T1/lmtt/m/n/10.95 box_of_shapes.html| 
+
+Underfull \hbox (badness 2401) in paragraph at lines 1197--1198
+[]|\T1/lmr/m/n/10.95 36 col-li-sions, $\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95
+ dE\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 =E \OT1/lmr/m/n/10.95 =
+
+Overfull \hbox (52.78572pt too wide) in paragraph at lines 1198--1198
+[]|\T1/lmtt/m/n/10.95 double_pendulum_hinges.html| 
+
+Overfull \hbox (12.54459pt too wide) in paragraph at lines 1202--1202
+[]|\T1/lmtt/m/n/10.95 universal_joint.html| 
+
+Underfull \hbox (badness 1675) in paragraph at lines 1204--1206
+\OT1/lmr/m/n/10.95 0\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 6000004$ \T1/lmr/m/
+n/10.95 against a ge-o-
+
+Overfull \hbox (18.29332pt too wide) in paragraph at lines 1206--1206
+[]|\T1/lmtt/m/n/10.95 ball_joint_chain.html| 
+
+Overfull \hbox (29.79079pt too wide) in paragraph at lines 1210--1210
+[]|\T1/lmtt/m/n/10.95 rod_pendulum_chain.html| 
+
+Underfull \hbox (badness 3884) in paragraph at lines 1212--1214
+[]|\T1/lmr/m/n/10.95 run con-tin-u-ously at the
+
+Overfull \hbox (18.29332pt too wide) in paragraph at lines 1217--1217
+[]|\T1/lmtt/m/n/10.95 gyroscope_gimbal.html| 
+
+Underfull \hbox (badness 1701) in paragraph at lines 1223--1225
+[]|\T1/lmr/m/n/10.95 line held to $\OT1/lmr/m/n/10.95 1\OML/lmm/m/it/10.95 :\OT
+1/lmr/m/n/10.95 1 \OMS/lmsy/m/n/10.95 ^^B \OT1/lmr/m/n/10.95 10[]$\T1/lmr/m/n/1
+0.95 ;
+
+Overfull \hbox (12.54459pt too wide) in paragraph at lines 1225--1225
+[]|\T1/lmtt/m/n/10.95 rack_and_pinion.html| 
+
+Overfull \hbox (24.04205pt too wide) in paragraph at lines 1228--1228
+[]|\T1/lmtt/m/n/10.95 piston_crankshaft.html| 
+
+Overfull \hbox (6.79585pt too wide) in paragraph at lines 1232--1232
+[]|\T1/lmtt/m/n/10.95 cardan_compass.html| 
+
+Underfull \hbox (badness 10000) in paragraph at lines 1234--1236
+[]|\T1/lmr/m/n/10.95 periods $\OT1/lmr/m/n/10.95 1\OML/lmm/m/it/10.95 :\OT1/lmr
+/m/n/10.95 878587$ \T1/lmr/m/n/10.95 and
+
+Underfull \hbox (badness 10000) in paragraph at lines 1234--1236
+\OT1/lmr/m/n/10.95 2\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 307339$ \T1/lmr/m/n
+/10.95 s against
+
+Underfull \hbox (badness 10000) in paragraph at lines 1234--1236
+\T1/lmr/m/n/10.95 mea-sured $\OT1/lmr/m/n/10.95 1\OML/lmm/m/it/10.95 :\OT1/lmr/
+m/n/10.95 883426$ \T1/lmr/m/n/10.95 and
+[21] [22]
+Overfull \hbox (16.23592pt too wide) in paragraph at lines 1292--1297
+\T1/lmr/m/n/10.95 Six ex-am-ple pro-grams, each print-ing \T1/lmtt/m/n/10.95 SU
+CCESS \T1/lmr/m/n/10.95 or \T1/lmtt/m/n/10.95 FAILURE \T1/lmr/m/n/10.95 and ex-
+it-ing nonzero if it fails: \T1/lmtt/m/n/10.95 kepler_orbit\T1/lmr/m/n/10.95 ,
+
+Overfull \hbox (65.46307pt too wide) in paragraph at lines 1292--1297
+\T1/lmtt/m/n/10.95 outer_solar_system\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 tum
+bling_body\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 charged_in_b_field\T1/lmr/m/n/
+10.95 , \T1/lmtt/m/n/10.95 newtons_cradle\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95
+ bouncing_ball_restitution\T1/lmr/m/n/10.95 . 
+[23]
+Overfull \hbox (18.23682pt too wide) in paragraph at lines 1318--1322
+\T1/lmr/m/n/10.95 diffed. They are iden-ti-cal byte for byte. See \T1/lmtt/m/n/
+10.95 PORT_7.8.0_PROVENANCE.md \T1/lmr/m/n/10.95 and \T1/lmtt/m/n/10.95 evidenc
+e/port-7.8.0/\T1/lmr/m/n/10.95 . 
+
+Underfull \hbox (badness 4168) in paragraph at lines 1334--1334
+[]|\T1/lmtt/m/n/10.95 RUN \T1/lmr/m/n/10.95 over-shoots where you
+
+Underfull \hbox (badness 6396) in paragraph at lines 1336--1336
+[]|\T1/lmr/m/n/10.95 bodies pass through each
+
+Underfull \hbox (badness 10000) in paragraph at lines 1337--1337
+[]|\T1/lmtt/m/n/10.95 SPRK method requires a
+
+Underfull \hbox (badness 10000) in paragraph at lines 1350--1350
+[]|\T1/lmtt/m/n/10.95 probability accumulating
+[24]
+Underfull \hbox (badness 10000) in paragraph at lines 1390--1390
+[]|\T1/lmtt/m/n/10.95 collision_detection.md \T1/lmr/m/n/10.95 /
+
+Overfull \hbox (13.0103pt too wide) in paragraph at lines 1392--1392
+[]|\T1/lmtt/m/n/10.95 physical_object_simulator.md
+[25] (SolveIt.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ )
+(see the transcript file for additional information)<C:/Users/nsh/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/nsh/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/nsh/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/nsh/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/nsh/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/nsh/AppData/Local/Programs
+/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/nsh/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/nsh/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/lm/lmr10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/
+fonts/type1/public/lm/lmr12.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fon
+ts/type1/public/lm/lmr17.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/
+type1/public/lm/lmr8.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type
+1/public/lm/lmri10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/
+public/lm/lmsy10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/pu
+blic/lm/lmsy8.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/publi
+c/lm/lmtk10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+lm/lmtt10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
+sfonts/symbols/msbm10.pfb>
+Output written on SolveIt.pdf (25 pages, 497036 bytes).
+Transcript written on SolveIt.log.

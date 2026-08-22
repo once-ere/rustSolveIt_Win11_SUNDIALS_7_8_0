@@ -2551,13 +2551,16 @@ in a row before \kw{list} finally becomes cell 4. Only executed
 commands become numbered cells --- so the \code{In[n]} numbering always
 matches what \code{\%history} will replay.
 
-The machine mode speaks the same language over JSON:
+The machine mode speaks the same language over JSON (the transcript is
+Git Bash; PowerShell piping into
+\code{.\textbackslash{}target\textbackslash{}release\textbackslash{}posim.exe}
+produces the same replies):
 
 \begin{lstlisting}
 $ printf '%s\n' '{"op":"exec","code":"new point { mass = 1, velocity = [0, 1, 0] }"}' \
                 '{"op":"get","path":"obj0.momentum"}' \
                 '{"op":"set","path":"obj0.mass","value":5}' \
-                '{"op":"get","path":"obj0.momentum"}' | posim --machine
+                '{"op":"get","path":"obj0.momentum"}' | ./target/release/posim.exe --machine
 {"display":"obj0","ok":true,"result":"obj0"}
 {"display":"[0, 1, 0]","ok":true,"result":[0.0,1.0,0.0]}
 {"display":"","ok":true,"result":null}
@@ -3189,10 +3192,22 @@ but it is worth one page knowing what answers you.
 differential-equation solvers, in production use in physics codes since
 the 1990s. \code{sundials\_rs/} in this repository is a \emph{pure-Rust
 translation of SUNDIALS 7.8.0}: no \code{unsafe}, no FFI, no C compiler,
-no crates.io dependency. It is vendored byte-for-byte from
-\code{once-ere/SUNDIALS\_7\_8\_Rust\_port\_for\_Linux@780b916}; the
-upgrade from the 7.7.0 engine the predecessor repository used is
-recorded, with its evidence, in \code{PORT\_7.8.0\_PROVENANCE.md}.
+no crates.io dependency. It is the \textbf{Windows 11 / x86-64 port} of
+the translation
+(\code{once-ere/SUNDIALS\_7\_8\_Rust\_port\_for\_Windows11}), which
+differs from the Linux port in exactly one substantive way: Microsoft's
+math runtime (UCRT) rounds \code{sin}, \code{cos}, \code{exp},
+\code{ln} and the inverse/hyperbolic functions differently from the
+Linux glibc that generated the reference outputs, so the Windows port
+carries its own pure-Rust translations of the glibc routines
+(\code{sundials\_libm}), each measured at 0 mismatches over millions of
+inputs against a real glibc oracle. Its deterministic routines use the
+fused multiply-add instruction, so the workspace pins
+\code{-C target-feature=+fma} in \code{.cargo/config.toml} (any Intel
+CPU since 2013 or AMD since 2012 has it). The upgrade from the 7.7.0
+engine the predecessor repository used is recorded, with its evidence,
+in \code{PORT\_7.8.0\_PROVENANCE.md}; the Windows port of this whole
+simulator is recorded in \code{PORT\_WIN11\_PROVENANCE.md}.
 
 \subsection{Which solver runs which command}
 
@@ -3489,16 +3504,20 @@ needs a running posim behind it. The other thing you often want is a
 file --- something you can mail to a colleague, open next year on a
 laptop with no Rust toolchain, and still scrub frame by frame.
 
-\code{tools/record\_video.py} makes one:
+\code{recorder/src/record\_video.py} makes one:
 
 \begin{lstlisting}
 cargo build --release -p posim          # once
-recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
-     -o videos/kepler_ellipse.html \
-     --frames 360 --dt 0.02 \
-     --title "Kepler orbit, e = 0.6" \
+python recorder/src/record_video.py videos/scenes/kepler_ellipse.posim `
+     -o videos/kepler_ellipse.html `
+     --frames 360 --dt 0.02 `
+     --title "Kepler orbit, e = 0.6" `
      --caption "CVODE Adams, 360 frames of dt = 0.02."
 \end{lstlisting}
+
+(The backtick is PowerShell's line continuation; on one line you need
+neither. Any Python~3.8+ works --- the recorder uses only the standard
+library.)
 
 \subsection{How it works, and what it does not do}
 

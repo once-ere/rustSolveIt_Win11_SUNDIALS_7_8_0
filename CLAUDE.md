@@ -1,37 +1,52 @@
-# CLAUDE.md — rustSolveIt on pure-Rust SUNDIALS 7.8.0
+# CLAUDE.md — rustSolveIt on pure-Rust SUNDIALS 7.8.0 (Windows 11)
 
-Pure-Rust physics simulator. The **only** numerical-integration backend
-is the vendored `sundials_rs/` workspace (pure-Rust **SUNDIALS 7.8.0**)
-— no exceptions. Treat `sundials_rs/` as a **read-only vendored
-library**: it is byte-identical to
-`once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916` (2,929 files) and
-that identity is a verifiable property — never edit it in place;
-upstream it instead.
+Pure-Rust physics simulator, the **Windows 11 / x86-64** port of
+`once-ere/rustSolveIt_Using_SUNDIALS_7_8_0` (measured on Windows 11 Pro
+for Workstations 25H2, rustc 1.91.1, `x86_64-pc-windows-msvc`; the
+MSVC linker comes from any installed Visual Studio 2022/2026 — rustc
+finds it itself, no developer prompt needed). The **only**
+numerical-integration backend is the vendored `sundials_rs/` workspace
+(pure-Rust **SUNDIALS 7.8.0**) — no exceptions. Treat `sundials_rs/`
+as a **read-only vendored library**: it is the crate tree of
+`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11` (its `.git`, `target/`
+and bulk `logs/` corpora excluded) and that identity is a verifiable
+property — never edit it in place; upstream it instead. Its
+deterministic `sundials_libm` needs real FMA instructions:
+`.cargo/config.toml` at THIS root pins `-C target-feature=+fma` —
+do not remove it, and remember cargo config does not flow down from the
+vendored workspace's own `.cargo/`.
 
 ```bash
-# the byte-identity claim, reproducible
-git clone https://github.com/once-ere/SUNDIALS_7_8_Rust_port_for_Linux.git
-diff -rq --exclude=.git --exclude=target \
-     SUNDIALS_7_8_Rust_port_for_Linux sundials_rs      # silent
+# the vendored-tree identity claim, reproducible in Git Bash
+git clone https://github.com/once-ere/SUNDIALS_7_8_Rust_port_for_Windows11.git
+diff -rq --exclude=.git --exclude=target --exclude=logs \
+     SUNDIALS_7_8_Rust_port_for_Windows11 sundials_rs      # silent
 ```
 
-This repository is `once-ere/rustSolveIt` with its 7.7.0 engine replaced
-by the 7.8.0 one. What changed, and the evidence that nothing else did,
-is in `PORT_7.8.0_PROVENANCE.md`. The original export's provenance —
-including which donor sources were deliberately not carried over — is in
+What the Windows port changed, and the evidence that the physics did
+not move (byte-identity gates against the Linux evidence), is in
+`PORT_WIN11_PROVENANCE.md`. The 7.7.0→7.8.0 engine upgrade is
+`PORT_7.8.0_PROVENANCE.md`; the original export's provenance is
 `EXPORT_PROVENANCE.md` and `PLAN.md`.
 
-## Commands
+## Commands (PowerShell; Git Bash equivalents in parentheses)
 
-- Build: `cargo build --workspace --all-targets 2>&1 | tee /tmp/build.log`
-- Tests: `cargo test --workspace 2>&1 | tee /tmp/test.log` (605 expected)
+- Build: `cargo build --workspace --all-targets 2>&1 | Tee-Object logs\build.log`
+- Tests: `cargo test --workspace 2>&1 | Tee-Object logs\test.log`
+  (**622 expected**: 49 physical_object lib + 19 collision +
+  9 conservation + 42 DAE/equilibrium/sensitivity + 112 posim +
+  92 quantum + 233 special_functions + 11 vendored identities +
+  55 doctests)
 - Notebook: `cargo run` (type `HELP`); batch: `cargo run -p posim -- --script <f>`
 - Dynamic notebook (loads a file, opens its scene window, stays
   interactive): `cargo run -p posim --release -- --notebook
-  dynamic_notebooks/<name>.posim` — see `dynamic_notebooks/README.md`
+  dynamic_notebooks/<name>.posim`, or `tools\posim_notebook.cmd <name>`
+  (`tools/posim_notebook` from Git Bash) — see
+  `dynamic_notebooks/README.md`
 - Scene window: type `SCENE CREATE` in the notebook (opens a browser
-  page; `SCENE START/PAUSE/REVERSE/RESET`, arrows/drag/wheel in the
-  window). Headless runs: `POSIM_NO_BROWSER=1` suppresses `xdg-open`.
+  page via `cmd /C start`; `SCENE START/PAUSE/REVERSE/RESET`,
+  arrows/drag/wheel in the window). Headless runs:
+  `$env:POSIM_NO_BROWSER = "1"` suppresses the browser launch.
 - Self-checking physics examples:
   `cargo run -p physical_object --release --example
   {kepler_orbit|outer_solar_system|tumbling_body|charged_in_b_field|newtons_cradle|bouncing_ball_restitution}`
@@ -39,20 +54,35 @@ including which donor sources were deliberately not carried over — is in
 - Collision example scripts: `cargo run -p posim -- --script
   scripts/collisions/NN_name.posim` (01–12; documented with captured
   output in `collision_detection.md` §9)
-- The sixteen SolveIt examples: `cargo run -p posim --release --
-  --script scripts/solveit/NN_name.posim` (01–16; documented with
+- The SolveIt examples: `cargo run -p posim --release --
+  --script scripts/solveit/NN_name.posim` (01–19; documented with
   captured output in `SolveIt.md` §7)
 - Browser video: `cargo build --release -p posim` then
-  `recorder/src/record_video.py videos/scenes/<x>.posim -o videos/<x>.html
-  --frames N --dt DT --title "..." --caption "..."`
-- Wire protocol test: `python3 jupyter/test_protocol.py` (needs
-  `cargo build --release` first — it prefers `target/release/posim`,
+  `python recorder/src/record_video.py videos/scenes/<x>.posim -o videos/<x>.html
+  --frames N --dt DT --title "..." --caption "..."`; byte-identity of
+  all 13 committed recordings: `python recorder/src/record_all.py --check`
+- The Windows physics byte-identity gate (Git Bash):
+  `bash tools/win_verify_physics.sh` — re-runs the 6 examples, 12
+  collision scripts and 59 dynamic notebooks and diffs against
+  `evidence/port-7.8.0/`; only the two divergences pinned in
+  `evidence/win11/accepted-divergences-*.diff` are allowed
+- GUI smoke test: `python tools\win_gui_smoke.py` (drives all 13
+  `gui/*/server.py` over their HTTP API)
+- Wire protocol test: `python jupyter\test_protocol.py` (needs
+  `cargo build --release` first — it prefers `target\release\posim.exe`,
   so a stale release binary silently shadows your debug build)
-- Kernel test: `POSIM_NO_BROWSER=1 jupyter/.venv/bin/python jupyter/test_kernel.py`
-  (needs `uv venv jupyter/.venv && uv pip install -p jupyter/.venv/bin/python ipykernel jupyter_client`)
-- Docs: `pdflatex -interaction=nonstopmode <name>.tex` (run **twice** —
-  the table of contents needs the second pass) for `SolveIt`,
-  `grammar`, `physical_object_simulator`, `scene_info`,
+- Kernel test: `$env:POSIM_NO_BROWSER = "1";
+  jupyter\.venv\Scripts\python.exe jupyter\test_kernel.py`
+  (needs `uv venv jupyter\.venv` then `uv pip install -p
+  jupyter\.venv\Scripts\python.exe ipykernel jupyter_client`)
+- Notebooks: regenerate `python notebooks\_build\regen.py`; execute all
+  109 `python notebooks\_build\nbrun.py notebooks\*.ipynb` (glob works
+  from Git Bash; from PowerShell pass the file list); check
+  `python notebooks\_build\nbcheck.py notebooks\*.ipynb`
+  (109/109 must pass all seven requirements)
+- Docs: `pdflatex -interaction=nonstopmode <name>.tex` (MiKTeX; run
+  **twice** — the table of contents needs the second pass) for
+  `SolveIt`, `grammar`, `physical_object_simulator`, `scene_info`,
   `collision_detection`. Keep `.md` and `.tex` in sync — **the `.md` is
   the source of truth.**
 
@@ -140,7 +170,7 @@ including which donor sources were deliberately not carried over — is in
    you need is absent from `sundials_rs/`, stop and say exactly which
    symbol is missing, naming the C original's file (`src/` or
    `include/` of the upstream **SUNDIALS 7.8.0** release, at
-   `/home/nsh/Developer/sundials-7.8.0/` — that reference tree is not
+   `C:\Users\nsh\Developer\sundials-7.8.0\` — that reference tree is not
    vendored here). Do not reimplement solver numerics locally. The same
    applies to a `None` from a 7.8.0 constructor or from
    `N_VGetArrayPointer`: turn it into a named `Err`, never an `unwrap`.
@@ -191,9 +221,9 @@ that will bite you:
   output. ≤2 attempts per failing command, then switch strategy.
 - Commit after every coherent file group; keep
   `cargo build --workspace --all-targets` warning-free and
-  `cargo test --workspace` green at every commit (**605 tests**:
-  46 physical_object lib + 19 collision + 9 conservation +
-  16 constrained/DAE + 111 posim + 92 quantum + 233 special_functions +
+  `cargo test --workspace` green at every commit (**622 tests**:
+  49 physical_object lib + 19 collision + 9 conservation +
+  42 constrained/DAE + 112 posim + 92 quantum + 233 special_functions +
   11 vendored identities + 55 doctests).
 - New solver features need: a unit or conservation test with an
   **analytic** expectation (not a golden-output snapshot), a grammar
@@ -240,6 +270,35 @@ or `sensitivity.rs`. Four things that already cost a day:
 - **The sensitivity parameter vector is shared (`Rc<RefCell<Vec<f64>>>`),
   and the RHS must read every value out of it.** Capture a copy and the
   difference-quotient sensitivities come back as zeros, silently.
+
+## Windows traps that have already cost time (this port)
+
+- **Python's default text encoding here is cp1252, not UTF-8** (checked:
+  Python 3.14.5, `locale.getpreferredencoding()` = cp1252). Every
+  `open()`, `read_text()`, `write_text()` and every `subprocess` pipe
+  with `text=True` that touches posim I/O or repository files must say
+  `encoding="utf-8"` explicitly — posim prints UTF-8 em-dashes, and one
+  unmarked pipe turns them into `â€”` (or writes a snippet file rustc
+  rejects as invalid UTF-8). All first-party tooling already complies;
+  keep new code compliant.
+- **Text-mode writes translate `\n` to `\r\n`.** Anything byte-compared
+  (recorded videos, notebook JSON, evidence logs) is written with
+  `newline="\n"`; `.gitattributes` sets `* -text` so git never converts
+  eols either. Do not remove either half.
+- **The binary is `posim.exe`.** Every finder probes
+  `target/release/posim.exe` before the extensionless name; keep that
+  order in new tooling.
+- **posim string literals process `\` escapes** (grammar lexer:
+  `\"`, `\\`, `\n`, anything else keeps the following character), so a
+  Windows path pasted into a quoted literal loses its separators —
+  `"C:\Users\x"` becomes `C:Usersx`. Use forward slashes (Windows
+  accepts them) or doubled backslashes; the qm3 tests do exactly this.
+- **A cwd inside a `TemporaryDirectory` blocks its cleanup**
+  (WinError 32). `os.chdir` back before the context manager exits.
+- **`cargo test` shell-reply races**: `jupyter/test_kernel.py` matches
+  shell replies to their execute request by parent `msg_id` — on
+  Windows `wait_for_ready` can leave a stale reply queued and shift
+  every status by one. Keep the matching loop.
 
 ## Traps that have already cost time
 

@@ -115,9 +115,19 @@ literals, the JSON protocol, the scene frame messages, the docs).
 ### 3.3 Solver driving (integrate.rs ↔ sundials_rs 7.8.0)
 
 The vendored engine is the pure-Rust translation of **SUNDIALS 7.8.0**
-(`once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916`, byte-identical,
-2,929 files). Its API models C's opaque pointers directly, which fixes
-the shape of everything in `integrate.rs`.
+— here the **Windows 11 / x86-64 port**
+(`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11`; its crate tree,
+examples, docs and tools, with `.git`, `target/` and bulk `logs/`
+corpora excluded). Its public API is identical to the Linux port the
+donor repository vendored; the Windows port additionally replaces every
+host-libm transcendental inside the engine with pure-Rust translations
+of the glibc routines (`sundials_libm`, 0 mismatches over millions of
+inputs vs. a glibc oracle) — which is what keeps this port's physics
+byte-identical to the Linux evidence (`PORT_WIN11_PROVENANCE.md`). The
+deterministic routines require real FMA: the root `.cargo/config.toml`
+pins `-C target-feature=+fma` (cargo config does NOT flow up from the
+vendored workspace). The API models C's opaque pointers directly, which
+fixes the shape of everything in `integrate.rs`.
 
 **Handle model.**
 
@@ -385,8 +395,11 @@ crate root (module/type namespace collision) — do not try.
   handle (SCENE CLOSE, quit) sets `shutdown`, clears outboxes, and all
   threads exit on their next poll tick (reader timeout 500 ms, accept
   poll 50 ms). `RESET` keeps the window open and re-syncs it.
-- **Browser opening** is best-effort `xdg-open`, suppressed by
-  `$POSIM_NO_BROWSER` (set in every headless test).
+- **Browser opening** is best-effort via the platform opener —
+  `cmd /C start` on Windows (this port's platform), `open` on macOS,
+  `xdg-open` elsewhere — suppressed by `$POSIM_NO_BROWSER` (set in
+  every headless test). Whether a launch was actually attempted is
+  reported in `SceneHandle::browser_launched`, never assumed.
 
 ### 3.8 Collision subsystem (physical_object/src/collide.rs ↔ integrate.rs ↔ vm ↔ scene)
 
@@ -806,11 +819,11 @@ queues an event.
 | wire/kernel | `jupyter/test_protocol.py`, `jupyter/test_kernel.py` | machine protocol incl. the scene command family and the `events` op; full Jupyter ZMQ path |
 | real-browser gestures | scratchpad `verify_gestures.py` (headless Chrome CDP; not committed) | genuine key/mouse/wheel input: arrows translate right/left/up/down, left-drag rotates, wheel and +/- zoom, toolbar Start/Pause/Reverse, statusbar reporting |
 
-Regression invariant: `cargo test --workspace` green (**605 tests**:
-52 physical_object lib + 19 collision + 9 conservation +
-25 constrained/DAE + 113 posim + 92 quantum + 233 special_functions +
-11 vendored identities + 55 doctests) and `cargo build --workspace --all-targets` warning-free at
-every commit.
+Regression invariant: `cargo test --workspace` green (**622 tests**:
+49 physical_object lib + 19 collision + 9 conservation +
+42 constrained/DAE + 112 posim + 92 quantum + 233 special_functions +
+11 vendored identities + 55 doctests — the Windows 11 measurement) and
+`cargo build --workspace --all-targets` warning-free at every commit.
 
 ## 7. The video recorder (`recorder/`)
 

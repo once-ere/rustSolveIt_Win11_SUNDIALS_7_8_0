@@ -1461,8 +1461,9 @@ Two things about it are worth knowing:
   keeps a ring of snapshots; running backward walks it. It returns to
   *t* = 0 bit-identically.
 
-For a headless machine, `POSIM_NO_BROWSER=1` suppresses the attempt to
-open a browser.
+For a headless machine, setting the environment variable
+`POSIM_NO_BROWSER=1` suppresses the attempt to open a browser (in
+PowerShell: `$env:POSIM_NO_BROWSER = "1"` before you run the program).
 
 ### 8.2 Recorded videos
 
@@ -1545,9 +1546,20 @@ reasons for each divergence, are in `sundials_rs/VERIFICATION.md`,
 
 Two consequences of taking this seriously: printed floating-point values
 go through helpers that reproduce C's `printf` conversions exactly
-(Rust's own `{:e}` formats exponents differently), and `pow` was made
-host-independent so that at least that function cannot vary between
-machines.
+(Rust's own `{:e}` formats exponents differently), and the transcendental
+functions were taken off the host entirely. The vendored engine is the
+**Windows port** of the translation: because Microsoft's math runtime
+(UCRT) rounds `sin`, `cos`, `exp`, `ln` and friends differently from the
+Linux library the reference outputs came from, the engine carries its own
+pure-Rust translations of the glibc routines (`sundials_libm`), each
+measured at **0 mismatches over millions of inputs** against a real glibc
+oracle. That — plus a deterministic `pow` and a pinned FMA instruction
+(`.cargo/config.toml`) — is why this Windows build reproduces the
+Linux physics **byte for byte**: the 12 collision scripts, all 13
+recorded videos and 57 of the 59 dynamic notebooks are byte-identical to
+the Linux evidence, and the remaining two (the quantum notebooks, whose
+first-party code still uses the host libm) agree to the last printed
+digit (see `evidence/win11/`).
 
 ### 9.2 The simulator against closed-form physics
 
@@ -1565,9 +1577,11 @@ cargo run -p physical_object --release --example bouncing_ball_restitution
 
 ### 9.3 The test suite
 
-605 tests: 40 library, 19 collision, 9 conservation, 109 language,
-92 quantum, 233 special-function, 11 vendored identities and 55
-documentation examples that are compiled and run as written.
+622 tests: 49 library, 19 collision, 9 conservation, 42 constrained/
+equilibrium/sensitivity, 112 language, 92 quantum, 233 special-function,
+11 vendored identities, 5 + 50 documentation examples that are compiled
+and run as written — measured on Windows 11 (`cargo test --workspace`,
+0 failed).
 
 The collision tests in particular are analytic rather than
 regression-style: they assert the time of impact against a closed form,

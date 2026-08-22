@@ -1,13 +1,22 @@
-# rustSolveIt — on pure-Rust SUNDIALS 7.8.0
+# rustSolveIt — on pure-Rust SUNDIALS 7.8.0, for Windows 11
 
-Pure-Rust physics simulator. This repository is
+Pure-Rust physics simulator, the **Windows 11 (x86-64)** port of
+[`once-ere/rustSolveIt_Using_SUNDIALS_7_8_0`](https://github.com/once-ere/rustSolveIt_Using_SUNDIALS_7_8_0)
+— which is
 [`once-ere/rustSolveIt`](https://github.com/once-ere/rustSolveIt) with
 its numerical engine upgraded from a pure-Rust translation of SUNDIALS
-**7.7.0** to one of **7.8.0** — and with the evidence that the upgrade
-changed no physics: the six self-checking examples, the twelve
-collision scripts and all 59 dynamic notebooks produce **byte-identical
-output** under both engines. See
-[PORT_7.8.0_PROVENANCE.md](PORT_7.8.0_PROVENANCE.md) and
+**7.7.0** to one of **7.8.0**. The engine vendored here is the
+**Windows port** of that translation
+([`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11`](https://github.com/once-ere/SUNDIALS_7_8_Rust_port_for_Windows11)),
+whose own pure-Rust glibc-translated math library is what lets this
+build reproduce the Linux physics **byte for byte**: the six
+self-checking examples, the twelve collision scripts, all 13 recorded
+videos and 57 of the 59 dynamic notebooks are byte-identical to the
+Linux evidence — the other two, the quantum notebooks, agree to the
+last printed digit. See
+[PORT_WIN11_PROVENANCE.md](PORT_WIN11_PROVENANCE.md),
+[PORT_7.8.0_PROVENANCE.md](PORT_7.8.0_PROVENANCE.md),
+[evidence/win11/](evidence/win11) and
 [evidence/port-7.8.0/](evidence/port-7.8.0).
 
 rustSolveIt itself is the refined and refactored export of
@@ -29,11 +38,17 @@ The repository is **self-contained**: an ordinary clone is all you need
 — no submodules, no network access during the build, nothing from
 crates.io.
 
-```bash
-git clone https://github.com/once-ere/rustSolveIt_Using_SUNDIALS_7_8_0.git
-cd rustSolveIt_Using_SUNDIALS_7_8_0/version-7.8.0
+```powershell
+git clone https://github.com/once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0.git
+cd rustSolveIt_Win11_SUNDIALS_7_8_0
 cargo run                 # the notebook REPL (type HELP)
 ```
+
+You need Rust with the MSVC toolchain (`rustup-init.exe` from
+<https://rustup.rs>; any installed Visual Studio 2022/2026 supplies the
+linker) and a CPU with FMA (every Intel since 2013, AMD since 2012 —
+the vendored engine's deterministic math library requires it, pinned in
+`.cargo/config.toml`).
 
 This project is a standalone export of the simulator; its lineage,
 byte-identity manifest and full verification transcript are recorded in
@@ -48,9 +63,10 @@ rod as ONE rigid body, exact part-wise collisions conserving E, P and
 L through real solver events); the scene window gains a permanent
 Reset button (with `SCENE RESET` — bit-identical re-initialization,
 Start re-runs) and a live labeled conserved-quantities readout (E, P
-and L); 605 passed workspace-wide (40 physical_object lib +
-19 collision + 9 conservation + 109 posim + 92 quantum +
-233 special_functions + 11 vendored identities + 55 doctests).
+and L); **622 passed workspace-wide on Windows 11** (49 physical_object
+lib + 19 collision + 9 conservation + 42 constrained/DAE + 112 posim +
+92 quantum + 233 special_functions + 11 vendored identities +
+55 doctests).
 
 - `physical_object/` — library: `pub struct physical_object`, the
   unique union of the legacy `PointParticle`, `RigidBody` and
@@ -150,10 +166,10 @@ frame you stopped on.
 
 Record your own from any posim script:
 
-```bash
+```powershell
 cargo build --release -p posim
-recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
-     -o /tmp/mine.html --frames 360 --dt 0.02 --title "..."
+python recorder/src/record_video.py videos/scenes/kepler_ellipse.posim `
+     -o mine.html --frames 360 --dt 0.02 --title "..."
 ```
 
 Every advance in a recording is a real SUNDIALS step — the recorder
@@ -198,7 +214,7 @@ then checks it against the integrator, so the numbers below are measured, not
 quoted. Launch any of them by name:
 
 ```bash
-tools/posim_notebook routh_p1_hodograph_circle
+tools\posim_notebook.cmd routh_p1_hodograph_circle
 ```
 
 ### Part I — *Dynamics of a Particle* (1898)
@@ -257,8 +273,8 @@ repository** — 6,309 of them — with a definition, the `file:line` where it i
 defined, its complete syntax, and examples you can paste into a notebook and
 run. Open it directly; it needs no server and fetches nothing.
 
-```bash
-open index_of_entities.html          # macOS  (xdg-open on Linux)
+```powershell
+start index_of_entities.html         # Windows (open on macOS, xdg-open on Linux)
 ```
 
 Keep `catalog-c.js` beside it: the page loads that second payload on demand
@@ -324,17 +340,17 @@ and the index carries the code's behaviour.
 
 ### Rebuilding it
 
-```bash
-python3 tools/extract_rust_items.py > index_data/rust_items.jsonl
-python3 tools/build_commands.py && python3 tools/build_tierb.py && python3 tools/build_tierc.py
-python3 tools/build_catalog.py && python3 tools/build_app.py
-python3 tools/verify_index_examples.py      # runs every posim fragment
-python3 tools/verify_tierb_examples.py      # compiles every Rust snippet
+```powershell
+python tools/extract_rust_items.py > index_data/rust_items.jsonl
+python tools/build_commands.py; python tools/build_tierb.py; python tools/build_tierc.py
+python tools/build_catalog.py; python tools/build_app.py
+python tools/verify_index_examples.py      # runs every posim fragment
+python tools/verify_tierb_examples.py      # compiles every Rust snippet
 ```
 
 ## Quick start
 
-```bash
+```powershell
 cargo run                 # notebook REPL (type HELP)
 cargo test --workspace    # all tests
 cargo run -p physical_object --release --example kepler_orbit

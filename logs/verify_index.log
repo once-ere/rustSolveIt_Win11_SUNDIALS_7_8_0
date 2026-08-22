@@ -1,0 +1,39 @@
+failure rules in force:
+  - A posim fragment FAILS if the process exits nonzero.
+  - A posim fragment FAILS if stdout contains any line starting `Err[`.
+  - A posim fragment FAILS if stdout contains a line matching `^%\w+ .* failed:` — a failing magic (notably %load) exits 0 and emits NO Err[ line, so exit status alone would pass it vacuously.
+  - posim fragments must be run with cwd = the repository root: %load and %save resolve paths relative to the current directory.
+  - POSIM_NO_BROWSER=1 must be set so SCENE CREATE does not launch a browser.
+  - Captured output has run-to-run variation normalised: the OS-assigned scene port becomes <port>, and the playback step and history counters become <varies> because playback advances on wall-clock time. Solver step counts are NOT normalised — those are deterministic, and they are the anchors the documentation pins.
+
+verifying 1177 fragments (1153 posim, 24 machine) with 12 workers
+
+  50/1177  failures so far: 0  (0s)
+  100/1177  failures so far: 0  (0s)
+  150/1177  failures so far: 0  (0s)
+  200/1177  failures so far: 0  (1s)
+  250/1177  failures so far: 0  (1s)
+  300/1177  failures so far: 0  (1s)
+  350/1177  failures so far: 0  (1s)
+  400/1177  failures so far: 0  (1s)
+  450/1177  failures so far: 0  (1s)
+  500/1177  failures so far: 0  (2s)
+  550/1177  failures so far: 0  (2s)
+  600/1177  failures so far: 0  (2s)
+  650/1177  failures so far: 0  (2s)
+  700/1177  failures so far: 0  (2s)
+  750/1177  failures so far: 0  (2s)
+  800/1177  failures so far: 0  (2s)
+  850/1177  failures so far: 0  (3s)
+  900/1177  failures so far: 0  (3s)
+  950/1177  failures so far: 0  (3s)
+  1000/1177  failures so far: 0  (3s)
+  1050/1177  failures so far: 0  (3s)
+  1100/1177  failures so far: 0  (3s)
+  1150/1177  failures so far: 0  (4s)
+  1177/1177  failures so far: 0  (31s)
+
+PASS 1177/1177  (100.0%)   31s wall clock
+
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\index_data\catalog.json
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\index_data\verification_report.json

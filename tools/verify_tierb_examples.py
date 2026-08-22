@@ -55,10 +55,10 @@ def build_file(entries):
 
 def main():
     keep = "--keep" in sys.argv
-    entries = json.load(open(ENTRIES))
+    entries = json.load(open(ENTRIES, encoding="utf-8"))
     src, index = build_file(entries)
     os.makedirs(os.path.dirname(SRC), exist_ok=True)
-    open(SRC, "w").write(src)
+    open(SRC, "w", encoding="utf-8", newline="\n").write(src)
     print("wrote %d snippets into %s" % (len(index), SRC))
     try:
         r = subprocess.run(
@@ -115,7 +115,8 @@ def main():
                 x["expected"] = "compiles"
                 x["verified"] = TODAY
                 ok += 1
-    json.dump(entries, open(ENTRIES, "w"), indent=1)
+    json.dump(entries, open(ENTRIES, "w", encoding="utf-8", newline="\n"),
+              indent=1)
 
     total = len(index)
     print("\nCOMPILED %d/%d  (%.1f%%)" % (ok, total, 100.0 * ok / total if total else 0))

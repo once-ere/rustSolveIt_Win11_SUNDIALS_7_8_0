@@ -12,24 +12,31 @@ JupyterLab ⇄ (ZMQ) ⇄ posim_kernel (Python wrapper kernel)
 The Rust side stays zero-dependency; the Python side is a thin
 ~100-line wrapper kernel built on `ipykernel`.
 
-## Setup
+## Setup (Windows 11, PowerShell)
 
-```bash
-# 1. build the simulator
-cd .. && cargo build --release && cd jupyter
+```powershell
+# 1. build the simulator (from the repository root)
+cd ..
+cargo build --release
+cd jupyter
 
 # 2. python env for the kernel (any env with ipykernel works)
 uv venv .venv
-uv pip install -p .venv/bin/python ipykernel jupyterlab
+uv pip install -p .venv\Scripts\python.exe ipykernel jupyterlab
 
 # 3. register the kernelspec (user-wide)
-.venv/bin/jupyter kernelspec install --user kernelspec --name posim
+.venv\Scripts\jupyter.exe kernelspec install --user kernelspec --name posim
 #    (edit kernelspec/kernel.json "argv" to point at your python if it
-#     is not `python3` on PATH; set POSIM_BIN if the binary is elsewhere)
+#     is not `python` on PATH; set POSIM_BIN if the binary is elsewhere)
 
 # 4. go
-PYTHONPATH=$PWD .venv/bin/jupyter lab
+$env:PYTHONPATH = "$PWD"
+.venv\Scripts\jupyter.exe lab
 ```
+
+(On Linux/macOS the venv paths are `.venv/bin/python` and
+`.venv/bin/jupyter`, and the last step is
+`PYTHONPATH=$PWD .venv/bin/jupyter lab`.)
 
 Pick the **posim (physical_object)** tile in the launcher. Each cell is
 one or more command lines (`HELP` lists them); shift-enter executes,
@@ -44,11 +51,13 @@ get obj0.position
 
 ## Tests (no JupyterLab needed)
 
-- `python3 test_protocol.py` — drives `posim --machine` directly over
+- `python test_protocol.py` — drives `posim --machine` directly over
   the JSONL protocol (stdlib only).
-- `.venv/bin/python test_kernel.py` — full kernel test over the Jupyter
-  ZMQ messaging protocol via `jupyter_client` (what JupyterLab itself
-  uses), including an analytic-solution check.
+- `.venv\Scripts\python.exe test_kernel.py` — full kernel test over the
+  Jupyter ZMQ messaging protocol via `jupyter_client` (what JupyterLab
+  itself uses), including an analytic-solution check. It needs
+  `jupyter_client` in the venv:
+  `uv pip install -p .venv\Scripts\python.exe ipykernel jupyter_client`.
 
 Machine-mode ops (one JSON doc per line):
 `{"op":"exec","code":"..."}`, `{"op":"get","path":"obj0.position"}`,

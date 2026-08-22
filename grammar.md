@@ -2835,13 +2835,15 @@ becomes cell 4. Only executed commands become numbered cells — so the
 `In[n]` numbering always matches what `%history` will replay.
 
 And the machine mode speaks the same language over JSON — one line per
-request:
+request. In Git Bash (the transcript below), `printf` pipes four
+requests into the simulator; in PowerShell the same four lines piped
+via `.\target\release\posim.exe --machine` produce the same replies:
 
 ```
 $ printf '%s\n' '{"op":"exec","code":"new point { mass = 1, velocity = [0, 1, 0] }"}' \
                 '{"op":"get","path":"obj0.momentum"}' \
                 '{"op":"set","path":"obj0.mass","value":5}' \
-                '{"op":"get","path":"obj0.momentum"}' | posim --machine
+                '{"op":"get","path":"obj0.momentum"}' | ./target/release/posim.exe --machine
 {"display":"obj0","ok":true,"result":"obj0"}
 {"display":"[0, 1, 0]","ok":true,"result":[0.0,1.0,0.0]}
 {"display":"","ok":true,"result":null}
@@ -3503,10 +3505,22 @@ is worth one page knowing what answers you.
 differential-equation solvers, in production use in physics codes since
 the 1990s. `sundials_rs/` in this repository is a **pure-Rust
 translation of SUNDIALS 7.8.0**: no `unsafe`, no FFI, no C compiler, no
-crates.io dependency. It is vendored byte-for-byte from
-`once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916`; the upgrade from
+crates.io dependency. It is the **Windows 11 / x86-64 port** of the
+translation (`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11`), which
+differs from the Linux port in exactly one substantive way: Microsoft's
+math runtime (UCRT) rounds `sin`, `cos`, `exp`, `ln` and the
+inverse/hyperbolic functions differently from the Linux glibc that
+generated the reference outputs, so the Windows port carries its own
+pure-Rust translations of the glibc routines
+(`sundials_rs/crates/sundials_core/src/sundials_libm/`), each measured
+at 0 mismatches over millions of inputs against a real glibc oracle.
+Its deterministic routines use the fused multiply-add instruction, so
+the workspace pins `-C target-feature=+fma` in `.cargo/config.toml`
+(any Intel CPU since 2013 or AMD since 2012 has it). The upgrade from
 the 7.7.0 engine the predecessor repository used is recorded, with its
-evidence, in [`PORT_7.8.0_PROVENANCE.md`](PORT_7.8.0_PROVENANCE.md).
+evidence, in [`PORT_7.8.0_PROVENANCE.md`](PORT_7.8.0_PROVENANCE.md);
+the Windows port of this whole simulator is recorded in
+[`PORT_WIN11_PROVENANCE.md`](PORT_WIN11_PROVENANCE.md).
 
 ### 11.1 Which solver runs which command
 
@@ -3617,14 +3631,18 @@ toolchain, and still scrub frame by frame.
 
 `recorder/src/record_video.py` makes one:
 
-```bash
+```powershell
 cargo build --release -p posim          # once
-recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
-     -o videos/kepler_ellipse.html \
-     --frames 360 --dt 0.02 \
-     --title "Kepler orbit, e = 0.6" \
+python recorder/src/record_video.py videos/scenes/kepler_ellipse.posim `
+     -o videos/kepler_ellipse.html `
+     --frames 360 --dt 0.02 `
+     --title "Kepler orbit, e = 0.6" `
      --caption "CVODE Adams, 360 frames of dt = 0.02."
 ```
+
+(The backtick is PowerShell's line continuation; on one line you need
+neither. Any Python 3.8+ works — the recorder uses only the standard
+library.)
 
 ### 12.1 How it works, and what it does not do
 

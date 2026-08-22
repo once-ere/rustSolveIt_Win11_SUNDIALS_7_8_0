@@ -1,0 +1,21 @@
+In[1]:= set system.g_constant = 0
+In[2]:= box 4
+Out[2]= box: inner size 4 x 4 x 4 — six static walls obj0, obj1, obj2, obj3, obj4, obj5 with inverse_mass = 0 (infinitely massive); objects collide elastically off the inside faces
+In[3]:= collide on
+Out[3]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[4]:= new torus as flat { mass = 1, ring_radius = 1.5, tube_radius = 0.5, position = [0, 0, 0] }
+Out[4]= obj6 as flat
+In[5]:= get flat.boundary
+Out[5]= Torus { ring_radius: 1.5, tube_radius: 0.5 }
+In[6]:= del 6
+Out[6]= deleted obj6; 6 object(s) remain (indices renumbered)
+In[7]:= new torus as tilt { mass = 1, ring_radius = 1.5, tube_radius = 0.5, position = [0, 0, 0], orientation = [0.8880738339771154, -0.32505758367186816, 0.32505758367186816, 0] }
+Out[7]= obj6 as tilt
+In[8]:= run 1 steps 10
+Out[8]= t = 1 (4 solver steps, 10 snapshots, |dE/E| = 0.000e0)
+In[9]:= get tilt.position
+Out[9]= [0, 0, 0]
+In[10]:= get system.collisions
+Out[10]= 0
+In[11]:= 1.5 * sqrt(2 / 3) + 0.5
+Out[11]= 1.724744871391589

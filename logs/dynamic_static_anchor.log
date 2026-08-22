@@ -1,0 +1,34 @@
+In[1]:= new point { mass = 5, position = [0, 10, 0], velocity = [0, 0, 0] }
+Out[1]= obj0
+In[2]:= set obj0.inverse_mass = 0
+In[3]:= new point { mass = 1, position = [1, 10, 0], velocity = [0, 0, 0] }
+Out[3]= obj1
+In[4]:= set system.g_constant = 0
+In[5]:= set system.uniform_gravity = [0, -9.81, 0]
+In[6]:= get obj0.mass
+Out[6]= 0
+In[7]:= get obj0.inverse_mass
+Out[7]= 0
+In[8]:= get obj0.position
+Out[8]= [0, 10, 0]
+In[9]:= get obj1.position
+Out[9]= [1, 10, 0]
+In[10]:= list
+Out[10]= obj0: point, mass=0, charge=0, pos=[0, 10, 0] [static, inverse_mass=0]
+obj1: point, mass=1, charge=0, pos=[1, 10, 0]
+In[11]:= energy
+Out[11]= 98.10000000000001
+In[12]:= momentum
+Out[12]= [0, 0, 0]
+In[13]:= angmom
+Out[13]= [0, 0, 0]
+In[14]:= scene create
+Out[14]= scene window created: http://127.0.0.1:50348/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[15]:= scene set_time_step 0.02
+Out[15]= scene time step dt = 0.02
+In[16]:= scene translate 0.5 4 0
+Out[16]= camera target = [0.5, 4, 0]
+In[17]:= scene zoom 0.8
+Out[17]= camera distance = 31.40586131600278

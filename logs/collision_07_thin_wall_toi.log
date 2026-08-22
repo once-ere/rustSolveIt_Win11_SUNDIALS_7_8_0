@@ -1,0 +1,20 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new cuboid { mass = 1, position = [0, 0, 0], half_extents = [0.005, 5, 5] }
+Out[2]= obj0
+In[3]:= set obj0.inverse_mass = 0
+In[4]:= set obj0.inverse_inertia_tensor = [[0,0,0],[0,0,0],[0,0,0]]
+In[5]:= new sphere { mass = 1, radius = 0.01, position = [-2, 0, 0], velocity = [100, 0, 0] }
+Out[5]= obj1
+In[6]:= step 0.05
+Out[6]= t = 0.05 (advanced by 0.05, 2002 solver steps, 1 collision(s) — CONTACTS lists them)
+In[7]:= contacts
+Out[7]= contact0: obj0 <-> obj1 at t = 0.019850000000000846
+  point  = [-0.005, 0, 0]
+  normal = [-1, -0, -0]  (from obj0 toward obj1)
+  depth = 0.000000000000022126397936084174, approach speed = 100, impulse = 200
+In[8]:= get contact0.t
+Out[8]= 0.019850000000000846
+In[9]:= get obj1.velocity.x
+Out[9]= -100
+In[10]:= get obj1.position.x
+Out[10]= -3.030000000000014

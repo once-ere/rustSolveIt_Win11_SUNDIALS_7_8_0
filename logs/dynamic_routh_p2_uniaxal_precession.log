@@ -1,0 +1,42 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.rtol = 1e-13
+In[3]:= set system.atol = 1e-15
+In[4]:= new cuboid { mass = 3, half_extents = [1, 1, 2], angular_velocity = [0.6, 0, 3] }
+Out[4]= obj0
+In[5]:= get obj0.inertia_tensor
+Out[5]= [[5, 0, 0], [0, 5, 0], [0, 0, 2]]
+In[6]:= get obj0.angular_momentum
+Out[6]= [3, 0, 6]
+In[7]:= norm(obj0.angular_momentum)
+Out[7]= 6.708203932499369
+In[8]:= norm(obj0.angular_velocity)
+Out[8]= 3.059411708155671
+In[9]:= dot(obj0.angular_velocity, obj0.angular_momentum) / (norm(obj0.angular_velocity) * norm(obj0.angular_momentum))
+Out[9]= 0.9647638212377322
+In[10]:= run 3.490658503988659 steps 4
+Out[10]= t = 3.490658503988659 (119 solver steps, 4 snapshots, |dE/E| = 1.958e-13)
+In[11]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_velocity.x, obj0.angular_velocity.y, obj0.angular_velocity.z] * obj0.orientation
+Out[11]= quat[w=-0.0000000000000002220446049250313, x=0.6000000000004303, y=-0.00000000000008204548151979907, z=2.9999999999994627]
+In[12]:= norm(obj0.angular_velocity)
+Out[12]= 3.0594117081552277
+In[13]:= dot(obj0.angular_velocity, obj0.angular_momentum) / (norm(obj0.angular_velocity) * norm(obj0.angular_momentum))
+Out[13]= 0.9647638212376831
+In[14]:= run 3.490658503988659 steps 4
+Out[14]= t = 6.981317007977318 (167 solver steps, 4 snapshots, |dE/E| = 1.753e-13)
+In[15]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_velocity.x, obj0.angular_velocity.y, obj0.angular_velocity.z] * obj0.orientation
+Out[15]= quat[w=0, x=0.6000000000008158, y=-0.0000000000011189174586867523, z=2.99999999999898]
+In[16]:= norm(obj0.angular_velocity)
+Out[16]= 3.0594117081548307
+In[17]:= reset
+Out[17]= system reset
+In[18]:= set system.g_constant = 0
+In[19]:= set system.rtol = 1e-13
+In[20]:= set system.atol = 1e-15
+In[21]:= new cuboid { mass = 3, half_extents = [1, 1, 2], angular_velocity = [0.6, 0, 3] }
+Out[21]= obj0
+In[22]:= scene create
+Out[22]= scene window created: http://127.0.0.1:50344/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[23]:= scene set_time_step 0.02
+Out[23]= scene time step dt = 0.02

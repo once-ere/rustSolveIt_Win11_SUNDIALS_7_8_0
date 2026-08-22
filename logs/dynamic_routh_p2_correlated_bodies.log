@@ -1,0 +1,50 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.rtol = 1e-13
+In[3]:= set system.atol = 1e-15
+In[4]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], position = [-5, 0, 0] }
+Out[4]= obj0
+In[5]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], position = [ 5, 0, 0], inertia_tensor = [[10, 0, 0], [0, 7.391304347826088, 0], [0, 0, 1.4285714285714284]] }
+Out[5]= obj1
+In[6]:= get obj0.inertia_tensor
+Out[6]= [[5, 0, 0], [0, 4.25, 0], [0, 0, 1.25]]
+In[7]:= get obj1.inertia_tensor
+Out[7]= [[10, 0, 0], [0, 7.391304347826088, 0], [0, 0, 1.4285714285714284]]
+In[8]:= set obj0.angular_momentum = [1.5, 12.75, 0.125]
+In[9]:= set obj1.angular_momentum = [1.5, 12.75, 0.125]
+In[10]:= get obj0.angular_velocity
+Out[10]= [0.30000000000000004, 3, 0.1]
+In[11]:= get obj1.angular_velocity
+Out[11]= [0.15000000000000002, 1.7249999999999999, 0.08750000000000001]
+In[12]:= obj0.angular_velocity - obj1.angular_velocity
+Out[12]= [0.15000000000000002, 1.2750000000000001, 0.012499999999999997]
+In[13]:= norm(obj0.angular_velocity - obj1.angular_velocity)
+Out[13]= 1.283854061020956
+In[14]:= run 3 steps 3
+Out[14]= t = 3 (933 solver steps, 3 snapshots, |dE/E| = 2.295e-12)
+In[15]:= obj0.angular_velocity - obj1.angular_velocity
+Out[15]= [0.7019371569591121, 1.2140792754085568, -0.39683197574987156]
+In[16]:= norm(obj0.angular_velocity - obj1.angular_velocity)
+Out[16]= 1.4574566464474867
+In[17]:= run 4 steps 4
+Out[17]= t = 7 (1235 solver steps, 4 snapshots, |dE/E| = 7.229e-15)
+In[18]:= obj0.angular_velocity - obj1.angular_velocity
+Out[18]= [-0.4625100834958395, 1.345608268490916, 0.1605776153078603]
+In[19]:= norm(obj0.angular_velocity - obj1.angular_velocity)
+Out[19]= 1.4319086423736707
+In[20]:= reset
+Out[20]= system reset
+In[21]:= set system.g_constant = 0
+In[22]:= set system.rtol = 1e-13
+In[23]:= set system.atol = 1e-15
+In[24]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], position = [-5, 0, 0] }
+Out[24]= obj0
+In[25]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], position = [ 5, 0, 0], inertia_tensor = [[10, 0, 0], [0, 7.391304347826088, 0], [0, 0, 1.4285714285714284]] }
+Out[25]= obj1
+In[26]:= set obj0.angular_momentum = [1.5, 12.75, 0.125]
+In[27]:= set obj1.angular_momentum = [1.5, 12.75, 0.125]
+In[28]:= scene create
+Out[28]= scene window created: http://127.0.0.1:50329/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[29]:= scene set_time_step 0.03
+Out[29]= scene time step dt = 0.03

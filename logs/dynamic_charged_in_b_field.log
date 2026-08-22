@@ -1,0 +1,25 @@
+In[1]:= new sphere { mass = 2, radius = 0.1, charge = -1.5, velocity = [3, 0, 0] }
+Out[1]= obj0
+In[2]:= set system.b_field = [0, 0, 4]
+In[3]:= method bdf
+Out[3]= method = CVODE BDF
+In[4]:= 2 * pi * 2 / (1.5 * 4)
+Out[4]= 2.0943951023931953
+In[5]:= 2 * 3 / (1.5 * 4)
+Out[5]= 1
+In[6]:= energy
+Out[6]= 9
+In[7]:= momentum
+Out[7]= [6, 0, 0]
+In[8]:= norm(obj0.velocity)
+Out[8]= 3
+In[9]:= scene create
+Out[9]= scene window created: http://127.0.0.1:58014/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[10]:= scene set_time_step 0.005
+Out[10]= scene time step dt = 0.005
+In[11]:= scene translate 0 1
+Out[11]= camera target = [0, 1, 0]
+In[12]:= scene zoom 2.5
+Out[12]= camera distance = 4.8

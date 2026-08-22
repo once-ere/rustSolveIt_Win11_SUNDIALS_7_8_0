@@ -1,0 +1,17 @@
+In[1]:= new point { mass = 1,   position = [1, 0, 0],  velocity = [0, 1, 0] }
+Out[1]= obj0
+In[2]:= new point { mass = 4,   position = [-1, 0, 0], velocity = [0, -0.25, 0] }
+Out[2]= obj1
+In[3]:= new point { mass = 256, position = [0, 8, 0],  velocity = [0, 0, 0] }
+Out[3]= obj2
+In[4]:= set system.g_constant = 0.001
+In[5]:= momentum
+Out[5]= [0, 0, 0]
+In[6]:= com
+Out[6]= [-0.011494252873563218, 7.846743295019157, 0]
+In[7]:= scene create
+Out[7]= scene window created: http://127.0.0.1:50350/
+(no browser was launched — open that address yourself)
+showing 3 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[8]:= scene translate 0 4
+Out[8]= camera target = [0, 4, 0]

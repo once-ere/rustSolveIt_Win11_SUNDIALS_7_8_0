@@ -1,0 +1,15 @@
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere { mass = 1, radius = 0.3, position = [-1, 0, 0], velocity = [0, -0.316227766, 0], restitution = 0.6 }
+Out[2]= obj0
+In[3]:= new sphere { mass = 1, radius = 0.3, position = [1, 0, 0], velocity = [0, 0.316227766, 0], restitution = 0.6 }
+Out[3]= obj1
+In[4]:= energy
+Out[4]= -0.4000000000105867
+In[5]:= momentum
+Out[5]= [0, 0, 0]
+In[6]:= scene create
+Out[6]= scene window created: http://127.0.0.1:58016/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[7]:= scene zoom 3
+Out[7]= camera distance = 4

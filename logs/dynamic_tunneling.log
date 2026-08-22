@@ -1,0 +1,64 @@
+In[1]:= def barrier(x) { 2.5 * (x > 0) * (x < 1) }
+Out[1]= function barrier(1 parameter(s)) defined — 1 body line(s)
+In[2]:= barrier(-1)
+Out[2]= 0
+In[3]:= barrier(0.5)
+Out[3]= 2.5
+In[4]:= barrier(2)
+Out[4]= 0
+In[5]:= qm grid -100 100 2000
+Out[5]= grid [-100, 100] with 2000 interior points, h = 0.099950 (potential and psi cleared)
+In[6]:= qm potential barrier
+Out[6]= potential `barrier` sampled at 2000 points, V in [0, 2.5] (psi cleared)
+In[7]:= qm packet -25 2 2
+Out[7]= psi = Gaussian packet at x0 = -25, sigma = 2, k0 = 2, t = 0
+In[8]:= qm energy
+Out[8]= 2.023971780446392
+In[9]:= qm prob -100 0
+Out[9]= 1.000000000000002
+In[10]:= qm run 30 steps 3000
+Out[10]= t = 30 (3000 step(s) of dt = 0.01), <E> = 2.023971780446, norm drift = 6.375e-13
+In[11]:= qm prob 1 100
+Out[11]= 0.327563019391994
+In[12]:= qm prob -100 0
+Out[12]= 0.672436408645741
+In[13]:= qm packet -25 2 2
+Out[13]= psi = Gaussian packet at x0 = -25, sigma = 2, k0 = 2, t = 0
+In[14]:= qm animate "scatter.html" 32 frames 140
+Out[14]= wrote scatter.html — 140 frames over t = 32 (dt = 0.011429, 667 points per frame), worst norm drift 5.793e-13. Open it in a browser.
+In[15]:= qm grid -45 45 1350
+Out[15]= grid [-45, 45] with 1350 interior points, h = 0.066617 (potential and psi cleared)
+In[16]:= qm potential barrier
+Out[16]= potential `barrier` sampled at 1350 points, V in [0, 2.5] (psi cleared)
+In[17]:= qm absorb 15 3
+Out[17]= absorbing edges: width 15, strength 3, power 2. Propagation is NO LONGER unitary — the norm decays, which is the absorber working. QM STATES is unavailable while this is on.
+In[18]:= qm packet -25 2 2
+Out[18]= psi = Gaussian packet at x0 = -25, sigma = 2, k0 = 2, t = 0
+In[19]:= qm run 20 steps 2000
+Out[19]= t = 20 (2000 step(s) of dt = 0.01), <E> = 2.027886352953, norm drift = 1.056e-4
+In[20]:= qm prob 1 30
+Out[20]= 0.327689667523847
+In[21]:= qm norm
+Out[21]= 0.999894441422700
+In[22]:= qm absorb off
+Out[22]= absorbing edges removed — the walls reflect again
+In[23]:= qm grid -100 100 2000
+Out[23]= grid [-100, 100] with 2000 interior points, h = 0.099950 (potential and psi cleared)
+In[24]:= def double(x) { 2.5 * ((x > 0) * (x < 1) + (x > 3) * (x < 4)) }
+Out[24]= function double(1 parameter(s)) defined — 1 body line(s)
+In[25]:= double(0.5)
+Out[25]= 2.5
+In[26]:= double(2)
+Out[26]= 0
+In[27]:= double(3.5)
+Out[27]= 2.5
+In[28]:= qm potential double
+Out[28]= potential `double` sampled at 2000 points, V in [0, 2.5] (psi cleared)
+In[29]:= qm packet -25 2 2
+Out[29]= psi = Gaussian packet at x0 = -25, sigma = 2, k0 = 2, t = 0
+In[30]:= qm run 30 steps 3000
+Out[30]= t = 30 (3000 step(s) of dt = 0.01), <E> = 2.023971780446, norm drift = 6.137e-13
+In[31]:= qm prob 4 100
+Out[31]= 0.271498902830156
+In[32]:= qm prob -100 0
+Out[32]= 0.720114758903631

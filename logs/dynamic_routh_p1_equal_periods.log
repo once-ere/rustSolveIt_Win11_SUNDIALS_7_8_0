@@ -1,0 +1,62 @@
+In[1]:= set system.rtol = 1e-13
+In[2]:= set system.atol = 1e-15
+In[3]:= set system.softening = 0
+In[4]:= set system.g_constant = 1e-9
+In[5]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[5]= obj0
+In[6]:= new point { mass = 1e-6, position = [ 1,  0, 0], velocity = [ 0.9526279441628827, 0.55, 0] }
+Out[6]= obj1
+In[7]:= new point { mass = 1e-6, position = [ 0,  1, 0], velocity = [-0.9526279441628827, 0.55, 0] }
+Out[7]= obj2
+In[8]:= new point { mass = 1e-6, position = [-1,  0, 0], velocity = [ 0, -1.1, 0] }
+Out[8]= obj3
+In[9]:= new point { mass = 1e-6, position = [ 0, -1, 0], velocity = [ 0.9526279441628826, 0.55, 0] }
+Out[9]= obj4
+In[10]:= norm(obj1.velocity)
+Out[10]= 1.1
+In[11]:= norm(obj2.velocity)
+Out[11]= 1.1
+In[12]:= norm(obj3.velocity)
+Out[12]= 1.1
+In[13]:= norm(obj4.velocity)
+Out[13]= 1.1
+In[14]:= run 2.23706828113415 steps 2
+Out[14]= t = 2.23706828113415 (207 solver steps, 2 snapshots, |dE/E| = 4.201e-11)
+In[15]:= norm(obj1.position)
+Out[15]= 2.1782053839918185
+In[16]:= norm(obj3.position)
+Out[16]= 1.3200860093132558
+In[17]:= run 6.711204843402455 steps 6
+Out[17]= t = 8.948273124536605 (482 solver steps, 6 snapshots, |dE/E| = 6.623e-11)
+In[18]:= norm(obj1.position - [ 1,  0, 0])
+Out[18]= 0.000000000037876959828645684
+In[19]:= norm(obj2.position - [ 0,  1, 0])
+Out[19]= 0.00000000034257792646856677
+In[20]:= norm(obj3.position - [-1,  0, 0])
+Out[20]= 0.0000000000055760596518119
+In[21]:= norm(obj4.position - [ 0, -1, 0])
+Out[21]= 0.0000000025692228173289967
+In[22]:= reset
+Out[22]= system reset
+In[23]:= set system.rtol = 1e-13
+In[24]:= set system.atol = 1e-15
+In[25]:= set system.softening = 0
+In[26]:= set system.g_constant = 1e-9
+In[27]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[27]= obj0
+In[28]:= new point { mass = 1e-6, position = [ 1,  0, 0], velocity = [ 0.9526279441628827, 0.55, 0] }
+Out[28]= obj1
+In[29]:= new point { mass = 1e-6, position = [ 0,  1, 0], velocity = [-0.9526279441628827, 0.55, 0] }
+Out[29]= obj2
+In[30]:= new point { mass = 1e-6, position = [-1,  0, 0], velocity = [ 0, -1.1, 0] }
+Out[30]= obj3
+In[31]:= new point { mass = 1e-6, position = [ 0, -1, 0], velocity = [ 0.9526279441628826, 0.55, 0] }
+Out[31]= obj4
+In[32]:= scene create
+Out[32]= scene window created: http://127.0.0.1:50316/
+(no browser was launched — open that address yourself)
+showing 5 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[33]:= scene zoom in
+Out[33]= camera distance = 9.6
+In[34]:= scene set_time_step 0.02
+Out[34]= scene time step dt = 0.02

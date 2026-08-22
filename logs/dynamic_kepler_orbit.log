@@ -1,0 +1,14 @@
+In[1]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[1]= obj0
+In[2]:= new point { mass = 1, position = [0.4, 0, 0], velocity = [0, 2, 0] }
+Out[2]= obj1
+In[3]:= set system.g_constant = 1e-9
+In[4]:= set system.softening = 0
+In[5]:= energy
+Out[5]= -0.5
+In[6]:= laplace 1
+Out[6]= [0.5999999974000001, 0, 0]
+In[7]:= scene create
+Out[7]= scene window created: http://127.0.0.1:50307/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands

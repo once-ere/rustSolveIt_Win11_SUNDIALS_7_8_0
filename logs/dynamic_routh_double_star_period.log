@@ -1,0 +1,96 @@
+In[1]:= set system.g_constant = 1
+In[2]:= set system.softening = 0
+In[3]:= set system.rtol = 1e-13
+In[4]:= set system.atol = 1e-15
+In[5]:= new point { mass = 1.0, position = [-0.5, 0, 0], velocity = [0, -0.7071067811865476, 0] }
+Out[5]= obj0
+In[6]:= new point { mass = 1.0, position = [ 0.5, 0, 0], velocity = [0,  0.7071067811865476, 0] }
+Out[6]= obj1
+In[7]:= run pi * sqrt(2) steps 1
+Out[7]= t = 4.442882938158366 (196 solver steps, 1 snapshots, |dE/E| = 3.141e-12)
+In[8]:= norm(obj1.position - [0.5, 0, 0])
+Out[8]= 0.00000000001619020970710841
+In[9]:= reset
+Out[9]= system reset
+In[10]:= set system.g_constant = 1
+In[11]:= set system.softening = 0
+In[12]:= set system.rtol = 1e-13
+In[13]:= set system.atol = 1e-15
+In[14]:= new point { mass = 1.5, position = [-0.25, 0, 0], velocity = [0, -0.35355339059327373, 0] }
+Out[14]= obj0
+In[15]:= new point { mass = 0.5, position = [ 0.75, 0, 0], velocity = [0,  1.0606601717798212, 0] }
+Out[15]= obj1
+In[16]:= run pi * sqrt(2) steps 1
+Out[16]= t = 4.442882938158366 (213 solver steps, 1 snapshots, |dE/E| = 1.193e-12)
+In[17]:= norm(obj1.position - [0.75, 0, 0])
+Out[17]= 0.000000000020250519535979178
+In[18]:= reset
+Out[18]= system reset
+In[19]:= set system.g_constant = 1
+In[20]:= set system.softening = 0
+In[21]:= set system.rtol = 1e-13
+In[22]:= set system.atol = 1e-15
+In[23]:= new point { mass = 1.9, position = [-0.05, 0, 0], velocity = [0, -0.07071067811865475, 0] }
+Out[23]= obj0
+In[24]:= new point { mass = 0.1, position = [ 0.95, 0, 0], velocity = [0,  1.3435028842544403, 0] }
+Out[24]= obj1
+In[25]:= run pi * sqrt(2) steps 1
+Out[25]= t = 4.442882938158366 (202 solver steps, 1 snapshots, |dE/E| = 1.224e-12)
+In[26]:= norm(obj1.position - [0.95, 0, 0])
+Out[26]= 0.0000000000336437996744414
+In[27]:= reset
+Out[27]= system reset
+In[28]:= set system.g_constant = 1
+In[29]:= set system.softening = 0
+In[30]:= set system.rtol = 1e-13
+In[31]:= set system.atol = 1e-15
+In[32]:= new point { mass = 2.4, position = [-0.04, 0, 0], velocity = [0, -0.06324555320336758, 0] }
+Out[32]= obj0
+In[33]:= new point { mass = 0.1, position = [ 0.96, 0, 0], velocity = [0,  1.517893276880822, 0] }
+Out[33]= obj1
+In[34]:= run pi * sqrt(2) steps 1
+Out[34]= t = 4.442882938158366 (221 solver steps, 1 snapshots, |dE/E| = 2.828e-13)
+In[35]:= norm(obj1.position - [0.96, 0, 0])
+Out[35]= 0.6957597889920557
+In[36]:= reset
+Out[36]= system reset
+In[37]:= set system.g_constant = 1
+In[38]:= set system.softening = 0
+In[39]:= set system.rtol = 1e-13
+In[40]:= set system.atol = 1e-15
+In[41]:= new point { mass = 2.4, position = [-0.04, 0, 0], velocity = [0, -0.06324555320336758, 0] }
+Out[41]= obj0
+In[42]:= new point { mass = 0.1, position = [ 0.96, 0, 0], velocity = [0,  1.517893276880822, 0] }
+Out[42]= obj1
+In[43]:= run 2 * pi / sqrt(2.5) steps 1
+Out[43]= t = 3.97383530631844 (204 solver steps, 1 snapshots, |dE/E| = 1.781e-14)
+In[44]:= norm(obj1.position - [0.96, 0, 0])
+Out[44]= 0.00000000004570390859562565
+In[45]:= reset
+Out[45]= system reset
+In[46]:= set system.g_constant = 1
+In[47]:= set system.softening = 0
+In[48]:= set system.rtol = 1e-13
+In[49]:= set system.atol = 1e-15
+In[50]:= new point { mass = 1.9, position = [-0.05, 0, 0], velocity = [0, -0.07071067811865475, 0] }
+Out[50]= obj0
+In[51]:= new point { mass = 0.1, position = [ 0.95, 0, 0], velocity = [0,  1.3435028842544403, 0] }
+Out[51]= obj1
+In[52]:= energy
+Out[52]= -0.095
+In[53]:= momentum
+Out[53]= [0, 0, 0]
+In[54]:= pi * sqrt(2)
+Out[54]= 4.442882938158366
+In[55]:= scene create
+Out[55]= scene window created: http://127.0.0.1:50312/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[56]:= scene zoom in
+Out[56]= camera distance = 9.6
+In[57]:= scene zoom in
+Out[57]= camera distance = 7.68
+In[58]:= scene zoom in
+Out[58]= camera distance = 6.144
+In[59]:= scene set_time_step 0.02
+Out[59]= scene time step dt = 0.02

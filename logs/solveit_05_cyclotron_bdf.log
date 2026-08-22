@@ -1,0 +1,22 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.b_field = [0, 0, 6]
+In[3]:= new sphere as ion { mass = 2, charge = -3, radius = 0.05, position = [0, 0, 0], velocity = [5, 0, 0] }
+Out[3]= obj0 as ion
+In[4]:= method bdf
+Out[4]= method = CVODE BDF
+In[5]:= run 0.3490658503988659 steps 200
+Out[5]= t = 0.34906585039886584 (178 solver steps, 200 snapshots, |dE/E| = 8.696e-9)
+In[6]:= get ion.position
+Out[6]= [-0.00000000020913167204927863, 1.1111111086955652, 0]
+In[7]:= norm(ion.position)
+Out[7]= 1.1111111086955652
+In[8]:= 2 * (2 * 5 / (3 * 6))
+Out[8]= 1.1111111111111112
+In[9]:= run 0.3490658503988659 steps 200
+Out[9]= t = 0.6981317007977317 (160 solver steps, 200 snapshots, |dE/E| = 1.068e-8)
+In[10]:= get ion.position
+Out[10]= [0.000000000408039691444928, 0.000000005381884658509583, 0]
+In[11]:= get ion.velocity
+Out[11]= [4.999999951563042, 0.0000000036723595761567474, 0]
+In[12]:= norm(ion.velocity)
+Out[12]= 4.999999951563042

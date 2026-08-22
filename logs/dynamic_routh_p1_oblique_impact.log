@@ -1,0 +1,48 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.rtol = 1e-13
+In[3]:= set system.atol = 1e-15
+In[4]:= collide on
+Out[4]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[5]:= new sphere { mass = 1, radius = 0.5, position = [-3, 0.5, 0], velocity = [1, 0, 0], restitution = 1 }
+Out[5]= obj0
+In[6]:= new sphere { mass = 1, radius = 0.5, position = [ 0, 0,   0], restitution = 1 }
+Out[6]= obj1
+In[7]:= momentum
+Out[7]= [1, 0, 0]
+In[8]:= energy
+Out[8]= 0.5
+In[9]:= run 4 steps 4
+Out[9]= t = 4 (29 solver steps, 4 snapshots, |dE/E| = 2.220e-16, 1 collision(s) — CONTACTS lists them)
+In[10]:= obj0.velocity
+Out[10]= [0.25000000000000044, 0.4330127018922197, 0]
+In[11]:= obj1.velocity
+Out[11]= [0.7499999999999996, -0.4330127018922197, 0]
+In[12]:= dot(obj0.velocity, obj1.velocity)
+Out[12]= -0.00000000000000008326672684688674
+In[13]:= norm(obj0.velocity)
+Out[13]= 0.5000000000000006
+In[14]:= norm(obj1.velocity)
+Out[14]= 0.8660254037844385
+In[15]:= momentum
+Out[15]= [1, 0, 0]
+In[16]:= energy
+Out[16]= 0.5000000000000001
+In[17]:= system.collisions
+Out[17]= 1
+In[18]:= reset
+Out[18]= system reset
+In[19]:= set system.g_constant = 0
+In[20]:= set system.rtol = 1e-13
+In[21]:= set system.atol = 1e-15
+In[22]:= collide on
+Out[22]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[23]:= new sphere { mass = 1, radius = 0.5, position = [-3, 0.5, 0], velocity = [1, 0, 0], restitution = 1 }
+Out[23]= obj0
+In[24]:= new sphere { mass = 1, radius = 0.5, position = [ 0, 0,   0], restitution = 1 }
+Out[24]= obj1
+In[25]:= scene create
+Out[25]= scene window created: http://127.0.0.1:50324/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[26]:= scene set_time_step 0.02
+Out[26]= scene time step dt = 0.02

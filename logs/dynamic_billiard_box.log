@@ -1,0 +1,21 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new cuboid { mass = 1, position = [-3, 0, 0], half_extents = [0.2, 2, 2] }
+Out[2]= obj0
+In[3]:= set obj0.inverse_mass = 0
+In[4]:= set obj0.inverse_inertia_tensor = [[0,0,0],[0,0,0],[0,0,0]]
+In[5]:= new cuboid { mass = 1, position = [3, 0, 0], half_extents = [0.2, 2, 2] }
+Out[5]= obj1
+In[6]:= set obj1.inverse_mass = 0
+In[7]:= set obj1.inverse_inertia_tensor = [[0,0,0],[0,0,0],[0,0,0]]
+In[8]:= new sphere { mass = 1, radius = 0.3, position = [0, 0, 0], velocity = [1.7, 0, 0] }
+Out[8]= obj2
+In[9]:= energy
+Out[9]= 1.4449999999999998
+In[10]:= get obj2.velocity.x
+Out[10]= 1.7
+In[11]:= scene create
+Out[11]= scene window created: http://127.0.0.1:58009/
+(no browser was launched — open that address yourself)
+showing 3 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[12]:= scene set_time_step 0.02
+Out[12]= scene time step dt = 0.02

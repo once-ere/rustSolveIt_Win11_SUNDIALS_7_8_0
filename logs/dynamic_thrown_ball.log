@@ -1,0 +1,25 @@
+In[1]:= new point { mass = 0.145, position = [0, 1, 0], velocity = [30, 30, 0] }
+Out[1]= obj0
+In[2]:= set system.gravity = [0, -9.81, 0]
+In[3]:= energy
+Out[3]= 131.92245
+In[4]:= momentum
+Out[4]= [4.35, 4.35, 0]
+In[5]:= get obj0.position
+Out[5]= [0, 1, 0]
+In[6]:= 30 * 6.12
+Out[6]= 183.6
+In[7]:= 30 / 9.81
+Out[7]= 3.058103975535168
+In[8]:= 1 + 30 * 30 / (2 * 9.81)
+Out[8]= 46.87155963302752
+In[9]:= scene create
+Out[9]= scene window created: http://127.0.0.1:50351/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[10]:= scene set_time_step 0.02
+Out[10]= scene time step dt = 0.02
+In[11]:= scene translate 90 20
+Out[11]= camera target = [90, 20, 0]
+In[12]:= scene zoom 0.06
+Out[12]= camera distance = 200

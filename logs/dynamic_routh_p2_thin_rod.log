@@ -1,0 +1,38 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.rtol = 1e-13
+In[3]:= set system.atol = 1e-15
+In[4]:= new cylinder { mass = 3, radius = 0.02, half_height = 2, angular_velocity = [1, 0, 50] }
+Out[4]= obj0
+In[5]:= get obj0.inertia_tensor
+Out[5]= [[4.0003, 0, 0], [0, 4.0003, 0], [0, 0, 0.0006000000000000001]]
+In[6]:= get obj0.angular_momentum
+Out[6]= [4.0003, 0, 0.030000000000000002]
+In[7]:= norm(obj0.angular_momentum)
+Out[7]= 4.000412489981502
+In[8]:= obj0.angular_momentum.z / obj0.angular_momentum.x
+Out[8]= 0.007499437542184337
+In[9]:= normalize(obj0.angular_momentum)
+Out[9]= [0.9999718804043873, 0, 0.007499226661033327]
+In[10]:= run 5 steps 5
+Out[10]= t = 5 (6735 solver steps, 5 snapshots, |dE/E| = 3.150e-10)
+In[11]:= norm(obj0.angular_momentum)
+Out[11]= 4.000412489981502
+In[12]:= normalize(obj0.angular_momentum)
+Out[12]= [0.9999718804043873, 0, 0.007499226661033327]
+In[13]:= norm(obj0.angular_velocity)
+Out[13]= 50.00999902907271
+In[14]:= energy
+Out[14]= 2.7501500008662263
+In[15]:= reset
+Out[15]= system reset
+In[16]:= set system.g_constant = 0
+In[17]:= set system.rtol = 1e-13
+In[18]:= set system.atol = 1e-15
+In[19]:= new cylinder { mass = 3, radius = 0.02, half_height = 2, angular_velocity = [1, 0, 50] }
+Out[19]= obj0
+In[20]:= scene create
+Out[20]= scene window created: http://127.0.0.1:50342/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[21]:= scene set_time_step 0.02
+Out[21]= scene time step dt = 0.02

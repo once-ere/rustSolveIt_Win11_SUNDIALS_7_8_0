@@ -46,7 +46,13 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 
 #: Where a built posim can be, relative to a cargo workspace root.
-BIN_CANDIDATES = ("target/release/posim", "target/debug/posim")
+#: On Windows cargo names the binary `posim.exe`; try it first there.
+BIN_CANDIDATES = (
+    ("target/release/posim.exe", "target/debug/posim.exe",
+     "target/release/posim", "target/debug/posim")
+    if os.name == "nt"
+    else ("target/release/posim", "target/debug/posim")
+)
 
 
 def _binary_in(root: pathlib.Path):

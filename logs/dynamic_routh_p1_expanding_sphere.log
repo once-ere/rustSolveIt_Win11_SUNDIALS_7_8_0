@@ -1,0 +1,54 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.gravity = [0, -9.81, 0]
+In[3]:= set system.rtol = 1e-13
+In[4]:= set system.atol = 1e-15
+In[5]:= new point { mass = 1, position = [0,0,0], velocity = [ 5, 0, 0] }
+Out[5]= obj0
+In[6]:= new point { mass = 1, position = [0,0,0], velocity = [-5, 0, 0] }
+Out[6]= obj1
+In[7]:= new point { mass = 1, position = [0,0,0], velocity = [ 0, 5, 0] }
+Out[7]= obj2
+In[8]:= new point { mass = 1, position = [0,0,0], velocity = [ 0,-5, 0] }
+Out[8]= obj3
+In[9]:= new point { mass = 1, position = [0,0,0], velocity = [ 0, 0, 5] }
+Out[9]= obj4
+In[10]:= new point { mass = 1, position = [0,0,0], velocity = [ 0, 0,-5] }
+Out[10]= obj5
+In[11]:= run 1 steps 1
+Out[11]= t = 1 (15 solver steps, 1 snapshots, |dE/E| = 3.790e-16)
+In[12]:= norm(obj0.position - [0, -4.905, 0])
+Out[12]= 5
+In[13]:= norm(obj3.position - [0, -4.905, 0])
+Out[13]= 5.000000000000001
+In[14]:= norm(obj4.position - [0, -4.905, 0])
+Out[14]= 5
+In[15]:= run 1 steps 1
+Out[15]= t = 2 (12 solver steps, 1 snapshots, |dE/E| = 4.889e-14)
+In[16]:= norm(obj0.position - [0, -19.62, 0])
+Out[16]= 9.999999999999996
+In[17]:= norm(obj3.position - [0, -19.62, 0])
+Out[17]= 10.000000000000004
+In[18]:= norm(obj4.position - [0, -19.62, 0])
+Out[18]= 9.999999999999996
+In[19]:= reset
+Out[19]= system reset
+In[20]:= set system.g_constant = 0
+In[21]:= set system.gravity = [0, -9.81, 0]
+In[22]:= new point { mass = 1, position = [0,0,0], velocity = [ 5, 0, 0] }
+Out[22]= obj0
+In[23]:= new point { mass = 1, position = [0,0,0], velocity = [-5, 0, 0] }
+Out[23]= obj1
+In[24]:= new point { mass = 1, position = [0,0,0], velocity = [ 0, 5, 0] }
+Out[24]= obj2
+In[25]:= new point { mass = 1, position = [0,0,0], velocity = [ 0,-5, 0] }
+Out[25]= obj3
+In[26]:= new point { mass = 1, position = [0,0,0], velocity = [ 0, 0, 5] }
+Out[26]= obj4
+In[27]:= new point { mass = 1, position = [0,0,0], velocity = [ 0, 0,-5] }
+Out[27]= obj5
+In[28]:= scene create
+Out[28]= scene window created: http://127.0.0.1:50319/
+(no browser was launched — open that address yourself)
+showing 6 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[29]:= scene set_time_step 0.02
+Out[29]= scene time step dt = 0.02

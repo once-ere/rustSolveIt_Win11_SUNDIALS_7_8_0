@@ -1,0 +1,44 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.rtol = 1e-13
+In[3]:= set system.atol = 1e-15
+In[4]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], angular_velocity = [0.3, 3, 0.1] }
+Out[4]= obj0
+In[5]:= get obj0.inertia_tensor
+Out[5]= [[5, 0, 0], [0, 4.25, 0], [0, 0, 1.25]]
+In[6]:= norm(obj0.angular_momentum)
+Out[6]= 12.838540610209558
+In[7]:= normalize(obj0.angular_momentum)
+Out[7]= [0.11683570941132974, 0.9931035299963029, 0.009736309117610812]
+In[8]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_momentum.x, obj0.angular_momentum.y, obj0.angular_momentum.z] * obj0.orientation
+Out[8]= quat[w=0, x=1.5, y=12.75, z=0.125]
+In[9]:= run 2 steps 2
+Out[9]= t = 2 (212 solver steps, 2 snapshots, |dE/E| = 6.094e-14)
+In[10]:= normalize(obj0.angular_momentum)
+Out[10]= [0.11683570941132974, 0.9931035299963029, 0.009736309117610812]
+In[11]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_momentum.x, obj0.angular_momentum.y, obj0.angular_momentum.z] * obj0.orientation
+Out[11]= quat[w=-0.0000000000000004440892098500626, x=11.51682019240888, y=-4.9016482887606125, z=2.857415214667472]
+In[12]:= run 2 steps 2
+Out[12]= t = 4 (229 solver steps, 2 snapshots, |dE/E| = 8.994e-15)
+In[13]:= normalize(obj0.angular_momentum)
+Out[13]= [0.11683570941132974, 0.9931035299963029, 0.009736309117610812]
+In[14]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_momentum.x, obj0.angular_momentum.y, obj0.angular_momentum.z] * obj0.orientation
+Out[14]= quat[w=0.0000000000000008881784197001252, x=1.564734986926688, y=-12.741730835996503, z=-0.1674058652001621]
+In[15]:= run 3 steps 3
+Out[15]= t = 7 (359 solver steps, 3 snapshots, |dE/E| = 2.874e-13)
+In[16]:= normalize(obj0.angular_momentum)
+Out[16]= [0.11683570941132974, 0.9931035299963029, 0.009736309117610812]
+In[17]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_momentum.x, obj0.angular_momentum.y, obj0.angular_momentum.z] * obj0.orientation
+Out[17]= quat[w=0.0000000000000015681900222830336, x=2.620208405068383, y=12.556215180485635, z=-0.5514465117771397]
+In[18]:= reset
+Out[18]= system reset
+In[19]:= set system.g_constant = 0
+In[20]:= set system.rtol = 1e-13
+In[21]:= set system.atol = 1e-15
+In[22]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], angular_velocity = [0.3, 3, 0.1] }
+Out[22]= obj0
+In[23]:= scene create
+Out[23]= scene window created: http://127.0.0.1:50337/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[24]:= scene set_time_step 0.03
+Out[24]= scene time step dt = 0.03

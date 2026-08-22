@@ -20,10 +20,12 @@ def find_posim():
     env = os.environ.get("POSIM_BIN")
     if env:
         return env
+    names = ("posim.exe", "posim") if os.name == "nt" else ("posim",)
     for profile in ("release", "debug"):
-        cand = os.path.join(WORKSPACE, "target", profile, "posim")
-        if os.path.isfile(cand) and os.access(cand, os.X_OK):
-            return cand
+        for name in names:
+            cand = os.path.join(WORKSPACE, "target", profile, name)
+            if os.path.isfile(cand) and os.access(cand, os.X_OK):
+                return cand
     sys.exit("posim binary not found: cargo build first (or set $POSIM_BIN)")
 
 

@@ -1,0 +1,43 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.rtol = 1e-13
+In[3]:= set system.atol = 1e-15
+In[4]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], angular_velocity = [0.3, 3, 0.1] }
+Out[4]= obj0
+In[5]:= get obj0.angular_momentum
+Out[5]= [1.5, 12.75, 0.125]
+In[6]:= norm(obj0.angular_momentum)
+Out[6]= 12.838540610209558
+In[7]:= normalize(obj0.angular_momentum)
+Out[7]= [0.11683570941132974, 0.9931035299963029, 0.009736309117610812]
+In[8]:= energy
+Out[8]= 19.356250000000003
+In[9]:= set obj0.angular_momentum = [6.465753021614381, 12.165793762163014, 0.125]
+In[10]:= norm(obj0.angular_momentum)
+Out[10]= 13.777812779973459
+In[11]:= normalize(obj0.angular_momentum)
+Out[11]= [0.4692873335463364, 0.8829989169141874, 0.009072557596492526]
+In[12]:= dot(normalize(obj0.angular_momentum), normalize([1.5, 12.75, 0.125]))
+Out[12]= 0.931827193128276
+In[13]:= get obj0.angular_velocity
+Out[13]= [1.2931506043228762, 2.862539708744239, 0.1]
+In[14]:= energy
+Out[14]= 21.59938007994385
+In[15]:= run 4 steps 4
+Out[15]= t = 4 (489 solver steps, 4 snapshots, |dE/E| = 1.447e-12)
+In[16]:= normalize(obj0.angular_momentum)
+Out[16]= [0.4692873335463364, 0.8829989169141874, 0.009072557596492526]
+In[17]:= norm(obj0.angular_momentum)
+Out[17]= 13.777812779973459
+In[18]:= reset
+Out[18]= system reset
+In[19]:= set system.g_constant = 0
+In[20]:= set system.rtol = 1e-13
+In[21]:= set system.atol = 1e-15
+In[22]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], angular_velocity = [0.3, 3, 0.1] }
+Out[22]= obj0
+In[23]:= scene create
+Out[23]= scene window created: http://127.0.0.1:50331/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[24]:= scene set_time_step 0.03
+Out[24]= scene time step dt = 0.03

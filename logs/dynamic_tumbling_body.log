@@ -1,0 +1,34 @@
+In[1]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], angular_velocity = [0.01, 3, 0.01] }
+Out[1]= obj0
+In[2]:= get obj0.inertia_tensor
+Out[2]= [[5, 0, 0], [0, 4.25, 0], [0, 0, 1.25]]
+In[3]:= get obj0.angular_velocity
+Out[3]= [0.010000000000000002, 3, 0.010000000000000002]
+In[4]:= angmom
+Out[4]= [0.05, 12.75, 0.0125]
+In[5]:= energy
+Out[5]= 19.1253125
+In[6]:= run 6 steps 3
+Out[6]= t = 6 (405 solver steps, 3 snapshots, |dE/E| = 7.094e-10)
+In[7]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_velocity.x, obj0.angular_velocity.y, obj0.angular_velocity.z] * obj0.orientation
+Out[7]= quat[w=0, x=0.04992925838537569, y=-2.9994134404438055, z=0.04992895040747192]
+In[8]:= run 14 steps 7
+Out[8]= t = 20 (837 solver steps, 7 snapshots, |dE/E| = 3.081e-10)
+In[9]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_velocity.x, obj0.angular_velocity.y, obj0.angular_velocity.z] * obj0.orientation
+Out[9]= quat[w=-0.00000000000000003899824392453524, x=0.001812721131245463, y=3.0000237049643665, z=-0.001800513610919619]
+In[10]:= obj0.angular_velocity.y
+Out[10]= 3.0000009356600437
+In[11]:= angmom
+Out[11]= [0.05, 12.75, 0.0125]
+In[12]:= energy
+Out[12]= 19.125312480540305
+In[13]:= reset
+Out[13]= system reset
+In[14]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], angular_velocity = [0.01, 3, 0.01] }
+Out[14]= obj0
+In[15]:= scene create
+Out[15]= scene window created: http://127.0.0.1:50352/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[16]:= scene set_time_step 0.05
+Out[16]= scene time step dt = 0.05

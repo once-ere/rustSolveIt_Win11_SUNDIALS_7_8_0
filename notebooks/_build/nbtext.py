@@ -20,10 +20,10 @@ that you never have to go looking in another file for it.
 
 | you need | why | check it with |
 |---|---|---|
-| **Rust** (1.75 or newer) | the simulator is pure Rust and is built from source | `rustc --version` |
-| **Python 3.8+** | Jupyter runs on Python, and this notebook is a Python notebook | `python3 --version` |
+| **Rust** (1.75 or newer, MSVC toolchain) | the simulator is pure Rust and is built from source | `rustc --version` |
+| **Python 3.8+** | Jupyter runs on Python, and this notebook is a Python notebook | `python --version` |
 | **JupyterLab** or **Jupyter Notebook** | the program that opens `.ipynb` files | `jupyter --version` |
-| the **posim** binary | the simulator itself; you build it once, below | `ls target/release/posim` |
+| the **posim** binary | the simulator itself; you build it once, below | `dir target\release\posim.exe` |
 
 You do **not** need SUNDIALS installed. You do **not** need a C or Fortran
 compiler. You do **not** need any package from crates.io. The whole solver
@@ -34,47 +34,55 @@ time.
 
 ### 1.2 Build the simulator, once
 
-Open a terminal and run these four commands. `$` is the shell prompt —
-do not type it.
+Open a terminal (PowerShell on Windows) and run these four commands.
+`>` is the shell prompt — do not type it.
 
-```bash
-$ git clone https://github.com/once-ere/rustSolveIt_Using_SUNDIALS_7_8_0.git
-$ cd rustSolveIt_Using_SUNDIALS_7_8_0/version-7.8.0
-$ cargo build --release -p posim
-$ ls -l target/release/posim
+```powershell
+> git clone https://github.com/once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0.git
+> cd rustSolveIt_Win11_SUNDIALS_7_8_0
+> cargo build --release -p posim
+> dir target\release\posim.exe
 ```
 
 The third command is the long one: it compiles the simulator and the whole
 vendored SUNDIALS translation, and takes a few minutes the first time.
 When it finishes, the fourth command must print a line describing an
-executable file. If it prints `No such file or directory`, the build did
+executable file. If it says the file cannot be found, the build did
 not succeed — scroll up in the terminal and read the first error, because
 later errors are usually consequences of it.
 
+(On Linux or macOS the same commands work with `ls -l
+target/release/posim` as the final check; the binary there has no
+`.exe` suffix.)
+
 ### 1.3 Install Jupyter, if you do not have it
 
-```bash
-$ python3 -m pip install --user jupyterlab
-$ jupyter --version
+```powershell
+> python -m pip install --user jupyterlab
+> jupyter --version
 ```
 
-If `jupyter` is still "command not found" after this, your `pip --user`
-scripts directory is not on your `PATH`. Print it and add it:
+If `jupyter` is still "not recognized" after this, your `pip --user`
+scripts directory is not on your `PATH`. Print it and add it (for the
+current PowerShell session):
 
-```bash
-$ python3 -m site --user-base
-$ export PATH="$(python3 -m site --user-base)/bin:$PATH"
+```powershell
+> python -m site --user-site
+> $env:PATH = "$(python -m site --user-base)\Scripts;$env:PATH"
 ```
 
-To make that permanent, append that same `export` line to `~/.bashrc`
-(bash) or `~/.zshrc` (zsh).
+To make that permanent, add the `...\Scripts` directory to your user
+`PATH` in Settings → System → About → Advanced system settings →
+Environment Variables. (On Linux/macOS the equivalent is `export
+PATH="$(python3 -m site --user-base)/bin:$PATH"` in `~/.bashrc`.)
 
 ### 1.4 Start Jupyter and open a NEW notebook
 
-From the `version-7.8.0` directory:
+From the repository root (the `rustSolveIt_Win11_SUNDIALS_7_8_0`
+directory you cloned above):
 
-```bash
-$ jupyter lab
+```powershell
+> jupyter lab
 ```
 
 That starts a small web server and prints a URL that contains a one-time
@@ -115,8 +123,8 @@ only the simulator's own command language and cannot do them.
 Everything this notebook does can also be typed straight into the
 simulator's own prompt:
 
-```bash
-$ cargo run --release -p posim
+```powershell
+> cargo run --release -p posim
 ```
 
 That gives you an `In[1]:=` prompt where the simulator's commands are
@@ -323,14 +331,16 @@ def _find_posim():
     if onpath:
         return onpath
     here = Path.cwd()
+    names = ("posim.exe", "posim") if os.name == "nt" else ("posim",)
     for base in [here, *here.parents]:
         for profile in ("release", "debug"):
-            cand = base / "target" / profile / "posim"
-            if cand.is_file():
-                return str(cand)
+            for name in names:
+                cand = base / "target" / profile / name
+                if cand.is_file():
+                    return str(cand)
     raise SystemExit(
         "Could not find the posim binary.\n"
-        "Build it first, from the version-7.8.0 directory:\n"
+        "Build it first, from the repository root:\n"
         "    cargo build --release -p posim\n"
         "or set the POSIM_BIN environment variable to its full path."
     )

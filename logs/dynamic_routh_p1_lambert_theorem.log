@@ -1,0 +1,54 @@
+In[1]:= set system.rtol = 1e-13
+In[2]:= set system.atol = 1e-15
+In[3]:= set system.softening = 0
+In[4]:= set system.g_constant = 1e-9
+In[5]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[5]= obj0
+In[6]:= new point { mass = 1e-6, position = [0.09670670934716541, 0.5738848727196183, 0], velocity = [-1.2326214869081589, 0.9577119881285612, 0] }
+Out[6]= obj1
+In[7]:= norm(obj1.position)
+Out[7]= 0.5819759743917009
+In[8]:= run 1.3453158122479596 steps 3
+Out[8]= t = 1.3453158122479596 (127 solver steps, 3 snapshots, |dE/E| = 4.405e-12)
+In[9]:= norm(obj1.position)
+Out[9]= 1.3531006703500303
+In[10]:= norm(obj1.position - [-1.188501117255346, 0.6467971230556722, 0])
+Out[10]= 0.000000000004778675718797375
+In[11]:= reset
+Out[11]= system reset
+In[12]:= set system.rtol = 1e-13
+In[13]:= set system.atol = 1e-15
+In[14]:= set system.softening = 0
+In[15]:= set system.g_constant = 1e-9
+In[16]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[16]= obj0
+In[17]:= new point { mass = 1e-6, position = [0.382211216366071, 0.6379992630370535, 0], velocity = [-0.9157640844146201, 0.9222463226977163, 0] }
+Out[17]= obj1
+In[18]:= norm(obj1.position)
+Out[18]= 0.7437260742718752
+In[19]:= run 1.3453158122479596 steps 3
+Out[19]= t = 1.3453158122479596 (96 solver steps, 3 snapshots, |dE/E| = 2.418e-13)
+In[20]:= norm(obj1.position)
+Out[20]= 1.1913505704747411
+In[21]:= norm(obj1.position - [-0.896715915637238, 0.784357538632282, 0])
+Out[21]= 0.0000000000033258613006479608
+In[22]:= reset
+Out[22]= system reset
+In[23]:= set system.rtol = 1e-13
+In[24]:= set system.atol = 1e-15
+In[25]:= set system.softening = 0
+In[26]:= set system.g_constant = 1e-9
+In[27]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[27]= obj0
+In[28]:= new point { mass = 1e-6, position = [0.09670670934716541, 0.5738848727196183, 0], velocity = [-1.2326214869081589, 0.9577119881285612, 0] }
+Out[28]= obj1
+In[29]:= new point { mass = 1e-6, position = [0.382211216366071, 0.6379992630370535, 0], velocity = [-0.9157640844146201, 0.9222463226977163, 0] }
+Out[29]= obj2
+In[30]:= scene create
+Out[30]= scene window created: http://127.0.0.1:50323/
+(no browser was launched — open that address yourself)
+showing 3 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[31]:= scene zoom in
+Out[31]= camera distance = 9.6
+In[32]:= scene set_time_step 0.01
+Out[32]= scene time step dt = 0.01

@@ -1,0 +1,32 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new sphere { mass = 1, radius = 0.5, position = [-2, 0, 0], velocity = [1, 0, 0] }
+Out[2]= obj0
+In[3]:= new sphere { mass = 1, radius = 0.5, position = [2, 0, 0], velocity = [-1, 0, 0] }
+Out[3]= obj1
+In[4]:= collide
+Out[4]= collisions ON (1 collidable pair(s); 0 impulse(s) so far)
+In[5]:= momentum
+Out[5]= [0, 0, 0]
+In[6]:= energy
+Out[6]= 1
+In[7]:= step 3
+Out[7]= t = 3 (advanced by 3, 26 solver steps, 1 collision(s) — CONTACTS lists them)
+In[8]:= contacts
+Out[8]= contact0: obj0 <-> obj1 at t = 1.5
+  point  = [0, 0, 0]
+  normal = [1, 0, 0]  (from obj0 toward obj1)
+  depth = 0, approach speed = 2, impulse = 2
+In[9]:= get contact0.t
+Out[9]= 1.5
+In[10]:= get contact0.normal
+Out[10]= [1, 0, 0]
+In[11]:= get contact0.impulse
+Out[11]= 2
+In[12]:= get obj0.velocity
+Out[12]= [-1, 0, 0]
+In[13]:= get obj1.velocity
+Out[13]= [1, 0, 0]
+In[14]:= momentum
+Out[14]= [0, 0, 0]
+In[15]:= energy
+Out[15]= 1

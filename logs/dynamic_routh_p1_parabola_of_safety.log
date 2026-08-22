@@ -1,0 +1,78 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.gravity = [0, -9.81, 0]
+In[3]:= set system.rtol = 1e-13
+In[4]:= set system.atol = 1e-15
+In[5]:= new point { mass = 1, position = [0,0,0], velocity = [3.62969990030487, 9.318008297577697, 0] }
+Out[5]= obj0
+In[6]:= run 1.6530292213678714 steps 2
+Out[6]= t = 1.6530292213678714 (15 solver steps, 2 snapshots, |dE/E| = 9.948e-16)
+In[7]:= obj0.position
+Out[7]= [6, 2.0000000000000036, 0]
+In[8]:= norm(obj0.position - [6, 2, 0])
+Out[8]= 0.000000000000003552713678800501
+In[9]:= reset
+Out[9]= system reset
+In[10]:= set system.g_constant = 0
+In[11]:= set system.gravity = [0, -9.81, 0]
+In[12]:= set system.rtol = 1e-13
+In[13]:= set system.atol = 1e-15
+In[14]:= new point { mass = 1, position = [0,0,0], velocity = [7.692026952223115, 6.390048620024201, 0] }
+Out[14]= obj0
+In[15]:= run 0.7800284680835533 steps 2
+Out[15]= t = 0.7800284680835533 (14 solver steps, 2 snapshots, |dE/E| = 2.842e-16)
+In[16]:= obj0.position
+Out[16]= [6.000000000000001, 1.9999999999999991, 0]
+In[17]:= norm(obj0.position - [6, 2, 0])
+Out[17]= 0.0000000000000012560739669470201
+In[18]:= reset
+Out[18]= system reset
+In[19]:= set system.g_constant = 0
+In[20]:= set system.gravity = [0, -9.81, 0]
+In[21]:= set system.rtol = 1e-13
+In[22]:= set system.atol = 1e-15
+In[23]:= new point { mass = 1, position = [0,0,0], velocity = [9.396926207859084, 3.420201433256687, 0] }
+Out[23]= obj0
+In[24]:= new point { mass = 1, position = [0,0,0], velocity = [8.191520442889918, 5.735764363510462, 0] }
+Out[24]= obj1
+In[25]:= new point { mass = 1, position = [0,0,0], velocity = [6.427876096865394, 7.660444431189780, 0] }
+Out[25]= obj2
+In[26]:= new point { mass = 1, position = [0,0,0], velocity = [4.226182617406994, 9.063077870366499, 0] }
+Out[26]= obj3
+In[27]:= new point { mass = 1, position = [0,0,0], velocity = [1.736481776669303, 9.848077530122080, 0] }
+Out[27]= obj4
+In[28]:= run 0.8 steps 1
+Out[28]= t = 0.8 (15 solver steps, 1 snapshots, |dE/E| = 0.000e0)
+In[29]:= 5.09683995922528 - 0.04905 * obj0.position.x * obj0.position.x - obj0.position.y
+Out[29]= 2.727895454700383
+In[30]:= 5.09683995922528 - 0.04905 * obj2.position.x * obj2.position.x - obj2.position.y
+Out[30]= 0.8106425939394688
+In[31]:= 5.09683995922528 - 0.04905 * obj4.position.x * obj4.position.x - obj4.position.y
+Out[31]= 0.2629194727131807
+In[32]:= run 0.7 steps 1
+Out[32]= t = 1.5 (11 solver steps, 1 snapshots, |dE/E| = 3.138e-14)
+In[33]:= 5.09683995922528 - 0.04905 * obj0.position.x * obj0.position.x - obj0.position.y
+Out[33]= 1.2575338166544938
+In[34]:= 5.09683995922528 - 0.04905 * obj2.position.x * obj2.position.x - obj2.position.y
+Out[34]= 0.08251066282909303
+In[35]:= 5.09683995922528 - 0.04905 * obj4.position.x * obj4.position.x - obj4.position.y
+Out[35]= 1.028190007116562
+In[36]:= reset
+Out[36]= system reset
+In[37]:= set system.g_constant = 0
+In[38]:= set system.gravity = [0, -9.81, 0]
+In[39]:= new point { mass = 1, position = [0,0,0], velocity = [3.62969990030487, 9.318008297577697, 0] }
+Out[39]= obj0
+In[40]:= new point { mass = 1, position = [0,0,0], velocity = [7.692026952223115, 6.390048620024201, 0] }
+Out[40]= obj1
+In[41]:= new point { mass = 1, position = [0,0,0], velocity = [9.396926207859084, 3.420201433256687, 0] }
+Out[41]= obj2
+In[42]:= new point { mass = 1, position = [0,0,0], velocity = [6.427876096865394, 7.660444431189780, 0] }
+Out[42]= obj3
+In[43]:= new point { mass = 1, position = [0,0,0], velocity = [1.736481776669303, 9.848077530122080, 0] }
+Out[43]= obj4
+In[44]:= scene create
+Out[44]= scene window created: http://127.0.0.1:50325/
+(no browser was launched — open that address yourself)
+showing 5 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[45]:= scene set_time_step 0.02
+Out[45]= scene time step dt = 0.02

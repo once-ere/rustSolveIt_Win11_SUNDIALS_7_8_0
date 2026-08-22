@@ -1,0 +1,20 @@
+In[1]:= set system.g_constant = 0
+In[2]:= collide on
+Out[2]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[3]:= new cuboid as plate  { mass = 1, half_extents = [5, 0.0025, 5], position = [0, 0, 0], inverse_mass = 0 }
+Out[3]= obj0 as plate
+In[4]:= new sphere as bullet { mass = 0.01, radius = 0.002, position = [0, 2, 0], velocity = [0, -100, 0] }
+Out[4]= obj1 as bullet
+In[5]:= run 0.1 steps 10
+Out[5]= t = 0.1 (10003 solver steps, 10 snapshots, |dE/E| = 0.000e0, 1 collision(s) — CONTACTS lists them)
+In[6]:= get bullet.position.y
+Out[6]= 8.009000000001455
+In[7]:= get bullet.velocity.y
+Out[7]= 100
+In[8]:= get system.collisions
+Out[8]= 1
+In[9]:= contacts
+Out[9]= contact0: obj0 <-> obj1 at t = 0.01995500000000067
+  point  = [0, 0.0025, 0]
+  normal = [-0, 1, -0]  (from obj0 toward obj1)
+  depth = 0.00000000000002214157676649897, approach speed = 100, impulse = 2

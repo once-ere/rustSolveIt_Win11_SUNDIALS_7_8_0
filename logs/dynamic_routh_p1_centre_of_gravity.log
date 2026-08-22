@@ -1,0 +1,50 @@
+In[1]:= set system.g_constant = 1
+In[2]:= set system.rtol = 1e-12
+In[3]:= set system.atol = 1e-14
+In[4]:= collide on
+Out[4]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[5]:= new sphere { mass = 1, radius = 0.3, position = [-1.5,  0.2, 0], velocity = [ 1.2,  0,   0], restitution = 1 }
+Out[5]= obj0
+In[6]:= new sphere { mass = 1, radius = 0.3, position = [ 1.5, -0.2, 0], velocity = [-0.8,  0,   0], restitution = 1 }
+Out[6]= obj1
+In[7]:= new sphere { mass = 1, radius = 0.3, position = [ 0,    1.5, 0], velocity = [ 0,   -1.0, 0], restitution = 1 }
+Out[7]= obj2
+In[8]:= new sphere { mass = 1, radius = 0.3, position = [ 0,   -1.5, 0], velocity = [ 0,    0.9, 0], restitution = 1 }
+Out[8]= obj3
+In[9]:= momentum
+Out[9]= [0.3999999999999999, -0.09999999999999998, 0]
+In[10]:= (obj0.position + obj1.position + obj2.position + obj3.position) / 4
+Out[10]= [0, 0, 0]
+In[11]:= run 5 steps 10
+Out[11]= t = 5 (957 solver steps, 10 snapshots, |dE/E| = 3.212e-10, 8 collision(s) — CONTACTS lists them)
+In[12]:= system.collisions
+Out[12]= 8
+In[13]:= momentum
+Out[13]= [0.40000000000000546, -0.10000000000000739, 0]
+In[14]:= (obj0.position + obj1.position + obj2.position + obj3.position) / 4
+Out[14]= [0.5000000000000044, -0.12500000000000583, 0]
+In[15]:= norm((obj0.position + obj1.position + obj2.position + obj3.position) / 4 - [0.5, -0.125, 0])
+Out[15]= 0.000000000000007327682229021407
+In[16]:= reset
+Out[16]= system reset
+In[17]:= set system.g_constant = 1
+In[18]:= set system.rtol = 1e-12
+In[19]:= set system.atol = 1e-14
+In[20]:= collide on
+Out[20]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[21]:= new sphere { mass = 1, radius = 0.3, position = [-1.5,  0.2, 0], velocity = [ 1.2,  0,   0], restitution = 1 }
+Out[21]= obj0
+In[22]:= new sphere { mass = 1, radius = 0.3, position = [ 1.5, -0.2, 0], velocity = [-0.8,  0,   0], restitution = 1 }
+Out[22]= obj1
+In[23]:= new sphere { mass = 1, radius = 0.3, position = [ 0,    1.5, 0], velocity = [ 0,   -1.0, 0], restitution = 1 }
+Out[23]= obj2
+In[24]:= new sphere { mass = 1, radius = 0.3, position = [ 0,   -1.5, 0], velocity = [ 0,    0.9, 0], restitution = 1 }
+Out[24]= obj3
+In[25]:= momentum
+Out[25]= [0.3999999999999999, -0.09999999999999998, 0]
+In[26]:= scene create
+Out[26]= scene window created: http://127.0.0.1:50314/
+(no browser was launched — open that address yourself)
+showing 4 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[27]:= scene set_time_step 0.02
+Out[27]= scene time step dt = 0.02

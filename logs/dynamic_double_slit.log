@@ -1,0 +1,58 @@
+In[1]:= def openings(y) { (y > 1.5) * (y < 2.5) + (y > -2.5) * (y < -1.5) }
+Out[1]= function openings(1 parameter(s)) defined — 1 body line(s)
+In[2]:= def slit(x, y) { 60 * (x > 0) * (x < 0.4) * (1 - openings(y)) }
+Out[2]= function slit(2 parameter(s)) defined — 1 body line(s)
+In[3]:= slit(0.2, 0)        # on the wall, between the slits -> 60
+Out[3]= 60
+In[4]:= slit(0.2, 2)        # in the upper slit             -> 0
+Out[4]= 0
+In[5]:= slit(0.2, -2)       # in the lower slit             -> 0
+Out[5]= 0
+In[6]:= slit(0.2, 6)        # on the wall, outside          -> 60
+Out[6]= 60
+In[7]:= slit(-2, 2)         # upstream of the wall          -> 0
+Out[7]= 0
+In[8]:= qm2 grid -12 24 450, -16 16 400
+Out[8]= grid x [-12, 24] x 450, y [-16, 16] x 400 — 180000 points, hx = 0.079823, hy = 0.079800 (potential and psi cleared)
+In[9]:= qm2 potential slit
+Out[9]= potential `slit` sampled at 180000 points, V in [0, 60] (psi cleared)
+In[10]:= qm2 absorb 4, 8
+Out[10]= absorbing edges on all four walls: width 4, strength 8, power 2. Propagation is no longer unitary — the norm decays by design.
+In[11]:= qm2 packet -4.5, 0, 1.2 4, 8 0
+Out[11]= psi = 2-D Gaussian at (-4.5, 0), sigma (1.2, 4), k (8, 0), t = 0
+  warning: 2.643e-4 already sits within 5% of a wall
+In[12]:= qm2 energy
+Out[12]= 31.008336923103123
+In[13]:= qm2 norm
+Out[13]= 0.999999999999975
+In[14]:= qm2 prob 0.4 24, -18 18
+Out[14]= 0.000021159931426
+In[15]:= qm2 run 2.6 steps 800
+Out[15]= t = 2.6 (800 ADI step(s) of dt = 0.0032500000000000003), <E> = 30.990650438623, norm drift = 7.796e-1
+In[16]:= qm2 prob 0.4 24, -18 18
+Out[16]= 0.194797531317859
+In[17]:= qm2 centroid
+Out[17]= [2.4186416801495634, -0.00000000000000018011700871521673]
+In[18]:= qm2 norm
+Out[18]= 0.220410865359296
+In[19]:= qm2 prob 11 19, -0.5 0.5
+Out[19]= 0.015766137658865
+In[20]:= qm2 prob 11 19, 0.5 1.5
+Out[20]= 0.004524177973093
+In[21]:= qm2 prob 11 19, 1.5 2.5
+Out[21]= 0.009164400220525
+In[22]:= qm2 prob 11 19, 2.5 3.5
+Out[22]= 0.017416488189815
+In[23]:= qm2 prob 11 19, 3.5 4.5
+Out[23]= 0.004708263315466
+In[24]:= qm2 prob 11 19, 4.5 5.5
+Out[24]= 0.006459341509658
+In[25]:= qm2 prob 11 19, 5.5 6.5
+Out[25]= 0.013993383178195
+In[26]:= qm2 prob 11 19, 6.5 7.5
+Out[26]= 0.005019205668637
+In[27]:= qm2 packet -4.5, 0, 1.2 4, 8 0
+Out[27]= psi = 2-D Gaussian at (-4.5, 0), sigma (1.2, 4), k (8, 0), t = 0
+  warning: 2.643e-4 already sits within 5% of a wall
+In[28]:= qm2 animate "double_slit.html" 3 frames 100
+Out[28]= wrote double_slit.html — 100 frames over t = 3 (dt = 0.003000, 225 x 200 cells), worst norm drift 8.046e-1. Open it in a browser.

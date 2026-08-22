@@ -1,0 +1,55 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.rtol = 1e-13
+In[3]:= set system.atol = 1e-15
+In[4]:= collide on
+Out[4]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[5]:= new sphere { mass = 1, radius = 0.5, position = [-3, 0, 0], velocity = [1, 0, 0], restitution = 1 }
+Out[5]= obj0
+In[6]:= new sphere { mass = 1, radius = 0.5, position = [ 0, 0, 0], restitution = 1 }
+Out[6]= obj1
+In[7]:= run 4 steps 4
+Out[7]= t = 4 (28 solver steps, 4 snapshots, |dE/E| = 0.000e0, 1 collision(s) — CONTACTS lists them)
+In[8]:= obj0.vx
+Out[8]= 0
+In[9]:= obj1.vx
+Out[9]= 1
+In[10]:= system.collisions
+Out[10]= 1
+In[11]:= reset
+Out[11]= system reset
+In[12]:= set system.g_constant = 0
+In[13]:= set system.rtol = 1e-13
+In[14]:= set system.atol = 1e-15
+In[15]:= collide on
+Out[15]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[16]:= new sphere { mass = 1, radius = 0.5, position = [-3, 0, 0], velocity = [1, 0, 0], restitution = 0.5 }
+Out[16]= obj0
+In[17]:= new sphere { mass = 2, radius = 0.5, position = [ 0, 0, 0], restitution = 0.5 }
+Out[17]= obj1
+In[18]:= run 4 steps 4
+Out[18]= t = 4 (24 solver steps, 4 snapshots, |dE/E| = 5.000e-1, 1 collision(s) — CONTACTS lists them)
+In[19]:= obj0.vx
+Out[19]= 0
+In[20]:= obj1.vx
+Out[20]= 0.5
+In[21]:= obj0.momentum + obj1.momentum
+Out[21]= [1, 0, 0]
+In[22]:= reset
+Out[22]= system reset
+In[23]:= set system.g_constant = 0
+In[24]:= set system.rtol = 1e-13
+In[25]:= set system.atol = 1e-15
+In[26]:= collide on
+Out[26]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[27]:= new sphere { mass = 1, radius = 0.5, position = [-3, 0, 0], velocity = [1, 0, 0], restitution = 0.5 }
+Out[27]= obj0
+In[28]:= new sphere { mass = 2, radius = 0.5, position = [ 0, 0, 0], restitution = 0.5 }
+Out[28]= obj1
+In[29]:= momentum
+Out[29]= [1, 0, 0]
+In[30]:= scene create
+Out[30]= scene window created: http://127.0.0.1:50326/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[31]:= scene set_time_step 0.02
+Out[31]= scene time step dt = 0.02

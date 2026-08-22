@@ -1,0 +1,48 @@
+In[1]:= set system.rtol = 1e-13
+In[2]:= set system.atol = 1e-15
+In[3]:= new cuboid { mass = 3, half_extents = [1, 0.5, 0.02], inertia_tensor = [[0.25, 0, 0], [0, 1, 0], [0, 0, 1.25]], angular_velocity = [0.8944271909999159, 0.4472135954999579, 0] }
+Out[3]= obj0
+In[4]:= run 4.285129705594264 steps 1
+Out[4]= t = 4.285129705594264 (126 solver steps, 1 snapshots, |dE/E| = 9.523e-13)
+In[5]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_velocity.x, obj0.angular_velocity.y, obj0.angular_velocity.z] * obj0.orientation
+Out[5]= quat[w=-0.000000000000000027755575615628914, x=0.8944271910010517, y=-0.4472135954998159, z=0.00000000000031066815786573443]
+In[6]:= run 4.285129705594264 steps 1
+Out[6]= t = 8.570259411188529 (161 solver steps, 1 snapshots, |dE/E| = 7.559e-13)
+In[7]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_velocity.x, obj0.angular_velocity.y, obj0.angular_velocity.z] * obj0.orientation
+Out[7]= quat[w=0.000000000000000018934457277838704, x=0.8944271910001502, y=0.4472135954999288, z=-0.0000000000009168776848866855]
+In[8]:= reset
+Out[8]= system reset
+In[9]:= set system.rtol = 1e-13
+In[10]:= set system.atol = 1e-15
+In[11]:= new cuboid { mass = 3, half_extents = [1, 0.5, 0.02], inertia_tensor = [[0.25, 0, 0], [0, 1, 0], [0, 0, 1.25]], angular_velocity = [0.8944271909999159, 0.4472135954999579, 0] }
+Out[11]= obj0
+In[12]:= run 2.142564852797132 steps 1
+Out[12]= t = 2.142564852797132 (75 solver steps, 1 snapshots, |dE/E| = 1.193e-12)
+In[13]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_velocity.x, obj0.angular_velocity.y, obj0.angular_velocity.z] * obj0.orientation
+Out[13]= quat[w=-0.000000000000000027755575615628914, x=1.0000000000011926, y=0.00000000000029637403642368554, z=-0.3464101615136378]
+In[14]:= sqrt(0.12)
+Out[14]= 0.34641016151377546
+In[15]:= reset
+Out[15]= system reset
+In[16]:= set system.rtol = 1e-13
+In[17]:= set system.atol = 1e-15
+In[18]:= new cuboid { mass = 3, half_extents = [1, 0.5, 0.02], inertia_tensor = [[0.25, 0, 0], [0, 1, 0], [0, 0, 1.25]], angular_velocity = [0.8944271909999159, 0.4472135954999579, 0] }
+Out[18]= obj0
+In[19]:= get obj0.inertia_tensor
+Out[19]= [[0.25, 0, 0], [0, 1, 0], [0, 0, 1.25]]
+In[20]:= angmom
+Out[20]= [0.22360679774997896, 0.4472135954999579, 0]
+In[21]:= energy
+Out[21]= 0.19999999999999998
+In[22]:= 4.285129705594264
+Out[22]= 4.285129705594264
+In[23]:= scene create
+Out[23]= scene window created: http://127.0.0.1:50345/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[24]:= scene zoom in
+Out[24]= camera distance = 9.6
+In[25]:= scene zoom in
+Out[25]= camera distance = 7.68
+In[26]:= scene set_time_step 0.02
+Out[26]= scene time step dt = 0.02

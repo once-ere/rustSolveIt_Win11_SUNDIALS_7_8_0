@@ -1,0 +1,42 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.rtol = 1e-13
+In[3]:= set system.atol = 1e-15
+In[4]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], orientation = [0.9396926207859084, 0.3420201433256687, 0, 0], torque = [0, 0, 2] }
+Out[4]= obj0
+In[5]:= get obj0.inertia_tensor
+Out[5]= [[5, 0, 0], [0, 4.25, 0], [0, 0, 1.25]]
+In[6]:= get obj0.angular_momentum
+Out[6]= [0, 0, 0]
+In[7]:= get obj0.angular_velocity
+Out[7]= [0, 0, 0]
+In[8]:= energy
+Out[8]= 0
+In[9]:= run 5 steps 5
+Out[9]= t = 5 (440 solver steps, 5 snapshots, |dE/E| = 2.833e1)
+In[10]:= get obj0.angular_momentum
+Out[10]= [0, 0, 10]
+In[11]:= norm(obj0.angular_velocity)
+Out[11]= 6.372576935166228
+In[12]:= energy
+Out[12]= 28.33385662577337
+In[13]:= run 5 steps 5
+Out[13]= t = 10 (1052 solver steps, 5 snapshots, |dE/E| = 3.000e0)
+In[14]:= get obj0.angular_momentum
+Out[14]= [0, 0, 20]
+In[15]:= norm(obj0.angular_velocity)
+Out[15]= 12.723302881560707
+In[16]:= energy
+Out[16]= 113.33542650352301
+In[17]:= reset
+Out[17]= system reset
+In[18]:= set system.g_constant = 0
+In[19]:= set system.rtol = 1e-13
+In[20]:= set system.atol = 1e-15
+In[21]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], orientation = [0.9396926207859084, 0.3420201433256687, 0, 0], torque = [0, 0, 2] }
+Out[21]= obj0
+In[22]:= scene create
+Out[22]= scene window created: http://127.0.0.1:50330/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[23]:= scene set_time_step 0.02
+Out[23]= scene time step dt = 0.02

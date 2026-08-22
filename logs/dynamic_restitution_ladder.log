@@ -1,0 +1,35 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new sphere { mass = 1, radius = 0.5, position = [-2, 3, 0], velocity = [1, 0, 0], restitution = 1.0 }
+Out[2]= obj0
+In[3]:= new sphere { mass = 1, radius = 0.5, position = [2, 3, 0], velocity = [-1, 0, 0], restitution = 1.0 }
+Out[3]= obj1
+In[4]:= new sphere { mass = 1, radius = 0.5, position = [-2, 1, 0], velocity = [1, 0, 0], restitution = 0.8 }
+Out[4]= obj2
+In[5]:= new sphere { mass = 1, radius = 0.5, position = [2, 1, 0], velocity = [-1, 0, 0], restitution = 0.8 }
+Out[5]= obj3
+In[6]:= new sphere { mass = 1, radius = 0.5, position = [-2, -1, 0], velocity = [1, 0, 0], restitution = 0.5 }
+Out[6]= obj4
+In[7]:= new sphere { mass = 1, radius = 0.5, position = [2, -1, 0], velocity = [-1, 0, 0], restitution = 0.5 }
+Out[7]= obj5
+In[8]:= new sphere { mass = 1, radius = 0.5, position = [-2, -3, 0], velocity = [1, 0, 0], restitution = 0.2 }
+Out[8]= obj6
+In[9]:= new sphere { mass = 1, radius = 0.5, position = [2, -3, 0], velocity = [-1, 0, 0], restitution = 0.2 }
+Out[9]= obj7
+In[10]:= energy
+Out[10]= 4
+In[11]:= momentum
+Out[11]= [0, 0, 0]
+In[12]:= angmom
+Out[12]= [0, 0, 0]
+In[13]:= get obj0.restitution
+Out[13]= 1
+In[14]:= get obj2.restitution
+Out[14]= 0.8
+In[15]:= get obj4.restitution
+Out[15]= 0.5
+In[16]:= get obj6.restitution
+Out[16]= 0.2
+In[17]:= scene create
+Out[17]= scene window created: http://127.0.0.1:50311/
+(no browser was launched — open that address yourself)
+showing 8 entities; SCENE START begins the evolution — HELP lists all scene commands

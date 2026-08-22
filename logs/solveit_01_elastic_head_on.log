@@ -1,0 +1,33 @@
+In[1]:= set system.g_constant = 0
+In[2]:= collide on
+Out[2]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[3]:= new sphere as heavy { mass = 3, radius = 0.5, position = [-3, 0, 0], velocity = [2, 0, 0] }
+Out[3]= obj0 as heavy
+In[4]:= new sphere as light { mass = 1, radius = 0.5, position = [ 3, 0, 0], velocity = [-4, 0, 0] }
+Out[4]= obj1 as light
+In[5]:= energy
+Out[5]= 14
+In[6]:= momentum
+Out[6]= [2, 0, 0]
+In[7]:= run 2 steps 200
+Out[7]= t = 2 (53 solver steps, 200 snapshots, |dE/E| = 0.000e0, 1 collision(s) — CONTACTS lists them)
+In[8]:= get heavy.velocity
+Out[8]= [-1, 0, 0]
+In[9]:= get light.velocity
+Out[9]= [5, 0, 0]
+In[10]:= let m1 = 3
+Out[10]= m1 set
+In[11]:= let m2 = 1
+Out[11]= m2 set
+In[12]:= let u1 = 2
+Out[12]= u1 set
+In[13]:= let u2 = -4
+Out[13]= u2 set
+In[14]:= ((m1 - m2) * u1 + 2 * m2 * u2) / (m1 + m2)
+Out[14]= -1
+In[15]:= ((m2 - m1) * u2 + 2 * m1 * u1) / (m1 + m2)
+Out[15]= 5
+In[16]:= energy
+Out[16]= 14
+In[17]:= momentum
+Out[17]= [2, 0, 0]

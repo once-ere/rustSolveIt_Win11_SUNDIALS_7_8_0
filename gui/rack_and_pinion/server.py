@@ -39,9 +39,12 @@ def find_posim():
     env = os.environ.get("POSIM_BIN")
     if env and Path(env).is_file():
         return env
-    cand = ROOT / "target" / "release" / "posim"
-    if cand.is_file():
-        return str(cand)
+    # Windows builds the binary as posim.exe; try it first on nt.
+    names = ("posim.exe", "posim") if os.name == "nt" else ("posim",)
+    for name in names:
+        cand = ROOT / "target" / "release" / name
+        if cand.is_file():
+            return str(cand)
     onpath = shutil.which("posim")
     if onpath:
         return onpath

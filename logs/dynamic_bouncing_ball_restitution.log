@@ -1,0 +1,27 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.gravity = [0, -10, 0]
+In[3]:= new cuboid { mass = 1, half_extents = [5, 0.5, 5], position = [0, -0.5, 0] }
+Out[3]= obj0
+In[4]:= set obj0.inverse_mass = 0
+In[5]:= set obj0.inverse_inertia_tensor = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+In[6]:= new sphere { mass = 1, radius = 0.5, position = [0, 5, 0] }
+Out[6]= obj1
+In[7]:= set obj1.restitution = 0.8
+In[8]:= collide
+Out[8]= collisions ON (1 collidable pair(s); 0 impulse(s) so far)
+In[9]:= energy
+Out[9]= 50
+In[10]:= momentum
+Out[10]= [0, 0, 0]
+In[11]:= get obj1.restitution
+Out[11]= 0.8
+In[12]:= sqrt(2 * 4.5 / 10)
+Out[12]= 0.9486832980505138
+In[13]:= 0.64 * 4.5 + 0.5
+Out[13]= 3.38
+In[14]:= scene create
+Out[14]= scene window created: http://127.0.0.1:58011/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[15]:= scene translate 0 2
+Out[15]= camera target = [0, 2, 0]

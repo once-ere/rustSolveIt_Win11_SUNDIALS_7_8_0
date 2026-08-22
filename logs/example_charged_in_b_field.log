@@ -1,0 +1,6 @@
+Charged sphere in uniform B (q = -1.5, B = 4, |v| = 3)
+  expected gyroradius   = 1.000000
+  measured gyroradius   = 1.000000
+  |v| drift             = 7.219880e-09
+  orbit closure |x(T)|  = 7.232739e-09
+SUCCESS: gyration matches analytic solution

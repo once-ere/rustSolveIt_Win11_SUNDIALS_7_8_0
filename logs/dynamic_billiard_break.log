@@ -1,0 +1,19 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new sphere { mass = 1, radius = 0.5, position = [-4, 0, 0], velocity = [2, 0, 0], restitution = 0.95 }
+Out[2]= obj0
+In[3]:= new sphere { mass = 1, radius = 0.5, position = [0, 0, 0], restitution = 0.95 }
+Out[3]= obj1
+In[4]:= new sphere { mass = 1, radius = 0.5, position = [0.9, 0.55, 0], restitution = 0.95 }
+Out[4]= obj2
+In[5]:= new sphere { mass = 1, radius = 0.5, position = [0.9, -0.55, 0], restitution = 0.95 }
+Out[5]= obj3
+In[6]:= energy
+Out[6]= 2
+In[7]:= momentum
+Out[7]= [2, 0, 0]
+In[8]:= angmom
+Out[8]= [0, 0, 0]
+In[9]:= scene create
+Out[9]= scene window created: http://127.0.0.1:58010/
+(no browser was launched — open that address yourself)
+showing 4 entities; SCENE START begins the evolution — HELP lists all scene commands

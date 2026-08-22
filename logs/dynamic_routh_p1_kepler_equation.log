@@ -1,0 +1,50 @@
+In[1]:= set system.rtol = 1e-13
+In[2]:= set system.atol = 1e-15
+In[3]:= set system.softening = 0
+In[4]:= set system.g_constant = 1e-9
+In[5]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[5]= obj0
+In[6]:= new point { mass = 1e-6, position = [0.4, 0, 0], velocity = [0, 2, 0] }
+Out[6]= obj1
+In[7]:= norm(obj1.position)
+Out[7]= 0.4
+In[8]:= norm(obj1.velocity)
+Out[8]= 2
+In[9]:= run 1 steps 1
+Out[9]= t = 1 (191 solver steps, 1 snapshots, |dE/E| = 3.585e-11)
+In[10]:= norm(obj1.position)
+Out[10]= 1.017368906081887
+In[11]:= norm(obj1.position) - 1.0173689060959745
+Out[11]= -0.000000000014087619959468611
+In[12]:= run 1 steps 1
+Out[12]= t = 2 (67 solver steps, 1 snapshots, |dE/E| = 4.645e-12)
+In[13]:= norm(obj1.position)
+Out[13]= 1.443915428252816
+In[14]:= norm(obj1.position) - 1.443915428283383
+Out[14]= -0.00000000003056710440318966
+In[15]:= run 1 steps 1
+Out[15]= t = 3 (59 solver steps, 1 snapshots, |dE/E| = 2.140e-12)
+In[16]:= norm(obj1.position)
+Out[16]= 1.597649801659709
+In[17]:= norm(obj1.position) - 1.5976498017220984
+Out[17]= -0.00000000006238942695802052
+In[18]:= reset
+Out[18]= system reset
+In[19]:= set system.rtol = 1e-13
+In[20]:= set system.atol = 1e-15
+In[21]:= set system.softening = 0
+In[22]:= set system.g_constant = 1e-9
+In[23]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[23]= obj0
+In[24]:= new point { mass = 1e-6, position = [0.4, 0, 0], velocity = [0, 2, 0] }
+Out[24]= obj1
+In[25]:= energy
+Out[25]= -0.0000004999999999999999
+In[26]:= scene create
+Out[26]= scene window created: http://127.0.0.1:50322/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[27]:= scene zoom in
+Out[27]= camera distance = 9.6
+In[28]:= scene set_time_step 0.01
+Out[28]= scene time step dt = 0.01

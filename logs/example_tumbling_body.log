@@ -1,0 +1,7 @@
+Torque-free tumbling cuboid, t in [0, 25], 25 snapshots
+  internal steps    = 1525
+  |dL|/|L|          = 0.000000e+00
+  |dKE|/KE          = 5.103724e-09
+  | |q| - 1 |       = 0.000000e+00
+  final w           = Vec3 { x: -0.002979137322269937, y: 3.0000001077647966, z: -0.00013719967149522248 }
+SUCCESS: rigid-body invariants conserved

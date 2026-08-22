@@ -137,7 +137,9 @@ def main():
     # quotations with the reason attached.
     import os, subprocess, tempfile
     root = os.getcwd()
-    binary = os.path.join(root, "target", "release", "posim")
+    binary = os.path.join(
+        root, "target", "release", "posim.exe" if os.name == "nt" else "posim"
+    )
     checked = 0
     for rec in found.values():
         if rec["kind"] != "posim" or not rec["code"]:

@@ -1,0 +1,26 @@
+posim --machine protocol test
+  ok   exec new
+  ok   set velocity
+  ok   get momentum = m*v
+  ok   set gravity
+  ok   exec set position
+  ok   sundials step
+  ok   analytic y(1) = 5.095
+  ok   state dump
+  ok   error path reported
+  ok   energy observable
+  ok   orientation stays unit
+  ok   scene needs create first
+  ok   scene create
+  ok   scene set_time_step
+  ok   scene translate
+  ok   scene rotate
+  ok   scene zoom
+  ok   scene hide
+  ok   scene show all
+  ok   scene start
+  ok   scene pause
+  ok   scene status
+  ok   events op
+  ok   scene close
+all protocol checks passed

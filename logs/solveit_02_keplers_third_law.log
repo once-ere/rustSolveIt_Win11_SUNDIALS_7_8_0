@@ -1,0 +1,50 @@
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun { mass = 1000, radius = 0.2 }
+Out[2]= obj0 as sun
+In[3]:= new sphere as p1  { mass = 0.000001, radius = 0.02, position = [1, 0, 0], velocity = [0, 0, 31.622776601683793] }
+Out[3]= obj1 as p1
+In[4]:= run 0.19869176531592203 steps 200
+Out[4]= t = 0.19869176531592203 (661 solver steps, 200 snapshots, |dE/E| = 1.731e-8)
+In[5]:= get p1.position
+Out[5]= [1.0000000044544244, 0, -0.00000014431704032681625]
+In[6]:= reset
+Out[6]= system reset
+In[7]:= set system.g_constant = 1
+In[8]:= new sphere as sun { mass = 1000, radius = 0.2 }
+Out[8]= obj0 as sun
+In[9]:= new sphere as p2  { mass = 0.000001, radius = 0.02, position = [2, 0, 0], velocity = [0, 0, 22.360679774997898] }
+Out[9]= obj1 as p2
+In[10]:= run 0.5619851784832581 steps 200
+Out[10]= t = 0.5619851784832581 (1306 solver steps, 200 snapshots, |dE/E| = 6.177e-10)
+In[11]:= get p2.position
+Out[11]= [2.000000000309673, 0, 0.000000026045939587396316]
+In[12]:= reset
+Out[12]= system reset
+In[13]:= set system.g_constant = 1
+In[14]:= new sphere as sun { mass = 1000, radius = 0.2 }
+Out[14]= obj0 as sun
+In[15]:= new sphere as p3  { mass = 0.000001, radius = 0.02, position = [3, 0, 0], velocity = [0, 0, 18.257418583505537] }
+Out[15]= obj1 as p3
+In[16]:= run 1.0324326977181857 steps 200
+Out[16]= t = 1.0324326977181857 (1954 solver steps, 200 snapshots, |dE/E| = 5.596e-10)
+In[17]:= get p3.position
+Out[17]= [3.0000000004230944, 0, 0.00000004071881288571222]
+In[18]:= reset
+Out[18]= system reset
+In[19]:= set system.g_constant = 1
+In[20]:= new sphere as sun { mass = 1000, radius = 0.2 }
+Out[20]= obj0 as sun
+In[21]:= new sphere as p4  { mass = 0.000001, radius = 0.02, position = [4, 0, 0], velocity = [0, 0, 15.811388300841896] }
+Out[21]= obj1 as p4
+In[22]:= run 1.5895341225273762 steps 200
+Out[22]= t = 1.5895341225273762 (2601 solver steps, 200 snapshots, |dE/E| = 7.707e-11)
+In[23]:= get p4.position
+Out[23]= [4.000000000077065, 0, 0.00000007248745821777447]
+In[24]:= 0.19869176531592203 * 0.19869176531592203 / 1
+Out[24]= 0.039478417604357434
+In[25]:= 0.5619851784832581 * 0.5619851784832581 / (2 * 2 * 2)
+Out[25]= 0.039478417604357434
+In[26]:= 1.0324326977181857 * 1.0324326977181857 / (3 * 3 * 3)
+Out[26]= 0.039478417604357434
+In[27]:= 1.5895341225273762 * 1.5895341225273762 / (4 * 4 * 4)
+Out[27]= 0.039478417604357434

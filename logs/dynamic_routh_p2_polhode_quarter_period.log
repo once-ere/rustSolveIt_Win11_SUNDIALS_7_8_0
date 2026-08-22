@@ -1,0 +1,40 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.rtol = 1e-13
+In[3]:= set system.atol = 1e-15
+In[4]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], angular_velocity = [2, 0, 1] }
+Out[4]= obj0
+In[5]:= get obj0.inertia_tensor
+Out[5]= [[5, 0, 0], [0, 4.25, 0], [0, 0, 1.25]]
+In[6]:= norm(obj0.angular_momentum)
+Out[6]= 10.077822185373186
+In[7]:= energy
+Out[7]= 10.625
+In[8]:= run 1.1584211285524637 steps 2
+Out[8]= t = 1.1584211285524637 (123 solver steps, 2 snapshots, |dE/E| = 2.163e-13)
+In[9]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_velocity.x, obj0.angular_velocity.y, obj0.angular_velocity.z] * obj0.orientation
+Out[9]= quat[w=-0.00000000000000005551115123125783, x=1.7320508075703824, y=-1.2126781251786896, z=-0.0000000000063126170957161776]
+In[10]:= run 1.1584211285524637 steps 2
+Out[10]= t = 2.3168422571049274 (119 solver steps, 2 snapshots, |dE/E| = 6.788e-14)
+In[11]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_velocity.x, obj0.angular_velocity.y, obj0.angular_velocity.z] * obj0.orientation
+Out[11]= quat[w=-0.00000000000000008711716799062873, x=2.000000000000102, y=0.000000000019429680087057477, z=-0.9999999999967766]
+In[12]:= run 2.3168422571049274 steps 4
+Out[12]= t = 4.633684514209855 (213 solver steps, 4 snapshots, |dE/E| = 4.330e-14)
+In[13]:= [obj0.orientation.w, 0 - obj0.orientation.x, 0 - obj0.orientation.y, 0 - obj0.orientation.z] * [0, obj0.angular_velocity.x, obj0.angular_velocity.y, obj0.angular_velocity.z] * obj0.orientation
+Out[13]= quat[w=-0.000000000000000001734723475976807, x=2.0000000000000857, y=-0.00000000001824147777274021, z=0.9999999999972675]
+In[14]:= norm(obj0.angular_momentum)
+Out[14]= 10.077822185373186
+In[15]:= energy
+Out[15]= 10.62499999999744
+In[16]:= reset
+Out[16]= system reset
+In[17]:= set system.g_constant = 0
+In[18]:= set system.rtol = 1e-13
+In[19]:= set system.atol = 1e-15
+In[20]:= new cuboid { mass = 3, half_extents = [0.5, 1, 2], angular_velocity = [2, 0, 1] }
+Out[20]= obj0
+In[21]:= scene create
+Out[21]= scene window created: http://127.0.0.1:50336/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[22]:= scene set_time_step 0.02
+Out[22]= scene time step dt = 0.02

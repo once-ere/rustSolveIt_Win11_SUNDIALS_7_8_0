@@ -1,0 +1,23 @@
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as a { mass = 1, radius = 0.01, position = [0.5773502691896258, 0, 0],                    velocity = [0, 0, 1] }
+Out[2]= obj0 as a
+In[3]:= new sphere as b { mass = 1, radius = 0.01, position = [-0.2886751345948129, 0, 0.5],                 velocity = [-0.8660254037844387, 0, -0.5] }
+Out[3]= obj1 as b
+In[4]:= new sphere as c { mass = 1, radius = 0.01, position = [-0.2886751345948129, 0, -0.5],                velocity = [0.8660254037844387, 0, -0.5] }
+Out[4]= obj2 as c
+In[5]:= com
+Out[5]= [0, 0, 0]
+In[6]:= energy
+Out[6]= -1.4999999999984994
+In[7]:= run 3.6275987284684357 steps 400
+Out[7]= t = 3.6275987284684357 (1289 solver steps, 400 snapshots, |dE/E| = 4.689e-10)
+In[8]:= get a.position
+Out[8]= [0.5773502692574497, 0, -0.0000000025627822854319693]
+In[9]:= get b.position
+Out[9]= [-0.2886751324104037, 0, 0.5000000013400956]
+In[10]:= get c.position
+Out[10]= [-0.28867513684704826, 0, -0.49999999877731977]
+In[11]:= com
+Out[11]= [-0.0000000000000007586524001605236, 0, -0.000000000000002146431180941969]
+In[12]:= norm(a.position - b.position)
+Out[12]= 1.0000000001184224

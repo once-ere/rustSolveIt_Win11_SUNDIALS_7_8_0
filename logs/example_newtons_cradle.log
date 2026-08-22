@@ -1,0 +1,5 @@
+Newton's cradle: 1 incomer at v = 1 into 4 touching spheres
+  collisions resolved : 4
+  final velocities    : [0.0, 0.0, 0.0, 0.0, 1.0]
+  total momentum      : [1, 0, 0]
+SUCCESS: impulse propagated through the chain, momentum conserved

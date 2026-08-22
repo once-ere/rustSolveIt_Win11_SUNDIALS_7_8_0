@@ -1,0 +1,17 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new cuboid { mass = 2, position = [0, 0, 0], half_extents = [0.6, 0.6, 0.6], angular_velocity = [0, 0, 2] }
+Out[2]= obj0
+In[3]:= new sphere { mass = 1, radius = 0.3, position = [-3, 0.4, 0], velocity = [2, 0, 0] }
+Out[3]= obj1
+In[4]:= get obj0.angular_momentum
+Out[4]= [0, 0, 0.96]
+In[5]:= angmom
+Out[5]= [0, 0, 0.15999999999999992]
+In[6]:= momentum
+Out[6]= [2, 0, 0]
+In[7]:= energy
+Out[7]= 2.96
+In[8]:= scene create
+Out[8]= scene window created: http://127.0.0.1:50347/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands

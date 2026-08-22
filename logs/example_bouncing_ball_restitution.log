@@ -1,0 +1,5 @@
+Bouncing ball: h = 4.5, g = 10, e = 0.8
+  impact time  : 0.9486832980505138 (analytic 0.9486832980505138)
+  impact normal: [-0, 1, -0] (floor → ball)
+  rebound apex : 3.37997191386479 (analytic 3.380000000000001)
+SUCCESS: rebound apex = e^2 x drop height, impact at the exact TOI

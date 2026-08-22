@@ -1,0 +1,16 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new point { mass = 2, charge = 3, position = [0, 0, 0], velocity = [0, 0, 0] }
+Out[2]= obj0
+In[3]:= set system.e_field = [0.5, 0, 0]
+In[4]:= energy
+Out[4]= 0
+In[5]:= momentum
+Out[5]= [0, 0, 0]
+In[6]:= get obj0.charge
+Out[6]= 3
+In[7]:= scene create
+Out[7]= scene window created: http://127.0.0.1:58015/
+(no browser was launched — open that address yourself)
+showing 1 entity; SCENE START begins the evolution — HELP lists all scene commands
+In[8]:= scene translate 3 0
+Out[8]= camera target = [3, 0, 0]

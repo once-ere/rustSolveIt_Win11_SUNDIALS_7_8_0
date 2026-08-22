@@ -1,0 +1,15 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new sphere { mass = 1, radius = 0.5, position = [-2, 0, 0], velocity = [1, 0, 0] }
+Out[2]= obj0
+In[3]:= new sphere { mass = 1, radius = 0.5, position = [2, 0, 0], velocity = [-1, 0, 0] }
+Out[3]= obj1
+In[4]:= collide
+Out[4]= collisions ON (1 collidable pair(s); 0 impulse(s) so far)
+In[5]:= momentum
+Out[5]= [0, 0, 0]
+In[6]:= energy
+Out[6]= 1
+In[7]:= scene create
+Out[7]= scene window created: http://127.0.0.1:50306/
+(no browser was launched — open that address yourself)
+showing 2 entities; SCENE START begins the evolution — HELP lists all scene commands

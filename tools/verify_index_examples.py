@@ -36,7 +36,9 @@ import time
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CATALOG = os.path.join(ROOT, "index_data", "catalog.json")
 REPORT = os.path.join(ROOT, "index_data", "verification_report.json")
-BIN = os.path.join(ROOT, "target", "release", "posim")
+BIN = os.path.join(
+    ROOT, "target", "release", "posim.exe" if os.name == "nt" else "posim"
+)
 # The day this actually ran. Hardcoding it is how the per-example
 # dates drifted away from the catalog's own verified_date: a stamp
 # that does not move is a stamp that stops being true.

@@ -1,0 +1,26 @@
+
+Outer solar system N-body problem (6 bodies, 78 equations incl. rigid DOF)
+physical_object -> sundials_rs CVODE (Adams + Newton + dense DQ Jacobian)
+
+  t (days)      com x (AU)     com y (AU)     com z (AU)      energy drift
+     50000      0.30898119    -0.12830142    -0.06401681      1.991119e-07
+    100000      0.61775767    -0.25005271    -0.12520879      3.927803e-07
+    150000      0.92653416    -0.37180400    -0.18640077      5.121495e-07
+    200000      1.23531064    -0.49355528    -0.24759275      4.900916e-08
+    250000      1.54408712    -0.61530657    -0.30878473      2.733654e-08
+    300000      1.85286360    -0.73705785    -0.36997671      1.797031e-07
+    350000      2.16164008    -0.85880914    -0.43116868      3.947370e-07
+    400000      2.47041656    -0.98056042    -0.49236066      4.179098e-07
+    450000      2.77919305    -1.10231171    -0.55355264      5.783308e-07
+    500000      3.08796953    -1.22406299    -0.61474462      7.835809e-07
+
+Pluto at t = 500000 days:
+  x =    31.78592516  y =    38.63618957  z =     3.19279415
+
+Final Statistics:
+  internal steps     = 12581
+  rhs evaluations    = 16680
+  nonlinear iters    = 16677
+  error test fails   = 1042
+  relative energy drift over 500000 days = 7.835809e-07
+  SUCCESS: energy drift within 1e-6

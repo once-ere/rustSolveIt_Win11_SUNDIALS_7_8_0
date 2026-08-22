@@ -1,0 +1,32 @@
+In[1]:= qm grid 0 1 800
+Out[1]= grid [0, 1] with 800 interior points, h = 0.001248 (potential and psi cleared)
+In[2]:= qm potential zero
+Out[2]= potential `zero` sampled at 800 points, V in [0, 0] (psi cleared)
+In[3]:= qm mass 1
+Out[3]= mass = 1
+In[4]:= qm hbar 1
+Out[4]= hbar = 1
+In[5]:= qm states 4
+Out[5]= 4 lowest bound state(s):
+  E[0] = 4.934795874467
+  E[1] = 19.739107587630
+  E[2] = 44.412707408131
+  E[3] = 78.955215788088
+In[6]:= pi * pi / 2
+Out[6]= 4.934802200544679
+In[7]:= 4 * pi * pi / 2
+Out[7]= 19.739208802178716
+In[8]:= 9 * pi * pi / 2
+Out[8]= 44.41321980490211
+In[9]:= 16 * pi * pi / 2
+Out[9]= 78.95683520871486
+In[10]:= qm state 1
+Out[10]= psi = bound state 1, E = 19.739107587630, t reset to 0
+In[11]:= qm norm
+Out[11]= 1.000000000000345
+In[12]:= qm position
+Out[12]= 0.500000000001550
+In[13]:= qm energy
+Out[13]= 19.739107587777767
+In[14]:= qm prob 0 0.5
+Out[14]= 0.499999999998032

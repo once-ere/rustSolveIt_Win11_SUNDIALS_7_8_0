@@ -1,0 +1,40 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.gravity = [0, -9.81, 0]
+In[3]:= set system.rtol = 1e-13
+In[4]:= set system.atol = 1e-15
+In[5]:= new point { mass = 1, position = [0, 0, 0], velocity = [ 3, 8,  1] }
+Out[5]= obj0
+In[6]:= new point { mass = 1, position = [0, 0, 0], velocity = [-2, 6,  4] }
+Out[6]= obj1
+In[7]:= new point { mass = 1, position = [0, 0, 0], velocity = [ 1, 9, -3] }
+Out[7]= obj2
+In[8]:= run 1 steps 1
+Out[8]= t = 1 (15 solver steps, 1 snapshots, |dE/E| = 3.858e-16)
+In[9]:= normalize(cross(obj1.position - obj0.position, obj2.position - obj0.position))
+Out[9]= [0.17879963496303766, -0.9297581018077972, -0.3218393429334681]
+In[10]:= run 1 steps 1
+Out[10]= t = 2 (11 solver steps, 1 snapshots, |dE/E| = 8.359e-14)
+In[11]:= normalize(cross(obj1.position - obj0.position, obj2.position - obj0.position))
+Out[11]= [0.17879963496303783, -0.9297581018077973, -0.32183934293346744]
+In[12]:= run 2 steps 2
+Out[12]= t = 4 (11 solver steps, 2 snapshots, |dE/E| = 1.215e-13)
+In[13]:= normalize(cross(obj1.position - obj0.position, obj2.position - obj0.position))
+Out[13]= [0.1787996349630378, -0.9297581018077973, -0.3218393429334674]
+In[14]:= norm(obj1.position - obj0.position)
+Out[14]= 24.657656011875904
+In[15]:= reset
+Out[15]= system reset
+In[16]:= set system.g_constant = 0
+In[17]:= set system.gravity = [0, -9.81, 0]
+In[18]:= new point { mass = 1, position = [0, 0, 0], velocity = [ 3, 8,  1] }
+Out[18]= obj0
+In[19]:= new point { mass = 1, position = [0, 0, 0], velocity = [-2, 6,  4] }
+Out[19]= obj1
+In[20]:= new point { mass = 1, position = [0, 0, 0], velocity = [ 1, 9, -3] }
+Out[20]= obj2
+In[21]:= scene create
+Out[21]= scene window created: http://127.0.0.1:50327/
+(no browser was launched — open that address yourself)
+showing 3 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[22]:= scene set_time_step 0.02
+Out[22]= scene time step dt = 0.02

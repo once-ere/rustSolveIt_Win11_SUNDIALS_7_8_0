@@ -1,0 +1,46 @@
+In[1]:= set system.g_constant = 0
+In[2]:= box 4
+Out[2]= box: inner size 4 x 4 x 4 — six static walls obj0, obj1, obj2, obj3, obj4, obj5 with inverse_mass = 0 (infinitely massive); objects collide elastically off the inside faces
+In[3]:= new torus { mass = 1, inner_radius = 1, outer_radius = 2, orientation = [0.888073833977115, -0.325057583671868, 0.325057583671868, 0] }
+Out[3]= obj6
+In[4]:= new point { mass = 32, position = [1.406590, -0.995859, 0.569601], velocity = [100, 200, 100] }
+Out[4]= obj7
+In[5]:= new sphere { mass = 2, radius = 1/2, position = [1.424704, 1.367496, -0.493612] }
+Out[5]= obj8
+In[6]:= new disk { mass = 2/3, radius = 1, position = [-0.677386, -1.041493, -1.091679], orientation = [0.900447102352677, 0.307567078752479, -0.307567078752479, 0] }
+Out[6]= obj9
+In[7]:= new cuboid { mass = 5/3, half_extents = [0.5, 0.5, 0.5], position = [1.074397, 0.816223, 1.102099] }
+Out[7]= obj10
+In[8]:= new cylinder { mass = 2, radius = 1/2, height = 3/2, position = [-1.027024, -1.403890, -0.485619], orientation = [0.968912421710645, 0, 0.247403959254523, 0] }
+Out[8]= obj11
+In[9]:= list
+Out[9]= obj0: cuboid he=[1, 4, 4], mass=0, charge=0, pos=[3, 0, 0] [wall: static, inverse_mass=0]
+obj1: cuboid he=[1, 4, 4], mass=0, charge=0, pos=[-3, 0, 0] [wall: static, inverse_mass=0]
+obj2: cuboid he=[4, 1, 4], mass=0, charge=0, pos=[0, 3, 0] [wall: static, inverse_mass=0]
+obj3: cuboid he=[4, 1, 4], mass=0, charge=0, pos=[0, -3, 0] [wall: static, inverse_mass=0]
+obj4: cuboid he=[4, 4, 1], mass=0, charge=0, pos=[0, 0, 3] [wall: static, inverse_mass=0]
+obj5: cuboid he=[4, 4, 1], mass=0, charge=0, pos=[0, 0, -3] [wall: static, inverse_mass=0]
+obj6: torus ring=1.5 tube=0.5, mass=1, charge=0, pos=[0, 0, 0]
+obj7: point, mass=32, charge=0, pos=[1.40659, -0.995859, 0.569601]
+obj8: sphere r=0.5, mass=2, charge=0, pos=[1.424704, 1.367496, -0.493612]
+obj9: disk r=1, mass=0.6666666666666666, charge=0, pos=[-0.677386, -1.041493, -1.091679]
+obj10: cuboid he=[0.5, 0.5, 0.5], mass=1.6666666666666667, charge=0, pos=[1.074397, 0.816223, 1.102099]
+obj11: cylinder r=0.5 h=1.5, mass=2, charge=0, pos=[-1.027024, -1.40389, -0.485619]
+In[10]:= collide
+Out[10]= collisions ON (51 collidable pair(s); 0 impulse(s) so far)
+In[11]:= get obj0.inverse_mass
+Out[11]= 0
+In[12]:= get obj7.restitution
+Out[12]= 1
+In[13]:= energy
+Out[13]= 960000
+In[14]:= momentum
+Out[14]= [3200, 6400, 3200]
+In[15]:= scene create
+Out[15]= scene window created: http://127.0.0.1:58012/
+(no browser was launched — open that address yourself)
+showing 12 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[16]:= scene set_time_step 0.0002
+Out[16]= scene time step dt = 0.0002
+In[17]:= scene zoom 2
+Out[17]= camera distance = 6

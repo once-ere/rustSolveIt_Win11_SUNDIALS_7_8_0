@@ -1,0 +1,15 @@
+Kepler orbit, e = 0.6, t in [0, 100] (~15.9 orbits)
+
+CVODE Adams (rtol 1e-10, atol 1e-12)
+  steps taken            = 4540
+  |dE/E|                 = 2.430222e-09
+  |dL|/|L|               = 5.144452e-08
+  |dA|/|A| (Runge-Lenz)  = 1.131858e-07
+
+ARKODE SPRKStep MCLACHLAN_4_4 (fixed dt = 0.01)
+  steps taken            = 10000
+  |dE/E|                 = 3.790119e-09
+  |dL|/|L|               = 1.260448e-09
+  |dA|/|A| (Runge-Lenz)  = 6.920925e-07
+
+SUCCESS: all conservation checks passed

@@ -1,0 +1,52 @@
+In[1]:= set system.rtol = 1e-13
+In[2]:= set system.atol = 1e-15
+In[3]:= set system.softening = 0
+In[4]:= set system.g_constant = 1e-9
+In[5]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[5]= obj0
+In[6]:= new point { mass = 1, position = [1, 0, 0], velocity = [0.1679448414712004, 1.1376706598234891, 0] }
+Out[6]= obj1
+In[7]:= norm(obj1.velocity)
+Out[7]= 1.15
+In[8]:= run 2.16112 steps 2
+Out[8]= t = 2.16112 (113 solver steps, 2 snapshots, |dE/E| = 5.752e-14)
+In[9]:= norm(obj1.position - [0, 1.6, 0])
+Out[9]= 0.0000013110768555525594
+In[10]:= reset
+Out[10]= system reset
+In[11]:= set system.rtol = 1e-13
+In[12]:= set system.atol = 1e-15
+In[13]:= set system.softening = 0
+In[14]:= set system.g_constant = 1e-9
+In[15]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[15]= obj0
+In[16]:= new point { mass = 1, position = [1, 0, 0], velocity = [0.8757322020879298, 0.745381184513149, 0] }
+Out[16]= obj1
+In[17]:= norm(obj1.velocity)
+Out[17]= 1.15
+In[18]:= run 8.89752 steps 4
+Out[18]= t = 8.89752 (282 solver steps, 4 snapshots, |dE/E| = 3.706e-12)
+In[19]:= norm(obj1.position - [0, 1.6, 0])
+Out[19]= 0.0000008977840636835201
+In[20]:= reset
+Out[20]= system reset
+In[21]:= set system.rtol = 1e-13
+In[22]:= set system.atol = 1e-15
+In[23]:= set system.softening = 0
+In[24]:= set system.g_constant = 1e-9
+In[25]:= new point { mass = 1e9, position = [0, 0, 0] }
+Out[25]= obj0
+In[26]:= new point { mass = 1e-6, position = [1, 0, 0.0005], velocity = [0.1679448414712004, 1.1376706598234891, 0] }
+Out[26]= obj1
+In[27]:= new point { mass = 1e-6, position = [1, 0, -0.0005], velocity = [0.8757322020879298, 0.745381184513149, 0] }
+Out[27]= obj2
+In[28]:= energy
+Out[28]= -0.0000006774997500010473
+In[29]:= scene create
+Out[29]= scene window created: http://127.0.0.1:50328/
+(no browser was launched — open that address yourself)
+showing 3 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[30]:= scene zoom in
+Out[30]= camera distance = 9.6
+In[31]:= scene set_time_step 0.02
+Out[31]= scene time step dt = 0.02

@@ -31,10 +31,12 @@ def find_posim():
         return on_path
     here = os.path.dirname(os.path.abspath(__file__))
     workspace = os.path.dirname(os.path.dirname(here))
+    names = ("posim.exe", "posim") if os.name == "nt" else ("posim",)
     for profile in ("release", "debug"):
-        cand = os.path.join(workspace, "target", profile, "posim")
-        if os.path.isfile(cand) and os.access(cand, os.X_OK):
-            return cand
+        for name in names:
+            cand = os.path.join(workspace, "target", profile, name)
+            if os.path.isfile(cand) and os.access(cand, os.X_OK):
+                return cand
     raise FileNotFoundError(
         "posim binary not found: set $POSIM_BIN or run "
         "`cargo build --release` at the workspace root"

@@ -1,0 +1,74 @@
+In[1]:= set system.g_constant = 1
+In[2]:= set system.softening = 0
+In[3]:= set system.rtol = 1e-13
+In[4]:= set system.atol = 1e-15
+In[5]:= new point { mass = 1, position = [-1, 0, 0], velocity = [0, -1.118033988749895, 0] }
+Out[5]= obj0
+In[6]:= new point { mass = 1, position = [ 0, 0, 0] }
+Out[6]= obj1
+In[7]:= new point { mass = 1, position = [ 1, 0, 0], velocity = [0,  1.118033988749895, 0] }
+Out[7]= obj2
+In[8]:= momentum
+Out[8]= [0, 0, 0]
+In[9]:= norm(obj0.position - obj1.position)
+Out[9]= 1
+In[10]:= norm(obj2.position - obj1.position)
+Out[10]= 1
+In[11]:= run 5.619851784832581 steps 8
+Out[11]= t = 5.619851784832581 (226 solver steps, 8 snapshots, |dE/E| = 5.454e-12)
+In[12]:= norm(obj0.position - [-1, 0, 0])
+Out[12]= 0.00000000006405587301341359
+In[13]:= norm(obj1.position - [0, 0, 0])
+Out[13]= 0.000000000002565003650786077
+In[14]:= norm(obj2.position - [ 1, 0, 0])
+Out[14]= 0.00000000006256907979299003
+In[15]:= reset
+Out[15]= system reset
+In[16]:= set system.g_constant = 1
+In[17]:= set system.softening = 1e-6
+In[18]:= set system.rtol = 1e-12
+In[19]:= set system.atol = 1e-14
+In[20]:= new point { mass = 1, position = [-1.001, 0, 0], velocity = [0, -1.118033988749895, 0] }
+Out[20]= obj0
+In[21]:= new point { mass = 1, position = [ 0, 0, 0] }
+Out[21]= obj1
+In[22]:= new point { mass = 1, position = [ 1, 0, 0], velocity = [0,  1.118033988749895, 0] }
+Out[22]= obj2
+In[23]:= norm(obj0.position - obj1.position)
+Out[23]= 1.001
+In[24]:= norm(obj2.position - obj1.position)
+Out[24]= 1
+In[25]:= run 16.859555354497743 steps 12
+Out[25]= t = 16.859555354497743 (2669 solver steps, 12 snapshots, |dE/E| = 1.397e-11)
+In[26]:= norm(obj0.position - obj1.position)
+Out[26]= 3.4436481175481823
+In[27]:= norm(obj2.position - obj1.position)
+Out[27]= 0.34058819953596386
+In[28]:= run 33.719110708995486 steps 16
+Out[28]= t = 50.57866606349323 (8151 solver steps, 16 snapshots, |dE/E| = 9.377e-10)
+In[29]:= norm(obj0.position - obj1.position)
+Out[29]= 7.847764693194425
+In[30]:= norm(obj2.position - obj1.position)
+Out[30]= 0.7149633209205206
+In[31]:= reset
+Out[31]= system reset
+In[32]:= set system.g_constant = 1
+In[33]:= set system.softening = 0
+In[34]:= set system.rtol = 1e-13
+In[35]:= set system.atol = 1e-15
+In[36]:= new point { mass = 1, position = [-1, 0, 0], velocity = [0, -1.118033988749895, 0] }
+Out[36]= obj0
+In[37]:= new point { mass = 1, position = [ 0, 0, 0] }
+Out[37]= obj1
+In[38]:= new point { mass = 1, position = [ 1, 0, 0], velocity = [0,  1.118033988749895, 0] }
+Out[38]= obj2
+In[39]:= energy
+Out[39]= -1.2499999999999998
+In[40]:= scene create
+Out[40]= scene window created: http://127.0.0.1:50315/
+(no browser was launched — open that address yourself)
+showing 3 entities; SCENE START begins the evolution — HELP lists all scene commands
+In[41]:= scene zoom in
+Out[41]= camera distance = 9.6
+In[42]:= scene set_time_step 0.02
+Out[42]= scene time step dt = 0.02

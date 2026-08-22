@@ -1,0 +1,3 @@
+IDENTICAL-MODULO-DOCUMENTED  examples-win11.log vs examples-7.8.0.log (pinned: accepted-divergences-examples.diff)
+IDENTICAL  collision-scripts-win11.log == collision-scripts-7.8.0.log
+IDENTICAL-MODULO-DOCUMENTED  dynamic-notebooks-win11.log vs dynamic-notebooks-7.8.0.log (pinned: accepted-divergences-dynamic.diff)

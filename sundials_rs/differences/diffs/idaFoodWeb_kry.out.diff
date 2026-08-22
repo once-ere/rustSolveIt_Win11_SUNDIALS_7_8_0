@@ -1,0 +1,11 @@
+--- c/idaFoodWeb_kry.out
++++ rust/idaFoodWeb_kry.out
+@@ -37,6 +37,6 @@
+ Number of steps                       = 165
+ Number of residual evaluations        = 206
+ Number of Preconditioner evaluations  = 26
+-Number of linear iterations           = 1036
++Number of linear iterations           = 1034
+ Number of error test failures         = 0
+-Number of precond solve fun called    = 1242
++Number of precond solve fun called    = 1240

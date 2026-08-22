@@ -1,0 +1,257 @@
+-- The C compiler identification is MSVC 19.51.36246.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Professional/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- SUNDIALS_GIT_VERSION: 
+-- Building SUNDIALS in 'Release' mode.
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option BUILD_FORTRAN_MODULE_INTERFACE is deprecated.  Use
+  SUNDIALS_ENABLE_FORTRAN instead.
+Call Stack (most recent call first):
+  cmake/SundialsBuildOptionsPre.cmake:218 (sundials_option)
+  CMakeLists.txt:174 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_MPI is deprecated.  Use SUNDIALS_ENABLE_MPI instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:24 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_OPENMP is deprecated.  Use SUNDIALS_ENABLE_OPENMP
+  instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:37 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_PTHREAD is deprecated.  Use SUNDIALS_ENABLE_PTHREAD
+  instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:77 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_CUDA is deprecated.  Use SUNDIALS_ENABLE_CUDA instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:90 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_HIP is deprecated.  Use SUNDIALS_ENABLE_HIP instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:103 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_SYCL is deprecated.  Use SUNDIALS_ENABLE_SYCL instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:110 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_LAPACK is deprecated.  Use SUNDIALS_ENABLE_LAPACK
+  instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:125 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_GINKGO is deprecated.  Use SUNDIALS_ENABLE_GINKGO
+  instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:151 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_SUPERLUDIST is deprecated.  Use
+  SUNDIALS_ENABLE_SUPERLUDIST instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:205 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_SUPERLUMT is deprecated.  Use SUNDIALS_ENABLE_SUPERLUMT
+  instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:250 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_KLU is deprecated.  Use SUNDIALS_ENABLE_KLU instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:287 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_HYPRE is deprecated.  Use SUNDIALS_ENABLE_HYPRE instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:316 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_PETSC is deprecated.  Use SUNDIALS_ENABLE_PETSC instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:347 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_RAJA is deprecated.  Use SUNDIALS_ENABLE_RAJA instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:385 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_TRILINOS is deprecated.  Use SUNDIALS_ENABLE_TRILINOS
+  instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:407 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_XBRAID is deprecated.  Use SUNDIALS_ENABLE_XBRAID
+  instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:423 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_CALIPER is deprecated.  Use SUNDIALS_ENABLE_CALIPER
+  instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:484 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:232 (message):
+  The variable SUNDIALS_ENABLE_CALIPER was set to OFF but not all of its
+  dependencies (SUNDIALS_ENABLE_PROFILING,) evaluate to TRUE.  Unsetting
+  SUNDIALS_ENABLE_CALIPER.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:484 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_ADIAK is deprecated.  Use SUNDIALS_ENABLE_ADIAK instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:505 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:232 (message):
+  The variable SUNDIALS_ENABLE_ADIAK was set to OFF but not all of its
+  dependencies (SUNDIALS_ENABLE_PROFILING,) evaluate to TRUE.  Unsetting
+  SUNDIALS_ENABLE_ADIAK.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:505 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option ENABLE_KOKKOS is deprecated.  Use SUNDIALS_ENABLE_KOKKOS
+  instead.
+Call Stack (most recent call first):
+  cmake/SundialsTPLOptions.cmake:526 (sundials_option)
+  CMakeLists.txt:180 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option EXAMPLES_ENABLE_C is deprecated.  Use SUNDIALS_ENABLE_C_EXAMPLES
+  instead.
+Call Stack (most recent call first):
+  cmake/SundialsExampleOptions.cmake:24 (sundials_option)
+  CMakeLists.txt:186 (include)
+
+
+CMake Warning at cmake/macros/SundialsOption.cmake:129 (message):
+  The option EXAMPLES_ENABLE_CXX is deprecated.  Use
+  SUNDIALS_ENABLE_CXX_EXAMPLES instead.
+Call Stack (most recent call first):
+  cmake/SundialsExampleOptions.cmake:43 (sundials_option)
+  CMakeLists.txt:186 (include)
+
+
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of int64_t
+-- Check size of int64_t - done
+-- Using int64_t for indices
+-- C standard set to 99
+-- C extensions set to ON
+-- Performing Test SUNDIALS_C_COMPILER_HAS_BUILTIN_EXPECT
+-- Performing Test SUNDIALS_C_COMPILER_HAS_BUILTIN_EXPECT - Failed
+-- Performing Test SUNDIALS_C_COMPILER_HAS_ATTRIBUTE_ASSUME
+-- Performing Test SUNDIALS_C_COMPILER_HAS_ATTRIBUTE_ASSUME - Failed
+-- Performing Test SUNDIALS_C_COMPILER_HAS_BUILTIN_ASSUME
+-- Performing Test SUNDIALS_C_COMPILER_HAS_BUILTIN_ASSUME - Failed
+-- Performing Test SUNDIALS_C_COMPILER_HAS_ASSUME
+-- Performing Test SUNDIALS_C_COMPILER_HAS_ASSUME - Failed
+-- Performing Test SUNDIALS_C_COMPILER_HAS_ATTRIBUTE_UNUSED
+-- Performing Test SUNDIALS_C_COMPILER_HAS_ATTRIBUTE_UNUSED - Failed
+-- Looking for rt library... FAILED
+-- Looking for POSIX timers... FAILED
+-- Performing Test COMPILER_HAS_DEPRECATED_MSG
+-- Performing Test COMPILER_HAS_DEPRECATED_MSG - Success
+-- Appending C RELEASE flags
+-- Found OpenMP_C: -openmp (found version "2.0")
+-- Found OpenMP: TRUE (found version "2.0")
+-- Performing Test COMPILER_HAS_DEPRECATED_ATTR
+-- Performing Test COMPILER_HAS_DEPRECATED_ATTR - Failed
+-- Performing Test COMPILER_HAS_DEPRECATED
+-- Performing Test COMPILER_HAS_DEPRECATED - Success
+-- Added NVECTOR_SERIAL module
+-- Added NVECTOR_MANYVECTOR module
+-- Added NVECTOR_OPENMP module
+-- Added SUNMATRIX_BAND module
+-- Added SUNMATRIX_DENSE module
+-- Added SUNMATRIX_SPARSE module
+-- Added SUNLINSOL_BAND module
+-- Added SUNLINSOL_DENSE module
+-- Added SUNLINSOL_PCG module
+-- Added SUNLINSOL_SPBCGS module
+-- Added SUNLINSOL_SPFGMR module
+-- Added SUNLINSOL_SPGMR module
+-- Added SUNLINSOL_SPTFQMR module
+-- Added SUNNONLINSOL_NEWTON module
+-- Added SUNNONLINSOL_FIXEDPOINT module
+-- Added SUNNONLINSOL_AUTO module
+-- Added SUNDOMEIGEST_POWER module
+-- Added ARKODE module
+-- Added CVODE module
+-- Added CVODES module
+-- Added IDA module
+-- Added IDAS module
+-- Added KINSOL module
+-- Configuring done (7.3s)
+-- Generating done (0.5s)
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    EXAMPLES_INSTALL
+
+
+-- Build files have been written to: C:/Users/nsh/Developer/github/SUNDIALS_7_8_Rust_port_for_Windows11/logs/c-build

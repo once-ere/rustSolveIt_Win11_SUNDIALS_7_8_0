@@ -1,0 +1,29 @@
+--- c/ark_brusselator_lsrk_domeigest.out
++++ rust/ark_brusselator_lsrk_domeigest.out
+@@ -20,7 +20,7 @@
+    -------------------------------------------
+ 
+ Final Statistics:
+-Current time                  = 10.0124696980107
++Current time                  = 10.0124697014274
+ Steps                         = 752
+ Step attempts                 = 762
+ Stability limited steps       = 0
+@@ -29,13 +29,13 @@
+ NLS step fails                = 0
+ Inequality constraint fails   = 0
+ Initial step size             = 1.13978962117636e-08
+-Last step size                = 0.0209214513458014
+-Current step size             = 0.0212807661216552
++Last step size                = 0.0209214515801851
++Current step size             = 0.0212807658348458
+ RHS fn evals                  = 47265
+ Number of dom_eig updates     = 38
+ Number of fe calls for DEE    = 106
+ Number of iterations for DEE  = 86
+ Max. num. of stages used      = 195
+ Max. num. of stages allowed   = 200
+-Max. spectral radius          = 202005.038282097
+-Min. spectral radius          = 202000.341508577
++Max. spectral radius          = 202005.038282096
++Min. spectral radius          = 202000.341508576

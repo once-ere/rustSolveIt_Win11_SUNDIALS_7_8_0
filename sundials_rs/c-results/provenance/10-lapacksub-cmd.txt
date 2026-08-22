@@ -1,0 +1,104 @@
+== token substitution applied to each source ==
+sunlinsol/sunlinsol_lapackdense.h -> sunlinsol/sunlinsol_dense.h
+sunlinsol/sunlinsol_lapackband.h  -> sunlinsol/sunlinsol_band.h
+SUNLinSol_LapackDense             -> SUNLinSol_Dense
+SUNLinSol_LapackBand              -> SUNLinSol_Band
+
+== compiler ==
+C:\Program Files\Microsoft Visual Studio\18\Professional\VC\Tools\MSVC\14.51.36231\bin\Hostx64\x64\cl.exe
+
+== cvRoberts_dnsL: every line that differs from the upstream source ==
+=> #include <sunlinsol/sunlinsol_dense.h> /* access to dense SUNLinearSolver      */
+=>   /* Create SUNLinSol_Dense solver object for use by CVode */
+=>   LS = SUNLinSol_Dense(y, A, sunctx);
+=>   if (check_retval((void*)LS, "SUNLinSol_Dense", 0)) { return (1); }
+<= #include <sunlinsol/sunlinsol_lapackdense.h> /* access to dense SUNLinearSolver      */
+<=   /* Create SUNLinSol_LapackDense solver object for use by CVode */
+<=   LS = SUNLinSol_LapackDense(y, A, sunctx);
+<=   if (check_retval((void*)LS, "SUNLinSol_LapackDense", 0)) { return (1); }
+
+== cvRoberts_dnsL: compile and link command line ==
+cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
+   /DSUNDIALS_STATIC_DEFINE /D_CRT_SECURE_NO_WARNINGS ^
+   /I"C:\Users\nsh\Developer\sundials-7.8.0\include" /I"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
+   "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvRoberts_dnsL.c" 
+   /Fo"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvRoberts_dnsL.obj" /Fe"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvRoberts_dnsL.exe" 
+   /link /LIBPATH:"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
+   sundials_cvode_static.lib sundials_cvodes_static.lib ^
+   sundials_core_static.lib sundials_nvecserial_static.lib ^
+   sundials_sunmatrixdense_static.lib sundials_sunmatrixband_static.lib ^
+   sundials_sunlinsoldense_static.lib sundials_sunlinsolband_static.lib ^
+   sundials_sunnonlinsolnewton_static.lib ^
+   sundials_sunnonlinsolfixedpoint_static.lib
+
+== cvAdvDiff_bndL: every line that differs from the upstream source ==
+=> #include <sunlinsol/sunlinsol_band.h> /* access to band SUNLinearSolver       */
+=>   /* Create SUNLinSol_Band solver object for use by CVode */
+=>   LS = SUNLinSol_Band(u, A, sunctx);
+=>   if (check_retval((void*)LS, "SUNLinSol_Band", 0)) { return (1); }
+<= #include <sunlinsol/sunlinsol_lapackband.h> /* access to band SUNLinearSolver       */
+<=   /* Create SUNLinSol_LapackBand solver object for use by CVode */
+<=   LS = SUNLinSol_LapackBand(u, A, sunctx);
+<=   if (check_retval((void*)LS, "SUNLinSol_LapackBand", 0)) { return (1); }
+
+== cvAdvDiff_bndL: compile and link command line ==
+cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
+   /DSUNDIALS_STATIC_DEFINE /D_CRT_SECURE_NO_WARNINGS ^
+   /I"C:\Users\nsh\Developer\sundials-7.8.0\include" /I"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
+   "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvAdvDiff_bndL.c" 
+   /Fo"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvAdvDiff_bndL.obj" /Fe"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvAdvDiff_bndL.exe" 
+   /link /LIBPATH:"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
+   sundials_cvode_static.lib sundials_cvodes_static.lib ^
+   sundials_core_static.lib sundials_nvecserial_static.lib ^
+   sundials_sunmatrixdense_static.lib sundials_sunmatrixband_static.lib ^
+   sundials_sunlinsoldense_static.lib sundials_sunlinsolband_static.lib ^
+   sundials_sunnonlinsolnewton_static.lib ^
+   sundials_sunnonlinsolfixedpoint_static.lib
+
+== cvsRoberts_dnsL: every line that differs from the upstream source ==
+=> #include <sunlinsol/sunlinsol_dense.h> /* access to dense SUNLinearSolver      */
+=>   /* Create SUNLinSol_Dense solver object for use by CVode */
+=>   LS = SUNLinSol_Dense(y, A, sunctx);
+=>   if (check_retval((void*)LS, "SUNLinSol_Dense", 0)) { return (1); }
+<= #include <sunlinsol/sunlinsol_lapackdense.h> /* access to dense SUNLinearSolver      */
+<=   /* Create SUNLinSol_LapackDense solver object for use by CVode */
+<=   LS = SUNLinSol_LapackDense(y, A, sunctx);
+<=   if (check_retval((void*)LS, "SUNLinSol_LapackDense", 0)) { return (1); }
+
+== cvsRoberts_dnsL: compile and link command line ==
+cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
+   /DSUNDIALS_STATIC_DEFINE /D_CRT_SECURE_NO_WARNINGS ^
+   /I"C:\Users\nsh\Developer\sundials-7.8.0\include" /I"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
+   "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsRoberts_dnsL.c" 
+   /Fo"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsRoberts_dnsL.obj" /Fe"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvsRoberts_dnsL.exe" 
+   /link /LIBPATH:"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
+   sundials_cvode_static.lib sundials_cvodes_static.lib ^
+   sundials_core_static.lib sundials_nvecserial_static.lib ^
+   sundials_sunmatrixdense_static.lib sundials_sunmatrixband_static.lib ^
+   sundials_sunlinsoldense_static.lib sundials_sunlinsolband_static.lib ^
+   sundials_sunnonlinsolnewton_static.lib ^
+   sundials_sunnonlinsolfixedpoint_static.lib
+
+== cvsAdvDiff_bndL: every line that differs from the upstream source ==
+=> #include <sunlinsol/sunlinsol_band.h> /* access to band SUNLinearSolver       */
+=>   /* Create SUNLinSol_Band solver object for use by CVode */
+=>   LS = SUNLinSol_Band(u, A, sunctx);
+=>   if (check_retval((void*)LS, "SUNLinSol_Band", 0)) { return (1); }
+<= #include <sunlinsol/sunlinsol_lapackband.h> /* access to band SUNLinearSolver       */
+<=   /* Create SUNLinSol_LapackBand solver object for use by CVode */
+<=   LS = SUNLinSol_LapackBand(u, A, sunctx);
+<=   if (check_retval((void*)LS, "SUNLinSol_LapackBand", 0)) { return (1); }
+
+== cvsAdvDiff_bndL: compile and link command line ==
+cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
+   /DSUNDIALS_STATIC_DEFINE /D_CRT_SECURE_NO_WARNINGS ^
+   /I"C:\Users\nsh\Developer\sundials-7.8.0\include" /I"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
+   "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsAdvDiff_bndL.c" 
+   /Fo"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsAdvDiff_bndL.obj" /Fe"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvsAdvDiff_bndL.exe" 
+   /link /LIBPATH:"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
+   sundials_cvode_static.lib sundials_cvodes_static.lib ^
+   sundials_core_static.lib sundials_nvecserial_static.lib ^
+   sundials_sunmatrixdense_static.lib sundials_sunmatrixband_static.lib ^
+   sundials_sunlinsoldense_static.lib sundials_sunlinsolband_static.lib ^
+   sundials_sunnonlinsolnewton_static.lib ^
+   sundials_sunnonlinsolfixedpoint_static.lib

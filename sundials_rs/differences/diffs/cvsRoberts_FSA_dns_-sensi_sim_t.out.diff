@@ -1,0 +1,21 @@
+--- c/cvsRoberts_FSA_dns_-sensi_sim_t.out
++++ rust/cvsRoberts_FSA_dns_-sensi_sim_t.out
+@@ -79,15 +79,15 @@
+ -----------------------------------------------------------------------
+ 
+ Final Statistics:
+-Current time                  = 43900737657.7538
++Current time                  = 43900558490.1758
+ Steps                         = 818
+ Error test fails              = 28
+ NLS step fails                = 2
+ Constraint fails              = 0
+ Constraint corrections        = 0
+ Initial step size             = 8.2362598325895e-14
+-Last step size                = 7184288709.86988
+-Current step size             = 7184288709.86988
++Last step size                = 7184239983.51319
++Current step size             = 7184239983.51319
+ Last method order             = 3
+ Current method order          = 3
+ Stab. lim. order reductions   = 0

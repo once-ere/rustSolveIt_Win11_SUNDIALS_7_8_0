@@ -1,0 +1,39 @@
+== how this file was produced ==
+tools/build_rust_examples.sh
+
+== host ==
+MINGW64_NT-10.0-26200 3.6.5-22c95533.x86_64 x86_64
+Microsoft Windows 11 Pro for Workstations
+Intel(R) Core(TM) Ultra 9 275HX
+
+== build started (UTC) ==
+2026-08-11T01:05:15Z
+
+== rustc ==
+/c/Users/nsh/.cargo/bin/rustc
+rustc 1.91.1 (ed61e7d7e 2025-11-07)
+binary: rustc
+commit-hash: ed61e7d7e242494fb7057f2657300d9e77bb4fcb
+commit-date: 2025-11-07
+host: x86_64-pc-windows-msvc
+release: 1.91.1
+LLVM version: 21.1.2
+
+== cargo ==
+/c/Users/nsh/.cargo/bin/cargo
+cargo 1.91.1 (ea2d97820 2025-10-10)
+
+== effective rustflags ==
+None are set in the environment; they come from .cargo/config.toml,
+reproduced in 03-cargo-config.txt. RUSTFLAGS env var is:
+RUSTFLAGS=<unset>
+
+== release profile ==
+[profile.release]
+opt-level = 3
+
+== build finished (UTC) ==
+2026-08-11T01:05:27Z
+cargo exit code: 0
+warnings emitted: 0
+errors emitted:   0

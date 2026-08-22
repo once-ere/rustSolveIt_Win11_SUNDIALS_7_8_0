@@ -1,0 +1,26 @@
+# This port targets Windows, but its harness is POSIX bash run under Git
+# Bash / MSYS2 (and, for the glibc oracle, inside a WSL2 guest). Shell
+# scripts and C sources must therefore keep LF endings even in a Windows
+# checkout, or /usr/bin/env cannot resolve the interpreter in a shebang
+# line.
+* text=auto eol=lf
+*.sh text eol=lf
+*.c  text eol=lf
+*.rs text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+
+# Captured example outputs are evidence: store the exact bytes, including
+# line endings. The MSVC C build emits CRLF (Windows stdio text mode), the
+# Rust port and the upstream references emit LF. Normalising either side
+# would destroy the artefact and hide the difference.
+c-results/outputs/**    -text
+rust-results/outputs/** -text
+differences/diffs/**    -text
+examples/**             -text
+
+# Build-provenance artefacts are evidence produced by cmd.exe (CRLF) and by
+# cmake/cargo. Store the exact bytes; normalising them would alter the record.
+c-results/provenance/**    -text
+rust-results/provenance/** -text
+differences/provenance/**  -text

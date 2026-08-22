@@ -1,0 +1,1 @@
+cmake --build "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build" --parallel -- -v 

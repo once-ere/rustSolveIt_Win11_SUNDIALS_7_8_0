@@ -1,0 +1,4 @@
+test sundials_math::tests::pow_deterministic_vs_host_powf ... pow host-libm differential: 5900000 inputs, 4926 differ from the deterministic routine, worst gap 1 ulp
+test sundials_math::tests::pow_glibc_vs_native_oracle_domain ... pow domain differential: not run (no oracle)
+test sundials_math::tests::pow_glibc_vs_native_oracle_random ... pow random differential: not run (no oracle)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.15s

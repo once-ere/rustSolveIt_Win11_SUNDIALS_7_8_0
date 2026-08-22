@@ -1,0 +1,9 @@
+== Windows measurement host ==
+os        : Windows 11 Pro for Workstations, 10.0.26200.8655 (25H2)
+cpu       : Intel(R) Core(TM) Ultra 9 275HX
+rustc     : rustc 1.91.1 (ed61e7d7e 2025-11-07)
+cargo     : cargo 1.91.1 (ea2d97820 2025-10-10)
+target    : x86_64-pc-windows-msvc
+shell     : MINGW64_NT-10.0-26200 3.6.5-22c95533.x86_64 x86_64
+ucrtbase  : 10.0.26100.8521
+glibc ref : WSL2 guest Ubuntu-24.04, glibc 2.39-0ubuntu8.7, rustc 1.93.1

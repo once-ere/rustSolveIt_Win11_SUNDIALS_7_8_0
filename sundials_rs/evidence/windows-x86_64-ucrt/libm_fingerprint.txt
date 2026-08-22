@@ -1,0 +1,56 @@
+== host libm fingerprint ==
+date : 2026-08-10T20:53:27Z
+
+-- Windows (x86_64-pc-windows-msvc, Microsoft UCRT) --
+# libm fingerprint  target=windows corpus=1000000
+sin      d24048dc31f48ced
+cos      2713cdab093fd588
+tan      d37cd996f51a7104
+exp      d3fbb3e3f701525d
+ln       f3077bdde695d604
+log10    fed62888ac323591
+asin     f0b9d8a72a6fdd56
+acos     fd890607b2b8214d
+atan     93fb8fad12094eca
+sinh     f63f457b2a32f802
+cosh     02756c6715efa9f4
+acosh    2ffb1006f336fc02
+tanh     d800f5cb26096113
+powf     85da70334b1a3efc
+sqrt     347b461b960a0a4f
+
+-- WSL guest 'Ubuntu-24.04' (x86_64-unknown-linux-gnu, glibc) --
+# guest: Linux 6.6.87.2-microsoft-standard-WSL2 x86_64 / ldd (Ubuntu GLIBC 2.39-0ubuntu8.7) 2.39 / 
+# libm fingerprint  target=linux corpus=1000000
+sin      15063616ce2fa672
+cos      d5305c992d124084
+tan      37a3ec084ea42f84
+exp      934b938d53df7942
+ln       ac0f328b6eae1348
+asin     17b99573571de65b
+acos     e2b491d6b7838d02
+atan     d2b5c67435ea5b6d
+sinh     44ad6cec529bc954
+cosh     bc8d0d88edc3e0be
+acosh    b131dcc40d80f660
+tanh     19400eac19aa1287
+powf     d953620f8109637c
+sqrt     347b461b960a0a4f
+
+-- verdict: functions whose results differ between the two hosts --
+acos     DIFFERS   windows=fd890607b2b8214d  glibc=e2b491d6b7838d02
+acosh    DIFFERS   windows=2ffb1006f336fc02  glibc=b131dcc40d80f660
+asin     DIFFERS   windows=f0b9d8a72a6fdd56  glibc=17b99573571de65b
+atan     DIFFERS   windows=93fb8fad12094eca  glibc=d2b5c67435ea5b6d
+cos      DIFFERS   windows=2713cdab093fd588  glibc=d5305c992d124084
+cosh     DIFFERS   windows=02756c6715efa9f4  glibc=bc8d0d88edc3e0be
+exp      DIFFERS   windows=d3fbb3e3f701525d  glibc=934b938d53df7942
+ln       DIFFERS   windows=f3077bdde695d604  glibc=ac0f328b6eae1348
+powf     DIFFERS   windows=85da70334b1a3efc  glibc=d953620f8109637c
+sin      DIFFERS   windows=d24048dc31f48ced  glibc=15063616ce2fa672
+sinh     DIFFERS   windows=f63f457b2a32f802  glibc=44ad6cec529bc954
+sqrt     same
+tan      DIFFERS   windows=d37cd996f51a7104  glibc=37a3ec084ea42f84
+tanh     DIFFERS   windows=d800f5cb26096113  glibc=19400eac19aa1287
+
+Done. Read logs/libm_fingerprint.txt

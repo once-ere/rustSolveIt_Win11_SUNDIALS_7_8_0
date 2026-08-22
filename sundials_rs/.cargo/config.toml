@@ -1,0 +1,30 @@
+# Pin the FMA instruction on x86-64.
+#
+# `crates/sundials_core/src/sundials_libm/` and the deterministic `pow` in
+# `sundials_math.rs` reproduce the FMA-contracted build glibc ifunc-dispatches
+# to on x86-64, so they use `f64::mul_add` in exactly the places that build
+# fuses. `mul_add` lowers to `llvm.fma.f64`, and on the default
+# `x86_64-pc-windows-msvc` target — whose baseline is SSE2, without FMA —
+# LLVM cannot emit an instruction for it and calls the C runtime instead.
+# Measured on rustc 1.91.1: `a.mul_add(b, c)` compiles to `jmp fma`, a tail
+# call into `ucrtbase.dll`; with the feature enabled it compiles to
+# `vfmadd213sd`.
+#
+# Both give the same answer if and only if the runtime's `fma` is correctly
+# rounded, which IEEE-754 requires and which the differential runs confirm on
+# this host — but "the port does not depend on the host libm" should be a
+# property of the build, not a property we hope the host has. Enabling the
+# feature makes it one.
+#
+# Consequence: binaries built from this workspace require a CPU with FMA
+# (Intel Haswell 2013+, AMD Piledriver 2012+). That is not a new restriction
+# in substance — glibc only selects the FMA build of these routines when the
+# CPU reports FMA, so bit-exactness with the reference outputs was never
+# available on a machine without it.
+#
+# Note this file governs builds *of this workspace*. A downstream crate that
+# depends on `sundials_core` gets its own flags, so the requirement is stated
+# in `sundials_libm.rs` as well.
+
+[target.'cfg(target_arch = "x86_64")']
+rustflags = ["-C", "target-feature=+fma"]

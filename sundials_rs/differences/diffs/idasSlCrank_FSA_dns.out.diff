@@ -1,0 +1,39 @@
+--- c/idasSlCrank_FSA_dns.out
++++ rust/idasSlCrank_FSA_dns.out
+@@ -5,19 +5,19 @@
+ 
+ Final Run Statistics: 
+ 
+-Number of steps                    = 273
+-Number of residual evaluations     = 1212
+-Number of Jacobian evaluations     = 44
+-Number of nonlinear iterations     = 772
++Number of steps                    = 233
++Number of residual evaluations     = 1180
++Number of Jacobian evaluations     = 46
++Number of nonlinear iterations     = 720
+ Number of error test failures      = 0
+-Number of nonlinear conv. failures = 24
+-Number of step solver failures     = 2
++Number of nonlinear conv. failures = 26
++Number of step solver failures     = 1
+ --------------------------------------------
+-  G =       3.3366104315243184
++  G =       3.3366155611545363
+ --------------------------------------------
+ 
+ -------------F O R W A R D------------------
+-   dG/dp:    3.3346e-01  -3.6376e-01
++   dG/dp:    3.3346e-01  -3.6375e-01
+ --------------------------------------------
+ 
+ 
+@@ -29,7 +29,7 @@
+ -----------------------------------------
+ 
+ ---------------FORWARD-------------------
+-   dG/dp:    3.3345e-01  -3.6374e-01
++   dG/dp:    3.3345e-01  -3.6375e-01
+ -----------------------------------------
+ 
+ --------------CENTERED-------------------

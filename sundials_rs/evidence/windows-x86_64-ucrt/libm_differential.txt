@@ -1,0 +1,32 @@
+== deterministic libm vs glibc 2.39 ==
+Corpus: 56 shared special values (NaN, +-inf, +-0, subnormals, domain
+boundaries, overflow thresholds) followed by function-specific random modes.
+
+-- development corpus, 4,000,000 per function --
+acos_vs_glibc_oracle ... acos differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+acosh_vs_glibc_oracle ... acosh differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+asin_vs_glibc_oracle ... asin differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+atan_vs_glibc_oracle ... atan differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+cos_vs_glibc_oracle ... cos differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+cosh_vs_glibc_oracle ... cosh differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+exp_vs_glibc_oracle ... exp differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+expm1_vs_glibc_oracle ... expm1 differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+log1p_vs_glibc_oracle ... log1p differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+log_vs_glibc_oracle ... log differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+sin_vs_glibc_oracle ... sin differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+sinh_vs_glibc_oracle ... sinh differential: 4000000 inputs, 0 mismatches, worst 0 ulp
+
+-- out-of-sample corpus, 8,000,000 per function --
+-- differential: sundials_libm (native Windows build) vs glibc --
+acos_vs_glibc_oracle ... acos differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+acosh_vs_glibc_oracle ... acosh differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+asin_vs_glibc_oracle ... asin differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+atan_vs_glibc_oracle ... atan differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+cos_vs_glibc_oracle ... cos differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+cosh_vs_glibc_oracle ... cosh differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+exp_vs_glibc_oracle ... exp differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+expm1_vs_glibc_oracle ... expm1 differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+log1p_vs_glibc_oracle ... log1p differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+log_vs_glibc_oracle ... log differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+sin_vs_glibc_oracle ... sin differential: 8000000 inputs, 0 mismatches, worst 0 ulp
+sinh_vs_glibc_oracle ... sinh differential: 8000000 inputs, 0 mismatches, worst 0 ulp

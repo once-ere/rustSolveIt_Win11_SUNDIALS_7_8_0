@@ -1,0 +1,10 @@
+--- c/idasSlCrank_dns.out
++++ rust/idasSlCrank_dns.out
+@@ -42,6 +42,6 @@
+ Number of nonlinear conv. failures = 20
+ Number of step solver failures     = 0
+ --------------------------------------------
+-  G =       3.3366160663327182
++  G =       3.3366160662909388
+ --------------------------------------------
+ 

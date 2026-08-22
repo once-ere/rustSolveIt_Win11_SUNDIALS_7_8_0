@@ -1,0 +1,27 @@
+--- c/ark_brusselator_lsrk_externaldomeigest.out
++++ rust/ark_brusselator_lsrk_externaldomeigest.out
+@@ -20,7 +20,7 @@
+    -------------------------------------------
+ 
+ Final Statistics:
+-Current time                  = 10.0124696980107
++Current time                  = 10.0124697014274
+ Steps                         = 752
+ Step attempts                 = 762
+ Stability limited steps       = 0
+@@ -29,11 +29,11 @@
+ NLS step fails                = 0
+ Inequality constraint fails   = 0
+ Initial step size             = 1.13978962117636e-08
+-Last step size                = 0.0209214513458014
+-Current step size             = 0.0212807661216552
++Last step size                = 0.0209214515801851
++Current step size             = 0.0212807658348458
+ RHS fn evals                  = 47265
+ Number of dom_eig updates     = 38
+ Max. num. of stages used      = 195
+ Max. num. of stages allowed   = 200
+-Max. spectral radius          = 202005.037624658
+-Min. spectral radius          = 202000.341172258
++Max. spectral radius          = 202005.037624676
++Min. spectral radius          = 202000.341172247

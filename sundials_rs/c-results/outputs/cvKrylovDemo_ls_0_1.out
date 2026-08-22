@@ -1,0 +1,92 @@
+ ------- 
+| SPGMR |
+ -------
+ 
+2-species diurnal advection-diffusion problem
+
+t = 8.64e+04   no. steps = 482   order = 5   stepsize = 7.86e+02
+c1 (bot.left/middle/top rt.) =    2.640e-09     2.511e-09     2.938e-09
+c2 (bot.left/middle/top rt.) =    3.352e+11     9.106e+11     4.162e+11
+
+
+Final Statistics.. 
+
+lenrw   =  2689     leniw   =    53
+lenrwLS =  2454     leniwLS =    42
+nst     =   482
+nfe     =   621     nfeLS   =   620
+nni     =   618     nli     =   620
+nsetups =    82     netf    =    29
+npe     =     9     nps     =  1183
+ncfn    =     0     ncfl    =     0
+
+======================================================================
+
+ --------- 
+| SPFGMR |
+ ---------
+ 
+2-species diurnal advection-diffusion problem
+
+t = 8.64e+04   no. steps = 439   order = 5   stepsize = 7.86e+02
+c1 (bot.left/middle/top rt.) =    5.687e-13    -9.924e-11    -1.149e-12
+c2 (bot.left/middle/top rt.) =    3.352e+11     9.106e+11     4.162e+11
+
+
+Final Statistics.. 
+
+lenrw   =  2689     leniw   =    53
+lenrwLS =  3254     leniwLS =    46
+nst     =   439
+nfe     =   565     nfeLS   =   858
+nni     =   562     nli     =   858
+nsetups =    77     netf    =    26
+npe     =     8     nps     =   858
+ncfn    =     0     ncfl    =     0
+
+======================================================================
+
+ ------- 
+| SPBCGS |
+ -------
+ 
+2-species diurnal advection-diffusion problem
+
+t = 8.64e+04   no. steps = 448   order = 5   stepsize = 5.83e+02
+c1 (bot.left/middle/top rt.) =   -8.107e-27    -1.304e-22    -1.213e-27
+c2 (bot.left/middle/top rt.) =    3.352e+11     9.107e+11     4.163e+11
+
+
+Final Statistics.. 
+
+lenrw   =  2689     leniw   =    53
+lenrwLS =  2202     leniwLS =    41
+nst     =   448
+nfe     =   570     nfeLS   =   966
+nni     =   567     nli     =   483
+nsetups =    72     netf    =    25
+npe     =     8     nps     =  1456
+ncfn    =     0     ncfl    =     0
+
+ --------- 
+| SPTFQMR |
+ ---------
+ 
+2-species diurnal advection-diffusion problem
+
+t = 8.64e+04   no. steps = 471   order = 5   stepsize = 8.15e+02
+c1 (bot.left/middle/top rt.) =   -6.005e-23     2.029e-21    -2.123e-22
+c2 (bot.left/middle/top rt.) =    3.352e+11     9.107e+11     4.163e+11
+
+
+Final Statistics.. 
+
+lenrw   =  2689     leniw   =    53
+lenrwLS =  2602     leniwLS =    43
+nst     =   471
+nfe     =   597     nfeLS   =  1304
+nni     =   594     nli     =   538
+nsetups =    72     netf    =    24
+npe     =     9     nps     =  1988
+ncfn    =     0     ncfl    =     0
+

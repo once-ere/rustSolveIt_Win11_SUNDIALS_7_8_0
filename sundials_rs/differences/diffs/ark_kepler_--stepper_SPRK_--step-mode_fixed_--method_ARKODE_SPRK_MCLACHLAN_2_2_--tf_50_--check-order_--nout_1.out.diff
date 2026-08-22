@@ -1,0 +1,11 @@
+--- c/ark_kepler_--stepper_SPRK_--step-mode_fixed_--method_ARKODE_SPRK_MCLACHLAN_2_2_--tf_50_--check-order_--nout_1.out
++++ rust/ark_kepler_--stepper_SPRK_--step-mode_fixed_--method_ARKODE_SPRK_MCLACHLAN_2_2_--tf_50_--check-order_--nout_1.out
+@@ -70,7 +70,7 @@
+   nout:                 1
+ 
+ t = 0.0000, H(p,q) = -0.5000000000000000, L(p,q) = 0.8000000000000000
+-t = 50.0000, H(p,q)-H0 = 1.8834971071690632e-07, L(p,q)-L0 = -5.1070259132757201e-15
++t = 50.0000, H(p,q)-H0 = 1.8834971715619986e-07, L(p,q)-L0 = -5.1070259132757201e-15
+ Current time                  = 50
+ Steps                         = 100000
+ Step attempts                 = 100000

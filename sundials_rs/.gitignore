@@ -1,0 +1,22 @@
+/target
+/logs
+.claude/
+
+# Runtime artifacts examples write into their CWD (stats CSVs, solution
+# trajectories). Root-anchored so real repo data files keep tracking —
+# e.g. crates/sundials_core/src/sundials_utils_cvec.txt, the printf
+# reference vectors.
+/*.csv
+/*.txt
+
+# LGPL upstream C sources fetched by tools/fetch_libm_sources.sh; not
+# committed (see NOTICE).
+/reference
+
+# MSVC build tree for the C examples (tools/build_c_examples.cmd).
+/logs/c-build
+/logs/run
+/logs/example_matrix_state.json
+
+# Stray run artefacts some examples write into the working directory.
+/win11-out.txt-*

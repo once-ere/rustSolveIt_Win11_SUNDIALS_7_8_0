@@ -1,0 +1,45 @@
+Where each compiled artefact came from
+========================================================================
+
+EXAMPLES -- compiled from this repository's own copy.
+
+  All 180 example .c files were compiled directly from
+
+      C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\examples
+
+  Every recorded cl.exe command line in 30-build-each-example.json contains
+  that path: 180 of 180 do. Nothing was compiled from a copy
+  held elsewhere, so the sources you can read in this repository are exactly
+  the sources that produced the binaries.
+
+  Check it yourself, from the top of the repository:
+
+      python -c "import json,os;d=json.load(open('c-results/provenance/30-build-each-example.json'));m=os.path.join(os.getcwd(),'examples');print(sum(1 for r in d if m in r['command']),'of',len(d))"
+
+  Expected: 180 of 180
+
+LIBRARY -- built from the upstream SUNDIALS 7.8.0 source tree.
+
+  Only the examples were copied into this repository. The library sources
+  (src/ and include/) are not here, so the sundials_*.lib files had to be
+  built from
+
+      C:\Users\nsh\Developer\sundials-7.8.0
+
+  as recorded in 01-configure-cmd.txt and 03-CMakeCache.txt. To reproduce
+  from scratch you need that release; the version is pinned by
+  SUNDIALS_VERSION in 03-CMakeCache.txt.
+
+RUST -- compiled from crates/<solver>_rs/examples/ inside this repository,
+  recorded rustc invocation by rustc invocation in
+  rust-results/provenance/02-build-out.txt.
+
+NOTE ON AN EARLIER VERSION OF THIS FILE
+
+  A previous revision compared this repository's examples/ against the
+  upstream tree and reported "370 identical, 0 different". That check was
+  circular and worthless: the C was being compiled from the upstream tree,
+  and the comparison merely confirmed that a copy matches its original. It
+  established nothing about the build. The examples are now compiled from
+  the repository's copy directly, which is what the recorded command lines
+  above establish -- and which is what should have been done from the start.

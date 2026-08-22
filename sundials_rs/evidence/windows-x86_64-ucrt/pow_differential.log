@@ -1,0 +1,63 @@
+== pow differential (Windows native) ==
+date        : 2026-08-10T20:51:11Z
+host        : MINGW64_NT-10.0-26200 x86_64 / 
+rustc       : rustc 1.91.1 (ed61e7d7e 2025-11-07) binary: rustc commit-hash: ed61e7d7e242494fb7057f2657300d9e77bb4fcb commit-date: 2025-11-07 host: x86_64-pc-windows-msvc release: 1.91.1 LLVM version: 21.1.2 
+cc (UCRT)   : clang version 22.1.0 (https://github.com/llvm/llvm-project 4434dabb69916856b824f68a64b029c67175e532)
+
+-- host oracle: Microsoft UCRT pow (clang, x86_64-pc-windows-msvc) --
+C:/Users/nsh/Developer/github/SUNDIALS_7_8_Rust_port_for_Windows11/tools/pow_oracle.c:29:10: fatal error: 'math.h' file not found
+   29 | #include <math.h>
+      |          ^~~~~~~~
+1 error generated.
+
+-- reference oracle: glibc pow (WSL guest 'Ubuntu-24.04') --
+[1;34m---------------------------------------------------[0m
+[1;37mSystem:[0m Linux 6.6.87.2-microsoft-standard-WSL2
+[1;37mPython:[0m Python 3.12.3 | [1;37muv:[0m 0.9.24
+[1;37mRust:[0m 1.93.1 | [1;37mNode:[0m v21.7.3
+[1;37mDocker:[0m 29.5.3
+[1;33mRecent Projects:[0m
+[1;34m---------------------------------------------------[0m
+ 
+ 
+guest: Linux 6.6.87.2-microsoft-standard-WSL2 x86_64 / ldd (Ubuntu GLIBC 2.39-0ubuntu8.7) 2.39 / cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+generating glibc domain corpus ...
+[1;34m---------------------------------------------------[0m
+[1;37mSystem:[0m Linux 6.6.87.2-microsoft-standard-WSL2
+[1;37mPython:[0m Python 3.12.3 | [1;37muv:[0m 0.9.24
+[1;37mRust:[0m 1.93.1 | [1;37mNode:[0m v21.7.3
+[1;37mDocker:[0m 29.5.3
+[1;33mRecent Projects:[0m
+[1;34m---------------------------------------------------[0m
+ 
+ 
+  47200000 bytes
+generating glibc random corpus ...
+[1;34m---------------------------------------------------[0m
+[1;37mSystem:[0m Linux 6.6.87.2-microsoft-standard-WSL2
+[1;37mPython:[0m Python 3.12.3 | [1;37muv:[0m 0.9.24
+[1;37mRust:[0m 1.93.1 | [1;37mNode:[0m v21.7.3
+[1;37mDocker:[0m 29.5.3
+[1;33mRecent Projects:[0m
+[1;34m---------------------------------------------------[0m
+ 
+ 
+  160000000 bytes
+
+-- differential: deterministic pow (native Windows build) vs oracles --
+     Running unittests src\lib.rs (target\release\deps\sundials_core-7ff72782ce4fe193.exe)
+
+running 5 tests
+test sundials_math::tests::pow_deterministic_vs_windows_ucrt_oracle ... pow UCRT differential: not run (no oracle)
+ok
+test sundials_math::tests::pow_exact ... ok
+test sundials_math::tests::pow_glibc_bits ... ok
+test sundials_math::tests::pow_glibc_vs_native_oracle_domain ... pow domain differential: 5900000 inputs, 0 mismatches
+ok
+test sundials_math::tests::pow_glibc_vs_native_oracle_random ... pow random differential: 20000000 inputs, 0 mismatches
+ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.53s
+
+
+Done. Read logs/pow_differential_win.log

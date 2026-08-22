@@ -1,0 +1,220 @@
+FAIL notebooks/collision_01_head_on_exchange.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\01_head_on_exchange.posim does not exist
+FAIL notebooks/collision_02_unequal_masses.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\02_unequal_masses.posim does not exist
+FAIL notebooks/collision_03_restitution_ladder.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\03_restitution_ladder.posim does not exist
+FAIL notebooks/collision_04_newtons_cradle.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\04_newtons_cradle.posim does not exist
+FAIL notebooks/collision_05_billiard_break.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\05_billiard_break.posim does not exist
+FAIL notebooks/collision_06_spin_up.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\06_spin_up.posim does not exist
+FAIL notebooks/collision_07_thin_wall_toi.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\07_thin_wall_toi.posim does not exist
+FAIL notebooks/collision_08_colliding_binary.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\08_colliding_binary.posim does not exist
+FAIL notebooks/collision_09_spinning_target.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\09_spinning_target.posim does not exist
+FAIL notebooks/collision_10_billiard_box.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\10_billiard_box.posim does not exist
+FAIL notebooks/collision_11_box_of_shapes.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\11_box_of_shapes.posim does not exist
+FAIL notebooks/collision_12_two_dumbbells.ipynb
+       R7 paired example version-7.8.0/scripts\collisions\12_two_dumbbells.posim does not exist
+FAIL notebooks/dynamic_billiard_box.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\billiard_box.posim does not exist
+FAIL notebooks/dynamic_billiard_break.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\billiard_break.posim does not exist
+FAIL notebooks/dynamic_bouncing_ball_restitution.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\bouncing_ball_restitution.posim does not exist
+FAIL notebooks/dynamic_box_of_shapes.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\box_of_shapes.posim does not exist
+FAIL notebooks/dynamic_box_of_shapes_m32.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\box_of_shapes_m32.posim does not exist
+FAIL notebooks/dynamic_charged_in_b_field.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\charged_in_b_field.posim does not exist
+FAIL notebooks/dynamic_charged_in_e_field.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\charged_in_e_field.posim does not exist
+FAIL notebooks/dynamic_colliding_binary.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\colliding_binary.posim does not exist
+FAIL notebooks/dynamic_double_slit.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\double_slit.posim does not exist
+FAIL notebooks/dynamic_head_on_exchange.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\head_on_exchange.posim does not exist
+FAIL notebooks/dynamic_kepler_orbit.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\kepler_orbit.posim does not exist
+FAIL notebooks/dynamic_magnetic_spin_up.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\magnetic_spin_up.posim does not exist
+FAIL notebooks/dynamic_newtons_cradle.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\newtons_cradle.posim does not exist
+FAIL notebooks/dynamic_outer_solar_system.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\outer_solar_system.posim does not exist
+FAIL notebooks/dynamic_restitution_ladder.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\restitution_ladder.posim does not exist
+FAIL notebooks/dynamic_routh_double_star_period.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_double_star_period.posim does not exist
+FAIL notebooks/dynamic_routh_p1_apsidal_symmetry.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_apsidal_symmetry.posim does not exist
+FAIL notebooks/dynamic_routh_p1_centre_of_gravity.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_centre_of_gravity.posim does not exist
+FAIL notebooks/dynamic_routh_p1_collinear_three_body.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_collinear_three_body.posim does not exist
+FAIL notebooks/dynamic_routh_p1_equal_periods.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_equal_periods.posim does not exist
+FAIL notebooks/dynamic_routh_p1_equilateral_three_body.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_equilateral_three_body.posim does not exist
+FAIL notebooks/dynamic_routh_p1_escape_velocity.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_escape_velocity.posim does not exist
+FAIL notebooks/dynamic_routh_p1_expanding_sphere.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_expanding_sphere.posim does not exist
+FAIL notebooks/dynamic_routh_p1_geometric_progression.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_geometric_progression.posim does not exist
+FAIL notebooks/dynamic_routh_p1_hodograph_circle.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_hodograph_circle.posim does not exist
+FAIL notebooks/dynamic_routh_p1_kepler_equation.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_kepler_equation.posim does not exist
+FAIL notebooks/dynamic_routh_p1_lambert_theorem.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_lambert_theorem.posim does not exist
+FAIL notebooks/dynamic_routh_p1_oblique_impact.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_oblique_impact.posim does not exist
+FAIL notebooks/dynamic_routh_p1_parabola_of_safety.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_parabola_of_safety.posim does not exist
+FAIL notebooks/dynamic_routh_p1_sphere_exchange.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_sphere_exchange.posim does not exist
+FAIL notebooks/dynamic_routh_p1_three_projectiles.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_three_projectiles.posim does not exist
+FAIL notebooks/dynamic_routh_p1_two_trajectories.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p1_two_trajectories.posim does not exist
+FAIL notebooks/dynamic_routh_p2_correlated_bodies.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_correlated_bodies.posim does not exist
+FAIL notebooks/dynamic_routh_p2_fixed_couple.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_fixed_couple.posim does not exist
+FAIL notebooks/dynamic_routh_p2_impulsive_couple.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_impulsive_couple.posim does not exist
+FAIL notebooks/dynamic_routh_p2_invariable_line.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_invariable_line.posim does not exist
+FAIL notebooks/dynamic_routh_p2_mean_axis_instability.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_mean_axis_instability.posim does not exist
+FAIL notebooks/dynamic_routh_p2_period_ratio.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_period_ratio.posim does not exist
+FAIL notebooks/dynamic_routh_p2_poinsot_rolling.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_poinsot_rolling.posim does not exist
+FAIL notebooks/dynamic_routh_p2_polhode_quarter_period.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_polhode_quarter_period.posim does not exist
+FAIL notebooks/dynamic_routh_p2_principal_axes_in_space.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_principal_axes_in_space.posim does not exist
+FAIL notebooks/dynamic_routh_p2_rolling_cones.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_rolling_cones.posim does not exist
+FAIL notebooks/dynamic_routh_p2_separatrix.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_separatrix.posim does not exist
+FAIL notebooks/dynamic_routh_p2_spin_stabilisation.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_spin_stabilisation.posim does not exist
+FAIL notebooks/dynamic_routh_p2_sylvester_time.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_sylvester_time.posim does not exist
+FAIL notebooks/dynamic_routh_p2_thin_rod.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_thin_rod.posim does not exist
+FAIL notebooks/dynamic_routh_p2_two_quadrics.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_two_quadrics.posim does not exist
+FAIL notebooks/dynamic_routh_p2_uniaxal_precession.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_p2_uniaxal_precession.posim does not exist
+FAIL notebooks/dynamic_routh_rectangle_diagonal.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\routh_rectangle_diagonal.posim does not exist
+FAIL notebooks/dynamic_spin_up.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\spin_up.posim does not exist
+FAIL notebooks/dynamic_spinning_target.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\spinning_target.posim does not exist
+FAIL notebooks/dynamic_static_anchor.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\static_anchor.posim does not exist
+FAIL notebooks/dynamic_thin_wall_toi.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\thin_wall_toi.posim does not exist
+FAIL notebooks/dynamic_three_bodies.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\three_bodies.posim does not exist
+FAIL notebooks/dynamic_thrown_ball.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\thrown_ball.posim does not exist
+FAIL notebooks/dynamic_tumbling_body.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\tumbling_body.posim does not exist
+FAIL notebooks/dynamic_tunneling.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\tunneling.posim does not exist
+FAIL notebooks/dynamic_two_dumbbells.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\two_dumbbells.posim does not exist
+FAIL notebooks/dynamic_unequal_masses.ipynb
+       R7 paired example version-7.8.0/dynamic_notebooks\unequal_masses.posim does not exist
+FAIL notebooks/rust_bouncing_ball_restitution.ipynb
+       R7 paired example version-7.8.0/physical_object/examples/bouncing_ball_restitution.rs does not exist
+FAIL notebooks/rust_charged_in_b_field.ipynb
+       R7 paired example version-7.8.0/physical_object/examples/charged_in_b_field.rs does not exist
+FAIL notebooks/rust_kepler_orbit.ipynb
+       R7 paired example version-7.8.0/physical_object/examples/kepler_orbit.rs does not exist
+FAIL notebooks/rust_newtons_cradle.ipynb
+       R7 paired example version-7.8.0/physical_object/examples/newtons_cradle.rs does not exist
+FAIL notebooks/rust_outer_solar_system.ipynb
+       R7 paired example version-7.8.0/physical_object/examples/outer_solar_system.rs does not exist
+FAIL notebooks/rust_tumbling_body.ipynb
+       R7 paired example version-7.8.0/physical_object/examples/tumbling_body.rs does not exist
+FAIL notebooks/solveit_01_elastic_head_on.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\01_elastic_head_on.posim does not exist
+FAIL notebooks/solveit_02_keplers_third_law.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\02_keplers_third_law.posim does not exist
+FAIL notebooks/solveit_03_three_conics.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\03_three_conics.posim does not exist
+FAIL notebooks/solveit_04_restitution_ladder.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\04_restitution_ladder.posim does not exist
+FAIL notebooks/solveit_05_cyclotron_bdf.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\05_cyclotron_bdf.posim does not exist
+FAIL notebooks/solveit_06_symplectic_vs_adaptive.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\06_symplectic_vs_adaptive.posim does not exist
+FAIL notebooks/solveit_07_dzhanibekov.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\07_dzhanibekov.posim does not exist
+FAIL notebooks/solveit_08_magnetic_torque.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\08_magnetic_torque.posim does not exist
+FAIL notebooks/solveit_09_newtons_cradle.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\09_newtons_cradle.posim does not exist
+FAIL notebooks/solveit_10_no_tunnelling.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\10_no_tunnelling.posim does not exist
+FAIL notebooks/solveit_11_lagrange_l4.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\11_lagrange_l4.posim does not exist
+FAIL notebooks/solveit_12_dumbbell_inertia.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\12_dumbbell_inertia.posim does not exist
+FAIL notebooks/solveit_13_tilted_torus.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\13_tilted_torus.posim does not exist
+FAIL notebooks/solveit_14_particle_in_a_box.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\14_particle_in_a_box.posim does not exist
+FAIL notebooks/solveit_15_tunnelling.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\15_tunnelling.posim does not exist
+FAIL notebooks/solveit_16_special_functions.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\16_special_functions.posim does not exist
+FAIL notebooks/solveit_17_pendulum_dae.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\17_pendulum_dae.posim does not exist
+FAIL notebooks/solveit_18_equilibrium_and_sensitivity.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\18_equilibrium_and_sensitivity.posim does not exist
+FAIL notebooks/solveit_19_hinged_door.ipynb
+       R7 paired example version-7.8.0/scripts\solveit\19_hinged_door.posim does not exist
+FAIL notebooks/video_ball_joint_chain.ipynb
+       R7 paired example version-7.8.0/videos\scenes\ball_joint_chain.posim does not exist
+FAIL notebooks/video_box_of_shapes.ipynb
+       R7 paired example version-7.8.0/videos\scenes\box_of_shapes.posim does not exist
+FAIL notebooks/video_cardan_compass.ipynb
+       R7 paired example version-7.8.0/videos\scenes\cardan_compass.posim does not exist
+FAIL notebooks/video_cardan_gear.ipynb
+       R7 paired example version-7.8.0/videos\scenes\cardan_gear.posim does not exist
+FAIL notebooks/video_double_pendulum_hinges.ipynb
+       R7 paired example version-7.8.0/videos\scenes\double_pendulum_hinges.posim does not exist
+FAIL notebooks/video_gyroscope_gimbal.ipynb
+       R7 paired example version-7.8.0/videos\scenes\gyroscope_gimbal.posim does not exist
+FAIL notebooks/video_kepler_ellipse.ipynb
+       R7 paired example version-7.8.0/videos\scenes\kepler_ellipse.posim does not exist
+FAIL notebooks/video_piston_crankshaft.ipynb
+       R7 paired example version-7.8.0/videos/scenes/piston_crankshaft.posim does not exist
+FAIL notebooks/video_rack_and_pinion.ipynb
+       R7 paired example version-7.8.0/videos\scenes\rack_and_pinion.posim does not exist
+FAIL notebooks/video_rod_pendulum_chain.ipynb
+       R7 paired example version-7.8.0/videos\scenes\rod_pendulum_chain.posim does not exist
+FAIL notebooks/video_spinning_top.ipynb
+       R7 paired example version-7.8.0/videos\scenes\spinning_top.posim does not exist
+FAIL notebooks/video_tumbling_racket.ipynb
+       R7 paired example version-7.8.0/videos\scenes\tumbling_racket.posim does not exist
+FAIL notebooks/video_universal_joint.ipynb
+       R7 paired example version-7.8.0/videos\scenes\universal_joint.posim does not exist
+
+0/109 notebooks pass all seven requirements

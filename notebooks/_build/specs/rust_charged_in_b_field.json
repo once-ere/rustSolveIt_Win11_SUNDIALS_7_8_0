@@ -1,7 +1,7 @@
 {
  "key": "rust_charged_in_b_field",
  "title": "A charged sphere gyrating in a magnetic field",
- "source": "version-7.8.0/physical_object/examples/charged_in_b_field.rs",
+ "source": "physical_object/examples/charged_in_b_field.rs",
  "category": "rust",
  "howtorun": "cargo run --release -p physical_object --example charged_in_b_field",
  "abstract": "**The example this notebook pairs with is a compiled Rust program**, `physical_object/examples/charged_in_b_field.rs`. It is self-checking: it runs its physics, compares the results against closed-form expectations, prints SUCCESS or FAILURE, and exits nonzero on failure.\n\nThis notebook reproduces the same physical situation through the simulator's command language, explains every line of it, and checks the same things: the gyroradius comes out at m|v|/(|q|B), the speed is conserved because a magnetic force does no work, and after one analytic period the orbit closes back on its starting point.\n\nThe two are the same physics on the same engine: the compiled example calls the `physical_object` library directly, and the commands below drive that same library through the `posim` interpreter. At the end, this notebook also runs the compiled example itself and shows its verdict.",

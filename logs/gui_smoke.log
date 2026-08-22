@@ -1,0 +1,15 @@
+ok    piston_crankshaft (port 8895): page served, ran to t = 1.450, reset to 0
+ok    rack_and_pinion (port 8896): page served, ran to t = 1.440, reset to 0
+ok    gyroscope_gimbal (port 8897): page served, ran to t = 1.450, reset to 0
+ok    cardan_compass (port 8898): page served, ran to t = 1.450, reset to 0
+ok    universal_joint (port 8899): page served, ran to t = 1.440, reset to 0
+ok    spinning_top (port 8900): page served, ran to t = 1.420, reset to 0
+ok    ball_joint_chain (port 8901): page served, ran to t = 1.420, reset to 0
+ok    cardan_gear (port 8902): page served, ran to t = 1.440, reset to 0
+ok    rod_pendulum_chain (port 8903): page served, ran to t = 1.420, reset to 0
+ok    double_pendulum_hinges (port 8904): page served, ran to t = 1.420, reset to 0
+ok    tumbling_racket (port 8905): page served, ran to t = 1.440, reset to 0
+ok    kepler_ellipse (port 8906): page served, ran to t = 1.430, reset to 0
+ok    box_of_shapes (port 8907): page served, ran to t = 1.410, reset to 0
+
+13 of 13 GUIs pass

@@ -1,7 +1,7 @@
 {
  "key": "rust_tumbling_body",
  "title": "The Dzhanibekov effect: tumbling about the intermediate axis",
- "source": "version-7.8.0/physical_object/examples/tumbling_body.rs",
+ "source": "physical_object/examples/tumbling_body.rs",
  "category": "rust",
  "howtorun": "cargo run --release -p physical_object --example tumbling_body",
  "abstract": "**The example this notebook pairs with is a compiled Rust program**, `physical_object/examples/tumbling_body.rs`. It is self-checking: it runs its physics, compares the results against closed-form expectations, prints SUCCESS or FAILURE, and exits nonzero on failure.\n\nThis notebook reproduces the same physical situation through the simulator's command language, explains every line of it, and checks the same things: a brick spun about its unstable middle axis flips end over end while its angular momentum stays exactly constant \u2014 the spin axis moves, the conserved vector does not.\n\nThe two are the same physics on the same engine: the compiled example calls the `physical_object` library directly, and the commands below drive that same library through the `posim` interpreter. At the end, this notebook also runs the compiled example itself and shows its verdict.",

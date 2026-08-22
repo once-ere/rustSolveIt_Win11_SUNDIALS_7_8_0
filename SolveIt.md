@@ -89,17 +89,24 @@ that can be pulled out from under you.
 
 ## 2. Installing and running it
 
-You need Rust. If you do not have it:
+This is the **Windows 11** edition of the simulator (x86-64; the
+processor must have FMA — every Intel chip since 2013 and AMD since
+2012 does). You need Rust with the MSVC toolchain. If you do not have
+it, download and run `rustup-init.exe` from
+<https://rustup.rs> — it installs `x86_64-pc-windows-msvc` by default
+and will offer to fetch the Visual Studio C++ Build Tools if none are
+present (any Visual Studio 2022 or 2026 install already satisfies it;
+Rust only needs its linker). Check with:
 
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```powershell
+rustc --version
 ```
 
-Then:
+Then, in PowerShell (or any terminal):
 
-```bash
-git clone https://github.com/once-ere/rustSolveIt_Using_SUNDIALS_7_8_0.git
-cd rustSolveIt_Using_SUNDIALS_7_8_0/version-7.8.0
+```powershell
+git clone https://github.com/once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0.git
+cd rustSolveIt_Win11_SUNDIALS_7_8_0
 cargo run
 ```
 
@@ -121,12 +128,14 @@ Comments start with `#`. Every example in section 7 is a script in
 
 ### Checking your build
 
-```bash
+```powershell
 cargo test --workspace
 ```
 
-605 tests should pass. If they do, your build is the same build this
-documentation was written against.
+622 tests should pass (567 unit and integration tests plus 55
+documentation tests). If they do, your build is the same build this
+documentation was written against — measured on Windows 11 Pro for
+Workstations 25H2, rustc 1.91.1, target `x86_64-pc-windows-msvc`.
 
 ---
 
@@ -435,7 +444,7 @@ output, which is exactly the property section 5.2 promises you have.
 Every transcript below is genuine program output. The scripts are in
 [`scripts/solveit/`](scripts/solveit) and you can run any of them:
 
-```bash
+```powershell
 cargo run -p posim --release -- --script scripts/solveit/01_elastic_head_on.posim
 ```
 
@@ -1460,12 +1469,16 @@ open a browser.
 A live window needs a live program. For something you can send to
 someone else, record it:
 
-```bash
+```powershell
 cargo build --release -p posim
-recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
-     -o videos/kepler_ellipse.html --frames 360 --dt 0.02 \
+python recorder/src/record_video.py videos/scenes/kepler_ellipse.posim `
+     -o videos/kepler_ellipse.html --frames 360 --dt 0.02 `
      --title "Kepler orbit, e = 0.6"
 ```
+
+(The backtick `` ` `` is PowerShell's line continuation; on one line you
+need neither. Any Python 3.8+ works — the recorder uses only the
+standard library.)
 
 The result is a single HTML file: the frames embedded as data plus a
 canvas player. It fetches nothing, so it works from `file://` on a
@@ -1541,7 +1554,7 @@ machines.
 Six example programs, each of which prints `SUCCESS` or `FAILURE` and
 exits nonzero if it fails:
 
-```bash
+```powershell
 cargo run -p physical_object --release --example kepler_orbit
 cargo run -p physical_object --release --example outer_solar_system
 cargo run -p physical_object --release --example tumbling_body

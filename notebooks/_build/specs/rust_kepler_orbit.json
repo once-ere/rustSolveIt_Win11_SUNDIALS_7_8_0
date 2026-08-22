@@ -1,7 +1,7 @@
 {
  "key": "rust_kepler_orbit",
  "title": "A Kepler orbit conserving the Laplace-Runge-Lenz vector",
- "source": "version-7.8.0/physical_object/examples/kepler_orbit.rs",
+ "source": "physical_object/examples/kepler_orbit.rs",
  "category": "rust",
  "howtorun": "cargo run --release -p physical_object --example kepler_orbit",
  "abstract": "**The example this notebook pairs with is a compiled Rust program**, `physical_object/examples/kepler_orbit.rs`. It is self-checking: it runs its physics, compares the results against closed-form expectations, prints SUCCESS or FAILURE, and exits nonzero on failure.\n\nThis notebook reproduces the same physical situation through the simulator's command language, explains every line of it, and checks the same things: energy, angular momentum and the Laplace-Runge-Lenz vector all hold over ~16 orbits at eccentricity 0.6; the Laplace vector is the sharp one, since only an exact 1/r potential conserves it.\n\nThe two are the same physics on the same engine: the compiled example calls the `physical_object` library directly, and the commands below drive that same library through the `posim` interpreter. At the end, this notebook also runs the compiled example itself and shows its verdict.",

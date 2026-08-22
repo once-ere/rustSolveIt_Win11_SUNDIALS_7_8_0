@@ -13,7 +13,8 @@
 import json, re, sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[3]   # the repository root
+ROOT = Path(__file__).resolve().parents[2]   # the repository root
+                                             # (…/notebooks/_build/nbcheck.py)
 
 # Phrases that would send a reader somewhere else. R2.
 CROSSREF = re.compile(
@@ -24,7 +25,7 @@ CROSSREF = re.compile(
 def check(path):
     bad = []
     try:
-        nb = json.loads(Path(path).read_text())
+        nb = json.loads(Path(path).read_text(encoding="utf-8"))
     except Exception as exc:
         return [f"R7 not valid JSON: {exc}"]
     if nb.get("nbformat") != 4:

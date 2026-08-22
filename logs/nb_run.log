@@ -1,0 +1,220 @@
+simulator stopped
+ok   notebooks/collision_01_head_on_exchange.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/collision_02_unequal_masses.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/collision_03_restitution_ladder.ipynb  (18 cells)
+simulator stopped
+ok   notebooks/collision_04_newtons_cradle.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/collision_05_billiard_break.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/collision_06_spin_up.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/collision_07_thin_wall_toi.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/collision_08_colliding_binary.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/collision_09_spinning_target.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/collision_10_billiard_box.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/collision_11_box_of_shapes.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/collision_12_two_dumbbells.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/dynamic_billiard_box.ipynb  (7 cells)
+simulator stopped
+ok   notebooks/dynamic_billiard_break.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/dynamic_bouncing_ball_restitution.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/dynamic_box_of_shapes.ipynb  (11 cells)
+simulator stopped
+ok   notebooks/dynamic_box_of_shapes_m32.ipynb  (11 cells)
+simulator stopped
+ok   notebooks/dynamic_charged_in_b_field.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/dynamic_charged_in_e_field.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/dynamic_colliding_binary.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/dynamic_double_slit.ipynb  (17 cells)
+simulator stopped
+ok   notebooks/dynamic_head_on_exchange.ipynb  (7 cells)
+simulator stopped
+ok   notebooks/dynamic_kepler_orbit.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/dynamic_magnetic_spin_up.ipynb  (7 cells)
+simulator stopped
+ok   notebooks/dynamic_newtons_cradle.ipynb  (7 cells)
+simulator stopped
+ok   notebooks/dynamic_outer_solar_system.ipynb  (7 cells)
+simulator stopped
+ok   notebooks/dynamic_restitution_ladder.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_double_star_period.ipynb  (27 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_apsidal_symmetry.ipynb  (19 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_centre_of_gravity.ipynb  (12 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_collinear_three_body.ipynb  (18 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_equal_periods.ipynb  (15 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_equilateral_three_body.ipynb  (19 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_escape_velocity.ipynb  (12 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_expanding_sphere.ipynb  (13 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_geometric_progression.ipynb  (12 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_hodograph_circle.ipynb  (15 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_kepler_equation.ipynb  (15 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_lambert_theorem.ipynb  (15 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_oblique_impact.ipynb  (13 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_parabola_of_safety.ipynb  (21 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_sphere_exchange.ipynb  (14 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_three_projectiles.ipynb  (14 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p1_two_trajectories.ipynb  (17 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_correlated_bodies.ipynb  (15 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_fixed_couple.ipynb  (12 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_impulsive_couple.ipynb  (14 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_invariable_line.ipynb  (14 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_mean_axis_instability.ipynb  (19 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_period_ratio.ipynb  (13 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_poinsot_rolling.ipynb  (15 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_polhode_quarter_period.ipynb  (14 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_principal_axes_in_space.ipynb  (15 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_rolling_cones.ipynb  (14 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_separatrix.ipynb  (18 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_spin_stabilisation.ipynb  (12 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_sylvester_time.ipynb  (16 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_thin_rod.ipynb  (12 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_two_quadrics.ipynb  (15 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_p2_uniaxal_precession.ipynb  (13 cells)
+simulator stopped
+ok   notebooks/dynamic_routh_rectangle_diagonal.ipynb  (17 cells)
+simulator stopped
+ok   notebooks/dynamic_spin_up.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/dynamic_spinning_target.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/dynamic_static_anchor.ipynb  (7 cells)
+simulator stopped
+ok   notebooks/dynamic_thin_wall_toi.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/dynamic_three_bodies.ipynb  (7 cells)
+simulator stopped
+ok   notebooks/dynamic_thrown_ball.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/dynamic_tumbling_body.ipynb  (13 cells)
+simulator stopped
+ok   notebooks/dynamic_tunneling.ipynb  (17 cells)
+simulator stopped
+ok   notebooks/dynamic_two_dumbbells.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/dynamic_unequal_masses.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/rust_bouncing_ball_restitution.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/rust_charged_in_b_field.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/rust_kepler_orbit.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/rust_newtons_cradle.ipynb  (11 cells)
+simulator stopped
+ok   notebooks/rust_outer_solar_system.ipynb  (11 cells)
+simulator stopped
+ok   notebooks/rust_tumbling_body.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/solveit_01_elastic_head_on.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/solveit_02_keplers_third_law.ipynb  (19 cells)
+simulator stopped
+ok   notebooks/solveit_03_three_conics.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/solveit_04_restitution_ladder.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/solveit_05_cyclotron_bdf.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/solveit_06_symplectic_vs_adaptive.ipynb  (12 cells)
+simulator stopped
+ok   notebooks/solveit_07_dzhanibekov.ipynb  (20 cells)
+simulator stopped
+ok   notebooks/solveit_08_magnetic_torque.ipynb  (7 cells)
+simulator stopped
+ok   notebooks/solveit_09_newtons_cradle.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/solveit_10_no_tunnelling.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/solveit_11_lagrange_l4.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/solveit_12_dumbbell_inertia.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/solveit_13_tilted_torus.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/solveit_14_particle_in_a_box.ipynb  (7 cells)
+simulator stopped
+ok   notebooks/solveit_15_tunnelling.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/solveit_16_special_functions.ipynb  (9 cells)
+simulator stopped
+ok   notebooks/solveit_17_pendulum_dae.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/solveit_18_equilibrium_and_sensitivity.ipynb  (12 cells)
+simulator stopped
+ok   notebooks/solveit_19_hinged_door.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/video_ball_joint_chain.ipynb  (7 cells)
+simulator stopped
+ok   notebooks/video_box_of_shapes.ipynb  (5 cells)
+simulator stopped
+ok   notebooks/video_cardan_compass.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/video_cardan_gear.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/video_double_pendulum_hinges.ipynb  (6 cells)
+simulator stopped
+ok   notebooks/video_gyroscope_gimbal.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/video_kepler_ellipse.ipynb  (5 cells)
+simulator stopped
+ok   notebooks/video_piston_crankshaft.ipynb  (10 cells)
+simulator stopped
+ok   notebooks/video_rack_and_pinion.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/video_rod_pendulum_chain.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/video_spinning_top.ipynb  (8 cells)
+simulator stopped
+ok   notebooks/video_tumbling_racket.ipynb  (4 cells)
+simulator stopped
+ok   notebooks/video_universal_joint.ipynb  (8 cells)
+
+109 ok, 0 failed

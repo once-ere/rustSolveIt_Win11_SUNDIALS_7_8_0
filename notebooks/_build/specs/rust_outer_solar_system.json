@@ -1,7 +1,7 @@
 {
  "key": "rust_outer_solar_system",
  "title": "The outer solar system over 1,370 years",
- "source": "version-7.8.0/physical_object/examples/outer_solar_system.rs",
+ "source": "physical_object/examples/outer_solar_system.rs",
  "category": "rust",
  "howtorun": "cargo run --release -p physical_object --example outer_solar_system",
  "abstract": "**The example this notebook pairs with is a compiled Rust program**, `physical_object/examples/outer_solar_system.rs`. It is self-checking: it runs its physics, compares the results against closed-form expectations, prints SUCCESS or FAILURE, and exits nonzero on failure.\n\nThis notebook reproduces the same physical situation through the simulator's command language, explains every line of it, and checks the same things: six bodies in AU/day/solar-mass units integrated 500,000 days; the regression anchor is Pluto at (31.78592516, 38.63618957, 3.19279415) with energy drift 7.8e-7 over 12,581 internal steps.\n\nThe two are the same physics on the same engine: the compiled example calls the `physical_object` library directly, and the commands below drive that same library through the `posim` interpreter. At the end, this notebook also runs the compiled example itself and shows its verdict.",

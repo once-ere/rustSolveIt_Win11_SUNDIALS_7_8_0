@@ -1,7 +1,7 @@
 {
  "key": "rust_bouncing_ball_restitution",
  "title": "A ball bouncing at the exact time of impact",
- "source": "version-7.8.0/physical_object/examples/bouncing_ball_restitution.rs",
+ "source": "physical_object/examples/bouncing_ball_restitution.rs",
  "category": "rust",
  "howtorun": "cargo run --release -p physical_object --example bouncing_ball_restitution",
  "abstract": "**The example this notebook pairs with is a compiled Rust program**, `physical_object/examples/bouncing_ball_restitution.rs`. It is self-checking: it runs its physics, compares the results against closed-form expectations, prints SUCCESS or FAILURE, and exits nonzero on failure.\n\nThis notebook reproduces the same physical situation through the simulator's command language, explains every line of it, and checks the same things: the rebound apex equals e^2 times the drop height, and the impact time equals sqrt(2h/g) to solver tolerance, because contact is found by SUNDIALS event rootfinding, not by noticing an overlap after a step.\n\nThe two are the same physics on the same engine: the compiled example calls the `physical_object` library directly, and the commands below drive that same library through the `posim` interpreter. At the end, this notebook also runs the compiled example itself and shows its verdict.",

@@ -95,8 +95,14 @@ class WorkspaceDiscovery(unittest.TestCase):
             scene = mine / "videos" / "scenes" / "s.posim"
             scene.parent.mkdir(parents=True)
             scene.write_text("collide off\n")
+            prev = os.getcwd()
             os.chdir(root)
-            self.assertEqual(rv.find_workspace(near=scene), mine.resolve())
+            try:
+                self.assertEqual(rv.find_workspace(near=scene), mine.resolve())
+            finally:
+                # On Windows a cwd inside the TemporaryDirectory blocks
+                # its cleanup (WinError 32); leave before the with-exit.
+                os.chdir(prev)
 
     def test_a_missing_workspace_is_reported_not_guessed(self):
         with tempfile.TemporaryDirectory() as d:

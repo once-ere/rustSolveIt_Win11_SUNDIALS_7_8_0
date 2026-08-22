@@ -1,0 +1,15 @@
+ok       kepler_ellipse: byte-identical (142106 bytes)
+ok       tumbling_racket: byte-identical (118201 bytes)
+ok       box_of_shapes: byte-identical (287976 bytes)
+ok       double_pendulum_hinges: byte-identical (284436 bytes)
+ok       universal_joint: byte-identical (205556 bytes)
+ok       ball_joint_chain: byte-identical (373656 bytes)
+ok       rod_pendulum_chain: byte-identical (310608 bytes)
+ok       spinning_top: byte-identical (190450 bytes)
+ok       gyroscope_gimbal: byte-identical (333644 bytes)
+ok       cardan_compass: byte-identical (324423 bytes)
+ok       cardan_gear: byte-identical (279671 bytes)
+ok       rack_and_pinion: byte-identical (170255 bytes)
+ok       piston_crankshaft: byte-identical (316882 bytes)
+
+all 13 recordings reproduce byte for byte

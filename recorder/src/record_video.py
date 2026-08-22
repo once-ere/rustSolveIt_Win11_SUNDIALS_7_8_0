@@ -193,7 +193,7 @@ def setup_lines(path: pathlib.Path):
     notebook layer handles and machine mode has no use for) are skipped.
     `SCENE ...` lines are skipped too: a recording has no live window.
     """
-    for raw in path.read_text().splitlines():
+    for raw in path.read_text(encoding="utf-8").splitlines():
         line = raw.split("#", 1)[0].strip()
         if not line or line.startswith("%"):
             continue
@@ -773,7 +773,10 @@ def main():
             .replace("__FRAMES__", json.dumps(frames))
             .replace("__META__", json.dumps(meta))
             .replace("__VIEW__", args.view))
-    args.out.write_text(html)
+    # Canonical bytes on every platform: UTF-8, LF. Without these the
+    # Windows defaults (locale cp1252, \r\n translation) silently break
+    # the byte-identity that record_all.py --check depends on.
+    args.out.write_text(html, encoding="utf-8", newline="\n")
     print(f"{args.out}: {len(frames)} frames, {len(bodies)} bodies, "
           f"{len(html)/1024:.0f} kB, dt = {args.dt}")
 

@@ -1,0 +1,41 @@
+test_every_entry_is_complete (__main__.Manifest.test_every_entry_is_complete) ... ok
+test_every_scene_and_output_exists (__main__.Manifest.test_every_scene_and_output_exists) ... ok
+test_names_are_unique (__main__.Manifest.test_names_are_unique) ... ok
+test_the_workspace_is_pinned (__main__.Manifest.test_the_workspace_is_pinned) ... ok
+test_titles_match_what_each_recording_carries (__main__.Manifest.test_titles_match_what_each_recording_carries)
+The manifest is the authority; drift would silently rename a ... ok
+test_player_reads_the_far_end_of_a_joint (__main__.Page.test_player_reads_the_far_end_of_a_joint) ... ok
+test_template_fetches_nothing (__main__.Page.test_template_fetches_nothing) ... ok
+test_template_has_every_placeholder (__main__.Page.test_template_has_every_placeholder) ... ok
+test_comments_and_blanks_are_dropped (__main__.SetupLines.test_comments_and_blanks_are_dropped) ... ok
+test_notebook_magics_are_dropped (__main__.SetupLines.test_notebook_magics_are_dropped) ... ok
+test_scene_lines_are_dropped (__main__.SetupLines.test_scene_lines_are_dropped) ... ok
+test_trailing_comment_is_trimmed (__main__.SetupLines.test_trailing_comment_is_trimmed) ... ok
+test_a_missing_workspace_is_reported_not_guessed (__main__.WorkspaceDiscovery.test_a_missing_workspace_is_reported_not_guessed) ... ok
+test_debug_is_accepted_when_release_is_absent (__main__.WorkspaceDiscovery.test_debug_is_accepted_when_release_is_absent) ... ok
+test_explicit_workspace_wins (__main__.WorkspaceDiscovery.test_explicit_workspace_wins) ... ok
+test_release_is_preferred_over_debug (__main__.WorkspaceDiscovery.test_release_is_preferred_over_debug) ... ok
+test_scene_chooses_its_own_workspace_not_a_sibling (__main__.WorkspaceDiscovery.test_scene_chooses_its_own_workspace_not_a_sibling)
+Regression: two workspaces in one checkout. ... ERROR
+
+======================================================================
+ERROR: test_scene_chooses_its_own_workspace_not_a_sibling (__main__.WorkspaceDiscovery.test_scene_chooses_its_own_workspace_not_a_sibling)
+Regression: two workspaces in one checkout.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Python314\Lib\shutil.py", line 707, in _rmtree_unsafe
+    os.rmdir(path)
+    ~~~~~~~~^^^^^^
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\nsh\\AppData\\Local\\Temp\\tmptn6d8wpq'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python314\Lib\tempfile.py", line 930, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\nsh\\AppData\\Local\\Temp\\tmptn6d8wpq'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):

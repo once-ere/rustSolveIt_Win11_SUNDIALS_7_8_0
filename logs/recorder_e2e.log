@@ -1,0 +1,39 @@
+test_a_frame_carries_the_conserved_quantities (__main__.Frames.test_a_frame_carries_the_conserved_quantities) ... ok
+test_a_rod_holds_two_distinct_points (__main__.Frames.test_a_rod_holds_two_distinct_points) ... ok
+test_meta_names_the_joints_and_the_method (__main__.Frames.test_meta_names_the_joints_and_the_method) ... ok
+test_shared_point_joints_have_coincident_ends (__main__.Frames.test_shared_point_joints_have_coincident_ends) ... ok
+test_the_joint_far_end_is_recorded (__main__.Frames.test_the_joint_far_end_is_recorded) ... ok
+test_the_joints_hold (__main__.Frames.test_the_joints_hold) ... ok
+test_the_recorder_never_integrates (__main__.Frames.test_the_recorder_never_integrates) ... ok
+test_the_written_page_is_self_contained (__main__.Output.test_the_written_page_is_self_contained) ... ok
+test_all_committed_recordings_reproduce_byte_for_byte (__main__.Recordings.test_all_committed_recordings_reproduce_byte_for_byte) ... FAIL
+
+======================================================================
+FAIL: test_all_committed_recordings_reproduce_byte_for_byte (__main__.Recordings.test_all_committed_recordings_reproduce_byte_for_byte)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\recorder\tests\test_end_to_end.py", line 39, in test_all_committed_recordings_reproduce_byte_for_byte
+    self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : DIFFERS  kepler_ellipse: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\kepler_ellipse.html
+DIFFERS  tumbling_racket: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\tumbling_racket.html
+DIFFERS  box_of_shapes: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\box_of_shapes.html
+DIFFERS  double_pendulum_hinges: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\double_pendulum_hinges.html
+DIFFERS  universal_joint: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\universal_joint.html
+DIFFERS  ball_joint_chain: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\ball_joint_chain.html
+DIFFERS  rod_pendulum_chain: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\rod_pendulum_chain.html
+DIFFERS  spinning_top: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\spinning_top.html
+DIFFERS  gyroscope_gimbal: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\gyroscope_gimbal.html
+DIFFERS  cardan_compass: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\cardan_compass.html
+DIFFERS  cardan_gear: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\cardan_gear.html
+DIFFERS  rack_and_pinion: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\rack_and_pinion.html
+DIFFERS  piston_crankshaft: C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\videos\piston_crankshaft.html
+
+13 of 13 differ: kepler_ellipse, tumbling_racket, box_of_shapes, double_pendulum_hinges, universal_joint, ball_joint_chain, rod_pendulum_chain, spinning_top, gyroscope_gimbal, cardan_compass, cardan_gear, rack_and_pinion, piston_crankshaft
+Each mismatch was written alongside the original as *.html.new
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 7.664s
+
+FAILED (failures=1)

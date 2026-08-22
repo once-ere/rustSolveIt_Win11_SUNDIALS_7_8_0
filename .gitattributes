@@ -1,0 +1,6 @@
+# Byte-exactness is a verified property in this repository: recorded
+# browser videos, evidence logs and reference outputs are compared
+# byte-for-byte by the harnesses (recorder/src/record_all.py --check,
+# tools/win_verify_physics.sh). Git end-of-line conversion silently
+# breaks that, so it is off for everything.
+* -text

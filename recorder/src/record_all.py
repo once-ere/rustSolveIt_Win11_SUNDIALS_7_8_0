@@ -37,7 +37,7 @@ RECORDER = HERE / "record_video.py"
 def load(manifest: pathlib.Path):
     """Manifest paths are relative to the manifest itself, so moving the
     package moves its notion of where the videos live with it."""
-    doc = json.loads(manifest.read_text())
+    doc = json.loads(manifest.read_text(encoding="utf-8"))
     base = (manifest.parent / doc["base"]).resolve()
     ws = doc.get("workspace")
     # Pinned, not searched: a checkout can hold more than one posim

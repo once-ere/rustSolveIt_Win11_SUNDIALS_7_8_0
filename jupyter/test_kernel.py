@@ -38,7 +38,17 @@ def run_cell(kc, code, timeout=60):
             outputs.append("\n".join(msg["content"].get("traceback", [])))
         elif t == "status" and msg["content"]["execution_state"] == "idle":
             break
-    reply = kc.get_shell_msg(timeout=timeout)
+    # Match the reply to THIS execute by parent msg_id. A stale reply
+    # (e.g. the kernel_info exchange wait_for_ready leaves behind, a
+    # startup race that shows on Windows) would otherwise shift every
+    # later cell's status by one.
+    while True:
+        try:
+            reply = kc.get_shell_msg(timeout=timeout)
+        except queue.Empty:
+            sys.exit(f"timeout waiting for shell reply of {code!r}")
+        if reply["parent_header"].get("msg_id") == msg_id:
+            break
     status = reply["content"]["status"]
     return status, outputs
 

@@ -34,7 +34,7 @@ class Recordings(unittest.TestCase):
         r = subprocess.run(
             [sys.executable, str(PACKAGE / "src" / "record_all.py"),
              "--check", "--workspace", str(WORKSPACE)],
-            capture_output=True, text=True,
+            capture_output=True, text=True, encoding="utf-8",
         )
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
         self.assertIn("reproduce byte for byte", r.stdout)
@@ -99,7 +99,7 @@ class Output(unittest.TestCase):
                  str(BASE / "videos/scenes/kepler_ellipse.posim"),
                  "-o", str(out), "--frames", "3", "--dt", "0.02",
                  "--workspace", str(WORKSPACE)],
-                capture_output=True, text=True,
+                capture_output=True, text=True, encoding="utf-8",
             )
             self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
             html = out.read_text()

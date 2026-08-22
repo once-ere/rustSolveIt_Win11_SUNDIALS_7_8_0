@@ -36,7 +36,7 @@ class Posim:
             [binary, "--machine"],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
-            text=True,
+            text=True, encoding="utf-8",
             bufsize=1,
             env=env,
         )

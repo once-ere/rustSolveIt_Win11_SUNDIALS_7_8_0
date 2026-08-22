@@ -73,7 +73,7 @@ def run_machine(code):
     try:
         r = subprocess.run(
             [BIN, "--machine"], input=code.rstrip("\n") + "\n",
-            capture_output=True, text=True, timeout=TIMEOUT,
+            capture_output=True, text=True, encoding="utf-8", timeout=TIMEOUT,
             env=dict(os.environ, POSIM_NO_BROWSER="1"), cwd=ROOT)
     except subprocess.TimeoutExpired:
         return False, "", ["timed out after %ds" % TIMEOUT]
@@ -92,7 +92,7 @@ def run_posim(code):
         try:
             r = subprocess.run(
                 [BIN, "--script", path],
-                capture_output=True, text=True, timeout=TIMEOUT,
+                capture_output=True, text=True, encoding="utf-8", timeout=TIMEOUT,
                 env=dict(os.environ, POSIM_NO_BROWSER="1"),
                 cwd=ROOT,                      # %load / %save are cwd-relative
             )

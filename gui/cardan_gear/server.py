@@ -74,7 +74,7 @@ class Sim:
         self.proc = subprocess.Popen(
             [find_posim(), "--machine"],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-            text=True, bufsize=1,
+            text=True, encoding="utf-8", bufsize=1,
             env=dict(os.environ, POSIM_NO_BROWSER="1"),
         )
         for cmd in MODEL:

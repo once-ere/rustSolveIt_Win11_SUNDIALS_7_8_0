@@ -64,7 +64,7 @@ def main():
         r = subprocess.run(
             ["cargo", "build", "-p", "posim", "--example", "_tierb_compile_check",
              "--message-format=short"],
-            capture_output=True, text=True, cwd=ROOT, timeout=1800)
+            capture_output=True, text=True, encoding="utf-8", cwd=ROOT, timeout=1800)
     except subprocess.TimeoutExpired:
         sys.exit("cargo build timed out after 1800 s — nothing was marked verified")
     finally:

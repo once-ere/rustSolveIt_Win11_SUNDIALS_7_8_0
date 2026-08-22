@@ -160,7 +160,7 @@ def main():
             open(f, "w").write(rec["code"] + "\n")
             try:
                 r = subprocess.run([binary, "--script", f], capture_output=True,
-                                   text=True, timeout=180, cwd=root,
+                                   text=True, encoding="utf-8", timeout=180, cwd=root,
                                    env=dict(os.environ, POSIM_NO_BROWSER="1"))
                 bad = [l for l in r.stdout.splitlines() if l.startswith("Err[")]
             except subprocess.TimeoutExpired:

@@ -1,0 +1,10 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+posim Jupyter kernel end-to-end test (jupyter_client over ZMQ)
+  ok   cell 1: NEW
+  ok   cell 2: multi-line SET + STEP
+  ok   cell 3: GET analytic y
+  ok   cell 4: error surfaces
+  ok   cell 5: ENERGY observable
+  ok   cell 6: multi-line DEF defines and calls
+  ok   cell 7: named path after DEF call
+all kernel checks passed — JupyterLab can drive this kernel

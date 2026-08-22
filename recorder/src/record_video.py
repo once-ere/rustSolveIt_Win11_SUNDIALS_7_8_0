@@ -132,7 +132,7 @@ class Posim:
             [binary, "--machine"],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
-            text=True,
+            text=True, encoding="utf-8",
             bufsize=1,
             # posim resolves relative paths against its own cwd, so it is
             # started in the workspace it belongs to, not in whatever

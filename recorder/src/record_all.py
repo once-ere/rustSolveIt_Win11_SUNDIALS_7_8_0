@@ -57,7 +57,7 @@ def record_one(entry: dict, base: pathlib.Path, out: pathlib.Path,
     ]
     if workspace:
         cmd += ["--workspace", str(workspace)]
-    r = subprocess.run(cmd, capture_output=True, text=True)
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8")
     if r.returncode:
         sys.exit(f"{entry['name']}: recorder failed\n{r.stdout}{r.stderr}")
 

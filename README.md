@@ -24,6 +24,17 @@ rustSolveIt itself is the refined and refactored export of
 (full history preserved; the refinement pass and its evidence are
 recorded in [REFINE_PROVENANCE.md](REFINE_PROVENANCE.md)).
 
+A sibling project born from this port's physics acceptance test:
+[`once-ere/rebound_rust`](https://github.com/once-ere/rebound_rust) — a
+pure-Rust translation of Hanno Rein et al.'s
+[REBOUND](https://github.com/hannorein/rebound) 5.1.1 N-body code,
+built with the same discipline (zero `unsafe`, zero dependencies, zero
+warnings, C names preserved) and the same methodology proven here:
+bit-for-bit verification against the MSVC-compiled C reference — 63
+integrator configurations, a 1482-particle shearing-sheet run with
+~10⁵ collisions (identical SHA-256 state dumps), and Simulationarchive
+files interchangeable with C-REBOUND in both directions.
+
 
 
 Based on a Claude-Fable-5/Opus-5 port of my

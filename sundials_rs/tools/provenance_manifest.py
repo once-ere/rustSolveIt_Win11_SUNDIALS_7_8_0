@@ -27,7 +27,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-UPSTREAM = Path(r"C:\Users\nsh\Developer\sundials-7.8.0")
+UPSTREAM = Path(r"C:\Users\youruser\Developer\sundials-7.8.0")
 C_BIN = ROOT / "logs" / "c-build" / "bin"
 RUST_BIN = ROOT / "target" / "release" / "examples"
 

@@ -7,7 +7,7 @@
 #   Requirements: POSIX bash (Git Bash / MSYS2 — it will not run under
 #   cmd.exe or PowerShell), cargo, and the read-only upstream SUNDIALS 7.8.0
 #   C tree. This workspace does NOT live inside that tree, so name it:
-#     SUNDIALS_C_TREE=/c/Users/nsh/Developer/sundials-7.8.0 tools/verify_examples.sh all
+#     SUNDIALS_C_TREE=/c/Users/youruser/Developer/sundials-7.8.0 tools/verify_examples.sh all
 #   Reference .out files are read from
 #   $SUNDIALS_C_TREE/examples/<solver>/<serial dir>/.
 #
@@ -51,7 +51,7 @@ UPSTREAM="${SUNDIALS_C_TREE:-$WS_ROOT/..}"
 if [ ! -d "$UPSTREAM/examples/cvode/serial" ]; then
   echo "ERROR: no upstream SUNDIALS 7.8.0 C tree at '$UPSTREAM'." >&2
   echo "       Set SUNDIALS_C_TREE to its path, e.g." >&2
-  echo "       SUNDIALS_C_TREE=/c/Users/nsh/Developer/sundials-7.8.0 $0 all" >&2
+  echo "       SUNDIALS_C_TREE=/c/Users/youruser/Developer/sundials-7.8.0 $0 all" >&2
   exit 2
 fi
 LOGS="$WS_ROOT/logs"

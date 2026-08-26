@@ -15,8 +15,8 @@ Intel Core Ultra 9 275HX, `ucrtbase.dll` 10.0.26100.8521, rustc/cargo
 (MSYS2 3.6.5). Commands:
 
 ```bash
-SUNDIALS_C_TREE=/c/Users/nsh/Developer/sundials-7.8.0 tools/verify_examples.sh all
-SUNDIALS_C_TREE=/c/Users/nsh/Developer/sundials-7.8.0 tools/classify_diffs.sh
+SUNDIALS_C_TREE=/c/Users/youruser/Developer/sundials-7.8.0 tools/verify_examples.sh all
+SUNDIALS_C_TREE=/c/Users/youruser/Developer/sundials-7.8.0 tools/classify_diffs.sh
 ```
 
 Raw output: `logs/summary.txt`, `logs/classify_diffs.txt`; committed copies

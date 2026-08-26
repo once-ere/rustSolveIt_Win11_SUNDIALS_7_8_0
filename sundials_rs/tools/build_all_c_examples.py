@@ -30,7 +30,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 EXAMPLES = ROOT / "examples"
-UPSTREAM = Path(r"C:\Users\nsh\Developer\sundials-7.8.0")
+UPSTREAM = Path(r"C:\Users\youruser\Developer\sundials-7.8.0")
 BUILD = ROOT / "logs" / "c-build"
 BIN = BUILD / "bin"
 OBJ = BUILD / "objs"

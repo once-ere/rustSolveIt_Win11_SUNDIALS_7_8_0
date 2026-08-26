@@ -20,10 +20,10 @@ C:\Program Files\Microsoft Visual Studio\18\Professional\VC\Tools\MSVC\14.51.362
 == cvRoberts_dnsL: compile and link command line ==
 cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
    /DSUNDIALS_STATIC_DEFINE /D_CRT_SECURE_NO_WARNINGS ^
-   /I"C:\Users\nsh\Developer\sundials-7.8.0\include" /I"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
-   "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvRoberts_dnsL.c" 
-   /Fo"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvRoberts_dnsL.obj" /Fe"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvRoberts_dnsL.exe" 
-   /link /LIBPATH:"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
+   /I"C:\Users\youruser\Developer\sundials-7.8.0\include" /I"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
+   "C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvRoberts_dnsL.c" 
+   /Fo"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvRoberts_dnsL.obj" /Fe"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvRoberts_dnsL.exe" 
+   /link /LIBPATH:"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
    sundials_cvode_static.lib sundials_cvodes_static.lib ^
    sundials_core_static.lib sundials_nvecserial_static.lib ^
    sundials_sunmatrixdense_static.lib sundials_sunmatrixband_static.lib ^
@@ -44,10 +44,10 @@ cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
 == cvAdvDiff_bndL: compile and link command line ==
 cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
    /DSUNDIALS_STATIC_DEFINE /D_CRT_SECURE_NO_WARNINGS ^
-   /I"C:\Users\nsh\Developer\sundials-7.8.0\include" /I"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
-   "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvAdvDiff_bndL.c" 
-   /Fo"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvAdvDiff_bndL.obj" /Fe"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvAdvDiff_bndL.exe" 
-   /link /LIBPATH:"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
+   /I"C:\Users\youruser\Developer\sundials-7.8.0\include" /I"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
+   "C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvAdvDiff_bndL.c" 
+   /Fo"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvAdvDiff_bndL.obj" /Fe"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvAdvDiff_bndL.exe" 
+   /link /LIBPATH:"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
    sundials_cvode_static.lib sundials_cvodes_static.lib ^
    sundials_core_static.lib sundials_nvecserial_static.lib ^
    sundials_sunmatrixdense_static.lib sundials_sunmatrixband_static.lib ^
@@ -68,10 +68,10 @@ cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
 == cvsRoberts_dnsL: compile and link command line ==
 cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
    /DSUNDIALS_STATIC_DEFINE /D_CRT_SECURE_NO_WARNINGS ^
-   /I"C:\Users\nsh\Developer\sundials-7.8.0\include" /I"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
-   "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsRoberts_dnsL.c" 
-   /Fo"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsRoberts_dnsL.obj" /Fe"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvsRoberts_dnsL.exe" 
-   /link /LIBPATH:"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
+   /I"C:\Users\youruser\Developer\sundials-7.8.0\include" /I"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
+   "C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsRoberts_dnsL.c" 
+   /Fo"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsRoberts_dnsL.obj" /Fe"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvsRoberts_dnsL.exe" 
+   /link /LIBPATH:"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
    sundials_cvode_static.lib sundials_cvodes_static.lib ^
    sundials_core_static.lib sundials_nvecserial_static.lib ^
    sundials_sunmatrixdense_static.lib sundials_sunmatrixband_static.lib ^
@@ -92,10 +92,10 @@ cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
 == cvsAdvDiff_bndL: compile and link command line ==
 cl /nologo /O2 /Ob2 /DNDEBUG /MD /DWIN32 /D_WINDOWS ^
    /DSUNDIALS_STATIC_DEFINE /D_CRT_SECURE_NO_WARNINGS ^
-   /I"C:\Users\nsh\Developer\sundials-7.8.0\include" /I"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
-   "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsAdvDiff_bndL.c" 
-   /Fo"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsAdvDiff_bndL.obj" /Fe"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvsAdvDiff_bndL.exe" 
-   /link /LIBPATH:"C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
+   /I"C:\Users\youruser\Developer\sundials-7.8.0\include" /I"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\include" ^
+   "C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsAdvDiff_bndL.c" 
+   /Fo"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\lapack-sub\cvsAdvDiff_bndL.obj" /Fe"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin\cvsAdvDiff_bndL.exe" 
+   /link /LIBPATH:"C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build\bin" ^
    sundials_cvode_static.lib sundials_cvodes_static.lib ^
    sundials_core_static.lib sundials_nvecserial_static.lib ^
    sundials_sunmatrixdense_static.lib sundials_sunmatrixband_static.lib ^

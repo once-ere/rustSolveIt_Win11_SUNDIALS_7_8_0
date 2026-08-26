@@ -325,8 +325,8 @@ tree; unlike the sibling ports this workspace does not live inside it, so name
 it explicitly:
 
 ```bash
-SUNDIALS_C_TREE=/c/Users/nsh/Developer/sundials-7.8.0 tools/verify_examples.sh all
-SUNDIALS_C_TREE=/c/Users/nsh/Developer/sundials-7.8.0 tools/classify_diffs.sh
+SUNDIALS_C_TREE=/c/Users/youruser/Developer/sundials-7.8.0 tools/verify_examples.sh all
+SUNDIALS_C_TREE=/c/Users/youruser/Developer/sundials-7.8.0 tools/classify_diffs.sh
 ```
 
 Then read `logs/summary.txt` and `logs/classify_diffs.txt`.
@@ -334,7 +334,7 @@ Then read `logs/summary.txt` and `logs/classify_diffs.txt`.
 ## 9. Provenance
 
 * **Upstream:** SUNDIALS 7.8.0, LLNL, BSD-3-Clause. Read-only reference at
-  `C:\Users\nsh\Developer\sundials-7.8.0` on the machine this was built on.
+  `C:\Users\youruser\Developer\sundials-7.8.0` on the machine this was built on.
 * **Crate tree:** inherited wholesale from
   `SUNDIALS_7_8_Rust_port_for_AppleSilicon_macos` (BSD-3-Clause), by way of
   `SUNDIALS_7_8_Rust_port_for_Linux`. `ARCHITECTURE.md`, `PROGRESS.md` and

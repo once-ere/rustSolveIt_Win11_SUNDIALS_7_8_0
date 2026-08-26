@@ -47,7 +47,7 @@ C:\Program Files\Microsoft Visual Studio\18\Professional\VC\Tools\MSVC\14.51.362
 C:\Program Files\Microsoft Visual Studio\18\Professional\VC\Tools\MSVC\14.51.36231\ATLMFC\lib\x64;C:\Program Files\Microsoft Visual Studio\18\Professional\VC\Tools\MSVC\14.51.36231\lib\x64;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8.1\lib\um\x64;C:\Program Files (x86)\Windows Kits\10\lib\10.0.28000.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\\lib\10.0.28000.0\\um\x64
 
 == source tree ==
-C:\Users\nsh\Developer\sundials-7.8.0
+C:\Users\youruser\Developer\sundials-7.8.0
 
 == build finished (UTC) ==
 2026-08-11T12:30:16Z

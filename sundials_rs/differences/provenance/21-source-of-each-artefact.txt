@@ -5,7 +5,7 @@ EXAMPLES -- compiled from this repository's own copy.
 
   All 180 example .c files were compiled directly from
 
-      C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\examples
+      C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\examples
 
   Every recorded cl.exe command line in 30-build-each-example.json contains
   that path: 180 of 180 do. Nothing was compiled from a copy
@@ -24,7 +24,7 @@ LIBRARY -- built from the upstream SUNDIALS 7.8.0 source tree.
   (src/ and include/) are not here, so the sundials_*.lib files had to be
   built from
 
-      C:\Users\nsh\Developer\sundials-7.8.0
+      C:\Users\youruser\Developer\sundials-7.8.0
 
   as recorded in 01-configure-cmd.txt and 03-CMakeCache.txt. To reproduce
   from scratch you need that release; the version is pinned by

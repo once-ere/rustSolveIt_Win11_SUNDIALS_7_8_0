@@ -1,7 +1,7 @@
 # SUNDIALS_7_8_Rust_port_for_Windows11 — workspace rules
 
 Pure-Rust port of SUNDIALS 7.8.0. The upstream C tree is **read-only** and
-lives *outside* this workspace, at `C:\Users\nsh\Developer\sundials-7.8.0`;
+lives *outside* this workspace, at `C:\Users\youruser\Developer\sundials-7.8.0`;
 the harness scripts take its location from `$SUNDIALS_C_TREE`. (The sibling
 ports keep the workspace inside that tree — this one does not, because it is
 its own repository under `.../github/`.) This workspace is its own git repo;
@@ -133,7 +133,7 @@ Run the harness from **Git Bash / MSYS2** — it is POSIX `bash` and will not
 run under `cmd.exe` or PowerShell — and give it the upstream C tree:
 
 ```bash
-SUNDIALS_C_TREE=/c/Users/nsh/Developer/sundials-7.8.0 tools/verify_examples.sh all
+SUNDIALS_C_TREE=/c/Users/youruser/Developer/sundials-7.8.0 tools/verify_examples.sh all
 ```
 
 `tools/verify_examples.sh [crate|all|list]` parses the upstream CMakeLists

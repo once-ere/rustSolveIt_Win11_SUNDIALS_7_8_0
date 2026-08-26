@@ -1,4 +1,4 @@
-cmake -G Ninja -S "C:\Users\nsh\Developer\sundials-7.8.0" -B "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build" ^
+cmake -G Ninja -S "C:\Users\youruser\Developer\sundials-7.8.0" -B "C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build" ^
   -DCMAKE_BUILD_TYPE=Release ^
   -DCMAKE_C_COMPILER=cl ^
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ^

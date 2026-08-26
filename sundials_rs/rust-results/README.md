@@ -39,7 +39,7 @@ cargo build --release --workspace --examples -v
 Quoted from `02-build-out.txt` (line breaks added for reading):
 
 ```text
-C:\Users\nsh\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin\rustc.exe
+C:\Users\youruser\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin\rustc.exe
   --crate-name sundials_core
   --edition=2021 'crates\sundials_core\src\lib.rs'
   --error-format=json
@@ -52,8 +52,8 @@ C:\Users\nsh\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin\rustc.exe
   --check-cfg 'cfg(feature, values())'
   -C metadata=21b2f8dad5df29c2
   -C extra-filename=-4c97891d540723de
-  --out-dir 'C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\target\release\deps'
-  -C strip=debuginfo -L 'dependency=C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\target\release\deps'
+  --out-dir 'C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\target\release\deps'
+  -C strip=debuginfo -L 'dependency=C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\target\release\deps'
   -C target-feature=+fma
 ```
 

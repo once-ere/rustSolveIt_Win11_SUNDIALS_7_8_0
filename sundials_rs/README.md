@@ -36,6 +36,16 @@ the code entirely rather than by tolerating it.
   [`SUNDIALS_7_8_Rust_port_for_AppleSilicon_macos`](https://github.com/once-ere/SUNDIALS_7_8_Rust_port_for_AppleSilicon_macos),
   where the 141 modules were translated from the C sources. No solver code
   is re-derived here. The work in this repository is target-platform work.
+* Downstream: this engine is vendored by
+  [`rustSolveIt_Win11_SUNDIALS_7_8_0`](https://github.com/once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0)
+  (pure-Rust physics simulator), and the same porting discipline and
+  bit-identity methodology produced
+  [`rebound_rust`](https://github.com/once-ere/rebound_rust) — a pure-Rust
+  translation of the [REBOUND](https://github.com/hannorein/rebound) 5.1.1
+  N-body code, verified bit-for-bit against its MSVC-compiled C reference
+  (63 integrator configurations, a 1482-particle collisional shearing-sheet
+  run with identical SHA-256 state dumps, C↔Rust-interchangeable
+  Simulationarchives).
 
 ## Quick start
 
@@ -67,7 +77,7 @@ or MSYS2, not `cmd.exe` or PowerShell — and it needs the read-only upstream
 SUNDIALS 7.8.0 C tree, which this workspace does *not* sit inside:
 
 ```bash
-SUNDIALS_C_TREE=/c/Users/nsh/Developer/sundials-7.8.0 tools/verify_examples.sh all
+SUNDIALS_C_TREE=/c/Users/youruser/Developer/sundials-7.8.0 tools/verify_examples.sh all
 ```
 
 ## Platform scope

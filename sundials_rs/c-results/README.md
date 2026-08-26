@@ -49,7 +49,7 @@ all of it yourself.
 ### The configure command, verbatim
 
 ```text
-cmake -G Ninja -S "C:\Users\nsh\Developer\sundials-7.8.0" -B "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build" ^
+cmake -G Ninja -S "C:\Users\youruser\Developer\sundials-7.8.0" -B "C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build" ^
   -DCMAKE_BUILD_TYPE=Release ^
   -DCMAKE_C_COMPILER=cl ^
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ^
@@ -75,7 +75,7 @@ run from the environment established by
 then built with
 
 ```text
-cmake --build "C:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build" --parallel -- -v
+cmake --build "C:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\tools\..\logs\c-build" --parallel -- -v
 ```
 
 ### What the compiler was actually told, for one file
@@ -85,14 +85,14 @@ for reading; the recorded command is one line):
 
 ```text
 C:\PROGRA~1\MICROS~3\18\PROFES~1\VC\Tools\MSVC\1451~1.362\bin\Hostx64\x64\cl.exe  /nologo -DSUNDIALS_STATIC_DEFINE -D_CRT_SECURE_NO_WARNINGS
-  -IC:\Users\nsh\Developer\sundials-7.8.0\include
-  -IC:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\logs\c-build\include
-  -IC:\Users\nsh\Developer\sundials-7.8.0\src\sundials
-  -IC:\Users\nsh\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\logs\c-build\src\sundials
+  -IC:\Users\youruser\Developer\sundials-7.8.0\include
+  -IC:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\logs\c-build\include
+  -IC:\Users\youruser\Developer\sundials-7.8.0\src\sundials
+  -IC:\Users\youruser\Developer\github\SUNDIALS_7_8_Rust_port_for_Windows11\logs\c-build\src\sundials
   /DWIN32
   /D_WINDOWS /O2 /Ob2
   /DNDEBUG -MD /Foexamples\cvode\serial\CMakeFiles\cvRoberts_dns.dir\cvRoberts_dns.c.obj /Fdexamples\cvode\serial\CMakeFiles\cvRoberts_dns.dir\ /FS
-  -c C:\Users\nsh\Developer\sundials-7.8.0\examples\cvode\serial\cvRoberts_dns.c
+  -c C:\Users\youruser\Developer\sundials-7.8.0\examples\cvode\serial\cvRoberts_dns.c
 ```
 
 So: `/O2 /Ob2` optimisation, `/DNDEBUG`, `-MD` (dynamic UCRT), 64-bit indices

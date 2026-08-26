@@ -33,7 +33,7 @@ setlocal enabledelayedexpansion
 set "VSROOT=C:\Program Files\Microsoft Visual Studio\18\Professional"
 set "HERE=%~dp0.."
 set "SRC=%~1"
-if "%SRC%"=="" set "SRC=C:\Users\nsh\Developer\sundials-7.8.0"
+if "%SRC%"=="" set "SRC=C:\Users\youruser\Developer\sundials-7.8.0"
 set "BUILD=%HERE%\logs\c-build"
 set "SUB=%BUILD%\lapack-sub"
 set "PROV=%HERE%\c-results\provenance"

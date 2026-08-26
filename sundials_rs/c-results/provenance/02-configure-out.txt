@@ -254,4 +254,4 @@ CMake Warning:
     EXAMPLES_INSTALL
 
 
--- Build files have been written to: C:/Users/nsh/Developer/github/SUNDIALS_7_8_Rust_port_for_Windows11/logs/c-build
+-- Build files have been written to: C:/Users/youruser/Developer/github/SUNDIALS_7_8_Rust_port_for_Windows11/logs/c-build

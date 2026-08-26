@@ -8,7 +8,8 @@
 //! license; see the LICENSE file carried in this crate. If you use it
 //! for published science, cite **Tamayo, Rein, Shi & Hernandez 2019**
 //! (MNRAS 491, 2885; arXiv:1908.05634) plus the papers for the
-//! individual effects you enable — the README lists them per effect.
+//! individual effects you enable. README.md in this crate lists the
+//! paper to cite for every effect.
 //!
 //! Translation rules (identical to the sibling `rebound_rs` crate):
 //! - zero `unsafe`, zero external dependencies, zero warnings;
@@ -19,8 +20,15 @@
 //! - the C pointer graph becomes owned Rust containers — see the
 //!   `types` module docs for the three mechanical substitutions used.
 //!
-//! Deviations from C, all mechanical, are documented in
-//! `reboundx_rust.md` §"Deviation classes".
+//! Deviations from C are all mechanical - parameters carry their
+//! type instead of being a `void*` plus a tag, linked lists become
+//! vectors whose index 0 is the head (preserving the C's prepend
+//! order, which decides the order accelerations are summed),
+//! forces and operators are referred to by index instead of by
+//! pointer, and the simulation is passed explicitly rather than
+//! reached through a `rebx->sim` back-pointer. None of them
+//! changes a computed number. README.md lists them with the
+//! reasoning under "How this differs from the C".
 
 #![forbid(unsafe_code)]
 #![deny(warnings)]
@@ -31,7 +39,8 @@
 // these fires on a pattern that mirrors the C source exactly, and
 // "fixing" it would either change floating-point evaluation order or
 // obscure the correspondence to the C that makes this port reviewable.
-// Justification per lint is in reboundx_rust.md §"Lint policy".
+// The reason for each one is written beside it below, so a reviewer
+// reads it here rather than having to find a configuration file.
 #![allow(clippy::too_many_arguments)] // C signatures are preserved verbatim
 #![allow(clippy::excessive_precision)] // physical constants carry the C's digits
 #![allow(clippy::needless_range_loop)] // index loops mirror the C's for(i=0;...)

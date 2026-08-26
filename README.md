@@ -36,7 +36,8 @@ and [`reboundx_rust/`](reboundx_rust):
   [`once-ere/rebound_rust`](https://github.com/once-ere/rebound_rust).
 - **`reboundx_rs` 5.1.0** — Dan Tamayo, Hanno Rein et al.'s
   [REBOUNDx](https://github.com/dtamayo/reboundx) library of additional
-  forces and effects for REBOUND.
+  forces and effects for REBOUND, also published on its own at
+  [`once-ere/reboundx_rust`](https://github.com/once-ere/reboundx_rust).
 
 Both are built with the same discipline as this repository (zero
 `unsafe`, zero external dependencies, zero warnings, C names preserved)

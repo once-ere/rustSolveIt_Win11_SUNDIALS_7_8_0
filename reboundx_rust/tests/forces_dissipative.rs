@@ -11,7 +11,8 @@
 // the crate root's waivers, so they are repeated here. Same justification:
 // this code mirrors the C source's idioms, and applying clippy's
 // suggestions would obscure the correspondence that makes the port
-// reviewable. See rebound_rust.md section 17.
+// reviewable. Each waiver below carries its own reason; the same
+// list and the rationale are in README.md under "Building and testing".
 #![allow(clippy::neg_cmp_op_on_partial_ord)]
 #![allow(clippy::excessive_precision)]
 #![allow(clippy::identity_op)]

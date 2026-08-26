@@ -356,7 +356,16 @@ class Sim:
             text=True, encoding="utf-8", bufsize=1,
             env=dict(os.environ, POSIM_NO_BROWSER="1"),
         )
-        print(f"simulator started: {self.binary}")
+        # Show where the binary is RELATIVE to the notebook, not its absolute
+        # location. The absolute form names the machine that ran the notebook
+        # (username and full directory tree) and gets baked into every
+        # committed output cell; the relative form is both portable and the
+        # more useful thing to read.
+        try:
+            shown = os.path.relpath(self.binary)
+        except ValueError:          # different drive: no relative path exists
+            shown = os.path.basename(self.binary)
+        print(f"simulator started: {shown}")
 
     def _rpc(self, obj):
         self.proc.stdin.write(json.dumps(obj) + "\n")

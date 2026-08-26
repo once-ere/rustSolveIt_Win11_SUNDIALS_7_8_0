@@ -1,212 +1,212 @@
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_ball_joint_chain.json  (5 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_box_of_shapes.json  (3 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_cardan_compass.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_cardan_gear.json  (8 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_double_pendulum_hinges.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_gyroscope_gimbal.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_kepler_ellipse.json  (3 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_rack_and_pinion.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_rod_pendulum_chain.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_spinning_top.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_tumbling_racket.json  (2 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_universal_joint.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_01_head_on_exchange.json  (7 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_02_unequal_masses.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_03_restitution_ladder.json  (16 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_04_newtons_cradle.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_05_billiard_break.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_06_spin_up.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_07_thin_wall_toi.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_08_colliding_binary.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_09_spinning_target.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_10_billiard_box.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_11_box_of_shapes.json  (8 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_12_two_dumbbells.json  (7 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_01_elastic_head_on.json  (7 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_02_keplers_third_law.json  (17 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_03_three_conics.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_04_restitution_ladder.json  (8 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_05_cyclotron_bdf.json  (7 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_06_symplectic_vs_adaptive.json  (10 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_07_dzhanibekov.json  (18 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_08_magnetic_torque.json  (5 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_09_newtons_cradle.json  (7 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_10_no_tunnelling.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_11_lagrange_l4.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_12_dumbbell_inertia.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_13_tilted_torus.json  (7 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_14_particle_in_a_box.json  (5 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_15_tunnelling.json  (7 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_16_special_functions.json  (7 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_17_pendulum_dae.json  (8 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_18_equilibrium_and_sensitivity.json  (10 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_19_hinged_door.json  (8 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_billiard_box.json  (5 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_billiard_break.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_bouncing_ball_restitution.json  (8 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_box_of_shapes.json  (9 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_box_of_shapes_m32.json  (9 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_charged_in_b_field.json  (8 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_charged_in_e_field.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_colliding_binary.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_double_slit.json  (15 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_head_on_exchange.json  (5 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_kepler_orbit.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_magnetic_spin_up.json  (5 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_newtons_cradle.json  (5 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_outer_solar_system.json  (5 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_restitution_ladder.json  (8 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_double_star_period.json  (25 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_apsidal_symmetry.json  (17 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_centre_of_gravity.json  (10 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_collinear_three_body.json  (16 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_equal_periods.json  (13 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_equilateral_three_body.json  (17 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_escape_velocity.json  (10 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_expanding_sphere.json  (11 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_geometric_progression.json  (10 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_hodograph_circle.json  (13 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_kepler_equation.json  (13 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_lambert_theorem.json  (13 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_oblique_impact.json  (11 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_parabola_of_safety.json  (19 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_sphere_exchange.json  (12 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_three_projectiles.json  (12 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_two_trajectories.json  (15 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_correlated_bodies.json  (13 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_fixed_couple.json  (10 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_impulsive_couple.json  (12 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_invariable_line.json  (12 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_mean_axis_instability.json  (17 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_period_ratio.json  (11 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_poinsot_rolling.json  (13 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_polhode_quarter_period.json  (12 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_principal_axes_in_space.json  (13 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_rolling_cones.json  (12 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_separatrix.json  (16 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_spin_stabilisation.json  (10 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_sylvester_time.json  (14 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_thin_rod.json  (10 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_two_quadrics.json  (13 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_uniaxal_precession.json  (11 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_rectangle_diagonal.json  (15 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_spin_up.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_spinning_target.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_static_anchor.json  (5 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_thin_wall_toi.json  (7 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_three_bodies.json  (5 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_thrown_ball.json  (7 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_tumbling_body.json  (11 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_tunneling.json  (15 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_two_dumbbells.json  (6 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_unequal_masses.json  (4 steps)
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_01_head_on_exchange.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_02_unequal_masses.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_03_restitution_ladder.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_04_newtons_cradle.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_05_billiard_break.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_06_spin_up.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_07_thin_wall_toi.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_08_colliding_binary.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_09_spinning_target.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_10_billiard_box.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_11_box_of_shapes.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_12_two_dumbbells.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_billiard_box.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_billiard_break.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_bouncing_ball_restitution.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_box_of_shapes.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_box_of_shapes_m32.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_charged_in_b_field.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_charged_in_e_field.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_colliding_binary.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_double_slit.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_head_on_exchange.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_kepler_orbit.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_magnetic_spin_up.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_newtons_cradle.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_outer_solar_system.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_restitution_ladder.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_double_star_period.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_apsidal_symmetry.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_centre_of_gravity.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_collinear_three_body.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_equal_periods.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_equilateral_three_body.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_escape_velocity.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_expanding_sphere.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_geometric_progression.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_hodograph_circle.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_kepler_equation.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_lambert_theorem.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_oblique_impact.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_parabola_of_safety.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_sphere_exchange.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_three_projectiles.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_two_trajectories.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_correlated_bodies.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_fixed_couple.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_impulsive_couple.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_invariable_line.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_mean_axis_instability.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_period_ratio.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_poinsot_rolling.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_polhode_quarter_period.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_principal_axes_in_space.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_rolling_cones.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_separatrix.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_spin_stabilisation.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_sylvester_time.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_thin_rod.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_two_quadrics.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_uniaxal_precession.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_rectangle_diagonal.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_spin_up.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_spinning_target.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_static_anchor.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_thin_wall_toi.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_three_bodies.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_thrown_ball.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_tumbling_body.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_tunneling.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_two_dumbbells.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_unequal_masses.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_bouncing_ball_restitution.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_charged_in_b_field.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_kepler_orbit.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_newtons_cradle.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_outer_solar_system.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_tumbling_body.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_01_elastic_head_on.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_02_keplers_third_law.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_03_three_conics.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_04_restitution_ladder.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_05_cyclotron_bdf.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_06_symplectic_vs_adaptive.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_07_dzhanibekov.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_08_magnetic_torque.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_09_newtons_cradle.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_10_no_tunnelling.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_11_lagrange_l4.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_12_dumbbell_inertia.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_13_tilted_torus.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_14_particle_in_a_box.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_15_tunnelling.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_16_special_functions.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_17_pendulum_dae.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_18_equilibrium_and_sensitivity.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_19_hinged_door.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_ball_joint_chain.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_box_of_shapes.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_cardan_compass.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_cardan_gear.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_double_pendulum_hinges.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_gyroscope_gimbal.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_kepler_ellipse.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_piston_crankshaft.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_rack_and_pinion.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_rod_pendulum_chain.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_spinning_top.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_tumbling_racket.ipynb
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_universal_joint.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_ball_joint_chain.json  (5 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_box_of_shapes.json  (3 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_cardan_compass.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_cardan_gear.json  (8 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_double_pendulum_hinges.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_gyroscope_gimbal.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_kepler_ellipse.json  (3 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_rack_and_pinion.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_rod_pendulum_chain.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_spinning_top.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_tumbling_racket.json  (2 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\video_universal_joint.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_01_head_on_exchange.json  (7 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_02_unequal_masses.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_03_restitution_ladder.json  (16 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_04_newtons_cradle.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_05_billiard_break.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_06_spin_up.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_07_thin_wall_toi.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_08_colliding_binary.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_09_spinning_target.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_10_billiard_box.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_11_box_of_shapes.json  (8 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\collision_12_two_dumbbells.json  (7 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_01_elastic_head_on.json  (7 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_02_keplers_third_law.json  (17 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_03_three_conics.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_04_restitution_ladder.json  (8 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_05_cyclotron_bdf.json  (7 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_06_symplectic_vs_adaptive.json  (10 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_07_dzhanibekov.json  (18 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_08_magnetic_torque.json  (5 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_09_newtons_cradle.json  (7 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_10_no_tunnelling.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_11_lagrange_l4.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_12_dumbbell_inertia.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_13_tilted_torus.json  (7 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_14_particle_in_a_box.json  (5 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_15_tunnelling.json  (7 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_16_special_functions.json  (7 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_17_pendulum_dae.json  (8 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_18_equilibrium_and_sensitivity.json  (10 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\solveit_19_hinged_door.json  (8 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_billiard_box.json  (5 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_billiard_break.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_bouncing_ball_restitution.json  (8 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_box_of_shapes.json  (9 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_box_of_shapes_m32.json  (9 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_charged_in_b_field.json  (8 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_charged_in_e_field.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_colliding_binary.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_double_slit.json  (15 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_head_on_exchange.json  (5 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_kepler_orbit.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_magnetic_spin_up.json  (5 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_newtons_cradle.json  (5 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_outer_solar_system.json  (5 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_restitution_ladder.json  (8 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_double_star_period.json  (25 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_apsidal_symmetry.json  (17 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_centre_of_gravity.json  (10 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_collinear_three_body.json  (16 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_equal_periods.json  (13 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_equilateral_three_body.json  (17 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_escape_velocity.json  (10 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_expanding_sphere.json  (11 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_geometric_progression.json  (10 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_hodograph_circle.json  (13 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_kepler_equation.json  (13 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_lambert_theorem.json  (13 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_oblique_impact.json  (11 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_parabola_of_safety.json  (19 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_sphere_exchange.json  (12 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_three_projectiles.json  (12 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p1_two_trajectories.json  (15 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_correlated_bodies.json  (13 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_fixed_couple.json  (10 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_impulsive_couple.json  (12 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_invariable_line.json  (12 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_mean_axis_instability.json  (17 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_period_ratio.json  (11 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_poinsot_rolling.json  (13 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_polhode_quarter_period.json  (12 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_principal_axes_in_space.json  (13 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_rolling_cones.json  (12 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_separatrix.json  (16 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_spin_stabilisation.json  (10 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_sylvester_time.json  (14 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_thin_rod.json  (10 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_two_quadrics.json  (13 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_p2_uniaxal_precession.json  (11 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_routh_rectangle_diagonal.json  (15 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_spin_up.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_spinning_target.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_static_anchor.json  (5 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_thin_wall_toi.json  (7 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_three_bodies.json  (5 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_thrown_ball.json  (7 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_tumbling_body.json  (11 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_tunneling.json  (15 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_two_dumbbells.json  (6 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\_build\specs\dynamic_unequal_masses.json  (4 steps)
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_01_head_on_exchange.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_02_unequal_masses.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_03_restitution_ladder.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_04_newtons_cradle.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_05_billiard_break.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_06_spin_up.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_07_thin_wall_toi.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_08_colliding_binary.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_09_spinning_target.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_10_billiard_box.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_11_box_of_shapes.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\collision_12_two_dumbbells.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_billiard_box.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_billiard_break.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_bouncing_ball_restitution.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_box_of_shapes.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_box_of_shapes_m32.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_charged_in_b_field.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_charged_in_e_field.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_colliding_binary.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_double_slit.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_head_on_exchange.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_kepler_orbit.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_magnetic_spin_up.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_newtons_cradle.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_outer_solar_system.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_restitution_ladder.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_double_star_period.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_apsidal_symmetry.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_centre_of_gravity.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_collinear_three_body.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_equal_periods.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_equilateral_three_body.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_escape_velocity.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_expanding_sphere.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_geometric_progression.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_hodograph_circle.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_kepler_equation.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_lambert_theorem.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_oblique_impact.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_parabola_of_safety.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_sphere_exchange.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_three_projectiles.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p1_two_trajectories.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_correlated_bodies.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_fixed_couple.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_impulsive_couple.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_invariable_line.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_mean_axis_instability.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_period_ratio.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_poinsot_rolling.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_polhode_quarter_period.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_principal_axes_in_space.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_rolling_cones.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_separatrix.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_spin_stabilisation.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_sylvester_time.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_thin_rod.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_two_quadrics.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_p2_uniaxal_precession.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_routh_rectangle_diagonal.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_spin_up.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_spinning_target.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_static_anchor.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_thin_wall_toi.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_three_bodies.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_thrown_ball.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_tumbling_body.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_tunneling.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_two_dumbbells.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\dynamic_unequal_masses.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_bouncing_ball_restitution.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_charged_in_b_field.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_kepler_orbit.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_newtons_cradle.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_outer_solar_system.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\rust_tumbling_body.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_01_elastic_head_on.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_02_keplers_third_law.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_03_three_conics.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_04_restitution_ladder.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_05_cyclotron_bdf.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_06_symplectic_vs_adaptive.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_07_dzhanibekov.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_08_magnetic_torque.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_09_newtons_cradle.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_10_no_tunnelling.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_11_lagrange_l4.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_12_dumbbell_inertia.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_13_tilted_torus.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_14_particle_in_a_box.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_15_tunnelling.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_16_special_functions.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_17_pendulum_dae.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_18_equilibrium_and_sensitivity.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\solveit_19_hinged_door.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_ball_joint_chain.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_box_of_shapes.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_cardan_compass.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_cardan_gear.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_double_pendulum_hinges.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_gyroscope_gimbal.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_kepler_ellipse.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_piston_crankshaft.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_rack_and_pinion.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_rod_pendulum_chain.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_spinning_top.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_tumbling_racket.ipynb
+C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0\notebooks\video_universal_joint.ipynb
 regenerated

@@ -140,7 +140,7 @@ byte what the donors shipped.
 ## 3. Build and test — commands and results
 
 Run everything from the repository root
-`C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0`.
+`C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0`.
 PowerShell forms are given; each was run exactly as written.
 
 ```powershell

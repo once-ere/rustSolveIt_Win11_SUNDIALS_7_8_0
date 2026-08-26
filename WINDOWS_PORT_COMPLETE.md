@@ -61,7 +61,7 @@ byte-identity gate is what proves it.
 ## Complete commands
 
 All from the repository root
-`C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0`,
+`C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0`,
 in PowerShell unless marked Git Bash.
 
 Build and test:

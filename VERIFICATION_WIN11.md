@@ -6,7 +6,7 @@ Windows 11 Pro for Workstations 25H2, rustc 1.91.1
 `x86_64-pc-windows-msvc`). Every command below is complete as written
 and was actually run; its measured result follows it. All commands run
 from the repository root
-`C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0`;
+`C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0`;
 PowerShell unless marked Git Bash.
 
 ## 1. Repository state

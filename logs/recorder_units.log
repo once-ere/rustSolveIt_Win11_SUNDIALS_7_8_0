@@ -26,7 +26,7 @@ Traceback (most recent call last):
   File "C:\Python314\Lib\shutil.py", line 707, in _rmtree_unsafe
     os.rmdir(path)
     ~~~~~~~~^^^^^^
-PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\nsh\\AppData\\Local\\Temp\\tmptn6d8wpq'
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\<you>\\AppData\\Local\\Temp\\tmptn6d8wpq'
 
 During handling of the above exception, another exception occurred:
 
@@ -34,7 +34,7 @@ Traceback (most recent call last):
   File "C:\Python314\Lib\tempfile.py", line 930, in onexc
     _os.unlink(path)
     ~~~~~~~~~~^^^^^^
-PermissionError: [WinError 5] Access is denied: 'C:\\Users\\nsh\\AppData\\Local\\Temp\\tmptn6d8wpq'
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\<you>\\AppData\\Local\\Temp\\tmptn6d8wpq'
 
 During handling of the above exception, another exception occurred:
 

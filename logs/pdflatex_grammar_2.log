@@ -4,86 +4,86 @@ entering extended mode
 (grammar.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
 Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo))
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
 For additional information on amsmath, use the `?' option.
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.sty
-) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg))
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx))
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+) (C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
 )
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefineke
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefineke
 ys.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.s
-ty)) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.s
+ty)) (C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty)
 
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro.s
-ty) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitle
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro.s
+ty) (C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitle
 string.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty))
-) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.s
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty))
+) (C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.s
 ty))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilec
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty))
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilec
 heck.sty
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecou
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecou
 nter.sty)))
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdfte
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdfte
 x.def) (grammar.aux)
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 ) (grammar.out) (grammar.out)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
-(grammar.toc [1{C:/Users/nsh/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{
-C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}])
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
+(grammar.toc [1{C:/Users/<you>/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{
+C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}])
 [2]
 Overfull \hbox (29.98479pt too wide) in paragraph at lines 60--67
  [] 
@@ -95,8 +95,8 @@ SPRK ENERGY COM MOMENTUM
 Overfull \hbox (28.05074pt too wide) in paragraph at lines 106--107
 []\T1/lmtt/m/n/10.95 SCENE CREATE CLOSE DESTROY TRANSLATE ROTATE ZOOM IN OUT HI
 DE SHOW REFRESH REDRAW START
-[4] [5] [6{C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.
-enc}{C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.en
+[4] [5] [6{C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.
+enc}{C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.en
 c}]
 Underfull \hbox (badness 10000) in paragraph at lines 295--296
 []|\T1/lmr/m/n/10.95 number$\OMS/lmsy/m/n/10.95 ^^A$\T1/lmr/m/n/10.95 number, n
@@ -178,10 +178,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 373--376
 
 Overfull \hbox (16.13872pt too wide) in paragraph at lines 326--378
  [] 
-[7{C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}
-] [8] (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd)
-[9{C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}
-{C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}]
+[7{C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}
+] [8] (C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd)
+[9{C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}
+{C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}]
 Overfull \hbox (17.62447pt too wide) in paragraph at lines 519--524
 \T1/lmr/m/n/10.95 comes from the as-cend-ing se-ries (DLMF 10.8.1) for $\OML/lm
 m/m/it/10.95 Y[]$ \T1/lmr/m/n/10.95 and $\OML/lmm/m/it/10.95 Y[]$ \T1/lmr/m/n/1
@@ -222,7 +222,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 Underfull \hbox (badness 1127) in paragraph at lines 1304--1305
 []|\T1/lmr/m/n/10.95 writing also up-dates \T1/lmtt/m/n/10.95 inverse_mass
-(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmss.fd)
+(C:\Users\<you>\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmss.fd)
 Underfull \hbox (badness 1127) in paragraph at lines 1316--1317
 []|\T1/lmr/m/n/10.95 spheres, disks, cylin-ders; write re-
 
@@ -599,32 +599,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 3695--3696
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  )
-(see the transcript file for additional information)<C:/Users/nsh/AppData/Local
-/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/nsh/AppData/Local/P
-rograms/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/nsh/AppData/Local/Pro
-grams/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/nsh/AppData/Local/Progra
-ms/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/nsh/AppData/Local/Program
-s/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/nsh/AppData/Local/Programs/
-MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/nsh/AppData/Local/Programs/Mi
-KTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTe
-X/fonts/type1/public/lm/lmmi8.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/f
-onts/type1/public/lm/lmr10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/font
-s/type1/public/lm/lmr12.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/t
-ype1/public/lm/lmr17.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type
-1/public/lm/lmr6.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/pu
-blic/lm/lmr8.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public
-/lm/lmri10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/l
-m/lmss8.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/l
-msy10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lms
-y6.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.
-pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb
-><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><
-C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:
-/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/U
-sers/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/User
-s/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb><C:/Users
-/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.p
-fb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symb
+(see the transcript file for additional information)<C:/Users/<you>/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/<you>/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/<you>/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/<you>/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/<you>/AppData/Local/Program
+s/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/<you>/AppData/Local/Programs/
+MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/<you>/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/lm/lmmi8.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/f
+onts/type1/public/lm/lmr10.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/font
+s/type1/public/lm/lmr12.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/lm/lmr17.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type
+1/public/lm/lmr6.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/pu
+blic/lm/lmr8.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public
+/lm/lmri10.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/l
+m/lmss8.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/l
+msy10.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lms
+y6.pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.
+pfb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb
+><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><
+C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:
+/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/U
+sers/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb><C:/User
+s/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtti10.pfb><C:/Users
+/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.p
+fb><C:/Users/<you>/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symb
 ols/msbm10.pfb>
 Output written on grammar.pdf (66 pages, 899012 bytes).
 Transcript written on grammar.log.

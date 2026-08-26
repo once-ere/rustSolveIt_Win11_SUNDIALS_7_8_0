@@ -16,7 +16,17 @@ default-members = [
 # Without this exclude, cargo would absorb its crates into THIS workspace
 # and they would inherit `version.workspace` from here (0.1.0) instead of
 # their own 7.8.0 — silently misreporting the SUNDIALS version they port.
-exclude = ["sundials_rs", "vendor/spec_math"]
+#
+# rebound_rust and reboundx_rust are the same arrangement: two more
+# self-contained workspaces (rebound_rs 5.1.1 and reboundx_rs 5.1.0)
+# carried here so that a clone of this repository reproduces the exact
+# directory layout their documentation describes. They are NOT
+# dependencies of the simulator; reboundx_rs depends on rebound_rs by
+# the relative path `../rebound_rust`, which is why they sit side by
+# side at this root. Excluding them keeps `cargo test --workspace`
+# reporting only this workspace's tests, and stops their own port
+# versions being overwritten by `version.workspace` from here.
+exclude = ["sundials_rs", "vendor/spec_math", "rebound_rust", "reboundx_rust"]
 
 [workspace.package]
 version = "0.1.0"

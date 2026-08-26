@@ -124,6 +124,22 @@ not move (byte-identity gates against the Linux evidence), is in
   loop in `notebooks/_build/` (see `notebooks/README.md`).
 - `evidence/port-7.8.0/` — the logs behind every claim in
   `PORT_7.8.0_PROVENANCE.md`.
+- `rebound_rust/`, `reboundx_rust/` — two more pure-Rust ports carried
+  here: `rebound_rs` 5.1.1 (REBOUND) and `reboundx_rs` 5.1.0 (REBOUNDx).
+  **Not dependencies of the simulator** and **excluded from this
+  workspace** (`Cargo.toml` `exclude`), so `cargo test --workspace` is
+  still exactly the 622 tests above. They sit side by side at this root
+  because `reboundx_rs` depends on `rebound_rs` through the relative
+  path `../rebound_rust`, and because that layout is what their own
+  documentation's absolute paths describe — a clone of this repository
+  reproduces it. Build and test them separately:
+  `cd rebound_rust && cargo test --release` (394 tests) and
+  `cd reboundx_rust && cargo test --release` (137 tests); both are also
+  clean under `cargo clippy --release --all-targets`.
+  `rebound_rust/` is a copy of the `once-ere/rebound_rust` repository's
+  tracked tree — treat it as read-only here and push changes there.
+  Full provenance of both ports, every command, and usage instructions:
+  `rebound_rust/rebound_rust.md` (typeset as `rebound_rust.pdf`).
 - `ARCHITECTURE.md` — pinned cross-module contracts (state layout,
   solver driving §3.7, setter invariants, wire protocol, scene
   subsystem, collision subsystem, the video recorder §7). **Read it

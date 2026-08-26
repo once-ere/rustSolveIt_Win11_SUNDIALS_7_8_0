@@ -71,7 +71,12 @@ that does not exist:
 
 ```
 error: failed to load manifest for dependency `rebound_rs`
-Caused by: failed to read `...\reboundx_rust\..\rebound_rust\Cargo.toml`
+
+Caused by:
+  failed to read `C:\...\rebound_rust\Cargo.toml`
+
+Caused by:
+  The system cannot find the path specified. (os error 3)
 ```
 
 The fix is always the same: clone `rebound_rust` next to `reboundx_rust`.

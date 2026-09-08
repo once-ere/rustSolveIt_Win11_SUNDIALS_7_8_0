@@ -6503,6 +6503,454 @@
   "reasons": []
  },
  {
+  "id": "cmd.dataset.create",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.create",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.create",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.create",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.open",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.open",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.open",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.open",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.close",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.close",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.close",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.close",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.record",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.record",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.record",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.record",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.snapshot",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.snapshot",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.snapshot",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.snapshot",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.list",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.list",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.list",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.list",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.info",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.info",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.info",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.info",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.copy",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.copy",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.copy",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.copy",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.saveas",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.saveas",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.saveas",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.saveas",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.delete",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.delete",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.delete",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.delete",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.play",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.play",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.play",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.play",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.sql",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.sql",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.sql",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.sql",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.create",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.create",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.create",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.create",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.delete",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.delete",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.delete",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.delete",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.list",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.list",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.list",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.list",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.play",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.play",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.play",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.movie.play",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
   "id": "cmd.qm.status",
   "kind": "command",
   "level": "trivial",

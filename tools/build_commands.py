@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
-"""Phase-3: the 107 command entries for the Index of Entities.
+"""Phase-3: the 120 command entries for the Index of Entities.
 
 Writes index_data/entries_commands.json, which tools/build_catalog.py folds
-into catalog.json. Ladders are hand-authored for the core and SCENE families
-and templated per sub-command for QM / QM2 / QM3, where argument shapes are
-regular. Every fragment is self-contained and starts from a clean session.
-Examples carry expected: null / verified: null — Phase 4 runs them.
+into catalog.json. Ladders are hand-authored for the core, SCENE and
+DATASET/SQL/MOVIE families and templated per sub-command for QM / QM2 / QM3,
+where argument shapes are regular. Every fragment is self-contained and
+starts from a clean session. Examples carry expected: null / verified: null —
+Phase 4 runs them.
+
+The DATASET/SQL/MOVIE ladders create datasets named idx_* so they can never
+collide with the shipped solveit/nb_* datasets, use a DIFFERENT idx_* name on
+every rung (the verifier runs rungs concurrently), and close + delete what
+they create — the only artifacts a verification run leaves behind are the
+idx_*_plots.html pages DATASET PLAY writes, because no command removes a
+plots page.
 
 Stdlib only.
 """
@@ -759,6 +767,420 @@ for sid, nm, syn, defn, rungs, errs in SCENE:
         seeAlso=["cmd.scene.create", "cmd.scene.status"],
         invariants=["The window evolves a synchronized COPY: notebook STEP/RUN never move the "
                     "window, and window playback never moves the notebook."]))
+
+# ==========================================================================
+# DATASET / SQL / MOVIE family — SQLite recording (grammar.md §5.14)
+# ==========================================================================
+
+# One recorded body, drift-free (G = 0), so every frame the ladders
+# capture is deterministic. Each rung uses its OWN idx_* dataset name:
+# the verifier runs rungs concurrently, and two rungs sharing a name
+# would replace each other's files mid-run.
+DB = ("set system.g_constant = 0\n"
+      "new sphere { mass = 1, radius = 0.5, velocity = [1, 0, 0] }\n")
+
+DB2 = ("set system.g_constant = 0\n"
+       "new sphere { mass = 1, radius = 0.5, position = [-2, 0, 0], "
+       "velocity = [1, 0, 0] }\n"
+       "new sphere { mass = 1, radius = 0.5, position = [2, 0, 0], "
+       "velocity = [-1, 0, 0] }\n")
+
+DBOX = ("set system.g_constant = 0\nbox 4\n"
+        "new sphere { mass = 1, radius = 0.5, velocity = [2, 1, 0] }\n")
+
+SIDECAR = ("posim itself contains NO SQLite code — the workspace keeps its "
+           "zero-external-dependency, zero-unsafe guarantee. Every DATASET/SQL/MOVIE "
+           "command drives the `solveit_db` sidecar (dataset_tools/), which posim "
+           "SPAWNS and never links; build it once with "
+           "`cd dataset_tools && cargo build --release`.")
+
+DATASET = [
+    ("create", "DATASET CREATE", "DATASET CREATE name",
+     "Make datasets/<name>.db FRESH and arm recording. An existing dataset of the same name "
+     "is REPLACED, so re-running a script or notebook always reproduces the same database — "
+     "keep an old run with COPY or SAVEAS first. While recording is armed, every output row "
+     "of a RUN (all STEPS n of them, captured at the exact output instants the solver visits) "
+     "and the end of every STEP is appended as one frame, in a single sidecar transaction per "
+     "command. The schema (version 1) is four tables — meta, bodies, frames, states — with NO "
+     "timestamps anywhere: byte-stable output is a verified property of this repository, and "
+     "a wall-clock column would silently break it. Names are file stems (letters, digits, _, "
+     "-), written as an identifier or, when a name collides with a keyword, as a quoted "
+     'string (`dataset create "box"`). ' + SIDECAR,
+     ["dataset create idx_ds_create_t\ndataset close\ndataset delete idx_ds_create_t",
+      DB + "dataset create idx_ds_create_i\nrun 1 steps 4\ndataset info\ndataset close\n"
+      "dataset delete idx_ds_create_i",
+      DB + "dataset create idx_ds_create_a\ndataset snapshot\ndataset info\n"
+      "dataset create idx_ds_create_a\ndataset info\ndataset close\n"
+      "dataset delete idx_ds_create_a",
+      DB + 'dataset create "idx_ds_create_e"\nrun 1 steps 3\ndataset close\n'
+      "movie create idx_ds_create_e\nmovie delete idx_ds_create_e\n"
+      "dataset delete idx_ds_create_e"],
+     ["invalid name `a/b`: use letters, digits, `_` and `-` only",
+      "the dataset sidecar `solveit_db` is not built. Build it once, from the repository "
+      "root: cd dataset_tools && cargo build --release"]),
+    ("open", "DATASET OPEN", "DATASET OPEN name",
+     "Attach an existing datasets/<name>.db, recording armed — the reply reports the row "
+     "counts found on arrival. New frames APPEND after the ones already there, which is how a "
+     "recording continues across sessions. Opening while another dataset is open closes the "
+     "first one cleanly; CREATE does the same, so exactly one dataset is ever open. A missing "
+     "name is an error pointing at DATASET LIST.",
+     ["dataset create idx_ds_open_t\ndataset close\ndataset open idx_ds_open_t\n"
+      "dataset close\ndataset delete idx_ds_open_t",
+      DB + "dataset create idx_ds_open_i\nrun 1 steps 3\ndataset close\n"
+      "dataset open idx_ds_open_i\ndataset info\ndataset close\ndataset delete idx_ds_open_i",
+      DB + "dataset create idx_ds_open_a\nrun 1 steps 2\ndataset close\n"
+      "dataset open idx_ds_open_a\nrun 1 steps 2\ndataset info\ndataset close\n"
+      "dataset delete idx_ds_open_a",
+      DB + "dataset create idx_ds_open_e1\nrun 0.5 steps 2\ndataset create idx_ds_open_e2\n"
+      "run 0.5 steps 2\ndataset open idx_ds_open_e1\ndataset info\ndataset close\n"
+      "dataset delete idx_ds_open_e1\ndataset delete idx_ds_open_e2"],
+     ["no such dataset `nosuch` (datasets/nosuch.db). DATASET LIST shows what exists."]),
+    ("close", "DATASET CLOSE", "DATASET CLOSE",
+     "Checkpoint the WAL into the main file — leaving ONE tidy .db with no -wal/-shm sidecar "
+     "files — and shut the sidecar child down. RESET closes the open dataset the same way: a "
+     "dataset describes ONE world, and RESET destroys that world (the scene window survives a "
+     "RESET; the dataset deliberately does not). Deleting the open dataset is refused until "
+     "you CLOSE it, so close-then-delete is the tidy-up idiom every ladder here ends with.",
+     ["dataset create idx_ds_close_t\ndataset close\ndataset delete idx_ds_close_t",
+      DB + "dataset create idx_ds_close_i\ndataset snapshot\ndataset close\n"
+      "dataset info idx_ds_close_i\ndataset delete idx_ds_close_i",
+      DB + "dataset create idx_ds_close_a\nrun 1 steps 2\ndataset close\n"
+      'dataset open idx_ds_close_a\nsql "SELECT COUNT(*) AS frames FROM frames"\n'
+      "dataset close\ndataset delete idx_ds_close_a",
+      DB + "dataset create idx_ds_close_e\ndataset snapshot\nreset\ndataset record\n"
+      "dataset delete idx_ds_close_e"],
+     ["no dataset is open"]),
+    ("record", "DATASET RECORD", 'DATASET RECORD [ "ON" | "OFF" ]',
+     "The auto-recording switch. While ON (and a dataset is open) every RUN output snapshot "
+     "and every STEP end is appended as a dataset frame; OFF pauses that without closing "
+     "anything; bare RECORD reports the switch. CREATE and OPEN both arm it. The switch "
+     "controls RECORDING only — physics advances either way, so switching OFF leaves a "
+     "visible gap in the frames table's t column, and DATASET SNAPSHOT still records, switch "
+     "or no.",
+     ["dataset create idx_ds_rec_t\ndataset record\ndataset close\n"
+      "dataset delete idx_ds_rec_t",
+      DB + "dataset create idx_ds_rec_i\ndataset record off\nrun 1 steps 3\ndataset info\n"
+      "dataset record on\nrun 1 steps 3\ndataset info\ndataset close\n"
+      "dataset delete idx_ds_rec_i",
+      DB + "dataset create idx_ds_rec_a\nrun 0.5 steps 5\ndataset record off\n"
+      "run 0.5 steps 5\ndataset record on\nrun 0.5 steps 5\n"
+      'sql "SELECT COUNT(*) AS frames, MIN(t) AS t_first, MAX(t) AS t_last FROM frames"\n'
+      'sql "SELECT COUNT(*) AS frames_in_gap FROM frames WHERE t > 0.501 AND t < 0.999"\n'
+      "dataset close\ndataset delete idx_ds_rec_a",
+      DB + "dataset create idx_ds_rec_e\ndataset record off\nrun 1 steps 5\n"
+      'dataset snapshot\nsql "SELECT COUNT(*) AS frames FROM frames"\ndataset close\n'
+      "dataset delete idx_ds_rec_e"],
+     ["no dataset is open — DATASET CREATE <name> or DATASET OPEN <name> first"]),
+    ("snapshot", "DATASET SNAPSHOT", "DATASET SNAPSHOT",
+     "Append one frame RIGHT NOW, recording switch or no. The frame carries the same columns "
+     "a RUN records — t, total energy, P, L, COM, the cumulative collision count, and one "
+     "states row per body (position, w-FIRST quaternion, velocities). SNAPSHOT is how a "
+     "hand-picked instant — an initial state, a before/after pair — gets into the database "
+     "without running anything.",
+     [DB + "dataset create idx_ds_snap_t\ndataset snapshot\ndataset close\n"
+      "dataset delete idx_ds_snap_t",
+      DB + "dataset create idx_ds_snap_i\ndataset snapshot\nstep 0.5\ndataset snapshot\n"
+      "dataset info\ndataset close\ndataset delete idx_ds_snap_i",
+      DB + "dataset create idx_ds_snap_a\ndataset snapshot\nrun 1 steps 2\n"
+      'dataset snapshot\nsql "SELECT frame, t FROM frames ORDER BY frame"\ndataset close\n'
+      "dataset delete idx_ds_snap_a",
+      DB + "dataset create idx_ds_snap_e\ndataset record off\nstep 0.5\ndataset snapshot\n"
+      "step 0.5\ndataset snapshot\n"
+      'sql "SELECT COUNT(*) AS frames, MIN(t) AS t_first, MAX(t) AS t_last FROM frames"\n'
+      "dataset close\ndataset delete idx_ds_snap_e"],
+     ["no dataset is open — DATASET CREATE <name> or DATASET OPEN <name> first"]),
+    ("list", "DATASET LIST", "DATASET LIST",
+     "Name every dataset under datasets/ — the .db file stems, sorted. The directory IS the "
+     "registry: anything CREATE, COPY or SAVEAS made is listed, open or closed, and DATASET "
+     "DELETE removes a name. With no datasets at all it says so and points at DATASET "
+     "CREATE. The listing is a LIVE directory snapshot, so expect it to differ from the "
+     "captured output whenever other sessions have made or removed datasets — the index "
+     "verifier itself runs examples concurrently, which is why a stray idx_* name from a "
+     "sibling example can appear in the recorded listing.",
+     ["dataset list",
+      "dataset create idx_ds_list_i\ndataset close\ndataset list\n"
+      "dataset delete idx_ds_list_i",
+      DB + "dataset create idx_ds_list_a\ndataset snapshot\ndataset saveas idx_ds_list_a2\n"
+      "dataset list\ndataset close\ndataset delete idx_ds_list_a\n"
+      "dataset delete idx_ds_list_a2",
+      "dataset create idx_ds_list_e\ndataset close\n"
+      "dataset copy idx_ds_list_e idx_ds_list_e2\ndataset list\n"
+      "dataset delete idx_ds_list_e\ndataset delete idx_ds_list_e2"],
+     []),
+    ("info", "DATASET INFO", "DATASET INFO [ name ]",
+     "Row counts — bodies, frames, states — for the NAMED dataset, or for the OPEN one when "
+     "no name is given. The named form reads the file directly (WAL lets a reader see every "
+     "committed transaction even while a writer holds the dataset open), so it works on "
+     "closed datasets and on checkpoints while the original records on. states grows as "
+     "bodies x frames: two bodies over three frames is six states rows.",
+     [DB + "dataset create idx_ds_info_t\ndataset snapshot\ndataset info\ndataset close\n"
+      "dataset delete idx_ds_info_t",
+      DB + "dataset create idx_ds_info_i\nrun 1 steps 4\ndataset close\n"
+      "dataset info idx_ds_info_i\ndataset delete idx_ds_info_i",
+      DB + "dataset create idx_ds_info_a\ndataset snapshot\ndataset saveas idx_ds_info_a2\n"
+      "dataset snapshot\ndataset info\ndataset info idx_ds_info_a2\ndataset close\n"
+      "dataset delete idx_ds_info_a\ndataset delete idx_ds_info_a2",
+      DB2 + "dataset create idx_ds_info_e\nrun 1 steps 3\ndataset info\ndataset close\n"
+      "dataset delete idx_ds_info_e"],
+     ["no dataset is open — DATASET INFO <name> names a closed one",
+      "no such dataset `nosuch` (datasets/nosuch.db)"]),
+    ("copy", "DATASET COPY", "DATASET COPY name name",
+     "Snapshot-copy a dataset to a new name via SQLite's VACUUM INTO: compact, checkpointed, "
+     "and safe to take even while the source is open, because WAL readers never block the "
+     "writer. The destination must not exist yet — COPY never clobbers. For copying the OPEN "
+     "dataset under a new name, DATASET SAVEAS is the same operation with the source filled "
+     "in.",
+     ["dataset create idx_ds_copy_t\ndataset close\n"
+      "dataset copy idx_ds_copy_t idx_ds_copy_t2\ndataset delete idx_ds_copy_t\n"
+      "dataset delete idx_ds_copy_t2",
+      DB + "dataset create idx_ds_copy_i\ndataset snapshot\n"
+      "dataset copy idx_ds_copy_i idx_ds_copy_i2\ndataset close\n"
+      "dataset info idx_ds_copy_i2\ndataset delete idx_ds_copy_i\n"
+      "dataset delete idx_ds_copy_i2",
+      DB + "dataset create idx_ds_copy_a\ndataset snapshot\ndataset close\n"
+      "dataset copy idx_ds_copy_a idx_ds_copy_a2\ndataset open idx_ds_copy_a\n"
+      "dataset snapshot\ndataset close\ndataset info idx_ds_copy_a\n"
+      "dataset info idx_ds_copy_a2\ndataset delete idx_ds_copy_a\n"
+      "dataset delete idx_ds_copy_a2",
+      DB + "dataset create idx_ds_copy_e\nrun 1 steps 3\ndataset close\n"
+      "dataset copy idx_ds_copy_e idx_ds_copy_e2\ndataset open idx_ds_copy_e\n"
+      "run 1 steps 3\n"
+      "sql \"ATTACH DATABASE 'datasets/idx_ds_copy_e2.db' AS twin\"\n"
+      'sql "SELECT (SELECT COUNT(*) FROM frames) AS live, '
+      '(SELECT COUNT(*) FROM twin.frames) AS copied"\n'
+      'sql "DETACH DATABASE twin"\ndataset close\ndataset delete idx_ds_copy_e\n'
+      "dataset delete idx_ds_copy_e2"],
+     ["no such dataset `nosuch` (datasets/nosuch.db)",
+      "dataset `dst` already exists (datasets/dst.db)"]),
+    ("saveas", "DATASET SAVEAS", "DATASET SAVEAS name",
+     "Snapshot the OPEN dataset under a new name — the CHECKPOINT idiom: keep recording into "
+     "the original while the named copy preserves this exact moment. Same VACUUM INTO "
+     "machinery as DATASET COPY (compact, checkpointed, safe against the live writer); the "
+     "only difference is that the source is the dataset you have open.",
+     ["dataset create idx_ds_sa_t\ndataset saveas idx_ds_sa_t2\ndataset close\n"
+      "dataset delete idx_ds_sa_t\ndataset delete idx_ds_sa_t2",
+      DB + "dataset create idx_ds_sa_i\nrun 1 steps 2\ndataset saveas idx_ds_sa_i2\n"
+      "dataset close\ndataset info idx_ds_sa_i\ndataset info idx_ds_sa_i2\n"
+      "dataset delete idx_ds_sa_i\ndataset delete idx_ds_sa_i2",
+      DB + "dataset create idx_ds_sa_a\nrun 0.5 steps 2\ndataset saveas idx_ds_sa_a2\n"
+      "run 0.5 steps 2\ndataset info\ndataset info idx_ds_sa_a2\ndataset close\n"
+      "dataset delete idx_ds_sa_a\ndataset delete idx_ds_sa_a2",
+      DB + "dataset create idx_ds_sa_e\nrun 1 steps 3\ndataset saveas idx_ds_sa_e2\n"
+      "dataset close\nmovie create idx_ds_sa_e2 as idx_ds_sa_e2_movie\n"
+      "movie delete idx_ds_sa_e2_movie\ndataset delete idx_ds_sa_e\n"
+      "dataset delete idx_ds_sa_e2"],
+     ["no dataset is open — DATASET SAVEAS snapshots the OPEN dataset; use DATASET COPY "
+      "<src> <dst> for closed ones"]),
+    ("delete", "DATASET DELETE", "DATASET DELETE name",
+     "Remove datasets/<name>.db and its -wal/-shm sidecar files. Deleting the OPEN dataset "
+     "is refused until you CLOSE it — the sidecar child still holds the file. Deletion does "
+     "not cascade to movies: a page already built from the dataset keeps playing (it is "
+     "self-contained), it just cannot be REBUILT once its source is gone.",
+     ["dataset create idx_ds_del_t\ndataset close\ndataset delete idx_ds_del_t",
+      "dataset create idx_ds_del_i\ndataset saveas idx_ds_del_i2\ndataset close\n"
+      "dataset delete idx_ds_del_i\ndataset delete idx_ds_del_i2",
+      "dataset create idx_ds_del_a\ndataset saveas idx_ds_del_a2\n"
+      "dataset delete idx_ds_del_a2\ndataset close\ndataset delete idx_ds_del_a",
+      DB + "dataset create idx_ds_del_e\ndataset snapshot\ndataset saveas idx_ds_del_e2\n"
+      "dataset close\ndataset copy idx_ds_del_e2 idx_ds_del_e3\n"
+      "dataset delete idx_ds_del_e\ndataset delete idx_ds_del_e2\n"
+      "dataset delete idx_ds_del_e3"],
+     ["no such dataset `nosuch` (datasets/nosuch.db)",
+      "dataset idx_ds_del_t is open — DATASET CLOSE first, then delete"]),
+    ("play", "DATASET PLAY", "DATASET PLAY [ name ]",
+     "Render the recorded time series of the named (or open) dataset into a self-contained "
+     "page datasets/<name>_plots.html — total energy E(t), |P| and |L|, per-body x/y/z "
+     "components, and a top view of every trajectory — and open it in your web browser. "
+     "Vanilla JS + canvas, zero external fetches, like every page this repository generates. "
+     "POSIM_NO_BROWSER=1 suppresses the browser launch (batch runs); the page is written "
+     "either way. Needs at least one frame; DATASET DELETE removes the .db but not the plots "
+     "page, so the picture outlives the data.",
+     [DB + "dataset create idx_ds_play_t\nrun 1 steps 3\ndataset play\ndataset close\n"
+      "dataset delete idx_ds_play_t",
+      DB + "dataset create idx_ds_play_i\nrun 1 steps 4\ndataset close\n"
+      "dataset play idx_ds_play_i\ndataset delete idx_ds_play_i",
+      DB2 + "dataset create idx_ds_play_a\nrun 2 steps 8\ndataset play\ndataset close\n"
+      "dataset delete idx_ds_play_a",
+      DB + "dataset create idx_ds_play_e\ndataset record off\nstep 0.5\ndataset snapshot\n"
+      "step 0.5\ndataset snapshot\ndataset play\ndataset close\n"
+      "dataset delete idx_ds_play_e"],
+     ["dataset `x` has no frames yet — RUN or STEP with recording on, or DATASET SNAPSHOT, "
+      "then try again",
+      "no dataset is open — DATASET PLAY <name> names one, or DATASET CREATE/OPEN first"]),
+]
+
+# Explicit one-liners: the SCENE trick of cutting the definition at its
+# first "." would truncate inside "datasets/<name>.db".
+DS_SUMMARY = {
+    "create": "Make datasets/<name>.db FRESH and arm recording — replaces an existing one.",
+    "open": "Attach an existing dataset, recording armed; new frames APPEND.",
+    "close": "Checkpoint the WAL into one tidy .db and shut the sidecar down.",
+    "record": "The auto-recording switch; bare RECORD reports it.",
+    "snapshot": "Append one frame RIGHT NOW, recording switch or no.",
+    "list": "Name every dataset under datasets/.",
+    "info": "Row counts — bodies, frames, states — for the named or open dataset.",
+    "copy": "Snapshot-copy a dataset (VACUUM INTO) — never clobbers.",
+    "saveas": "Checkpoint the OPEN dataset under a new name.",
+    "delete": "Remove a dataset and its WAL sidecars; close it first if open.",
+    "play": "Render the recorded time series as a plots page in your browser.",
+}
+
+for did, nm, syn, defn, rungs, errs in DATASET:
+    out.append(E(
+        "cmd.dataset." + did, nm, DS_SUMMARY[did], defn, [syn], rungs,
+        indexKeys=["D"], errors=errs,
+        locations=[{"file": P, "line": 71, "role": "datasetcmd production"},
+                   {"file": "posim/src/dataset.rs", "line": 1, "role": "the sidecar handle"},
+                   {"file": V, "line": 2077, "role": "exec_dataset"},
+                   {"file": G, "line": gsec("5.14"), "role": "spec (5.14)"}],
+        seeAlso=["cmd.sql", "cmd.movie.create", "cmd.dataset.create", "cmd.run"],
+        invariants=["posim contains NO SQLite code: every DATASET/SQL/MOVIE command drives "
+                    "the solveit_db sidecar (dataset_tools/), spawned, never linked.",
+                    "The schema has no timestamps anywhere — byte-stable output is a "
+                    "verified property, and a wall-clock column would silently break it."]))
+
+out.append(E(
+    "cmd.sql", "SQL",
+    "Run ANY SQLite statement(s) on the open dataset.",
+    "The quoted string is handed to SQLite VERBATIM (several statements separated by ; are "
+    "fine), so every SQLite command works: SELECT with joins, subqueries, CTEs (WITH) and "
+    "window functions (LAG ... OVER), INSERT, UPDATE, DELETE, CREATE TABLE / INDEX / VIEW / "
+    "TRIGGER, ALTER TABLE, DROP, ATTACH DATABASE / DETACH DATABASE, PRAGMA, VACUUM, EXPLAIN, "
+    "transactions — anything SQLite 3.46 accepts. Row-returning statements print a header "
+    "line and one line per row, columns separated by ` | `; integer values print without a "
+    "decimal point, other reals in Rust's shortest round-trip form, NULL as `NULL`; "
+    "statements that change rows print `ok (N row(s) changed)`. The sidecar registers "
+    "sqrt(x), pow(x, y) and hypot(x, y) as deterministic SQL functions — the bundled SQLite "
+    "is compiled without its optional math functions, and physics queries want them. SQL "
+    "runs on the OPEN dataset; with none open it says so and points at DATASET CREATE/OPEN. "
+    "Cross-dataset work is one ATTACH away.",
+    ['SQL STRING'],
+    ['dataset create idx_sql_t\nsql "SELECT 1 + 1 AS two"\ndataset close\n'
+     "dataset delete idx_sql_t",
+     DB + 'dataset create idx_sql_i\nrun 1 steps 4\n'
+     'sql "SELECT COUNT(*) AS frames FROM frames"\ndataset close\ndataset delete idx_sql_i',
+     DB + 'dataset create idx_sql_a\nrun 1 steps 3\n'
+     'sql "SELECT t, sqrt(px*px + py*py + pz*pz) AS p FROM frames ORDER BY frame"\n'
+     "dataset close\ndataset delete idx_sql_a",
+     DB + 'dataset create idx_sql_e\nrun 1 steps 5\n'
+     'sql "CREATE VIEW drift AS SELECT frame, t, energy - LAG(energy) OVER '
+     "(ORDER BY frame) AS de FROM frames; "
+     'SELECT COUNT(*) AS rows_with_de FROM drift WHERE de IS NOT NULL"\n'
+     "dataset close\ndataset delete idx_sql_e"],
+    returns="string — a header line plus ` | `-separated rows, or `ok (N row(s) changed)`",
+    errors=["no dataset is open — SQL runs on the open dataset; DATASET CREATE <name> or "
+            "DATASET OPEN <name> first"],
+    locations=[{"file": P, "line": 56, "role": "production"},
+               {"file": V, "line": 2054, "role": "exec_sql_cmd"},
+               {"file": "posim/src/dataset.rs", "line": 1, "role": "the sidecar handle"},
+               {"file": G, "line": gsec("5.14"), "role": "spec (5.14)"}],
+    seeAlso=["cmd.dataset.create", "cmd.dataset.open", "cmd.dataset.info"],
+    invariants=["The string reaches SQLite VERBATIM: the ENTIRE SQLite grammar is "
+                "available, not a curated subset.",
+                "SQL, DATASET and MOVIE are CONTEXTUAL keywords like BALL/HINGE — commands "
+                "only at the start of a line, ordinary identifiers everywhere else."]))
+
+MOVIE = [
+    ("create", "MOVIE CREATE", 'MOVIE CREATE name [ "AS" name ]',
+     "Read the bodies, frames and states tables of a dataset and write the self-contained "
+     "3-D player page movies/<name>.html (the name defaults to the dataset's; AS picks "
+     "another, so one dataset can carry several movies). The player animates the recorded "
+     "bodies: play/pause/step, a scrub bar, 0.25x-4x speed, an orbiting camera, per-body "
+     "trails and labels, and a live readout of t, E, |P|, |L| and the cumulative collision "
+     "count. It follows the same pinned drawing rules as the scene window and the recorded "
+     "videos: wall slabs are excluded from both the draw list and the camera auto-fit (a BOX "
+     "appears as the dashed wireframe instead), and every round shape is rendered "
+     "quaternion-rotated about its local z axis so spin is visible. Because the dataset is "
+     "the source of truth, a movie can be deleted and rebuilt at any time without re-running "
+     "any physics. Needs at least 2 frames of at least one body.",
+     [DB + "dataset create idx_mv_create_t\nrun 1 steps 3\ndataset close\n"
+      "movie create idx_mv_create_t\nmovie delete idx_mv_create_t\n"
+      "dataset delete idx_mv_create_t",
+      DB + "dataset create idx_mv_create_i\nrun 1 steps 3\ndataset close\n"
+      "movie create idx_mv_create_i as idx_mv_create_i_v2\n"
+      "movie delete idx_mv_create_i_v2\ndataset delete idx_mv_create_i",
+      DB + "dataset create idx_mv_create_a\nrun 1 steps 4\ndataset close\n"
+      "movie create idx_mv_create_a\nmovie create idx_mv_create_a as idx_mv_create_a_alt\n"
+      "movie delete idx_mv_create_a\nmovie delete idx_mv_create_a_alt\n"
+      "dataset delete idx_mv_create_a",
+      DBOX + "dataset create idx_mv_create_e\nrun 1 steps 5\ndataset close\n"
+      "movie create idx_mv_create_e\nmovie delete idx_mv_create_e\n"
+      "dataset delete idx_mv_create_e"],
+     ["dataset `x` has 1 frame(s); a movie needs at least 2 — RUN with recording on first",
+      "dataset `x` has no bodies — a movie needs something to draw",
+      "no such dataset `nosuch` (datasets/nosuch.db)"]),
+    ("delete", "MOVIE DELETE", "MOVIE DELETE name",
+     "Remove movies/<name>.html. The dataset it was built from is untouched — the dataset is "
+     "the source of truth, so MOVIE CREATE rebuilds the page at any time without re-running "
+     "any physics. Deleting a movie never deletes data; deleting a missing movie is an error "
+     "naming the path.",
+     [DB + "dataset create idx_mv_del_t\nrun 1 steps 2\ndataset close\n"
+      "movie create idx_mv_del_t\nmovie delete idx_mv_del_t\ndataset delete idx_mv_del_t",
+      DB + "dataset create idx_mv_del_i\nrun 1 steps 2\ndataset close\n"
+      "movie create idx_mv_del_i\nmovie delete idx_mv_del_i\nmovie create idx_mv_del_i\n"
+      "movie delete idx_mv_del_i\ndataset delete idx_mv_del_i",
+      DB + "dataset create idx_mv_del_a\nrun 1 steps 2\ndataset close\n"
+      "movie create idx_mv_del_a as idx_mv_del_a_view\nmovie delete idx_mv_del_a_view\n"
+      "dataset delete idx_mv_del_a",
+      DB + "dataset create idx_mv_del_e\nrun 1 steps 3\ndataset close\n"
+      "movie create idx_mv_del_e\nmovie create idx_mv_del_e as idx_mv_del_e_alt\n"
+      "movie delete idx_mv_del_e\nmovie delete idx_mv_del_e_alt\n"
+      "dataset delete idx_mv_del_e"],
+     ["no such movie `nosuch` (movies/nosuch.html). MOVIE CREATE <dataset> builds one."]),
+    ("list", "MOVIE LIST", "MOVIE LIST",
+     "Name every movie under movies/ — the .html file stems, sorted. With none it says so "
+     "and points at MOVIE CREATE. LIST is how you find what MOVIE PLAY can play: entries "
+     "appear when MOVIE CREATE writes a page and disappear when MOVIE DELETE removes one.",
+     ["movie list",
+      DB + "dataset create idx_mv_list_i\nrun 1 steps 2\ndataset close\n"
+      "movie create idx_mv_list_i\nmovie list\nmovie delete idx_mv_list_i\n"
+      "dataset delete idx_mv_list_i",
+      DB + "dataset create idx_mv_list_a\nrun 1 steps 2\ndataset close\n"
+      "movie create idx_mv_list_a as idx_mv_list_a_view\nmovie list\n"
+      "movie delete idx_mv_list_a_view\ndataset delete idx_mv_list_a",
+      DB + "dataset create idx_mv_list_e\nrun 1 steps 2\ndataset close\n"
+      "movie create idx_mv_list_e\nmovie delete idx_mv_list_e\nmovie list\n"
+      "dataset delete idx_mv_list_e"],
+     []),
+    ("play", "MOVIE PLAY", "MOVIE PLAY name",
+     "Open movies/<name>.html in your web browser. The page is fully self-contained — "
+     "bodies, frames and player embedded, zero external fetches — so it also opens by hand "
+     "from the file system, plays offline, and keeps playing after its dataset is deleted. "
+     "POSIM_NO_BROWSER=1 suppresses the browser launch (batch runs), and PLAY then reports "
+     "the page as ready instead.",
+     ["movie play solveit20_kepler",
+      DB + "dataset create idx_mv_play_i\nrun 1 steps 2\ndataset close\n"
+      "movie create idx_mv_play_i\nmovie play idx_mv_play_i\nmovie delete idx_mv_play_i\n"
+      "dataset delete idx_mv_play_i",
+      DB + "dataset create idx_mv_play_a\nrun 1 steps 3\ndataset close\n"
+      "movie create idx_mv_play_a as idx_mv_play_a_view\nmovie play idx_mv_play_a_view\n"
+      "movie delete idx_mv_play_a_view\ndataset delete idx_mv_play_a",
+      DBOX + "dataset create idx_mv_play_e\nrun 1 steps 5\ndataset close\n"
+      "movie create idx_mv_play_e\nmovie play idx_mv_play_e\nmovie delete idx_mv_play_e\n"
+      "dataset delete idx_mv_play_e"],
+     ["no such movie `nosuch` (movies/nosuch.html). MOVIE CREATE <dataset> builds one."]),
+]
+
+MV_SUMMARY = {
+    "create": "Build the self-contained 3-D player page movies/<name>.html from a dataset.",
+    "delete": "Remove a movie page; the dataset it came from stays.",
+    "list": "Name every movie under movies/.",
+    "play": "Open a movie page in your web browser.",
+}
+
+for mid, nm, syn, defn, rungs, errs in MOVIE:
+    out.append(E(
+        "cmd.movie." + mid, nm, MV_SUMMARY[mid], defn, [syn], rungs,
+        indexKeys=["M"], errors=errs,
+        locations=[{"file": P, "line": 87, "role": "moviecmd production"},
+                   {"file": "posim/src/movie.rs", "line": 1, "role": "the player builder"},
+                   {"file": V, "line": 2226, "role": "exec_movie"},
+                   {"file": G, "line": gsec("5.14"), "role": "spec (5.14)"}],
+        seeAlso=["cmd.dataset.create", "cmd.dataset.play", "cmd.movie.create", "cmd.sql"],
+        invariants=["A movie is DERIVED from a dataset, never recorded independently of "
+                    "one — delete and rebuild it at any time without re-running physics.",
+                    "Wall slabs are excluded from the draw list and the camera auto-fit; "
+                    "a BOX draws as the dashed wireframe (the pinned rule)."]))
 
 # ==========================================================================
 # QM / QM2 / QM3 families

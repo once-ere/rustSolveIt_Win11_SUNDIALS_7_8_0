@@ -29,7 +29,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::boundary::{Boundary, Sdf};\n\n// Sdf is the trait every shape implements: a signed distance, plus a\n// surface normal that defaults to a central difference of it.\nlet s = Boundary::Sphere { radius: 0.5 };\nlet d = s.signed_distance(&Vec3::new(1.0, 0.0, 0.0));\nassert!((d - 0.5).abs() < 1e-9);   // 1.0 out from a radius-0.5 sphere",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -160,7 +160,7 @@
     "medium": "rust",
     "code": "use ::physical_object::boundary::Boundary;\nuse ::physical_object::boundary::analytic_inertia_tensor;\nuse ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = analytic_inertia_tensor(0.5, &Boundary::Sphere { radius: 0.5 });",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -203,7 +203,7 @@
     "medium": "rust",
     "code": "use ::physical_object::boundary::Boundary;\nuse ::physical_object::boundary::support_extent;\nuse ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = support_extent(&Boundary::Sphere { radius: 0.5 }, Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -246,7 +246,7 @@
     "medium": "rust",
     "code": "use ::physical_object::boundary::Boundary;\nuse ::physical_object::boundary::support_point;\nuse ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = support_point(&Boundary::Sphere { radius: 0.5 }, Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -289,7 +289,7 @@
     "medium": "rust",
     "code": "use ::physical_object::boundary::Boundary;\nuse ::physical_object::boundary::support_rank;\nuse ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = support_rank(&Boundary::Sphere { radius: 0.5 }, Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -332,7 +332,7 @@
     "medium": "rust",
     "code": "use ::physical_object::boundary::Boundary;\nuse ::physical_object::boundary::support_footprint_radius;\nuse ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = support_footprint_radius(&Boundary::Sphere { radius: 0.5 }, Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -375,7 +375,7 @@
     "medium": "rust",
     "code": "use ::physical_object::boundary::Boundary;\nuse ::physical_object::boundary::bounding_radius;\nuse ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = bounding_radius(&Boundary::Sphere { radius: 0.5 });",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -447,7 +447,7 @@
     "medium": "rust",
     "code": "use ::physical_object::collide::ZENO_GAP_RELATIVE;\n\n// the relative gap below which a contact is treated as resting rather\n// than as another impact \u2014 the anti-Zeno guard\nassert!(ZENO_GAP_RELATIVE > 0.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -490,7 +490,7 @@
     "medium": "rust",
     "code": "use ::physical_object::collide::same_burst;\nuse ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = same_burst(0.5, 0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -596,7 +596,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::boundary::Boundary;\nuse ::physical_object::collide::{ContactGeometry, contact_geometry};\n\nlet a = physical_object::new_rigid(0, 1.0, 0.0, Vec3::new(-0.6, 0.0, 0.0),\n    Quat::identity(), Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 0.0, 0.0),\n    Mat3::identity(), Mat3::identity(), Boundary::Sphere { radius: 0.5 });\nlet b = physical_object::new_rigid(1, 1.0, 0.0, Vec3::new(0.6, 0.0, 0.0),\n    Quat::identity(), Vec3::new(-1.0, 0.0, 0.0), Vec3::new(0.0, 0.0, 0.0),\n    Mat3::identity(), Mat3::identity(), Boundary::Sphere { radius: 0.5 });\nlet g: Option<ContactGeometry> = contact_geometry(&a, &b, 1e-9);\n// the two spheres are 1.2 apart with radii 0.5 each, so they are NOT\n// touching yet and the narrow phase says so\nassert!(g.is_none());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -741,7 +741,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::collide::world_aabb;\n\nlet o = physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 0.0, 0.0));\nlet (lo, hi) = world_aabb(&o);\nassert!(lo.x <= hi.x);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -813,7 +813,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::boundary::Boundary;\nuse ::physical_object::collide::contact_geometry;\n\nlet a = physical_object::new_rigid(0, 1.0, 0.0, Vec3::new(-0.6, 0.0, 0.0),\n    Quat::identity(), Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 0.0, 0.0),\n    Mat3::identity(), Mat3::identity(), Boundary::Sphere { radius: 0.5 });\nlet b = physical_object::new_rigid(1, 1.0, 0.0, Vec3::new(0.6, 0.0, 0.0),\n    Quat::identity(), Vec3::new(-1.0, 0.0, 0.0), Vec3::new(0.0, 0.0, 0.0),\n    Mat3::identity(), Mat3::identity(), Boundary::Sphere { radius: 0.5 });\n// separation > 0 means apart; the normal points from a toward b\nlet g = contact_geometry(&a, &b, 1e-9);\nlet _ = g;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -851,7 +851,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\nuse ::physical_object::collide::resolve_pair;\n\nlet mut sys = PhysicalObjectSystem::new(vec![\n    physical_object::new_point(0, 1.0, Vec3::new(-1.0, 0.0, 0.0), Vec3::new(1.0, 0.0, 0.0)),\n    physical_object::new_point(1, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(-1.0, 0.0, 0.0)),\n], 0.0);\n// two POINTS can never collide, so the resolver has nothing to do\nlet c = resolve_pair(&mut sys, 0, 1, false)?;\nassert!(c.is_none());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -1015,7 +1015,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 100,
+    "line": 206,
     "role": "definition"
    },
    {
@@ -1054,7 +1054,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 109,
+    "line": 218,
     "role": "definition"
    },
    {
@@ -1093,7 +1093,7 @@
    "K"
   ],
   "summary": "fn `kind` in `physical_object::constrain`.",
-  "definition": "No doc comment in the source.  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `special_functions/examples/bessel_complex_accuracy.rs`, `special_functions/examples/hankel_accuracy.rs`.",
+  "definition": "No doc comment in the source.  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`, `special_functions/examples/bessel_complex_accuracy.rs`, `special_functions/examples/hankel_accuracy.rs`.",
   "syntax": [
    "pub fn kind(&self) -> &'static str"
   ],
@@ -1103,8 +1103,13 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 118,
+    "line": 230,
     "role": "definition"
+   },
+   {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
    },
    {
     "file": "special_functions/examples/bessel_complex_accuracy.rs",
@@ -1142,7 +1147,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 128,
+    "line": 243,
     "role": "definition"
    },
    {
@@ -1176,7 +1181,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 135,
+    "line": 250,
     "role": "definition"
    }
   ],
@@ -1205,7 +1210,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 143,
+    "line": 258,
     "role": "definition"
    },
    {
@@ -1249,7 +1254,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 150,
+    "line": 265,
     "role": "definition"
    },
    {
@@ -1293,7 +1298,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 158,
+    "line": 273,
     "role": "definition"
    },
    {
@@ -1337,7 +1342,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 172,
+    "line": 287,
     "role": "definition"
    },
    {
@@ -1371,7 +1376,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 178,
+    "line": 293,
     "role": "definition"
    },
    {
@@ -1420,7 +1425,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 182,
+    "line": 297,
     "role": "definition"
    },
    {
@@ -1459,7 +1464,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 188,
+    "line": 303,
     "role": "definition"
    },
    {
@@ -1503,7 +1508,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 233,
+    "line": 362,
     "role": "definition"
    },
    {
@@ -1537,7 +1542,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 267,
+    "line": 396,
     "role": "definition"
    },
    {
@@ -1571,7 +1576,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 281,
+    "line": 410,
     "role": "definition"
    },
    {
@@ -1605,7 +1610,109 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 313,
+    "line": 442,
+    "role": "definition"
+   },
+   {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.physical_object.constrain.ConstraintSet.add_prismatic",
+  "name": "ConstraintSet::add_prismatic",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "A"
+  ],
+  "summary": "A slider along `axis`: body `j` may translate along it and do nothing else.",
+  "definition": "A slider along `axis`: body `j` may translate along it and do nothing else.  Five rows, one freedom \u2014 the mirror of [`add_hinge`](Self::add_hinge), which leaves one rotation instead. Two rows hold the offset across the axis at whatever it is now, three lock the relative orientation, and the bodies keep the separation they are assembled with, so the slide is measured from there.  This is what a rac  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
+  "syntax": [
+   "pub fn add_prismatic( &mut self, system: &PhysicalObjectSystem, i: usize, j: usize, axis: Vec3,"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "physical_object/src/constrain.rs",
+    "line": 498,
+    "role": "definition"
+   },
+   {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.physical_object.constrain.ConstraintSet.add_rack",
+  "name": "ConstraintSet::add_rack",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "A"
+  ],
+  "summary": "Rack and pinion: body `i` turns about `axis`, body `j` slides along `direction`, locked by the pitch radius as `\u0394s = r\u00b7\u03b8`.",
+  "definition": "Rack and pinion: body `i` turns about `axis`, body `j` slides along `direction`, locked by the pitch radius as `\u0394s = r\u00b7\u03b8`.  One row, and the only one that couples a rotation to a translation. A positive `radius` means a positive turn about the axis drives the rack along `+direction`; negate either to flip the sense. The direction must be perpendicular to the axis, as it is on any real rack, and is  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
+  "syntax": [
+   "pub fn add_rack( &mut self, system: &PhysicalObjectSystem, i: usize, j: usize, axis: Vec3,"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "physical_object/src/constrain.rs",
+    "line": 544,
+    "role": "definition"
+   },
+   {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.physical_object.constrain.ConstraintSet.add_gear",
+  "name": "ConstraintSet::add_gear",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "A"
+  ],
+  "summary": "Gear the two bodies' turns about `axis` in the ratio `theta_i = -ratio * theta_j`.",
+  "definition": "Gear the two bodies' turns about `axis` in the ratio `theta_i = -ratio * theta_j`.  One row. It holds no point and no direction \u2014 only the proportion \u2014 so it is the one joint here that couples a rotation to another rotation. Two shafts on a 2:1 pair take `ratio = 2`; equal and opposite, as a wheel rolling inside a ring of twice its radius, takes `ratio = 1`.  **The ratio must be rational**, and is  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
+  "syntax": [
+   "pub fn add_gear( &mut self, system: &PhysicalObjectSystem, i: usize, j: usize, axis: Vec3,"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "physical_object/src/constrain.rs",
+    "line": 616,
     "role": "definition"
    },
    {
@@ -1639,7 +1746,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 361,
+    "line": 678,
     "role": "definition"
    },
    {
@@ -1668,7 +1775,7 @@
    "F"
   ],
   "summary": "Calls `emit(row, block)` for every non-zero block of the velocity Jacobian at this configuration.",
-  "definition": "Calls `emit(row, block)` for every non-zero block of the velocity Jacobian at this configuration. Everything else is written in terms of this one walk.  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/integrate.rs`.",
+  "definition": "Calls `emit(row, block)` for every non-zero block of the velocity Jacobian at this configuration. Everything else is written in terms of this one walk.  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn for_each_block(&self, pose: &[Pose], mut emit: impl FnMut(usize, JacBlock))"
   ],
@@ -1678,11 +1785,11 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 392,
+    "line": 734,
     "role": "definition"
    },
    {
-    "file": "physical_object/src/integrate.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -1702,7 +1809,7 @@
    "V"
   ],
   "summary": "`\u0121 = J\u00b7u` for every constraint.",
-  "definition": "`\u0121 = J\u00b7u` for every constraint.  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/integrate.rs`, `physical_object/src/sensitivity.rs`.",
+  "definition": "`\u0121 = J\u00b7u` for every constraint.  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn velocity_residual(&self, pose: &[Pose], v: &[Vec3], w: &[Vec3], out: &mut [f64])"
   ],
@@ -1712,16 +1819,11 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 428,
+    "line": 821,
     "role": "definition"
    },
    {
-    "file": "physical_object/src/integrate.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/sensitivity.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -1751,7 +1853,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 442,
+    "line": 835,
     "role": "definition"
    },
    {
@@ -1795,7 +1897,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 463,
+    "line": 856,
     "role": "definition"
    },
    {
@@ -1834,7 +1936,7 @@
    "P"
   ],
   "summary": "fn `poses` in `physical_object::constrain`.",
-  "definition": "No doc comment in the source.  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/collide.rs`, `physical_object/src/equilibrium.rs`, `physical_object/src/integrate.rs`.",
+  "definition": "No doc comment in the source.  Declared in the `constrain` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn poses(system: &PhysicalObjectSystem) -> Vec<Pose>"
   ],
@@ -1844,21 +1946,11 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 480,
+    "line": 873,
     "role": "definition"
    },
    {
-    "file": "physical_object/src/collide.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/equilibrium.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/integrate.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -1888,7 +1980,7 @@
   "locations": [
    {
     "file": "physical_object/src/constrain.rs",
-    "line": 491,
+    "line": 884,
     "role": "definition"
    },
    {
@@ -2044,7 +2136,7 @@
    "S"
   ],
   "summary": "Conserved-quantity snapshot recorded at each output time.",
-  "definition": "Conserved-quantity snapshot recorded at each output time.  Declared in the `integrate` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/equilibrium.rs`, `physical_object/src/lib.rs`.",
+  "definition": "Conserved-quantity snapshot recorded at each output time.  Declared in the `integrate` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/equilibrium.rs`, `physical_object/src/lib.rs`, `posim/src/dataset.rs`.",
   "syntax": [
    "pub struct Snapshot"
   ],
@@ -2066,12 +2158,46 @@
     "file": "physical_object/src/lib.rs",
     "line": 1,
     "role": "used here"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "used here"
    }
   ],
   "examples": [],
   "seeAlso": [],
   "invariants": [],
   "status": "reference"
+ },
+ {
+  "id": "rs.physical_object.integrate.BodySnap",
+  "name": "BodySnap",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "B"
+  ],
+  "summary": "One body's kinematic state inside a [`Snapshot`].",
+  "definition": "One body's kinematic state inside a [`Snapshot`].  Declared in the `integrate` module of the `physical_object` crate.",
+  "syntax": [
+   "pub struct BodySnap"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "physical_object/src/integrate.rs",
+    "line": 198,
+    "role": "definition"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "stub"
  },
  {
   "id": "rs.physical_object.integrate.RunReport",
@@ -2083,7 +2209,7 @@
    "R"
   ],
   "summary": "Result of a solver run: per-output snapshots plus solver statistics.",
-  "definition": "Result of a solver run: per-output snapshots plus solver statistics.  Declared in the `integrate` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/lib.rs`.",
+  "definition": "Result of a solver run: per-output snapshots plus solver statistics.  Declared in the `integrate` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/lib.rs`, `posim/src/vm.rs`.",
   "syntax": [
    "pub struct RunReport"
   ],
@@ -2093,11 +2219,16 @@
   "locations": [
    {
     "file": "physical_object/src/integrate.rs",
-    "line": 189,
+    "line": 208,
     "role": "definition"
    },
    {
     "file": "physical_object/src/lib.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
     "line": 1,
     "role": "used here"
    }
@@ -2127,7 +2258,7 @@
   "locations": [
    {
     "file": "physical_object/src/integrate.rs",
-    "line": 516,
+    "line": 547,
     "role": "definition"
    }
   ],
@@ -2137,7 +2268,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\nuse ::physical_object::integrate::run;\n\nlet mut sys = PhysicalObjectSystem::new(vec![\n    physical_object::new_point(0, 1.0, Vec3::new(0.0, 0.0, 0.0), Vec3::new(1.0, 0.0, 0.0)),\n], 0.0);\n// every step goes through the pure-Rust SUNDIALS solvers; there is no\n// hand-rolled stepper anywhere in the project\nlet report = run(&mut sys, 1.0, 2)?;\nlet _ = report;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2155,7 +2286,7 @@
    "S"
   ],
   "summary": "Advances the system by a single interval `dt` (one output).",
-  "definition": "Advances the system by a single interval `dt` (one output).  Declared in the `integrate` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `posim/examples/scene_server_reference.rs`.",
+  "definition": "Advances the system by a single interval `dt` (one output).  Declared in the `integrate` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn step(system: &mut PhysicalObjectSystem, dt: f64) -> Result<RunReport, String>"
   ],
@@ -2165,7 +2296,7 @@
   "locations": [
    {
     "file": "physical_object/src/integrate.rs",
-    "line": 542,
+    "line": 573,
     "role": "definition"
    },
    {
@@ -2184,7 +2315,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/examples/scene_server_reference.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -2214,7 +2345,7 @@
   "locations": [
    {
     "file": "physical_object/src/integrate.rs",
-    "line": 1219,
+    "line": 1250,
     "role": "definition"
    },
    {
@@ -2327,7 +2458,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Vec3::new(0.5, 0.5, 0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2385,7 +2516,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Vec3::zeros();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2467,7 +2598,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Vec3::new(1.0, 2.0, 3.0);\nlet _value = subject.to_array();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2499,17 +2630,7 @@
     "role": "definition"
    },
    {
-    "file": "physical_object/src/boundary.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/collide.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/constrain.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -2520,7 +2641,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Vec3::new(1.0, 2.0, 3.0);\nlet _value = subject.dot(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2559,17 +2680,17 @@
     "role": "used here"
    },
    {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
     "file": "special_functions/examples/bessel_complex_accuracy.rs",
     "line": 1,
     "role": "used here"
    },
    {
     "file": "special_functions/examples/hard_sphere.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "special_functions/tests/vendored_identities.rs",
     "line": 1,
     "role": "used here"
    }
@@ -2580,7 +2701,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Vec3::new(1.0, 2.0, 3.0);\nlet _value = subject.cross(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2635,7 +2756,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Vec3::new(1.0, 2.0, 3.0);\nlet _value = subject.norm_squared();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2693,7 +2814,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Vec3::new(1.0, 2.0, 3.0);\nlet _value = subject.norm();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2738,7 +2859,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Vec3::new(1.0, 2.0, 3.0);\nlet _value = subject.normalize();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2842,7 +2963,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Mat3::zeros();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2900,7 +3021,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Mat3::identity();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -2948,7 +3069,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Mat3::from_diagonal(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3001,7 +3122,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Mat3::identity();\nlet _value = subject.transpose();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3044,7 +3165,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Mat3::identity();\nlet _value = subject.determinant();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3087,7 +3208,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Mat3::identity();\nlet _value = subject.try_inverse();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3130,7 +3251,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Mat3::identity();\nlet _value = subject.inverse_diagonal();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3178,7 +3299,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Mat3::skew(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3210,17 +3331,7 @@
     "role": "definition"
    },
    {
-    "file": "physical_object/src/boundary.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/collide.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "posim/src/vm.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -3231,7 +3342,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Mat3::outer(Vec3::new(1.0, 0.0, 0.0), Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3249,7 +3360,7 @@
    "Q"
   ],
   "summary": "A quaternion `w + xi + yj + zk`; orientation quaternions are kept normalized by the owning setters.",
-  "definition": "A quaternion `w + xi + yj + zk`; orientation quaternions are kept normalized by the owning setters.  Declared in the `linalg` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/collide.rs`, `physical_object/src/constrain.rs`, `physical_object/src/equilibrium.rs`.",
+  "definition": "A quaternion `w + xi + yj + zk`; orientation quaternions are kept normalized by the owning setters.  Declared in the `linalg` module of the `physical_object` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub struct Quat"
   ],
@@ -3263,17 +3374,7 @@
     "role": "definition"
    },
    {
-    "file": "physical_object/src/collide.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/constrain.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/equilibrium.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -3307,17 +3408,7 @@
     "role": "definition"
    },
    {
-    "file": "physical_object/src/integrate.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/system.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "posim/src/vm.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -3328,7 +3419,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Quat::new(0.5, 0.5, 0.5, 0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3386,7 +3477,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Quat::identity();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3434,7 +3525,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Quat::pure(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3487,7 +3578,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet _value = Quat::from_axis_angle(Vec3::new(1.0, 0.0, 0.0), 0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3545,7 +3636,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Quat::identity();\nlet _value = subject.norm();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3590,7 +3681,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Quat::identity();\nlet _value = subject.normalize();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3645,7 +3736,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Quat::identity();\nlet _value = subject.conjugate();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3688,7 +3779,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Quat::identity();\nlet _value = subject.inverse();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3720,17 +3811,7 @@
     "role": "definition"
    },
    {
-    "file": "physical_object/src/collide.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/constrain.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/integrate.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -3741,7 +3822,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Quat::identity();\nlet _value = subject.rotate(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3794,7 +3875,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\n\nlet subject = Quat::identity();\nlet _value = subject.to_rotation_matrix();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3901,7 +3982,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet _value = physical_object::new_point(1, 0.5, Vec3::new(1.0, 0.0, 0.0), Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -3939,7 +4020,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::boundary::Boundary;\n\n// id, mass, charge, then pose, then the two velocities, then the two\n// tensors, then the shape\nlet o = physical_object::new_rigid(\n    0, 2.0, 0.0,\n    Vec3::new(0.0, 0.0, 0.0), Quat::identity(),\n    Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 0.0, 0.0),\n    Mat3::identity(), Mat3::identity(),\n    Boundary::Sphere { radius: 0.5 },\n);\nassert_eq!(o.get_mass(), 2.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4020,17 +4101,17 @@
     "role": "definition"
    },
    {
+    "file": "physical_object/src/integrate.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
     "file": "physical_object/src/system.rs",
     "line": 1,
     "role": "used here"
    },
    {
-    "file": "posim/src/machine.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "posim/src/vm.rs",
+    "file": "posim/src/dataset.rs",
     "line": 1,
     "role": "used here"
    }
@@ -4041,7 +4122,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_id();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4084,7 +4165,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_id(1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4127,7 +4208,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_mass();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4170,7 +4251,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_mass(0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4213,7 +4294,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_inverse_mass();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4266,7 +4347,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_inverse_mass(0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4319,7 +4400,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_charge();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4362,7 +4443,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_charge(0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4420,7 +4501,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_position();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4452,17 +4533,7 @@
     "role": "definition"
    },
    {
-    "file": "physical_object/src/collide.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/equilibrium.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/integrate.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -4473,7 +4544,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_position(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4513,6 +4584,11 @@
     "file": "physical_object/tests/conservation.rs",
     "line": 1,
     "role": "used here"
+   },
+   {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
    }
   ],
   "examples": [
@@ -4521,7 +4597,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_orientation();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4553,17 +4629,7 @@
     "role": "definition"
    },
    {
-    "file": "physical_object/src/collide.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/system.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "posim/src/vm.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -4574,7 +4640,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_orientation(Quat::identity());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4617,7 +4683,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_momentum();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4670,7 +4736,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_momentum(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4728,7 +4794,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_angular_momentum();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4771,7 +4837,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_angular_momentum(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4814,7 +4880,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_inertia_tensor();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4857,7 +4923,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_inertia_tensor(Mat3::identity());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4910,7 +4976,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_inverse_inertia_tensor();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -4958,7 +5024,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_inverse_inertia_tensor(Mat3::identity());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5006,7 +5072,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_magnetic_moment_tensor();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5049,7 +5115,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_magnetic_moment_tensor(Mat3::identity());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5102,7 +5168,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_restitution();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5150,7 +5216,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_restitution(0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5192,7 +5258,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/src/machine.rs",
+    "file": "posim/src/dataset.rs",
     "line": 1,
     "role": "used here"
    }
@@ -5203,7 +5269,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_boundary();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5246,7 +5312,7 @@
     "medium": "rust",
     "code": "use ::physical_object::boundary::Boundary;\nuse ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_boundary(Boundary::Sphere { radius: 0.5 });",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5299,7 +5365,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_velocity();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5352,7 +5418,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_velocity(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5400,7 +5466,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.linear_velocity();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5432,12 +5498,7 @@
     "role": "definition"
    },
    {
-    "file": "physical_object/src/collide.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "posim/src/vm.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -5448,7 +5509,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.get_angular_velocity();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5491,7 +5552,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.world_inverse_inertia();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5523,7 +5584,7 @@
     "role": "definition"
    },
    {
-    "file": "posim/src/vm.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -5534,7 +5595,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.set_angular_velocity(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5582,7 +5643,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.angular_velocity();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5640,7 +5701,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.momentum();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5688,7 +5749,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.orbital_angular_momentum(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5731,7 +5792,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.total_angular_momentum(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5774,7 +5835,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.laplace_vector(Vec3::new(1.0, 0.0, 0.0), 0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5822,7 +5883,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.kinetic_energy();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5860,7 +5921,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.to_local_space(&Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5898,7 +5959,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.to_world_space(&Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5946,7 +6007,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.signed_distance(&Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -5989,7 +6050,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nlet _value = subject.surface_normal(&Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6032,7 +6093,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.recompute_inertia_from_boundary();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6090,7 +6151,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\n\nlet mut subject = physical_object::new_point(0, 2.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 3.0, 0.0));\nsubject.integrate(&Vec3::new(1.0, 0.0, 0.0), &Vec3::new(1.0, 0.0, 0.0), 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6454,7 +6515,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet _value = PhysicalObjectSystem::new(vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))], 0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6541,7 +6602,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet mut subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nlet _value = subject.remove_object(1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6584,7 +6645,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nlet _value = subject.total_mass();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6642,7 +6703,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nlet _value = subject.center_of_mass();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6685,7 +6746,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nlet _value = subject.compute_accelerations();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6733,7 +6794,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nlet _value = subject.total_momentum();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6776,7 +6837,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nlet _value = subject.total_angular_momentum(Vec3::new(1.0, 0.0, 0.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6834,7 +6895,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nlet _value = subject.total_energy();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6877,7 +6938,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nlet _value = subject.laplace_vector(1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6920,7 +6981,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nlet _value = subject.state_len();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -6963,7 +7024,7 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nlet _value = subject.pack_state();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -7006,13 +7067,835 @@
     "medium": "rust",
     "code": "use ::physical_object::linalg::{Vec3, Mat3, Quat};\nuse ::physical_object::physical_object::physical_object;\nuse ::physical_object::system::PhysicalObjectSystem;\n\nlet mut subject = PhysicalObjectSystem::new(\n    vec![physical_object::new_point(0, 1.0, Vec3::new(1.0, 0.0, 0.0), Vec3::new(0.0, 1.0, 0.0))],\n    1.0,\n);\nsubject.unpack_state(&[1.0, 2.0, 3.0]);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
   "seeAlso": [],
   "invariants": [],
   "status": "complete"
+ },
+ {
+  "id": "rs.posim.dataset.DATASET_DIR",
+  "name": "DATASET_DIR",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "Where datasets live, relative to the working directory (exactly like `videos/` and `scripts/`).",
+  "definition": "Where datasets live, relative to the working directory (exactly like `videos/` and `scripts/`).  Declared in the `dataset` module of the `posim` crate.",
+  "syntax": [
+   "pub const DATASET_DIR: &str = \"datasets\""
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 44,
+    "role": "definition"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "stub"
+ },
+ {
+  "id": "rs.posim.dataset.DATASET_SUBCOMMANDS",
+  "name": "DATASET_SUBCOMMANDS",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "Every DATASET subcommand the parser implements.",
+  "definition": "Every DATASET subcommand the parser implements. The lockstep test below checks each is documented in the EBNF, HELP_TEXT, grammar.md and grammar.tex \u2014 and, conversely, that the EBNF promises nothing the parser lacks (the QM2 phantom-`ISO` lesson).  Declared in the `dataset` module of the `posim` crate.",
+  "syntax": [
+   "pub const DATASET_SUBCOMMANDS: &[&str] = &[ \"create\", \"open\", \"close\", \"record\", \"snapshot\", \"list\", \"info\", \"copy\", \"saveas\", \"delete\", \"play\", ]"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 50,
+    "role": "definition"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "stub"
+ },
+ {
+  "id": "rs.posim.dataset.MOVIE_SUBCOMMANDS",
+  "name": "MOVIE_SUBCOMMANDS",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "M"
+  ],
+  "summary": "Every MOVIE subcommand the parser implements.",
+  "definition": "Every MOVIE subcommand the parser implements.  Declared in the `dataset` module of the `posim` crate.",
+  "syntax": [
+   "pub const MOVIE_SUBCOMMANDS: &[&str] = &[\"create\", \"delete\", \"list\", \"play\"]"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 56,
+    "role": "definition"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "stub"
+ },
+ {
+  "id": "rs.posim.dataset.valid_name",
+  "name": "valid_name",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "V"
+  ],
+  "summary": "Dataset and movie names are file stems: letters, digits, `_`, `-`.",
+  "definition": "Dataset and movie names are file stems: letters, digits, `_`, `-`.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/movie.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn valid_name(name: &str) -> Result<(), String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 59,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.db_path",
+  "name": "db_path",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "fn `db_path` in `posim::dataset`.",
+  "definition": "No doc comment in the source.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/movie.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn db_path(name: &str) -> PathBuf"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 71,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.find_db_tool",
+  "name": "find_db_tool",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "F"
+  ],
+  "summary": "Locates the `solveit_db` sidecar binary: `$POSIM_DB_TOOL`, then `dataset_tools/target/release/solveit_db` from the working directory upward, then `$PA.",
+  "definition": "Locates the `solveit_db` sidecar binary: `$POSIM_DB_TOOL`, then `dataset_tools/target/release/solveit_db` from the working directory upward, then `$PATH`. The error tells the user exactly how to build it \u2014 the sidecar is a separate package precisely so the simulator workspace stays dependency-free.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn find_db_tool() -> Result<PathBuf, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 80,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.open_in_browser",
+  "name": "open_in_browser",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "O"
+  ],
+  "summary": "Opens `path` in the default browser unless `$POSIM_NO_BROWSER` is set (the same suppression switch the scene window uses).",
+  "definition": "Opens `path` in the default browser unless `$POSIM_NO_BROWSER` is set (the same suppression switch the scene window uses). Returns whether a browser was actually asked for.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/movie.rs`.",
+  "syntax": [
+   "pub fn open_in_browser(path: &Path) -> bool"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 117,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.DatasetHandle",
+  "name": "DatasetHandle",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "A live connection to one dataset: a `solveit_db serve` child holding the r2d2 pool, spoken to in line-delimited JSON.",
+  "definition": "A live connection to one dataset: a `solveit_db serve` child holding the r2d2 pool, spoken to in line-delimited JSON.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/vm.rs`.",
+  "syntax": [
+   "pub struct DatasetHandle"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 134,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.DatasetHandle.create",
+  "name": "DatasetHandle::create",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Creates `datasets/<name>.",
+  "definition": "Creates `datasets/<name>.db` FRESH \u2014 an existing dataset of the same name is replaced, so re-running a script or notebook always reproduces the same dataset (use DATASET COPY / SAVEAS first to keep an old run).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/lexer.rs`, `posim/src/movie.rs`, `posim/src/parser.rs`.",
+  "syntax": [
+   "pub fn create(name: &str) -> Result<Self, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 172,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/lexer.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.DatasetHandle.open",
+  "name": "DatasetHandle::open",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "O"
+  ],
+  "summary": "Opens an existing dataset.",
+  "definition": "Opens an existing dataset.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/examples/scene_server_reference.rs`.",
+  "syntax": [
+   "pub fn open(name: &str) -> Result<Self, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 193,
+    "role": "definition"
+   },
+   {
+    "file": "posim/examples/scene_server_reference.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.DatasetHandle.sql",
+  "name": "DatasetHandle::sql",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "S"
+  ],
+  "summary": "Runs arbitrary SQL.",
+  "definition": "Runs arbitrary SQL. Returns (columns, rows, changed-row count).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn sql(&mut self, sql: &str) -> Result<(Vec<String>, Vec<Vec<Json>>, i64), String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 243,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.DatasetHandle.append",
+  "name": "DatasetHandle::append",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "A"
+  ],
+  "summary": "Appends one batch of frames (bodies re-synced first).",
+  "definition": "Appends one batch of frames (bodies re-synced first). Also keeps the `box` meta key current so a movie can draw the bounding box.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn append(&mut self, state: &SimState, frames: Vec<Json>) -> Result<(i64, i64), String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 274,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.DatasetHandle.counts",
+  "name": "DatasetHandle::counts",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Row counts for messages: (bodies, frames, states).",
+  "definition": "Row counts for messages: (bodies, frames, states).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/collision.rs`.",
+  "syntax": [
+   "pub fn counts(&mut self) -> Result<(i64, i64, i64), String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 302,
+    "role": "definition"
+   },
+   {
+    "file": "physical_object/tests/collision.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.DatasetHandle.close",
+  "name": "DatasetHandle::close",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Checkpoints the WAL and shuts the child down.",
+  "definition": "Checkpoints the WAL and shuts the child down.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/charged_in_b_field.rs`, `physical_object/tests/dae.rs`, `posim/examples/scene_server_reference.rs`.",
+  "syntax": [
+   "pub fn close(mut self) -> Result<String, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 314,
+    "role": "definition"
+   },
+   {
+    "file": "physical_object/examples/charged_in_b_field.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/examples/scene_server_reference.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.delete",
+  "name": "delete",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "Deletes `datasets/<name>.",
+  "definition": "Deletes `datasets/<name>.db` (refusing while it is the open one is the VM's job \u2014 it knows what is open).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/lexer.rs`, `posim/src/movie.rs`, `posim/src/parser.rs`.",
+  "syntax": [
+   "pub fn delete(name: &str) -> Result<String, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 351,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/lexer.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.copy",
+  "name": "copy",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Copies `src` to `dst` via the sidecar's VACUUM INTO (compact, checkpointed, safe against a live writer).",
+  "definition": "Copies `src` to `dst` via the sidecar's VACUUM INTO (compact, checkpointed, safe against a live writer).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/examples/scene_server_reference.rs`, `special_functions/tests/vendored_identities.rs`.",
+  "syntax": [
+   "pub fn copy(src: &str, dst: &str) -> Result<String, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 363,
+    "role": "definition"
+   },
+   {
+    "file": "posim/examples/scene_server_reference.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "special_functions/tests/vendored_identities.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.list",
+  "name": "list",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "L"
+  ],
+  "summary": "Names of every dataset under `datasets/`, sorted.",
+  "definition": "Names of every dataset under `datasets/`, sorted.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/examples/scene_server_reference.rs`.",
+  "syntax": [
+   "pub fn list() -> Result<Vec<String>, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 388,
+    "role": "definition"
+   },
+   {
+    "file": "posim/examples/scene_server_reference.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.query_file",
+  "name": "query_file",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "Q"
+  ],
+  "summary": "One-shot query against a dataset ON DISK (no open handle needed \u2014 WAL guarantees a reader sees every committed transaction even while a serve child ho.",
+  "definition": "One-shot query against a dataset ON DISK (no open handle needed \u2014 WAL guarantees a reader sees every committed transaction even while a serve child holds the file). Returns (columns, rows).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/movie.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn query_file(db: &Path, sql: &str) -> Result<(Vec<String>, Vec<Vec<Json>>), String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 412,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.jnum",
+  "name": "jnum",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "J"
+  ],
+  "summary": "fn `jnum` in `posim::dataset`.",
+  "definition": "No doc comment in the source.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/movie.rs`.",
+  "syntax": [
+   "pub fn jnum(j: &Json) -> f64"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 442,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.bodies_payload",
+  "name": "bodies_payload",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "B"
+  ],
+  "summary": "The bodies table payload: every current object, keyed by its STABLE id (`get_id()`, not the index \u2014 DEL renumbers indices but never reuses ids), with .",
+  "definition": "The bodies table payload: every current object, keyed by its STABLE id (`get_id()`, not the index \u2014 DEL renumbers indices but never reuses ids), with the user-registered name when one exists.  Declared in the `dataset` module of the `posim` crate.",
+  "syntax": [
+   "pub fn bodies_payload(state: &SimState) -> Json"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 487,
+    "role": "definition"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "stub"
+ },
+ {
+  "id": "rs.posim.dataset.frame_from_system",
+  "name": "frame_from_system",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "F"
+  ],
+  "summary": "A frame captured from the LIVE system (DATASET SNAPSHOT, and the frame recorded after STEP).",
+  "definition": "A frame captured from the LIVE system (DATASET SNAPSHOT, and the frame recorded after STEP).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn frame_from_system(state: &SimState) -> Json"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 559,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.frame_from_snapshot",
+  "name": "frame_from_snapshot",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "F"
+  ],
+  "summary": "A frame from an integration [`Snapshot`] (the per-output captures a RUN makes on its way to t_end).",
+  "definition": "A frame from an integration [`Snapshot`] (the per-output captures a RUN makes on its way to t_end).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn frame_from_snapshot(snap: &Snapshot) -> Json"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 588,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.play",
+  "name": "play",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "P"
+  ],
+  "summary": "Builds `datasets/<name>_plots.",
+  "definition": "Builds `datasets/<name>_plots.html` (self-contained: vanilla JS + canvas, zero external fetches) and opens it in the browser. Returns the status message.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/movie.rs`, `posim/src/parser.rs`, `posim/src/qm.rs`.",
+  "syntax": [
+   "pub fn play(name: &str) -> Result<String, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 612,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/qm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
  },
  {
   "id": "rs.posim.lexer.Keyword",
@@ -7068,7 +7951,7 @@
   "locations": [
    {
     "file": "posim/src/lexer.rs",
-    "line": 183,
+    "line": 198,
     "role": "definition"
    },
    {
@@ -7107,7 +7990,7 @@
   "locations": [
    {
     "file": "posim/src/lexer.rs",
-    "line": 217,
+    "line": 232,
     "role": "definition"
    },
    {
@@ -7141,7 +8024,7 @@
   "locations": [
    {
     "file": "posim/src/lexer.rs",
-    "line": 255,
+    "line": 270,
     "role": "definition"
    },
    {
@@ -7170,7 +8053,7 @@
    "J"
   ],
   "summary": "Minimal JSON document.",
-  "definition": "Minimal JSON document.  Declared in the `machine` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/scene/mod.rs`.",
+  "definition": "Minimal JSON document.  Declared in the `machine` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/dataset.rs`, `posim/src/movie.rs`, `posim/src/scene/mod.rs`.",
   "syntax": [
    "pub enum Json"
   ],
@@ -7182,6 +8065,16 @@
     "file": "posim/src/machine.rs",
     "line": 33,
     "role": "definition"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
    },
    {
     "file": "posim/src/scene/mod.rs",
@@ -7204,7 +8097,7 @@
    "G"
   ],
   "summary": "fn `get` in `posim::machine`.",
-  "definition": "No doc comment in the source.  Declared in the `machine` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/collide.rs`, `physical_object/src/system.rs`, `posim/src/main.rs`.",
+  "definition": "No doc comment in the source.  Declared in the `machine` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/collide.rs`, `physical_object/src/system.rs`, `posim/src/dataset.rs`.",
   "syntax": [
    "pub fn get<'a>(&'a self, key: &str) -> Option<&'a Json>"
   ],
@@ -7228,7 +8121,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/src/main.rs",
+    "file": "posim/src/dataset.rs",
     "line": 1,
     "role": "used here"
    }
@@ -7411,7 +8304,7 @@
   "locations": [
    {
     "file": "posim/src/machine.rs",
-    "line": 447,
+    "line": 520,
     "role": "definition"
    }
   ],
@@ -7432,7 +8325,7 @@
    "S"
   ],
   "summary": "The `--machine` stdin/stdout server loop.",
-  "definition": "The `--machine` stdin/stdout server loop.  Declared in the `machine` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/main.rs`, `special_functions/src/debye.rs`, `special_functions/src/eigen.rs`.",
+  "definition": "The `--machine` stdin/stdout server loop.  Declared in the `machine` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/dataset.rs`, `posim/src/main.rs`, `posim/src/vm.rs`.",
   "syntax": [
    "pub fn serve()"
   ],
@@ -7442,8 +8335,13 @@
   "locations": [
    {
     "file": "posim/src/machine.rs",
-    "line": 512,
+    "line": 585,
     "role": "definition"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "used here"
    },
    {
     "file": "posim/src/main.rs",
@@ -7451,12 +8349,231 @@
     "role": "used here"
    },
    {
-    "file": "special_functions/src/debye.rs",
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.movie.MOVIE_DIR",
+  "name": "MOVIE_DIR",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "M"
+  ],
+  "summary": "Where movies live, next to `videos/` (which holds the legacy recorder's pages).",
+  "definition": "Where movies live, next to `videos/` (which holds the legacy recorder's pages).  Declared in the `movie` module of the `posim` crate.",
+  "syntax": [
+   "pub const MOVIE_DIR: &str = \"movies\""
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/movie.rs",
+    "line": 29,
+    "role": "definition"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "stub"
+ },
+ {
+  "id": "rs.posim.movie.movie_path",
+  "name": "movie_path",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "M"
+  ],
+  "summary": "fn `movie_path` in `posim::movie`.",
+  "definition": "No doc comment in the source.  Declared in the `movie` module of the `posim` crate.",
+  "syntax": [
+   "pub fn movie_path(name: &str) -> PathBuf"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/movie.rs",
+    "line": 31,
+    "role": "definition"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "stub"
+ },
+ {
+  "id": "rs.posim.movie.create",
+  "name": "create",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Builds `movies/<name>.",
+  "definition": "Builds `movies/<name>.html` from `datasets/<dataset>.db`.  Declared in the `movie` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/dataset.rs`, `posim/src/lexer.rs`, `posim/src/parser.rs`.",
+  "syntax": [
+   "pub fn create(ds: &str, name: Option<&str>) -> Result<String, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/movie.rs",
+    "line": 36,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/dataset.rs",
     "line": 1,
     "role": "used here"
    },
    {
-    "file": "special_functions/src/eigen.rs",
+    "file": "posim/src/lexer.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.movie.delete",
+  "name": "delete",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "fn `delete` in `posim::movie`.",
+  "definition": "No doc comment in the source.  Declared in the `movie` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/dataset.rs`, `posim/src/lexer.rs`, `posim/src/parser.rs`.",
+  "syntax": [
+   "pub fn delete(name: &str) -> Result<String, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/movie.rs",
+    "line": 169,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/lexer.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.movie.list",
+  "name": "list",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "L"
+  ],
+  "summary": "fn `list` in `posim::movie`.",
+  "definition": "No doc comment in the source.  Declared in the `movie` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/examples/scene_server_reference.rs`.",
+  "syntax": [
+   "pub fn list() -> Result<Vec<String>, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/movie.rs",
+    "line": 179,
+    "role": "definition"
+   },
+   {
+    "file": "posim/examples/scene_server_reference.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.movie.play",
+  "name": "play",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "P"
+  ],
+  "summary": "fn `play` in `posim::movie`.",
+  "definition": "No doc comment in the source.  Declared in the `movie` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/dataset.rs`, `posim/src/parser.rs`, `posim/src/qm.rs`.",
+  "syntax": [
+   "pub fn play(name: &str) -> Result<String, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/movie.rs",
+    "line": 200,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/qm.rs",
     "line": 1,
     "role": "used here"
    }
@@ -7728,7 +8845,7 @@
   "locations": [
    {
     "file": "posim/src/parser.rs",
-    "line": 238,
+    "line": 287,
     "role": "definition"
    }
   ],
@@ -7759,7 +8876,7 @@
   "locations": [
    {
     "file": "posim/src/parser.rs",
-    "line": 246,
+    "line": 295,
     "role": "definition"
    },
    {
@@ -7793,7 +8910,7 @@
   "locations": [
    {
     "file": "posim/src/parser.rs",
-    "line": 264,
+    "line": 313,
     "role": "definition"
    },
    {
@@ -8143,7 +9260,7 @@
    "F"
   ],
   "summary": "`Default` gives 0 for `mass`/`hbar`, which are invalid, so the session builds one through here instead.",
-  "definition": "`Default` gives 0 for `mass`/`hbar`, which are invalid, so the session builds one through here instead.  Declared in the `qm2` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/collision.rs`.",
+  "definition": "`Default` gives 0 for `mass`/`hbar`, which are invalid, so the session builds one through here instead.  Declared in the `qm2` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/collision.rs`, `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn fresh() -> Self"
   ],
@@ -8158,6 +9275,11 @@
    },
    {
     "file": "physical_object/tests/collision.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -8318,7 +9440,7 @@
    "F"
   ],
   "summary": "fn `fresh` in `posim::qm3`.",
-  "definition": "No doc comment in the source.  Declared in the `qm3` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/collision.rs`.",
+  "definition": "No doc comment in the source.  Declared in the `qm3` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/collision.rs`, `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn fresh() -> Self"
   ],
@@ -8333,6 +9455,11 @@
    },
    {
     "file": "physical_object/tests/collision.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -8386,7 +9513,7 @@
    "C"
   ],
   "summary": "Dispatch a special-function call.",
-  "definition": "Dispatch a special-function call.  Returns `None` if `name` is not one of ours, so the caller can fall through to the core builtins and then to its own \"unknown function\" error \u2014 this module never swallows a name it does not own.  Declared in the `special` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/equilibrium.rs`, `physical_object/src/integrate.rs`, `physical_object/src/physical_object.rs`.",
+  "definition": "Dispatch a special-function call.  Returns `None` if `name` is not one of ours, so the caller can fall through to the core builtins and then to its own \"unknown function\" error \u2014 this module never swallows a name it does not own.  Declared in the `special` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/constrain.rs`, `physical_object/src/equilibrium.rs`, `physical_object/src/integrate.rs`.",
   "syntax": [
    "pub fn call(name: &str, args: &[Value]) -> Option<Result<Value, String>>"
   ],
@@ -8400,17 +9527,17 @@
     "role": "definition"
    },
    {
+    "file": "physical_object/src/constrain.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
     "file": "physical_object/src/equilibrium.rs",
     "line": 1,
     "role": "used here"
    },
    {
     "file": "physical_object/src/integrate.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/physical_object.rs",
     "line": 1,
     "role": "used here"
    }
@@ -8620,7 +9747,7 @@
    "P"
   ],
   "summary": "A dotted access path: `obj0.",
-  "definition": "A dotted access path: `obj0.position.x`, `system.g_constant`, `contact0.normal`.  Declared in the `vm` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`.",
+  "definition": "A dotted access path: `obj0.position.x`, `system.g_constant`, `contact0.normal`.  Declared in the `vm` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/dataset.rs`, `posim/src/movie.rs`, `posim/src/parser.rs`.",
   "syntax": [
    "pub struct Path"
   ],
@@ -8632,6 +9759,16 @@
     "file": "posim/src/vm.rs",
     "line": 120,
     "role": "definition"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
    },
    {
     "file": "posim/src/parser.rs",
@@ -8846,6 +9983,74 @@
   "status": "reference"
  },
  {
+  "id": "rs.posim.vm.DatasetCmd",
+  "name": "DatasetCmd",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "The `DATASET` family: SQLite recording via the `solveit_db` sidecar (see [`crate::dataset`]).",
+  "definition": "The `DATASET` family: SQLite recording via the `solveit_db` sidecar (see [`crate::dataset`]). Names are embedded at parse time \u2014 none of these arguments is an expression.  Declared in the `vm` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`.",
+  "syntax": [
+   "pub enum DatasetCmd"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/vm.rs",
+    "line": 238,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.vm.MovieCmd",
+  "name": "MovieCmd",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "M"
+  ],
+  "summary": "The `MOVIE` family: browser animations DERIVED from datasets (see [`crate::movie`]).",
+  "definition": "The `MOVIE` family: browser animations DERIVED from datasets (see [`crate::movie`]).  Declared in the `vm` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`.",
+  "syntax": [
+   "pub enum MovieCmd"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/vm.rs",
+    "line": 262,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
   "id": "rs.posim.vm.Instr",
   "name": "Instr",
   "kind": "type",
@@ -8865,7 +10070,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 236,
+    "line": 272,
     "role": "definition"
    },
    {
@@ -8894,7 +10099,7 @@
    "S"
   ],
   "summary": "The mutable simulator state driven by the notebook / machine modes.",
-  "definition": "The mutable simulator state driven by the notebook / machine modes.  Declared in the `vm` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/machine.rs`, `posim/src/notebook.rs`, `posim/src/qm.rs`.",
+  "definition": "The mutable simulator state driven by the notebook / machine modes.  Declared in the `vm` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/dataset.rs`, `posim/src/machine.rs`, `posim/src/notebook.rs`.",
   "syntax": [
    "pub struct SimState"
   ],
@@ -8904,8 +10109,13 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 323,
+    "line": 373,
     "role": "definition"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "used here"
    },
    {
     "file": "posim/src/machine.rs",
@@ -8914,11 +10124,6 @@
    },
    {
     "file": "posim/src/notebook.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "posim/src/qm.rs",
     "line": 1,
     "role": "used here"
    }
@@ -8938,7 +10143,7 @@
    "H"
   ],
   "summary": "const `HELP_TEXT` in `posim::vm`.",
-  "definition": "No doc comment in the source.  Declared in the `vm` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/machine.rs`, `posim/src/main.rs`, `posim/src/qm.rs`.",
+  "definition": "No doc comment in the source.  Declared in the `vm` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/dataset.rs`, `posim/src/machine.rs`, `posim/src/main.rs`.",
   "syntax": [
    "pub const HELP_TEXT: &str = \"\\ posim command language (case-insensitive keywords): NEW POINT|SPHERE|CUBOID|TORUS|DISK|CYLINDER"
   ],
@@ -8948,8 +10153,13 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 396,
+    "line": 455,
     "role": "definition"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "used here"
    },
    {
     "file": "posim/src/machine.rs",
@@ -8958,11 +10168,6 @@
    },
    {
     "file": "posim/src/main.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "posim/src/qm.rs",
     "line": 1,
     "role": "used here"
    }
@@ -8992,7 +10197,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 737,
+    "line": 822,
     "role": "definition"
    },
    {
@@ -9031,7 +10236,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 2073,
+    "line": 2459,
     "role": "definition"
    },
    {
@@ -9075,7 +10280,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 2131,
+    "line": 2517,
     "role": "definition"
    }
   ],
@@ -9106,7 +10311,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 2186,
+    "line": 2572,
     "role": "definition"
    }
   ],
@@ -9137,7 +10342,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 2987,
+    "line": 3373,
     "role": "definition"
    },
    {
@@ -9494,7 +10699,7 @@
    "R"
   ],
   "summary": "Orbits the camera: yaw (azimuth) and pitch (elevation), degrees.",
-  "definition": "Orbits the camera: yaw (azimuth) and pitch (elevation), degrees.  Declared in the `scene` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/collide.rs`, `physical_object/src/constrain.rs`, `physical_object/src/integrate.rs`.",
+  "definition": "Orbits the camera: yaw (azimuth) and pitch (elevation), degrees.  Declared in the `scene` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn rotate(&self, dyaw: f64, dpitch: f64) -> Result<String, String>"
   ],
@@ -9508,17 +10713,7 @@
     "role": "definition"
    },
    {
-    "file": "physical_object/src/collide.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/constrain.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "physical_object/src/integrate.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -9788,7 +10983,7 @@
    "C"
   ],
   "summary": "Current camera (used in tests).",
-  "definition": "Current camera (used in tests).  Declared in the `scene` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/vm.rs`.",
+  "definition": "Current camera (used in tests).  Declared in the `scene` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/movie.rs`, `posim/src/parser.rs`, `posim/src/vm.rs`.",
   "syntax": [
    "pub fn camera(&self) -> Camera"
   ],
@@ -9800,6 +10995,11 @@
     "file": "posim/src/scene/mod.rs",
     "line": 703,
     "role": "definition"
+   },
+   {
+    "file": "posim/src/movie.rs",
+    "line": 1,
+    "role": "used here"
    },
    {
     "file": "posim/src/parser.rs",
@@ -10330,7 +11530,7 @@
     "medium": "rust",
     "code": "use ::special_functions::airy_complex::airy_c;\nuse ::special_functions::complex::Complex64;\n\nlet _value = airy_c(Complex64::new(1.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10378,7 +11578,7 @@
     "medium": "rust",
     "code": "use ::special_functions::airy_uniform::jy_airy;\n\nlet _value = jy_airy(0.5, 2.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10431,7 +11631,7 @@
     "medium": "rust",
     "code": "use ::special_functions::airy_uniform::jy_airy_c;\nuse ::special_functions::complex::Complex64;\n\nlet _value = jy_airy_c(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10484,7 +11684,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel::bessel_j_array;\n\nlet _value = bessel_j_array(4, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10539,7 +11739,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel::bessel_j;\n\nlet _value = bessel_j(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10589,7 +11789,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_cnu::bessel_j_cnu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_j_cnu(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10637,7 +11837,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_cnu::bessel_i_cnu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_i_cnu(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10690,7 +11890,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_cnu::bessel_y_cnu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_y_cnu(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10738,7 +11938,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_cnu::bessel_k_cnu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_k_cnu(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10820,7 +12020,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_cnu_large::j_asym;\nuse ::special_functions::complex::Complex64;\n\nlet _value = j_asym(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10868,7 +12068,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_cnu_large::y_asym;\nuse ::special_functions::complex::Complex64;\n\nlet _value = y_asym(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10921,7 +12121,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_cnu_large::k_asym;\nuse ::special_functions::complex::Complex64;\n\nlet _value = k_asym(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -10969,7 +12169,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_cnu_large::i_asym;\nuse ::special_functions::complex::Complex64;\n\nlet _value = i_asym(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11012,7 +12212,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_cnu_large::ik_uniform_unscaled;\nuse ::special_functions::complex::Complex64;\n\nlet _value = ik_uniform_unscaled(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11055,7 +12255,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_complex::bessel_j_array_c;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_j_array_c(1, Complex64::new(1.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11098,7 +12298,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_complex::bessel_j_c;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_j_c(0, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11141,7 +12341,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_complex::bessel_i_c;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_i_c(0, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11179,7 +12379,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_complex::bessel_y_array_c;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_y_array_c(1, Complex64::new(1.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11227,7 +12427,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_complex::bessel_y_c;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_y_c(0, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11275,7 +12475,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_complex::bessel_k_c;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_k_c(0, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11318,7 +12518,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_complex::bessel_j_nu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_j_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11373,7 +12573,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_complex::bessel_i_nu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_i_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11428,7 +12628,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_complex::bessel_y_nu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_y_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11473,7 +12673,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_complex::bessel_k_nu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_k_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11513,7 +12713,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_scaled::asym_error_estimate;\nuse ::special_functions::complex::Complex64;\n\nlet _value = asym_error_estimate(0.5, Complex64::new(2.0, 0.5));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11556,7 +12756,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_scaled::hankel_h1_scaled_nu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = hankel_h1_scaled_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11599,7 +12799,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_scaled::hankel_h2_scaled_nu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = hankel_h2_scaled_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11647,7 +12847,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_scaled::bessel_k_scaled_nu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_k_scaled_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11690,7 +12890,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_scaled::bessel_i_scaled_nu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_i_scaled_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11733,7 +12933,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_scaled::bessel_j_scaled_nu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_j_scaled_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11781,7 +12981,7 @@
     "medium": "rust",
     "code": "use ::special_functions::bessel_scaled::bessel_y_scaled_nu;\nuse ::special_functions::complex::Complex64;\n\nlet _value = bessel_y_scaled_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11873,7 +13073,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet _value = Complex64::new(0.5, 2.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11910,17 +13110,17 @@
     "role": "used here"
    },
    {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
     "file": "quantum/examples/absorber_tuning.rs",
     "line": 1,
     "role": "used here"
    },
    {
     "file": "special_functions/examples/bessel_complex_accuracy.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "special_functions/examples/bessel_nu_accuracy.rs",
     "line": 1,
     "role": "used here"
    }
@@ -11931,7 +13131,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet _value = Complex64::real(0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -11969,7 +13169,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet v = Complex64::I * Complex64::I;\nassert_eq!(v, Complex64::real(-1.0));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12046,7 +13246,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet v = Complex64::ONE * Complex64::new(3.0, -4.0);\nassert_eq!(v.abs(), 5.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12099,7 +13299,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.conj();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12142,7 +13342,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.norm_sqr();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12200,7 +13400,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.abs();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12245,7 +13445,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.arg();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12303,7 +13503,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.exp();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12358,7 +13558,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.ln();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12416,7 +13616,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.powf(0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12518,7 +13718,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.sin();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12573,7 +13773,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.cos();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12633,7 +13833,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet _value = Complex64::from_polar(0.5, 2.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12686,7 +13886,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.is_finite();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12744,7 +13944,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\n\nlet subject = Complex64::new(3.0, -4.0);\nlet _value = subject.inv();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12831,7 +14031,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::debye::ik_uniform;\n\nlet _value = ik_uniform(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12874,7 +14074,7 @@
     "medium": "rust",
     "code": "use ::special_functions::debye::jy_debye;\n\nlet _value = jy_debye(0.5, 2.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12922,7 +14122,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::debye::jy_debye_c;\n\nlet _value = jy_debye_c(Complex64::new(0.5, 0.0), Complex64::new(2.0, 0.5));",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -12965,7 +14165,7 @@
     "medium": "rust",
     "code": "use ::special_functions::debye::jy_log_magnitude;\n\nlet _value = jy_log_magnitude(0.5, 2.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13080,7 +14280,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::gamma_complex::ln_gamma_c;\n\nlet _value = ln_gamma_c(Complex64::new(1.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13128,7 +14328,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::gamma_complex::gamma_c;\n\nlet _value = gamma_c(Complex64::new(1.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13176,7 +14376,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::gamma_complex::rgamma_c;\n\nlet _value = rgamma_c(Complex64::new(1.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13219,7 +14419,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::hankel_h1_c;\n\nlet _value = hankel_h1_c(0, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13262,7 +14462,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::hankel_h2_c;\n\nlet _value = hankel_h2_c(0, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13310,7 +14510,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::hankel_h1_nu;\n\nlet _value = hankel_h1_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13365,7 +14565,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::hankel_h2_nu;\n\nlet _value = hankel_h2_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13410,7 +14610,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::hankel_h1_prime_c;\n\nlet _value = hankel_h1_prime_c(0, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13453,7 +14653,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::hankel_h2_prime_c;\n\nlet _value = hankel_h2_prime_c(0, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13506,7 +14706,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::hankel_h1_prime_nu;\n\nlet _value = hankel_h1_prime_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13561,7 +14761,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::hankel_h2_prime_nu;\n\nlet _value = hankel_h2_prime_nu(0.5, Complex64::new(2.0, 0.5))?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13606,7 +14806,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::sph_hankel_h1;\n\nlet _value = sph_hankel_h1(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13661,7 +14861,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::sph_hankel_h2;\n\nlet _value = sph_hankel_h2(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13716,7 +14916,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::sph_hankel_h1_prime;\n\nlet _value = sph_hankel_h1_prime(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13771,7 +14971,7 @@
     "medium": "rust",
     "code": "use ::special_functions::complex::Complex64;\nuse ::special_functions::hankel::sph_hankel_h2_prime;\n\nlet _value = sph_hankel_h2_prime(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13855,7 +15055,7 @@
     "medium": "rust",
     "code": "use ::special_functions::lanczos::{LanczosResult, Stop};\n\n// what QM2/QM3 STATES return: the k lowest eigenvalues with their vectors\n// and the residual that justifies trusting them \u2014 an iterative eigensolver\n// has no exact stopping point, so the residual is part of the answer\nlet r = LanczosResult { values: vec![1.0], vectors: vec![vec![1.0]],\n                        residuals: vec![1e-8], iterations: 1, stop: Stop::Converged };\nassert_eq!(r.values.len(), r.residuals.len());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -13947,7 +15147,7 @@
     "medium": "rust",
     "code": "use ::special_functions::legendre::legendre_p;\n\nlet _value = legendre_p(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14002,7 +15202,7 @@
     "medium": "rust",
     "code": "use ::special_functions::legendre::legendre_p_prime;\n\nlet _value = legendre_p_prime(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14057,7 +15257,7 @@
     "medium": "rust",
     "code": "use ::special_functions::legendre::assoc_legendre_p;\n\nlet _value = assoc_legendre_p(1, 1, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14112,7 +15312,7 @@
     "medium": "rust",
     "code": "use ::special_functions::legendre::norm_assoc_legendre_p;\n\nlet _value = norm_assoc_legendre_p(1, 1, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14167,7 +15367,7 @@
     "medium": "rust",
     "code": "use ::special_functions::legendre::sph_harm;\n\nlet _value = sph_harm(1, 1, 0.5, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14222,7 +15422,7 @@
     "medium": "rust",
     "code": "use ::special_functions::legendre::sph_harm_real;\n\nlet _value = sph_harm_real(1, 1, 0.5, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14267,7 +15467,7 @@
     "medium": "rust",
     "code": "use ::special_functions::rel_err;\n\nlet _value = rel_err(0.5, 2.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14312,7 +15512,7 @@
     "medium": "rust",
     "code": "use ::special_functions::orthopoly::hermite_h;\n\nlet _value = hermite_h(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14367,7 +15567,7 @@
     "medium": "rust",
     "code": "use ::special_functions::orthopoly::hermite_he;\n\nlet _value = hermite_he(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14422,7 +15622,7 @@
     "medium": "rust",
     "code": "use ::special_functions::orthopoly::laguerre_l;\n\nlet _value = laguerre_l(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14477,7 +15677,7 @@
     "medium": "rust",
     "code": "use ::special_functions::orthopoly::laguerre_l_assoc;\n\nlet _value = laguerre_l_assoc(1, 0.5, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14532,7 +15732,7 @@
     "medium": "rust",
     "code": "use ::special_functions::orthopoly::chebyshev_t;\n\nlet _value = chebyshev_t(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14587,7 +15787,7 @@
     "medium": "rust",
     "code": "use ::special_functions::orthopoly::chebyshev_u;\n\nlet _value = chebyshev_u(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14642,7 +15842,7 @@
     "medium": "rust",
     "code": "use ::special_functions::orthopoly::gegenbauer_c;\n\nlet _value = gegenbauer_c(1, 0.5, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14697,7 +15897,7 @@
     "medium": "rust",
     "code": "use ::special_functions::orthopoly::jacobi_p;\n\nlet _value = jacobi_p(1, 0.5, 0.5, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14752,7 +15952,7 @@
     "medium": "rust",
     "code": "use ::special_functions::quadrature::gauss_legendre;\n\nlet _value = gauss_legendre(1)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14841,7 +16041,7 @@
     "medium": "rust",
     "code": "use ::special_functions::quadrature::integrate_adaptive;\n\nlet v = integrate_adaptive(|x: f64| x * x * x, 0.0, 1.0, 1e-10)?;\nassert!((v - 0.25).abs() < 1e-10);\n// and the honest failure: 1/sqrt(x) on [0,1] is finite but Simpson\n// cannot resolve the endpoint, so it ERRORS rather than guessing.\nassert!(integrate_adaptive(|x: f64| 1.0 / x.sqrt(), 0.0, 1.0, 1e-10).is_err());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14879,7 +16079,7 @@
     "medium": "rust",
     "code": "use ::special_functions::quadrature::brent_root;\n\n// cos x = x, bracketed on [0, 1]\nlet r = brent_root(|x: f64| x.cos() - x, 0.0, 1.0, 1e-12)?;\nassert!((r - 0.739085133215).abs() < 1e-9);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14917,7 +16117,7 @@
     "medium": "rust",
     "code": "use ::special_functions::quadrature::find_roots;\n\n// find_roots CANNOT tell a pole from a root: a pole flips the sign of f\n// too, and Brent converges on it. Check f at each value it returns.\nlet rs = find_roots(|x: f64| x.sin(), 0.1, 7.0, 100, 1e-12)?;\nassert!(!rs.is_empty());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -14965,7 +16165,7 @@
     "medium": "rust",
     "code": "use ::special_functions::sph_bessel::sph_j;\n\nlet _value = sph_j(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15010,7 +16210,7 @@
     "medium": "rust",
     "code": "use ::special_functions::sph_bessel::sph_y;\n\nlet _value = sph_y(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15065,7 +16265,7 @@
     "medium": "rust",
     "code": "use ::special_functions::sph_bessel::sph_j_prime;\n\nlet _value = sph_j_prime(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15120,7 +16320,7 @@
     "medium": "rust",
     "code": "use ::special_functions::sph_bessel::sph_y_prime;\n\nlet _value = sph_y_prime(0, 2.0)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15175,7 +16375,7 @@
     "medium": "rust",
     "code": "use ::special_functions::tridiag::solve_tridiag;\n\nlet _value = solve_tridiag(&[1.0, 2.0, 3.0], &[1.0, 2.0, 3.0], &[1.0, 2.0, 3.0], &[1.0, 2.0, 3.0])?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15481,7 +16681,7 @@
     "medium": "rust",
     "code": "use ::quantum::absorber::Ramp;\n\nlet ramp = Ramp { width: 15.0, power: 2.0 };\n// power 2 is the measured optimum: too steep a ramp is a mirror,\n// whether it is real or imaginary\nassert_eq!(ramp.power, 2.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15519,7 +16719,7 @@
     "medium": "rust",
     "code": "use ::quantum::absorber::Band;\n\nlet band = Band { k_lo: 1.0, k_hi: 4.0, samples: 8 };\nassert_eq!(band.samples, 8);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15557,7 +16757,7 @@
     "medium": "rust",
     "code": "use ::quantum::absorber::Leak;\n\n// the two ways probability escapes an absorber, which trade off against\n// each other: too weak and it passes THROUGH, too strong and it reflects\n// off the absorber's own leading edge\nlet leak = Leak { k: 3.0, reflection: 1e-9, leakage: 2e-9, absorbed: 1.0 };\nassert!(leak.escaped() > 0.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15595,7 +16795,7 @@
     "medium": "rust",
     "code": "use ::quantum::absorber::Leak;\n\nlet leak = Leak { k: 3.0, reflection: 1e-9, leakage: 2e-9, absorbed: 1.0 };\n// R + T: everything the absorber failed to swallow\nassert!((leak.escaped() - 3e-9).abs() < 1e-18);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15677,7 +16877,7 @@
     "medium": "rust",
     "code": "use ::quantum::absorber::{Ramp, Band, worst_escape};\n\nlet w = worst_escape(Ramp { width: 15.0, power: 2.0 }, 3.0,\n                    Band { k_lo: 2.0, k_hi: 4.0, samples: 4 }, 1.0, 1.0)?;\nassert!(w >= 0.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15715,7 +16915,7 @@
     "medium": "rust",
     "code": "use ::quantum::absorber::{Ramp, Band, choose_strength};\n\n// the tuning surface has a wide optimum \u2014 over an order of magnitude \u2014\n// but it is not infinite, so the strength is SEARCHED rather than guessed\nlet (strength, escape) = choose_strength(Ramp { width: 15.0, power: 2.0 },\n                                        Band { k_lo: 2.0, k_hi: 4.0, samples: 4 },\n                                        1.0, 1.0)?;\nassert!(strength > 0.0 && escape >= 0.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15753,7 +16953,7 @@
     "medium": "rust",
     "code": "use ::quantum::isosurface::Mesh;\n\nlet m = Mesh::default();\nassert!(m.triangles.is_empty() || !m.triangles.is_empty());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15898,7 +17098,7 @@
     "medium": "rust",
     "code": "use ::quantum::isosurface::Mesh;\n\nlet m = Mesh::default();\n// checked by the divergence theorem against shapes whose volume is known\nassert_eq!(m.enclosed_volume(), 0.0);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -15936,7 +17136,7 @@
     "medium": "rust",
     "code": "use ::quantum::isosurface::Mesh;\n\nlet m = Mesh::default();\n// every directed edge exactly once, its reverse exactly once: a hole\n// leaves an unmatched edge, a flipped triangle leaves a duplicate\nassert!(m.is_watertight());",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16047,7 +17247,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::PeriodicGrid;\n\nlet _value = PeriodicGrid::new(0.5, 0.5, 1)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16133,7 +17333,7 @@
    "P"
   ],
   "summary": "All positions.",
-  "definition": "All positions.  Declared in the `nash` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `quantum/examples/nash_propagator.rs`, `special_functions/examples/harmonic_oscillator.rs`, `special_functions/examples/scatter_1d.rs`.",
+  "definition": "All positions.  Declared in the `nash` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/dae.rs`, `quantum/examples/nash_propagator.rs`, `special_functions/examples/harmonic_oscillator.rs`.",
   "syntax": [
    "pub fn points(&self) -> Vec<f64>"
   ],
@@ -16152,17 +17352,17 @@
     "role": "used here"
    },
    {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
     "file": "quantum/examples/nash_propagator.rs",
     "line": 1,
     "role": "used here"
    },
    {
     "file": "special_functions/examples/harmonic_oscillator.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "special_functions/examples/scatter_1d.rs",
     "line": 1,
     "role": "used here"
    }
@@ -16207,7 +17407,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::order_for;\n\nlet _value = order_for(0.5, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16250,7 +17450,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::truncation_bound;\n\nlet _value = truncation_bound(0.5, 1)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16429,7 +17629,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::{PeriodicGrid, NashPropagator};\n\nlet subject = NashPropagator::new(PeriodicGrid::new(-8.0, 8.0, 60)?, &vec![0.0; 60], 1.0, 1.0, 0.01, None)?;\nlet _value = subject.splitting();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16487,7 +17687,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::{PeriodicGrid, NashPropagator};\n\nlet subject = NashPropagator::new(PeriodicGrid::new(-8.0, 8.0, 60)?, &vec![0.0; 60], 1.0, 1.0, 0.01, None)?;\nlet _value = subject.grid();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16525,7 +17725,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::{PeriodicGrid, NashPropagator};\n\nlet subject = NashPropagator::new(PeriodicGrid::new(-8.0, 8.0, 60)?, &vec![0.0; 60], 1.0, 1.0, 0.01, None)?;\nlet _value = subject.dt();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16578,7 +17778,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::{PeriodicGrid, NashPropagator};\n\nlet subject = NashPropagator::new(PeriodicGrid::new(-8.0, 8.0, 60)?, &vec![0.0; 60], 1.0, 1.0, 0.01, None)?;\nlet _value = subject.hbar();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16636,7 +17836,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::{PeriodicGrid, NashPropagator};\n\nlet subject = NashPropagator::new(PeriodicGrid::new(-8.0, 8.0, 60)?, &vec![0.0; 60], 1.0, 1.0, 0.01, None)?;\nlet _value = subject.mass();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16684,7 +17884,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::{PeriodicGrid, NashPropagator};\n\nlet subject = NashPropagator::new(PeriodicGrid::new(-8.0, 8.0, 60)?, &vec![0.0; 60], 1.0, 1.0, 0.01, None)?;\nlet _value = subject.lambda();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16742,7 +17942,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::{PeriodicGrid, NashPropagator};\n\nlet subject = NashPropagator::new(PeriodicGrid::new(-8.0, 8.0, 60)?, &vec![0.0; 60], 1.0, 1.0, 0.01, None)?;\nlet _value = subject.order();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16785,7 +17985,7 @@
     "medium": "rust",
     "code": "use ::quantum::nash::{PeriodicGrid, NashPropagator};\n\nlet subject = NashPropagator::new(PeriodicGrid::new(-8.0, 8.0, 60)?, &vec![0.0; 60], 1.0, 1.0, 0.01, None)?;\nlet _value = subject.truncation_error();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -16803,7 +18003,7 @@
    "S"
   ],
   "summary": "Advance `psi` by one time step, in place.",
-  "definition": "Advance `psi` by one time step, in place.  # Errors A length mismatch with the grid.  Declared in the `nash` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `posim/examples/scene_server_reference.rs`.",
+  "definition": "Advance `psi` by one time step, in place.  # Errors A length mismatch with the grid.  Declared in the `nash` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn step(&self, psi: &mut [C]) -> Result<(), String>"
   ],
@@ -16832,7 +18032,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/examples/scene_server_reference.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -17055,7 +18255,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::Grid;\n\nlet _value = Grid::new(0.5, 0.5, 1)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -17098,7 +18298,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::Grid;\n\nlet subject = Grid::new(-8.0, 8.0, 60)?;\nlet _value = subject.h();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -17141,7 +18341,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::Grid;\n\nlet subject = Grid::new(-8.0, 8.0, 60)?;\nlet _value = subject.x(1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -17178,17 +18378,17 @@
     "role": "used here"
    },
    {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
     "file": "quantum/examples/nash_propagator.rs",
     "line": 1,
     "role": "used here"
    },
    {
     "file": "special_functions/examples/harmonic_oscillator.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "special_functions/examples/scatter_1d.rs",
     "line": 1,
     "role": "used here"
    }
@@ -17199,7 +18399,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::Grid;\n\nlet subject = Grid::new(-8.0, 8.0, 60)?;\nlet _value = subject.points();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -17286,7 +18486,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::{Grid, Hamiltonian};\n\nlet _value = Hamiltonian::new(Grid::new(-8.0, 8.0, 60)?, vec![0.0; 60], 0.5, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -17358,7 +18558,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::{Grid, Hamiltonian};\n\nlet h = Hamiltonian::new(Grid::new(-8.0, 8.0, 60)?, vec![0.0; 60], 1.0, 1.0)?;\n// QM STATES is refused while an absorber is on, because H - iW is not\n// Hermitian; this is the Hermitian half of the same operator\nlet bare = h.without_absorber();\nlet _ = bare;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -17411,7 +18611,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::{Grid, Hamiltonian};\n\nlet subject = Hamiltonian::new(Grid::new(-8.0, 8.0, 60)?, vec![0.0; 60], 1.0, 1.0)?;\nlet _value = subject.is_absorbing();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -17542,7 +18742,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::{Grid, Hamiltonian};\n\nlet subject = Hamiltonian::new(Grid::new(-8.0, 8.0, 60)?, vec![0.0; 60], 1.0, 1.0)?;\nlet _value = subject.bound_states(1)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -17614,7 +18814,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::Grid;\nuse ::quantum::qm1d::Wavefunction;\nuse ::special_functions::complex::Complex64;\n\nlet _value = Wavefunction::new(Grid::new(-8.0, 8.0, 60)?, vec![Complex64::new(1.0, 0.0); 60])?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -17657,7 +18857,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::Grid;\nuse ::quantum::qm1d::Wavefunction;\n\nlet _value = Wavefunction::gaussian(Grid::new(-8.0, 8.0, 60)?, 0.5, 0.5, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -17700,7 +18900,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::Grid;\nuse ::quantum::qm1d::Wavefunction;\n\nlet _value = Wavefunction::from_real(Grid::new(-8.0, 8.0, 60)?, &[1.0, 2.0, 3.0])?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18165,7 +19365,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::{Grid, Hamiltonian, Propagator};\n\nlet subject = Propagator::new(Hamiltonian::new(Grid::new(-8.0, 8.0, 60)?, vec![0.0; 60], 1.0, 1.0)?, 0.01)?;\nlet _value = subject.dt();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18218,7 +19418,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::{Grid, Hamiltonian, Propagator};\n\nlet subject = Propagator::new(Hamiltonian::new(Grid::new(-8.0, 8.0, 60)?, vec![0.0; 60], 1.0, 1.0)?, 0.01)?;\nlet _value = subject.hamiltonian();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18236,7 +19436,7 @@
    "S"
   ],
   "summary": "Advance `w` by one time step, in place.",
-  "definition": "Advance `w` by one time step, in place.  # Errors A tridiagonal solve failure, or a grid mismatch.  Declared in the `qm1d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `posim/examples/scene_server_reference.rs`.",
+  "definition": "Advance `w` by one time step, in place.  # Errors A tridiagonal solve failure, or a grid mismatch.  Declared in the `qm1d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn step(&self, w: &mut Wavefunction) -> Result<(), String>"
   ],
@@ -18265,7 +19465,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/examples/scene_server_reference.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -18437,7 +19637,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::{Grid, Hamiltonian, DrivenPropagator};\n\nlet subject = DrivenPropagator::new(Hamiltonian::new(Grid::new(-8.0, 8.0, 60)?, vec![0.0; 60], 1.0, 1.0)?, vec![0.0; 60], 0.01)?;\nlet _value = subject.time();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18475,7 +19675,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::{Grid, Hamiltonian, DrivenPropagator};\n\nlet subject = DrivenPropagator::new(Hamiltonian::new(Grid::new(-8.0, 8.0, 60)?, vec![0.0; 60], 1.0, 1.0)?, vec![0.0; 60], 0.01)?;\nlet _value = subject.dt();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18513,7 +19713,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::{Grid, Hamiltonian, DrivenPropagator};\n\nlet h = Hamiltonian::new(Grid::new(-8.0, 8.0, 60)?, vec![0.0; 60], 1.0, 1.0)?;\nlet d = DrivenPropagator::new(h, vec![0.0; 60], 0.01)?;\n// the modulation is a CLOSURE of t, sampled at the MIDPOINT of each step \u2014\n// which is what keeps the scheme second order\nlet hn = d.hamiltonian_now(|t: f64| 0.3 * t.cos())?;\nlet _ = hn;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18531,7 +19731,7 @@
    "S"
   ],
   "summary": "One step, with `modulation` giving `f(t)`.",
-  "definition": "One step, with `modulation` giving `f(t)`.  # Errors A grid mismatch, a non-finite modulation, or a solve failure.  Declared in the `qm1d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `posim/examples/scene_server_reference.rs`.",
+  "definition": "One step, with `modulation` giving `f(t)`.  # Errors A grid mismatch, a non-finite modulation, or a solve failure.  Declared in the `qm1d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn step<F: Fn(f64) -> f64>( &mut self, w: &mut Wavefunction, modulation: F, ) -> Result<(), String>"
   ],
@@ -18560,7 +19760,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/examples/scene_server_reference.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -18644,7 +19844,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm1d::barrier_transmission;\n\nlet _value = barrier_transmission(0.5, 0.5, 0.5);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18775,7 +19975,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::Grid2;\n\nlet subject = Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?;\nlet _value = subject.hx();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18828,7 +20028,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::Grid2;\n\nlet subject = Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?;\nlet _value = subject.hy();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18871,7 +20071,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::Grid2;\n\nlet subject = Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?;\nlet _value = subject.x(1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18924,7 +20124,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::Grid2;\n\nlet subject = Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?;\nlet _value = subject.y(1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -18977,7 +20177,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::Grid2;\n\nlet subject = Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?;\nlet _value = subject.idx(1, 1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -19035,7 +20235,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::Grid2;\n\nlet subject = Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?;\nlet _value = subject.len();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -19083,7 +20283,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::Grid2;\n\nlet subject = Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?;\nlet _value = subject.is_empty();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -19126,7 +20326,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::Grid2;\n\nlet subject = Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?;\nlet _value = subject.cell();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -19208,7 +20408,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::Grid2;\nuse ::quantum::qm2d::Hamiltonian2;\n\nlet _value = Hamiltonian2::new(Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?, vec![0.0; 60], 0.5, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -19602,7 +20802,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::Grid2;\nuse ::quantum::qm2d::Wavefunction2;\nuse ::special_functions::complex::Complex64;\n\nlet _value = Wavefunction2::new(Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?, vec![Complex64::new(1.0, 0.0); 60])?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20062,7 +21262,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::{Grid2, Hamiltonian2, Propagator2};\n\nlet subject = Propagator2::new(Hamiltonian2::new(Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?, vec![0.0; 400], 1.0, 1.0)?, 0.01)?;\nlet _value = subject.dt();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20115,7 +21315,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::{Grid2, Hamiltonian2, Propagator2};\n\nlet subject = Propagator2::new(Hamiltonian2::new(Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?, vec![0.0; 400], 1.0, 1.0)?, 0.01)?;\nlet _value = subject.hamiltonian();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20133,7 +21333,7 @@
    "S"
   ],
   "summary": "Advance by one step.",
-  "definition": "Advance by one step.  # Errors A grid mismatch or a tridiagonal solve failure.  Declared in the `qm2d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `posim/examples/scene_server_reference.rs`.",
+  "definition": "Advance by one step.  # Errors A grid mismatch or a tridiagonal solve failure.  Declared in the `qm2d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn step(&self, w: &mut Wavefunction2) -> Result<(), String>"
   ],
@@ -20162,7 +21362,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/examples/scene_server_reference.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -20329,7 +21529,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::{Grid2, Hamiltonian2, DrivenPropagator2};\n\nlet subject = DrivenPropagator2::new(Hamiltonian2::new(Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?, vec![0.0; 400], 1.0, 1.0)?, vec![0.0; 400], 0.01)?;\nlet _value = subject.time();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20367,7 +21567,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm2d::{Grid2, Hamiltonian2, DrivenPropagator2};\n\nlet subject = DrivenPropagator2::new(Hamiltonian2::new(Grid2::new(-4.0, 4.0, 20, -4.0, 4.0, 20)?, vec![0.0; 400], 1.0, 1.0)?, vec![0.0; 400], 0.01)?;\nlet _value = subject.dt();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20385,7 +21585,7 @@
    "S"
   ],
   "summary": "One ADI step with the modulation taken at the midpoint.",
-  "definition": "One ADI step with the modulation taken at the midpoint.  # Errors Grid mismatch, non-finite modulation, or a solve failure.  Declared in the `qm2d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `posim/examples/scene_server_reference.rs`.",
+  "definition": "One ADI step with the modulation taken at the midpoint.  # Errors Grid mismatch, non-finite modulation, or a solve failure.  Declared in the `qm2d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn step<F: Fn(f64) -> f64>( &mut self, w: &mut Wavefunction2, modulation: F, ) -> Result<(), String>"
   ],
@@ -20414,7 +21614,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/examples/scene_server_reference.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -20620,7 +21820,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\n\nlet subject = Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?;\nlet _value = subject.hx();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20673,7 +21873,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\n\nlet subject = Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?;\nlet _value = subject.hy();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20716,7 +21916,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\n\nlet subject = Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?;\nlet _value = subject.hz();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20759,7 +21959,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\n\nlet subject = Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?;\nlet _value = subject.x(1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20812,7 +22012,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\n\nlet subject = Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?;\nlet _value = subject.y(1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20855,7 +22055,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\n\nlet subject = Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?;\nlet _value = subject.z(1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20908,7 +22108,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\n\nlet subject = Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?;\nlet _value = subject.idx(1, 1, 1);",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -20966,7 +22166,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\n\nlet subject = Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?;\nlet _value = subject.len();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -21014,7 +22214,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\n\nlet subject = Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?;\nlet _value = subject.is_empty();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -21057,7 +22257,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\n\nlet subject = Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?;\nlet _value = subject.cell();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -21134,7 +22334,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\nuse ::quantum::qm3d::Hamiltonian3;\n\nlet _value = Hamiltonian3::new(Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?, vec![0.0; 60], 0.5, 0.5)?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -21528,7 +22728,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::Grid3;\nuse ::quantum::qm3d::Wavefunction3;\nuse ::special_functions::complex::Complex64;\n\nlet _value = Wavefunction3::new(Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?, vec![Complex64::new(1.0, 0.0); 60])?;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -22022,7 +23222,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::{Grid3, Hamiltonian3, Propagator3};\n\nlet subject = Propagator3::new(Hamiltonian3::new(Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?, vec![0.0; 1000], 1.0, 1.0)?, 0.01)?;\nlet _value = subject.dt();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -22075,7 +23275,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::{Grid3, Hamiltonian3, Propagator3};\n\nlet subject = Propagator3::new(Hamiltonian3::new(Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?, vec![0.0; 1000], 1.0, 1.0)?, 0.01)?;\nlet _value = subject.hamiltonian();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -22093,7 +23293,7 @@
    "S"
   ],
   "summary": "Advance by one step.",
-  "definition": "Advance by one step.  # Errors Grid mismatch or a solve failure.  Declared in the `qm3d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `posim/examples/scene_server_reference.rs`.",
+  "definition": "Advance by one step.  # Errors Grid mismatch or a solve failure.  Declared in the `qm3d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn step(&self, w: &mut Wavefunction3) -> Result<(), String>"
   ],
@@ -22122,7 +23322,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/examples/scene_server_reference.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -22289,7 +23489,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::{Grid3, Hamiltonian3, DrivenPropagator3};\n\nlet subject = DrivenPropagator3::new(Hamiltonian3::new(Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?, vec![0.0; 1000], 1.0, 1.0)?, vec![0.0; 1000], 0.01)?;\nlet _value = subject.time();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -22327,7 +23527,7 @@
     "medium": "rust",
     "code": "use ::quantum::qm3d::{Grid3, Hamiltonian3, DrivenPropagator3};\n\nlet subject = DrivenPropagator3::new(Hamiltonian3::new(Grid3::new(-3.0, 3.0, 10, -3.0, 3.0, 10, -3.0, 3.0, 10)?, vec![0.0; 1000], 1.0, 1.0)?, vec![0.0; 1000], 0.01)?;\nlet _value = subject.dt();",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -22345,7 +23545,7 @@
    "S"
   ],
   "summary": "One step, modulation taken at the midpoint.",
-  "definition": "One step, modulation taken at the midpoint.  # Errors Grid mismatch, non-finite modulation, or a solve failure.  Declared in the `qm3d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `posim/examples/scene_server_reference.rs`.",
+  "definition": "One step, modulation taken at the midpoint.  # Errors Grid mismatch, non-finite modulation, or a solve failure.  Declared in the `qm3d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/examples/kepler_orbit.rs`, `physical_object/tests/collision.rs`, `physical_object/tests/conservation.rs`, `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn step<F: Fn(f64) -> f64>( &mut self, w: &mut Wavefunction3, modulation: F, ) -> Result<(), String>"
   ],
@@ -22374,7 +23574,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/examples/scene_server_reference.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }
@@ -22531,7 +23731,7 @@
     "medium": "rust",
     "code": "use ::quantum::transfer::scatter_real;\n\n// T(E) and R(E) for a potential sampled on a grid, by transfer matrix \u2014\n// exact at one energy, with no packet and no time stepping\nlet v = vec![0.0f64; 40];\nlet out = scatter_real(&v, -8.0, 8.0, 2.0, 1.0, 1.0)?;\nlet _ = out;",
     "expected": "compiles",
-    "verified": "2026-08-23",
+    "verified": "2026-09-08",
     "runner": "cargo build"
    }
   ],
@@ -22627,7 +23827,7 @@
    "S"
   ],
   "summary": "Sample a potential at the midpoints of `n` cells spanning `[x_min, x_max]`.",
-  "definition": "Sample a potential at the midpoints of `n` cells spanning `[x_min, x_max]`.  Midpoints, not left edges: that is what makes [`scatter`] second order in the cell width rather than first.  Declared in the `transfer` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/collide.rs`, `posim/src/qm.rs`, `posim/src/vm.rs`.",
+  "definition": "Sample a potential at the midpoints of `n` cells spanning `[x_min, x_max]`.  Midpoints, not left edges: that is what makes [`scatter`] second order in the cell width rather than first.  Declared in the `transfer` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
   "syntax": [
    "pub fn sample<F: Fn(f64) -> f64>(x_min: f64, x_max: f64, n: usize, f: F) -> Vec<C>"
   ],
@@ -22641,17 +23841,7 @@
     "role": "definition"
    },
    {
-    "file": "physical_object/src/collide.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "posim/src/qm.rs",
-    "line": 1,
-    "role": "used here"
-   },
-   {
-    "file": "posim/src/vm.rs",
+    "file": "physical_object/tests/dae.rs",
     "line": 1,
     "role": "used here"
    }

@@ -44,12 +44,13 @@ including which donor sources were deliberately not carried over — is in
 - Collision example scripts: `cargo run -p posim -- --script
   scripts/collisions/NN_name.posim` (01–12; documented with captured
   output in `collision_detection.md` §9)
-- The thirty-five SolveIt examples: `cargo run -p posim --release --
-  --script scripts/solveit/NN_name.posim` (01–35; documented with
-  captured output in `SolveIt.md` §7; 20–35 are the dataset/SQL/movie
-  examples and need the sidecar built first)
+- The thirty-eight SolveIt examples: `cargo run -p posim --release --
+  --script scripts/solveit/NN_name.posim` (01–38; documented with
+  captured output in `SolveIt.md` §7; 20–38 are the dataset/SQL/movie
+  examples — 36–38 add DATASET DIFF/SUM/MAP and the fourteen
+  curvilinear coordinate systems — and need the sidecar built first)
 - Dataset sidecar (REQUIRED for DATASET/SQL/MOVIE commands, the
-  solveit 20–35 scripts and all notebooks): `cd dataset_tools && cargo
+  solveit 20–38 scripts and all notebooks): `cd dataset_tools && cargo
   build --release` (first build fetches rusqlite/r2d2 from crates.io;
   Cargo.lock pins versions). Its own tests: `cd dataset_tools && cargo
   test` (11: WAL + busy-timeout, 10-thread pool stress, two-pool
@@ -116,8 +117,8 @@ including which donor sources were deliberately not carried over — is in
 - `gui/` — thirteen live GUI web pages, one per recorded video scene:
   a stdlib-Python server owning a `posim --machine` child plus a
   vanilla-JS canvas page with live physics readouts (`gui/README.md`).
-- `notebooks/` — one executed Jupyter notebook per example, 125 in all
-  (13 video scenes, 6 Rust examples, 12 collision scripts, 35 SolveIt
+- `notebooks/` — one executed Jupyter notebook per example, 128 in all
+  (13 video scenes, 6 Rust examples, 12 collision scripts, 38 SolveIt
   scripts, 59 dynamic notebooks). **Every notebook owns a SQLite
   dataset** (section 6 creates it, section 9 reads it back with SQL and
   plain-Python sqlite3, section 10 derives the movie); nbcheck enforces

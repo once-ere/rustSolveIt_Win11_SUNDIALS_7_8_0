@@ -16,7 +16,7 @@ memory.*
 4. [What the program is made of](#4-what-the-program-is-made-of)
 5. [The engine: SUNDIALS 7.8.0 in pure Rust](#5-the-engine-sundials-780-in-pure-rust)
 6. [How collisions actually work](#6-how-collisions-actually-work)
-7. [Thirty-five worked examples](#7-thirty-five-worked-examples)
+7. [Thirty-eight worked examples](#7-thirty-eight-worked-examples)
 8. [Watching it: the scene window, videos, dataset plots and movies](#8-watching-it-the-scene-window-videos-dataset-plots-and-movies)
 9. [How you know the numbers are right](#9-how-you-know-the-numbers-are-right)
 10. [When something goes wrong](#10-when-something-goes-wrong)
@@ -430,7 +430,7 @@ output, which is exactly the property section 5.2 promises you have.
 
 ---
 
-## 7. Thirty-five worked examples
+## 7. Thirty-eight worked examples
 
 Every transcript below is genuine program output. The scripts are in
 [`scripts/solveit/`](scripts/solveit) and you can run any of them:
@@ -443,11 +443,15 @@ The examples are ordered roughly by difficulty and each one checks the
 simulator against something known independently — a closed-form
 solution, a textbook identity, or a hand calculation.
 
-Examples 1–19 use the core language. Examples 20–35 add the **SQLite
+Examples 1–19 use the core language. Examples 20–38 add the **SQLite
 dataset layer**: each records its run into a database under
 `datasets/`, answers its physics question **in SQL**, and derives
-plots and movies from the recording (see §8.3–§8.4 and the grammar
-guide §5.14). They need the sidecar built once:
+plots and movies from the recording — and examples 36–38 add
+**trajectory algebra** (`DATASET DIFF`/`SUM`, alignment checked) and
+the **fourteen classical curvilinear coordinate systems**
+(`DATASET MAP` and the value-level `cart_to_*`/`*_to_cart` builtins;
+see §8.3–§8.4 and the grammar guide §5.14–§5.15). They need the
+sidecar built once:
 
 ```bash
 cd dataset_tools && cargo build --release
@@ -2299,6 +2303,251 @@ not see on a featureless sphere.
 
 ---
 
+### Example 36 — the teacher's experiment — change a mass, rerun, subtract
+
+**The physics.** Two trials of the same two-body system over the SAME space-time
+domain (identical start, identical `run 2 steps 40` grid); the only
+difference is the planet's mass, 1 in trial A and 1.5 in trial B. The
+mutual dynamics change, so the trajectories drift apart from t = 0.
+
+**Why it is a real test.** `DATASET DIFF` is trajectory algebra with its dimensions checked:
+same frame count, bit-equal time grid, same body set — else it errors
+naming the first mismatch. And the algebra must CLOSE: rebuilding
+trial A as `(A − B) + B` and diffing against the original must give
+zero to roundoff. SQL reads both facts out of the difference
+datasets.
+
+```
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[3]= obj1 as planet
+In[4]:= dataset create solveit36_trial_a
+Out[4]= dataset solveit36_trial_a created (datasets/solveit36_trial_a.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 2 steps 40
+Out[5]= t = 2 (183 solver steps, 40 snapshots, |dE/E| = 3.639e-9)
+In[6]:= dataset close
+Out[6]= dataset solveit36_trial_a closed
+In[7]:= reset
+Out[7]= system reset
+In[8]:= set system.g_constant = 1
+In[9]:= new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+Out[9]= obj0 as sun
+In[10]:= new sphere as planet { mass = 1.5, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[10]= obj1 as planet
+In[11]:= dataset create solveit36_trial_b
+Out[11]= dataset solveit36_trial_b created (datasets/solveit36_trial_b.db, journal_mode=wal, schema v1) — recording armed
+In[12]:= run 2 steps 40
+Out[12]= t = 2 (199 solver steps, 40 snapshots, |dE/E| = 3.197e-9)
+In[13]:= dataset close
+Out[13]= dataset solveit36_trial_b closed
+In[14]:= dataset diff solveit36_trial_a solveit36_trial_b as solveit36_delta
+Out[14]= dataset solveit36_delta = solveit36_trial_a - solveit36_trial_b (40 frames, 2 bodies)
+In[15]:= dataset open solveit36_delta
+Out[15]= dataset solveit36_delta opened (2 bodies, 40 frames, 80 states) — recording armed
+In[16]:= sql "SELECT MAX(ABS(x)) AS max_dx, MAX(ABS(y)) AS max_dy FROM states"
+Out[16]= max_dx | max_dy
+0.26778294538839353 | 0.4995465204100412
+In[17]:= sql "SELECT t, MAX(ABS(x)) AS dx_at_t FROM states JOIN frames USING(frame) GROUP BY frame ORDER BY frame DESC LIMIT 3"
+Out[17]= t | dx_at_t
+2 | 0.26778294538839353
+1.95 | 0.26566104547420744
+1.9 | 0.26312812645046635
+In[18]:= dataset close
+Out[18]= dataset solveit36_delta closed
+In[19]:= dataset play solveit36_delta
+Out[19]= dataset plots written to datasets/solveit36_delta_plots.html (browser suppressed)
+In[20]:= dataset sum solveit36_delta solveit36_trial_b as solveit36_rebuilt
+Out[20]= dataset solveit36_rebuilt = solveit36_delta + solveit36_trial_b (40 frames, 2 bodies)
+In[21]:= dataset diff solveit36_rebuilt solveit36_trial_a as solveit36_zero
+Out[21]= dataset solveit36_zero = solveit36_rebuilt - solveit36_trial_a (40 frames, 2 bodies)
+In[22]:= dataset open solveit36_zero
+Out[22]= dataset solveit36_zero opened (2 bodies, 40 frames, 80 states) — recording armed
+In[23]:= sql "SELECT MAX(ABS(x)) AS x_residual, MAX(ABS(vy)) AS vy_residual FROM states"
+Out[23]= x_residual | vy_residual
+6.938893903907228e-18 | 2.7755575615628914e-17
+In[24]:= sql "SELECT MAX(ABS(energy)) AS e_residual FROM frames"
+Out[24]= e_residual
+0
+In[25]:= dataset close
+Out[25]= dataset solveit36_zero closed
+In[26]:= dataset delete solveit36_rebuilt
+Out[26]= dataset solveit36_rebuilt deleted
+In[27]:= dataset delete solveit36_zero
+Out[27]= dataset solveit36_zero deleted
+```
+
+**What to notice.** The difference grows to `max_dx = 0.26778294538839353`
+over the two seconds — a changed mass is a changed orbit, and the gap
+compounds every step — while the closure residual is
+`6.938893903907228e-18` in position and `2.8e-17` in velocity: pure
+floating-point roundoff from two passes of component arithmetic, with
+the energy column closing to exactly `0`. `dataset play` renders the
+difference curves themselves.
+
+---
+
+### Example 37 — Cartesian to spherical, and to plane polar — with the equator as witness
+
+**The physics.** A planar two-body orbit (z = 0 throughout, the centre of mass pinned
+at the origin) is recorded, then converted: `DATASET MAP ... TO
+spherical` and, because the trajectory is planar, `... TO polar2` —
+the two-dimensional chart, whose `|z| <= 1e-9` requirement is checked
+row by row.
+
+**Why it is a real test.** A z = 0 orbit must sit on the sphere's equator: the mapped dataset's
+polar-angle column has to be pi/2 at EVERY one of the 100 frames — a
+`MIN(y) = MAX(y)` one-liner in SQL. The polar map then hands over the
+planet's radial extremes about the origin directly as column minima
+and maxima, no coordinate arithmetic in the query at all.
+
+```
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[3]= obj1 as planet
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit37_orbit
+Out[5]= dataset solveit37_orbit created (datasets/solveit37_orbit.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 12.418264743622237 steps 100
+Out[6]= t = 12.418264743622238 (664 solver steps, 100 snapshots, |dE/E| = 4.162e-9)
+In[7]:= dataset close
+Out[7]= dataset solveit37_orbit closed
+In[8]:= dataset map solveit37_orbit to spherical as solveit37_sph
+Out[8]= dataset solveit37_sph = spherical(solveit37_orbit) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[9]:= dataset open solveit37_sph
+Out[9]= dataset solveit37_sph opened (2 bodies, 100 frames, 200 states) — recording armed
+In[10]:= sql "SELECT MIN(y) AS theta_min, MAX(y) AS theta_max FROM states"
+Out[10]= theta_min | theta_max
+1.5707963267948966 | 1.5707963267948966
+In[11]:= sql "SELECT COUNT(*) AS null_velocity_rows FROM states WHERE vx IS NULL"
+Out[11]= null_velocity_rows
+200
+In[12]:= dataset close
+Out[12]= dataset solveit37_sph closed
+In[13]:= dataset map solveit37_orbit to polar2 as solveit37_pol
+Out[13]= dataset solveit37_pol = polar2(solveit37_orbit) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[14]:= dataset open solveit37_pol
+Out[14]= dataset solveit37_pol opened (2 bodies, 100 frames, 200 states) — recording armed
+In[15]:= sql "SELECT MIN(x) AS r_min, MAX(x) AS r_max FROM states WHERE body = (SELECT body FROM bodies WHERE name = 'planet')"
+Out[15]= r_min | r_max
+0.7500000019886397 | 3.0000000158618207
+In[16]:= dataset close
+Out[16]= dataset solveit37_pol closed
+In[17]:= dataset play solveit37_sph
+Out[17]= dataset plots written to datasets/solveit37_sph_plots.html (browser suppressed)
+In[18]:= cart_to_spherical([0, 0, 2])
+Out[18]= [2, 0, 0]
+In[19]:= spherical_to_cart(cart_to_spherical([1.3, 0.7, 2.1]))
+Out[19]= [1.2999999999999996, 0.6999999999999997, 2.1]
+In[20]:= cart2_to_polar([3, 4])
+Out[20]= [5, 0.9272952180016122]
+In[21]:= polar_to_cart2(cart2_to_polar([3, 4]))
+Out[21]= [3, 3.9999999999999996]
+```
+
+**What to notice.** `theta_min = theta_max = 1.5707963267948966` — pi/2 to the last bit,
+100 frames without exception. The planet's polar radius spans
+`[0.7500000019886397, 3.0000000158618207]` against the analytic
+`[3/4 · 1, 3/4 · 4] = [0.75, 3]` (its share of the relative orbit's
+perihelion 1 and aphelion 4). All 200 velocity rows come back NULL —
+curvilinear velocity components need the metric, and the map refuses
+to fake them. The value-level calls close their own loops:
+`spherical_to_cart(cart_to_spherical(v))` returns `v`, and the 3-4-5
+triangle reads `[5, 0.9272952180016122]` in polar form.
+
+---
+
+### Example 38 — one helix through every remaining chart
+
+**The physics.** Example 25's helical cyclotron (gyroradius 5/9, axial drift 1) is
+recorded once, then mapped through four genuinely three-dimensional
+charts — cylindrical, toroidal (a = 2), bispherical (a = 2), oblate
+spheroidal (a = 1) — and the value level round-trips every system the
+earlier examples have not already exercised, including the 2-D
+elliptic chart and the conformal 2-D bipolar chart.
+
+**Why it is a real test.** Fourteen coordinate systems, fourteen inverses, all with error
+checking — this example is the coverage proof. Each mapped dataset is
+sanity-checked in SQL (the cylindrical `z` column still ends at the
+helix pitch `0.6981317007977318`; the toroidal `tau` column stays
+positive and finite), and each `X_to_cart(cart_to_X(w))` composition
+must return `w` to machine precision.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.b_field = [0, 0, 6]
+In[3]:= new sphere as ion { mass = 2, charge = -3, radius = 0.05, position = [0, 0, 0], velocity = [5, 0, 1] }
+Out[3]= obj0 as ion
+In[4]:= method bdf
+Out[4]= method = CVODE BDF
+In[5]:= dataset create solveit38_helix
+Out[5]= dataset solveit38_helix created (datasets/solveit38_helix.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 0.6981317007977318 steps 100
+Out[6]= t = 0.6981317007977317 (303 solver steps, 100 snapshots, |dE/E| = 2.048e-8)
+In[7]:= dataset close
+Out[7]= dataset solveit38_helix closed
+In[8]:= dataset map solveit38_helix to cylindrical as solveit38_cyl
+Out[8]= dataset solveit38_cyl = cylindrical(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[9]:= dataset open solveit38_cyl
+Out[9]= dataset solveit38_cyl opened (1 bodies, 100 frames, 100 states) — recording armed
+In[10]:= sql "SELECT MAX(z) AS pitch FROM states"
+Out[10]= pitch
+0.6981317007977317
+In[11]:= dataset close
+Out[11]= dataset solveit38_cyl closed
+In[12]:= dataset map solveit38_helix to toroidal 2.0 as solveit38_tor
+Out[12]= dataset solveit38_tor = toroidal(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[13]:= dataset open solveit38_tor
+Out[13]= dataset solveit38_tor opened (1 bodies, 100 frames, 100 states) — recording armed
+In[14]:= sql "SELECT MIN(y) AS tau_min, MAX(y) AS tau_max FROM states"
+Out[14]= tau_min | tau_max
+5.28650864731464e-9 | 1.1892318293548387
+In[15]:= dataset close
+Out[15]= dataset solveit38_tor closed
+In[16]:= dataset map solveit38_helix to bispherical 2.0 as solveit38_bis
+Out[16]= dataset solveit38_bis = bispherical(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[17]:= dataset map solveit38_helix to oblate 1.0 as solveit38_obl
+Out[17]= dataset solveit38_obl = oblate(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[18]:= dataset info solveit38_bis
+Out[18]= dataset solveit38_bis: 1 bodies, 100 frames, 100 states
+In[19]:= dataset info solveit38_obl
+Out[19]= dataset solveit38_obl: 1 bodies, 100 frames, 100 states
+In[20]:= let w = [1.3, 0.7, 2.1]
+Out[20]= w set
+In[21]:= norm(oblate_to_cart(cart_to_oblate(w, 1.25), 1.25) - w)
+Out[21]= 0.0000000000000004440892098500626
+In[22]:= norm(prolate_to_cart(cart_to_prolate(w, 1.25), 1.25) - w)
+Out[22]= 0.0000000000000008671119018262734
+In[23]:= norm(paraboloidal_to_cart(cart_to_paraboloidal(w)) - w)
+Out[23]= 0.0000000000000004965068306494546
+In[24]:= norm(elliptic_cyl_to_cart(cart_to_elliptic_cyl(w, 1.25), 1.25) - w)
+Out[24]= 0
+In[25]:= norm(parabolic_cyl_to_cart(cart_to_parabolic_cyl(w)) - w)
+Out[25]= 0
+In[26]:= norm(bipolar_cyl_to_cart(cart_to_bipolar_cyl(w, 1.25), 1.25) - w)
+Out[26]= 0.0000000000000002220446049250313
+In[27]:= norm(bispherical_to_cart(cart_to_bispherical(w, 1.25), 1.25) - w)
+Out[27]= 0.0000000000000004440892098500626
+In[28]:= norm(cylindrical_to_cart(cart_to_cylindrical(w)) - w)
+Out[28]= 0
+In[29]:= elliptic_to_cart2(cart2_to_elliptic([1.2, -0.8], 1.5), 1.5)
+Out[29]= [1.2000000000000004, -0.8000000000000002]
+In[30]:= bipolar_to_cart2(cart2_to_bipolar([1.2, -0.8], 1.5), 1.5)
+Out[30]= [1.2, -0.8]
+```
+
+**What to notice.** Every round trip lands between `0` exactly and `2.2e-16` — one
+`f64` unit in the last place — and the 2-D charts return
+`[1.2, -0.8]` verbatim. Singular loci stay refused: type
+`cart_to_toroidal([1, 0, 0], 1)` interactively and the reply names
+the focal ring instead of returning a NaN.
+
+---
+
 ## 8. Watching it: the scene window, videos, dataset plots and movies
 
 ### 8.1 The live window
@@ -2539,7 +2788,7 @@ with the complete EBNF grammar and a further eighteen worked examples.
 | `jupyter/` | the JupyterLab kernel |
 | `notebooks/` | one executed Jupyter notebook per example (125), each owning a dataset |
 | `dynamic_notebooks/` | 59 runnable sessions, incl. 34 Routh problems |
-| `scripts/solveit/` | the thirty-five examples in section 7 |
+| `scripts/solveit/` | the thirty-eight examples in section 7 |
 | `scripts/collisions/` | twelve documented collision scripts |
 | `videos/` | recorded browser videos; `videos/scenes/` the scripts behind them |
 | `datasets/` | the SQLite datasets — one per notebook and per dataset example (plus their `_plots.html` pages) |

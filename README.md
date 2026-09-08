@@ -83,7 +83,7 @@ and L); **622 passed workspace-wide on macOS/Apple Silicon**
   each a standard-library Python server driving the engine over the
   machine protocol plus a canvas page with Start/Pause/Reset and live
   readouts verifying that scene's closed forms (`gui/README.md`).
-- `notebooks/` — one executed Jupyter notebook per example — 125 in
+- `notebooks/` — one executed Jupyter notebook per example — 128 in
   all, one per video scene, Rust example, collision script, SolveIt
   script and dynamic notebook. Each is a stand-alone Python notebook
   that starts the simulator in machine mode, explains every command it
@@ -160,9 +160,9 @@ the worked cases.
 
 - **[SolveIt.md](SolveIt.md) / [SolveIt.pdf](SolveIt.pdf)** — the
   complete solution guide, written for a reader who has never used the
-  program, with **thirty-five** fully documented worked examples
-  (scripts in [`scripts/solveit/`](scripts/solveit); examples 20–35 are
-  the SQLite dataset / SQL / movie examples).
+  program, with **thirty-eight** fully documented worked examples
+  (scripts in [`scripts/solveit/`](scripts/solveit); examples 20–38 are
+  the SQLite dataset / SQL / movie / curvilinear-coordinate examples).
 - **[grammar.md](grammar.md) / [grammar.pdf](grammar.pdf)** — the
   complete command-language and notebook specification: the lexer, the
   full EBNF, the type system, every command (the SQLite dataset, SQL

@@ -49,7 +49,15 @@ pub const DATASET_DIR: &str = "datasets";
 /// the parser lacks (the QM2 phantom-`ISO` lesson).
 pub const DATASET_SUBCOMMANDS: &[&str] = &[
     "create", "open", "close", "record", "snapshot", "list", "info", "copy", "saveas",
-    "delete", "play",
+    "delete", "play", "diff", "sum", "map",
+];
+
+/// Every coordinate system DATASET MAP accepts (the 2-D systems apply
+/// in the plane z = 0 and require a planar trajectory).
+pub const MAP_SYSTEMS: &[&str] = &[
+    "spherical", "cylindrical", "ellipsoidal", "oblate", "prolate", "paraboloidal",
+    "elliptic_cyl", "parabolic_cyl", "bipolar_cyl", "toroidal", "bispherical",
+    "polar2", "elliptic2", "bipolar2",
 ];
 
 /// Every MOVIE subcommand the parser implements.
@@ -282,9 +290,16 @@ impl DatasetHandle {
             self.sql(&boxsql)?;
             self.last_box = Some(state.box_size);
         }
+        self.append_raw(bodies_payload(state), frames)
+    }
+
+    /// Appends one batch with an EXPLICIT bodies payload — the path the
+    /// offline dataset operations (DIFF / SUM / MAP) use, where the
+    /// bodies come from a queried dataset rather than the live system.
+    pub fn append_raw(&mut self, bodies: Json, frames: Vec<Json>) -> Result<(i64, i64), String> {
         let mut req = std::collections::BTreeMap::new();
         req.insert("op".to_string(), Json::Str("append".to_string()));
-        req.insert("bodies".to_string(), bodies_payload(state));
+        req.insert("bodies".to_string(), bodies);
         req.insert("frames".to_string(), Json::Arr(frames));
         let v = self.rpc(req)?;
         let first = match v.get("first_frame") {
@@ -554,6 +569,36 @@ fn frame_obj(
     Json::Obj(m)
 }
 
+/// A state row straight from 14 raw numbers
+/// (`[body, x,y,z, qw,qx,qy,qz, vx,vy,vz, wx,wy,wz]`) — the offline
+/// operations' path.
+fn state_row_raw(r: [f64; 14]) -> Json {
+    Json::Arr(r.iter().map(|v| Json::Num(*v)).collect())
+}
+
+/// A frame from raw numbers — the offline operations' path.
+#[allow(clippy::too_many_arguments)]
+fn frame_obj_raw(
+    t: f64,
+    energy: f64,
+    p: [f64; 3],
+    l: [f64; 3],
+    com: [f64; 3],
+    ncollisions: f64,
+    states: Vec<Json>,
+) -> Json {
+    let vec3 = |v: [f64; 3]| Json::Arr(vec![Json::Num(v[0]), Json::Num(v[1]), Json::Num(v[2])]);
+    let mut m = std::collections::BTreeMap::new();
+    m.insert("t".to_string(), Json::Num(t));
+    m.insert("e".to_string(), Json::Num(energy));
+    m.insert("p".to_string(), vec3(p));
+    m.insert("l".to_string(), vec3(l));
+    m.insert("c".to_string(), vec3(com));
+    m.insert("n".to_string(), Json::Num(ncollisions));
+    m.insert("s".to_string(), Json::Arr(states));
+    Json::Obj(m)
+}
+
 /// A frame captured from the LIVE system (DATASET SNAPSHOT, and the
 /// frame recorded after STEP).
 pub fn frame_from_system(state: &SimState) -> Json {
@@ -698,6 +743,423 @@ fn js_num(j: &Json) -> String {
     } else {
         "null".to_string()
     }
+}
+
+// ---------------------------------------------------------------------
+// Offline dataset operations: DIFF, SUM, MAP
+// ---------------------------------------------------------------------
+
+/// The arithmetic DATASET DIFF / DATASET SUM apply, component-wise,
+/// to every state column and every frames-table quantity.
+#[derive(Clone, Copy, PartialEq)]
+pub enum BinOp {
+    Diff,
+    Sum,
+}
+
+impl BinOp {
+    fn apply(self, x: f64, y: f64) -> f64 {
+        match self {
+            BinOp::Diff => x - y,
+            BinOp::Sum => x + y,
+        }
+    }
+    fn word(self) -> &'static str {
+        match self {
+            BinOp::Diff => "-",
+            BinOp::Sum => "+",
+        }
+    }
+    fn meta(self) -> &'static str {
+        match self {
+            BinOp::Diff => "diff",
+            BinOp::Sum => "sum",
+        }
+    }
+}
+
+/// Validates a DATASET MAP system word and its parameter list — used
+/// at PARSE time so a typo errors before anything runs. The scale
+/// parameters are the focal distance / ring radius `a` (one number)
+/// or the ellipsoidal semi-axes `a b c` (three numbers).
+pub fn validate_map_spec(system: &str, params: &[f64]) -> Result<(), String> {
+    resolve_map(system, params).map(|_| ())
+}
+
+enum MapKind {
+    Three(special_functions::coords::Map3),
+    Two(special_functions::coords::Map2),
+}
+
+fn resolve_map(system: &str, params: &[f64]) -> Result<MapKind, String> {
+    use special_functions::coords::{Map2, Map3};
+    let need = |n: usize| -> Result<(), String> {
+        if params.len() != n {
+            return Err(format!(
+                "the {system} map takes {n} scale parameter(s), got {} — \
+                 e.g. `dataset map orbit to toroidal 2.0 as orbit_tor`",
+                params.len()
+            ));
+        }
+        for (i, v) in params.iter().enumerate() {
+            if !v.is_finite() || (n > 0 && *v <= 0.0) {
+                return Err(format!(
+                    "the {system} map's scale parameter {} must be finite and > 0, got {v}",
+                    i + 1
+                ));
+            }
+        }
+        Ok(())
+    };
+    let one = || params[0];
+    Ok(match system {
+        "spherical" => {
+            need(0)?;
+            MapKind::Three(Map3::Spherical)
+        }
+        "cylindrical" => {
+            need(0)?;
+            MapKind::Three(Map3::Cylindrical)
+        }
+        "ellipsoidal" => {
+            need(3)?;
+            if !(params[0] > params[1] && params[1] > params[2]) {
+                return Err(format!(
+                    "the ellipsoidal map needs semi-axes a > b > c > 0, got {} {} {}",
+                    params[0], params[1], params[2]
+                ));
+            }
+            MapKind::Three(Map3::Ellipsoidal { a: params[0], b: params[1], c: params[2] })
+        }
+        "oblate" => {
+            need(1)?;
+            MapKind::Three(Map3::Oblate { a: one() })
+        }
+        "prolate" => {
+            need(1)?;
+            MapKind::Three(Map3::Prolate { a: one() })
+        }
+        "paraboloidal" => {
+            need(0)?;
+            MapKind::Three(Map3::Paraboloidal)
+        }
+        "elliptic_cyl" => {
+            need(1)?;
+            MapKind::Three(Map3::EllipticCyl { a: one() })
+        }
+        "parabolic_cyl" => {
+            need(0)?;
+            MapKind::Three(Map3::ParabolicCyl)
+        }
+        "bipolar_cyl" => {
+            need(1)?;
+            MapKind::Three(Map3::BipolarCyl { a: one() })
+        }
+        "toroidal" => {
+            need(1)?;
+            MapKind::Three(Map3::Toroidal { a: one() })
+        }
+        "bispherical" => {
+            need(1)?;
+            MapKind::Three(Map3::Bispherical { a: one() })
+        }
+        "polar2" => {
+            need(0)?;
+            MapKind::Two(Map2::Polar)
+        }
+        "elliptic2" => {
+            need(1)?;
+            MapKind::Two(Map2::Elliptic { a: one() })
+        }
+        "bipolar2" => {
+            need(1)?;
+            MapKind::Two(Map2::Bipolar { a: one() })
+        }
+        other => {
+            return Err(format!(
+                "unknown coordinate system `{other}` — one of: {}",
+                MAP_SYSTEMS.join(", ")
+            ))
+        }
+    })
+}
+
+/// One dataset read into memory for the offline operations.
+struct Loaded {
+    /// `[frame, t, energy, px, py, pz, lx, ly, lz, comx, comy, comz, n]`
+    frames: Vec<[f64; 13]>,
+    /// per frame (aligned with `frames`): body id -> the 13 state
+    /// columns `[x..z, qw..qz, vx..vz, wx..wz]`
+    states: Vec<std::collections::BTreeMap<i64, [f64; 13]>>,
+    /// bodies rows, ready to append: the sidecar payload objects
+    bodies: Vec<Json>,
+    nbodies: usize,
+}
+
+fn load_dataset(name: &str) -> Result<Loaded, String> {
+    valid_name(name)?;
+    let db = db_path(name);
+    if !db.is_file() {
+        return Err(format!("no such dataset `{name}` ({})", db.display()));
+    }
+    let (_, frows) = query_file(
+        &db,
+        "SELECT frame, t, energy, px, py, pz, lx, ly, lz, comx, comy, comz, ncollisions \
+         FROM frames ORDER BY frame",
+    )?;
+    let mut frames = Vec::with_capacity(frows.len());
+    let mut index_of = std::collections::BTreeMap::new();
+    for r in &frows {
+        let mut f = [0.0f64; 13];
+        for (i, cell) in r.iter().enumerate().take(13) {
+            f[i] = jnum(cell);
+        }
+        index_of.insert(f[0] as i64, frames.len());
+        frames.push(f);
+    }
+    let (_, srows) = query_file(
+        &db,
+        "SELECT frame, body, x, y, z, qw, qx, qy, qz, vx, vy, vz, wx, wy, wz \
+         FROM states ORDER BY frame, body",
+    )?;
+    let mut states: Vec<std::collections::BTreeMap<i64, [f64; 13]>> =
+        vec![std::collections::BTreeMap::new(); frames.len()];
+    for r in &srows {
+        let frame = jnum(&r[0]) as i64;
+        let body = jnum(&r[1]) as i64;
+        let Some(&k) = index_of.get(&frame) else {
+            return Err(format!("dataset `{name}` has a state row for unknown frame {frame}"));
+        };
+        let mut cols = [0.0f64; 13];
+        for i in 0..13 {
+            cols[i] = jnum(&r[i + 2]);
+        }
+        states[k].insert(body, cols);
+    }
+    let (_, brows) =
+        query_file(&db, "SELECT body, name, shape, mass, wall, geometry FROM bodies ORDER BY body")?;
+    let nbodies = brows.len();
+    let bodies = brows
+        .iter()
+        .map(|r| {
+            let mut m = std::collections::BTreeMap::new();
+            m.insert("body".to_string(), Json::Num(jnum(&r[0])));
+            m.insert("name".to_string(), Json::Str(r[1].as_str().unwrap_or("").to_string()));
+            m.insert("shape".to_string(), Json::Str(r[2].as_str().unwrap_or("point").to_string()));
+            m.insert("mass".to_string(), Json::Num(jnum(&r[3])));
+            m.insert("wall".to_string(), Json::Bool(jnum(&r[4]) != 0.0));
+            m.insert(
+                "geometry".to_string(),
+                Json::Str(r[5].as_str().unwrap_or("{}").to_string()),
+            );
+            Json::Obj(m)
+        })
+        .collect();
+    Ok(Loaded { frames, states, bodies, nbodies })
+}
+
+/// Writes an offline-produced dataset: create fresh, append in chunks,
+/// stamp meta pairs, checkpoint and close.
+fn write_out(
+    out: &str,
+    bodies: Vec<Json>,
+    frames: Vec<Json>,
+    meta: &[(&str, String)],
+    null_velocities: bool,
+) -> Result<(), String> {
+    let mut h = DatasetHandle::create(out)?;
+    for chunk in frames.chunks(200) {
+        h.append_raw(Json::Arr(bodies.clone()), chunk.to_vec())?;
+    }
+    for (k, v) in meta {
+        let v = v.replace('\'', "''");
+        h.sql(&format!("INSERT OR REPLACE INTO meta(key, value) VALUES ('{k}', '{v}')"))?;
+    }
+    if null_velocities {
+        /* Velocity components in curvilinear coordinates need the
+         * metric (the coordinate basis is position-dependent), which
+         * is beyond a pure point map — so the mapped dataset stores
+         * NULL there rather than numbers that would be wrong. */
+        h.sql(
+            "UPDATE states SET vx = NULL, vy = NULL, vz = NULL, \
+             wx = NULL, wy = NULL, wz = NULL",
+        )?;
+    }
+    h.close()?;
+    Ok(())
+}
+
+/// `DATASET DIFF a b AS out` / `DATASET SUM a b AS out`: frame-aligned,
+/// component-wise arithmetic on two identically dimensioned recorded
+/// trajectories. Alignment is CHECKED, not assumed: same frame count,
+/// bit-equal time grid, and the same body-id set at every frame —
+/// any mismatch errors with the first offending frame named. The
+/// orientation columns of the output hold component-wise quaternion
+/// arithmetic (a difference of quaternions is not a rotation — the
+/// output is a difference TABLE, not a rigid state).
+pub fn dataset_binop(a: &str, b: &str, out: &str, op: BinOp) -> Result<String, String> {
+    valid_name(a)?;
+    valid_name(b)?;
+    valid_name(out)?;
+    if out == a || out == b {
+        return Err(format!(
+            "the output dataset `{out}` must differ from the inputs (COPY one first to \
+             keep it)"
+        ));
+    }
+    let la = load_dataset(a)?;
+    let lb = load_dataset(b)?;
+    if la.frames.len() != lb.frames.len() {
+        return Err(format!(
+            "datasets are not identically dimensioned: `{a}` has {} frame(s) but `{b}` \
+             has {} — record both over the same space-time domain (same RUN duration \
+             and STEPS)",
+            la.frames.len(),
+            lb.frames.len()
+        ));
+    }
+    let mut out_frames = Vec::with_capacity(la.frames.len());
+    for (k, (fa, fb)) in la.frames.iter().zip(lb.frames.iter()).enumerate() {
+        if fa[1] != fb[1] {
+            return Err(format!(
+                "time grids differ at frame {k}: `{a}` has t = {} but `{b}` has t = {} — \
+                 the trajectories must share one space-time domain",
+                fa[1], fb[1]
+            ));
+        }
+        let sa = &la.states[k];
+        let sb = &lb.states[k];
+        if sa.len() != sb.len() || sa.keys().zip(sb.keys()).any(|(x, y)| x != y) {
+            let ka: Vec<String> = sa.keys().map(|i| i.to_string()).collect();
+            let kb: Vec<String> = sb.keys().map(|i| i.to_string()).collect();
+            return Err(format!(
+                "body sets differ at frame {k}: `{a}` has bodies [{}] but `{b}` has \
+                 [{}] — the trajectories must describe the same bodies",
+                ka.join(", "),
+                kb.join(", ")
+            ));
+        }
+        let mut rows = Vec::with_capacity(sa.len());
+        for (body, ca) in sa {
+            let cb = &sb[body];
+            let mut row = [0.0f64; 14];
+            row[0] = *body as f64;
+            for i in 0..13 {
+                row[i + 1] = op.apply(ca[i], cb[i]);
+            }
+            rows.push(state_row_raw(row));
+        }
+        out_frames.push(frame_obj_raw(
+            fa[1],
+            op.apply(fa[2], fb[2]),
+            [op.apply(fa[3], fb[3]), op.apply(fa[4], fb[4]), op.apply(fa[5], fb[5])],
+            [op.apply(fa[6], fb[6]), op.apply(fa[7], fb[7]), op.apply(fa[8], fb[8])],
+            [op.apply(fa[9], fb[9]), op.apply(fa[10], fb[10]), op.apply(fa[11], fb[11])],
+            op.apply(fa[12], fb[12]),
+            rows,
+        ));
+    }
+    let n = out_frames.len();
+    let nb = la.nbodies;
+    write_out(
+        out,
+        la.bodies,
+        out_frames,
+        &[
+            ("op", op.meta().to_string()),
+            ("lhs", a.to_string()),
+            ("rhs", b.to_string()),
+        ],
+        false,
+    )?;
+    Ok(format!("dataset {out} = {a} {} {b} ({n} frames, {nb} bodies)", op.word()))
+}
+
+/// `DATASET MAP src TO system [params] AS out`: every recorded position
+/// is pushed through the chosen curvilinear map; the frames table
+/// (t, E, P, L, com, collision count — Cartesian bookkeeping) is
+/// copied unchanged, orientations are carried (they are still rotation
+/// quaternions), and the velocity columns are set to NULL because
+/// velocity components in curvilinear coordinates require the metric.
+/// A 2-D system requires a planar trajectory: every |z| must be
+/// <= 1e-9, and the output stores (q1, q2, 0).
+pub fn dataset_map(src: &str, system: &str, params: &[f64], out: &str) -> Result<String, String> {
+    valid_name(src)?;
+    valid_name(out)?;
+    if out == src {
+        return Err(format!("the output dataset `{out}` must differ from the source"));
+    }
+    let kind = resolve_map(system, params)?;
+    let l = load_dataset(src)?;
+    if let MapKind::Two(_) = kind {
+        for (k, per) in l.states.iter().enumerate() {
+            for (body, cols) in per {
+                if cols[2].abs() > 1e-9 {
+                    return Err(format!(
+                        "the {system} map is two-dimensional and needs a planar \
+                         trajectory (|z| <= 1e-9 everywhere), but frame {k} body {body} \
+                         has z = {} — use a 3-D system, or simulate in the z = 0 plane",
+                        cols[2]
+                    ));
+                }
+            }
+        }
+    }
+    let mut out_frames = Vec::with_capacity(l.frames.len());
+    for (k, f) in l.frames.iter().enumerate() {
+        let mut rows = Vec::with_capacity(l.states[k].len());
+        for (body, cols) in &l.states[k] {
+            let p = [cols[0], cols[1], cols[2]];
+            let q = match &kind {
+                MapKind::Three(m) => m.forward(p).map_err(|e| {
+                    format!("DATASET MAP {system}: frame {k}, body {body}: {e}")
+                })?,
+                MapKind::Two(m) => {
+                    let q2 = m.forward([p[0], p[1]]).map_err(|e| {
+                        format!("DATASET MAP {system}: frame {k}, body {body}: {e}")
+                    })?;
+                    [q2[0], q2[1], 0.0]
+                }
+            };
+            let mut row = [0.0f64; 14];
+            row[0] = *body as f64;
+            row[1] = q[0];
+            row[2] = q[1];
+            row[3] = q[2];
+            for i in 3..13 {
+                row[i + 1] = cols[i];
+            }
+            rows.push(state_row_raw(row));
+        }
+        out_frames.push(frame_obj_raw(
+            f[1],
+            f[2],
+            [f[3], f[4], f[5]],
+            [f[6], f[7], f[8]],
+            [f[9], f[10], f[11]],
+            f[12],
+            rows,
+        ));
+    }
+    let n = out_frames.len();
+    let params_text =
+        params.iter().map(|v| format!("{v}")).collect::<Vec<_>>().join(" ");
+    write_out(
+        out,
+        l.bodies,
+        out_frames,
+        &[
+            ("op", "map".to_string()),
+            ("source", src.to_string()),
+            ("system", system.to_string()),
+            ("params", params_text),
+        ],
+        true,
+    )?;
+    Ok(format!(
+        "dataset {out} = {system}({src}) ({n} frames mapped; velocities stored as NULL — \
+         curvilinear velocity components need the metric)"
+    ))
 }
 
 /// The DATASET PLAY page. Self-contained by construction: no CDN, no
@@ -919,7 +1381,7 @@ mod tests {
 
         /* Converse: every quoted ALL-CAPS word in the two EBNF blocks
          * must be a declared subcommand or a declared argument word. */
-        const ARGUMENT_WORDS: &[&str] = &["ON", "OFF", "AS"];
+        const ARGUMENT_WORDS: &[&str] = &["ON", "OFF", "AS", "TO", "NUMBER"];
         let mut phantom = Vec::new();
         for (name, ebnf, subs) in [
             ("datasetcmd", &ds_ebnf, crate::dataset::DATASET_SUBCOMMANDS),

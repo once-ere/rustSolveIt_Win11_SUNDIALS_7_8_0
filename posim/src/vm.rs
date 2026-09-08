@@ -254,6 +254,14 @@ pub enum DatasetCmd {
     Delete(String),
     /// Plots page in the browser for the named (or open) dataset.
     Play(Option<String>),
+    /// Frame-aligned trajectory difference: `out = a - b`.
+    Diff { a: String, b: String, out: String },
+    /// Frame-aligned trajectory sum: `out = a + b`.
+    Sum { a: String, b: String, out: String },
+    /// Coordinate transform of a recorded trajectory:
+    /// `out = system(src)`, positions mapped through one of the
+    /// classical curvilinear systems (see [`crate::dataset::resolve_map`]).
+    Map { src: String, system: String, params: Vec<f64>, out: String },
 }
 
 /// The `MOVIE` family: browser animations DERIVED from datasets (see
@@ -803,6 +811,24 @@ SQLite datasets and movies (the solveit_db sidecar; see grammar.md):
   DATASET SAVEAS <name>     save the OPEN dataset under a new name
   DATASET DELETE <name>     remove a dataset (close it first if open)
   DATASET PLAY [<name>]     time-series plots in your web browser
+  DATASET DIFF <a> <b> AS <out>
+                            out = a - b, frame-aligned trajectory
+                            difference: same frame count, bit-equal t
+                            grid and same body ids required (checked;
+                            mismatches error naming the frame)
+  DATASET SUM <a> <b> AS <out>
+                            out = a + b, same alignment rules
+  DATASET MAP <src> TO <system> [<a> [<b> <c>]] AS <out>
+                            positions mapped to a curvilinear system:
+                            spherical | cylindrical | ellipsoidal a b c
+                            | oblate a | prolate a | paraboloidal
+                            | elliptic_cyl a | parabolic_cyl
+                            | bipolar_cyl a | toroidal a
+                            | bispherical a | polar2 | elliptic2 a
+                            | bipolar2 a  (2-D systems need a planar
+                            trajectory, |z| <= 1e-9; velocities are
+                            stored as NULL - curvilinear components
+                            need the metric)
   SQL \"<statements>\"        run ANY SQLite statement(s) on the open
                             dataset - the whole SQLite grammar: SELECT
                             (CTEs, window functions), INSERT, UPDATE,
@@ -814,6 +840,26 @@ SQLite datasets and movies (the solveit_db sidecar; see grammar.md):
   MOVIE PLAY <name>         play a movie in your web browser
   MOVIE LIST | MOVIE DELETE <name>
                             what exists / remove one
+coordinate transformations (expression-level; vectors are [x, y, z],
+2-D points are 2-element lists [x, y]; see grammar.md):
+  cart_to_spherical(v) | spherical_to_cart(q)
+  cart_to_cylindrical(v) | cylindrical_to_cart(q)
+  cart_to_ellipsoidal(v, a, b, c) | ellipsoidal_to_cart(q, a, b, c)
+  cart_to_oblate(v, a) | oblate_to_cart(q, a)
+  cart_to_prolate(v, a) | prolate_to_cart(q, a)
+  cart_to_paraboloidal(v) | paraboloidal_to_cart(q)
+  cart_to_elliptic_cyl(v, a) | elliptic_cyl_to_cart(q, a)
+  cart_to_parabolic_cyl(v) | parabolic_cyl_to_cart(q)
+  cart_to_bipolar_cyl(v, a) | bipolar_cyl_to_cart(q, a)
+  cart_to_toroidal(v, a) | toroidal_to_cart(q, a)
+  cart_to_bispherical(v, a) | bispherical_to_cart(q, a)
+  cart2_to_polar(u) | polar_to_cart2(w)
+  cart2_to_elliptic(u, a) | elliptic_to_cart2(w, a)
+  cart2_to_bipolar(u, a) | bipolar_to_cart2(w, a)
+                            every map validates its domain: invalid
+                            scale parameters, out-of-range coordinates
+                            and singular loci (foci, focal rings, the
+                            point at infinity) are ERRORS, not NaNs
 notebook magics: %history  %edit <n> <text>  %rerun <n>  %save <file>
                  %load <file>  %reset  %quit";
 
@@ -2074,6 +2120,24 @@ fn exec_sql_cmd(sql: &str, state: &mut SimState) -> Result<String, String> {
     Ok(out)
 }
 
+/// DIFF/SUM/MAP work on datasets ON DISK. While one is open through
+/// the serve child, its file may be read (WAL guarantees readers see
+/// every committed transaction) but must not be REPLACED or aliased as
+/// an output — so any name involved that matches the open dataset is
+/// refused with the fix spelled out.
+fn refuse_open_clobber(state: &SimState, names: &[&String]) -> Result<(), String> {
+    if let Some(h) = &state.dataset {
+        if names.iter().any(|n| ***n == *h.name) {
+            return Err(format!(
+                "dataset {} is open — DATASET CLOSE first (DIFF/SUM/MAP operate on \
+                 datasets on disk)",
+                h.name
+            ));
+        }
+    }
+    Ok(())
+}
+
 fn exec_dataset(cmd: &DatasetCmd, state: &mut SimState) -> Result<String, String> {
     use crate::dataset as ds;
     match cmd {
@@ -2203,6 +2267,18 @@ fn exec_dataset(cmd: &DatasetCmd, state: &mut SimState) -> Result<String, String
                 ));
             }
             ds::delete(name)
+        }
+        DatasetCmd::Diff { a, b, out } => {
+            refuse_open_clobber(state, &[a, b, out])?;
+            crate::dataset::dataset_binop(a, b, out, crate::dataset::BinOp::Diff)
+        }
+        DatasetCmd::Sum { a, b, out } => {
+            refuse_open_clobber(state, &[a, b, out])?;
+            crate::dataset::dataset_binop(a, b, out, crate::dataset::BinOp::Sum)
+        }
+        DatasetCmd::Map { src, system, params, out } => {
+            refuse_open_clobber(state, &[src, out])?;
+            crate::dataset::dataset_map(src, system, params, out)
         }
         DatasetCmd::Play(name) => {
             let target = match name {

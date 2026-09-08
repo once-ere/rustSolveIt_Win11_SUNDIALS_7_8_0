@@ -1,0 +1,41 @@
+# 38. The grand tour: one helix through every remaining chart.
+# A charged sphere in B = 6 z-hat with an axial drift traces a helix
+# (example 25's setup). Its recording is mapped through cylindrical,
+# toroidal, bispherical and oblate-spheroidal coordinates - four
+# genuinely three-dimensional charts - and SQL sanity-checks each
+# result. Then the value level closes the round trip for EVERY system
+# the earlier examples have not already exercised, including the 2-D
+# elliptic and conformal bipolar charts. Errors are part of the
+# grammar: singular loci and bad parameters are refused with named
+# reasons (the notebook shows them; a script must run clean).
+set system.g_constant = 0
+set system.b_field = [0, 0, 6]
+new sphere as ion { mass = 2, charge = -3, radius = 0.05, position = [0, 0, 0], velocity = [5, 0, 1] }
+method bdf
+dataset create solveit38_helix
+run 0.6981317007977318 steps 100
+dataset close
+dataset map solveit38_helix to cylindrical as solveit38_cyl
+dataset open solveit38_cyl
+sql "SELECT MAX(z) AS pitch FROM states"
+dataset close
+dataset map solveit38_helix to toroidal 2.0 as solveit38_tor
+dataset open solveit38_tor
+sql "SELECT MIN(y) AS tau_min, MAX(y) AS tau_max FROM states"
+dataset close
+dataset map solveit38_helix to bispherical 2.0 as solveit38_bis
+dataset map solveit38_helix to oblate 1.0 as solveit38_obl
+dataset info solveit38_bis
+dataset info solveit38_obl
+# value-level round trips for the rest of the fourteen
+let w = [1.3, 0.7, 2.1]
+norm(oblate_to_cart(cart_to_oblate(w, 1.25), 1.25) - w)
+norm(prolate_to_cart(cart_to_prolate(w, 1.25), 1.25) - w)
+norm(paraboloidal_to_cart(cart_to_paraboloidal(w)) - w)
+norm(elliptic_cyl_to_cart(cart_to_elliptic_cyl(w, 1.25), 1.25) - w)
+norm(parabolic_cyl_to_cart(cart_to_parabolic_cyl(w)) - w)
+norm(bipolar_cyl_to_cart(cart_to_bipolar_cyl(w, 1.25), 1.25) - w)
+norm(bispherical_to_cart(cart_to_bispherical(w, 1.25), 1.25) - w)
+norm(cylindrical_to_cart(cart_to_cylindrical(w)) - w)
+elliptic_to_cart2(cart2_to_elliptic([1.2, -0.8], 1.5), 1.5)
+bipolar_to_cart2(cart2_to_bipolar([1.2, -0.8], 1.5), 1.5)

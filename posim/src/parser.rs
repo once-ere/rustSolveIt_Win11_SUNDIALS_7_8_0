@@ -83,7 +83,27 @@
 //!           | "COPY" name name                  (* src -> dst snapshot *)
 //!           | "SAVEAS" name                     (* open dataset -> new *)
 //!           | "DELETE" name
-//!           | "PLAY" [ name ] ;                 (* plots in a browser  *)
+//!           | "PLAY" [ name ]                   (* plots in a browser  *)
+//!           | "DIFF" name name "AS" name        (* out = a - b, frame-
+//!                                                  aligned: same frame
+//!                                                  count, bit-equal t
+//!                                                  grid, same body ids
+//!                                                  per frame — errors
+//!                                                  name the mismatch  *)
+//!           | "SUM" name name "AS" name         (* out = a + b, same
+//!                                                  alignment rules    *)
+//!           | "MAP" name "TO" mapsys
+//!                   [ NUMBER [ NUMBER NUMBER ] ]
+//!                   "AS" name ;                 (* positions mapped to
+//!                                                  a curvilinear
+//!                                                  system; scale
+//!                                                  parameter(s) where
+//!                                                  the system has them
+//!                                                  (1 for the focal
+//!                                                  families, 3 for
+//!                                                  ellipsoidal); 2-D
+//!                                                  systems require a
+//!                                                  planar trajectory  *)
 //! moviecmd := "CREATE" name [ "AS" name ]       (* dataset -> movie
 //!                                                  page movies/<n>.html *)
 //!           | "DELETE" name | "LIST"
@@ -91,6 +111,13 @@
 //! name     := IDENT | STRING ;                  (* quote a name that
 //!                                                  collides with a
 //!                                                  keyword: "box"      *)
+//! mapsys   := "SPHERICAL" | "CYLINDRICAL" | "ELLIPSOIDAL" | "OBLATE"
+//!           | "PROLATE" | "PARABOLOIDAL" | "ELLIPTIC_CYL"
+//!           | "PARABOLIC_CYL" | "BIPOLAR_CYL" | "TOROIDAL"
+//!           | "BISPHERICAL"                     (* three-dimensional  *)
+//!           | "POLAR2" | "ELLIPTIC2" | "BIPOLAR2" ;
+//!                                               (* two-dimensional, in
+//!                                                  the plane z = 0    *)
 //!
 //! (* DATASET, MOVIE and SQL are CONTEXTUAL keywords like BALL/HINGE:
 //!    commands only at the start of a line, ordinary identifiers
@@ -248,7 +275,7 @@
 //!
 //! (* The call production above is uniform: it already admits every
 //!    builtin, so adding a function is a REGISTRATION, not a grammar
-//!    change. Two classes of name are reachable through it:
+//!    change. Three classes of name are reachable through it:
 //!
 //!      core      dot cross norm normalize sqrt abs sin cos exp log
 //!      special   sph_j sph_y sph_j_prime sph_y_prime legendre_p
@@ -271,6 +298,20 @@
 //!                jacobi_eigen solve_tridiag solve_tridiag_c
 //!                solve_cyclic_tridiag_c wigner_3j wigner_6j
 //!                clebsch_gordan wigner_9j rel_err
+//!      coords    cart_to_spherical spherical_to_cart
+//!                cart_to_cylindrical cylindrical_to_cart
+//!                cart_to_ellipsoidal ellipsoidal_to_cart
+//!                cart_to_oblate oblate_to_cart
+//!                cart_to_prolate prolate_to_cart
+//!                cart_to_paraboloidal paraboloidal_to_cart
+//!                cart_to_elliptic_cyl elliptic_cyl_to_cart
+//!                cart_to_parabolic_cyl parabolic_cyl_to_cart
+//!                cart_to_bipolar_cyl bipolar_cyl_to_cart
+//!                cart_to_toroidal toroidal_to_cart
+//!                cart_to_bispherical bispherical_to_cart
+//!                cart2_to_polar polar_to_cart2
+//!                cart2_to_elliptic elliptic_to_cart2
+//!                cart2_to_bipolar bipolar_to_cart2
 //!
 //!    The genuine parse-time obligation the special functions add is
 //!    ARGUMENT DOMAIN checking, not syntax: an integer order must be a
@@ -872,9 +913,74 @@ impl Parser {
             "saveas" => DatasetCmd::SaveAs(self.name_arg("the new dataset name")?),
             "delete" => DatasetCmd::Delete(self.name_arg("the dataset name")?),
             "play" => DatasetCmd::Play(self.opt_name_arg()),
+            "diff" | "sum" => {
+                let a = self.name_arg("the left dataset name")?;
+                let b = self.name_arg("the right dataset name")?;
+                match self.next() {
+                    Some(Token { kind: TokKind::Keyword(Keyword::As), .. }) => {}
+                    _ => {
+                        return Err(format!(
+                            "parse error: DATASET {} needs `AS <output>` after the two \
+                             dataset names",
+                            word.to_ascii_uppercase()
+                        ))
+                    }
+                }
+                let out = self.name_arg("the output dataset name")?;
+                if word == "diff" {
+                    DatasetCmd::Diff { a, b, out }
+                } else {
+                    DatasetCmd::Sum { a, b, out }
+                }
+            }
+            "map" => {
+                let src = self.name_arg("the source dataset name")?;
+                match self.family_word().as_deref() {
+                    Some("to") => {}
+                    _ => {
+                        return Err(
+                            "parse error: DATASET MAP needs `TO <system>` after the \
+                             source dataset name"
+                                .to_string(),
+                        )
+                    }
+                }
+                let system = match self.family_word() {
+                    Some(w) => w,
+                    None => {
+                        return Err(format!(
+                            "parse error: DATASET MAP TO needs a coordinate system \
+                             (one of: {})",
+                            crate::dataset::MAP_SYSTEMS.join(", ")
+                        ))
+                    }
+                };
+                let mut params = Vec::new();
+                while let Some(Token { kind: TokKind::Number(n), .. }) = self.peek() {
+                    params.push(*n);
+                    self.pos += 1;
+                }
+                /* Validate the system word and its parameter count at
+                 * PARSE time — a typo should not wait for execution. */
+                crate::dataset::validate_map_spec(&system, &params)
+                    .map_err(|e| format!("parse error: {e}"))?;
+                match self.next() {
+                    Some(Token { kind: TokKind::Keyword(Keyword::As), .. }) => {}
+                    _ => {
+                        return Err(
+                            "parse error: DATASET MAP needs `AS <output>` after the \
+                             coordinate system"
+                                .to_string(),
+                        )
+                    }
+                }
+                let out = self.name_arg("the output dataset name")?;
+                DatasetCmd::Map { src, system, params, out }
+            }
             other => {
                 return Err(format!(
-                    "parse error: unknown DATASET subcommand `{other}` — {USAGE}"
+                    "parse error: unknown DATASET subcommand `{other}` (one of: {}) — {USAGE}",
+                    crate::dataset::DATASET_SUBCOMMANDS.join(", ")
                 ))
             }
         };
@@ -908,7 +1014,8 @@ impl Parser {
             "play" => MovieCmd::Play(self.name_arg("the movie name")?),
             other => {
                 return Err(format!(
-                    "parse error: unknown MOVIE subcommand `{other}` — {USAGE}"
+                    "parse error: unknown MOVIE subcommand `{other}` (one of: {}) — {USAGE}",
+                    crate::dataset::MOVIE_SUBCOMMANDS.join(", ")
                 ))
             }
         };

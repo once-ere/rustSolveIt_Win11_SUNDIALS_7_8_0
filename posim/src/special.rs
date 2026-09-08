@@ -24,6 +24,8 @@
 
 use special_functions as sf;
 
+use ::physical_object::linalg::Vec3;
+
 use crate::vm::Value;
 
 /// Human-readable type name, for error messages.
@@ -204,6 +206,39 @@ fn nums(v: Vec<f64>) -> Value {
     Value::List(v.into_iter().map(Value::Num).collect())
 }
 
+/// Exactly three numeric components (a vector literal, a Vec3, or a
+/// 3-element list) — the Cartesian or curvilinear triple of the
+/// coordinate maps.
+fn as_v3(name: &str, pos: usize, v: &Value) -> Result<[f64; 3], String> {
+    let l = as_num_list(name, pos, v)?;
+    if l.len() != 3 {
+        return Err(format!(
+            "{name}(): argument {} must have exactly 3 components, got {}",
+            pos + 1,
+            l.len()
+        ));
+    }
+    Ok([l[0], l[1], l[2]])
+}
+
+/// Exactly two numeric components (a 2-element list) — the planar
+/// pairs of the 2-D coordinate maps.
+fn as_v2(name: &str, pos: usize, v: &Value) -> Result<[f64; 2], String> {
+    let l = as_num_list(name, pos, v)?;
+    if l.len() != 2 {
+        return Err(format!(
+            "{name}(): argument {} must have exactly 2 components, got {}",
+            pos + 1,
+            l.len()
+        ));
+    }
+    Ok([l[0], l[1]])
+}
+
+fn vec3v(r: [f64; 3]) -> Value {
+    Value::Vec3(Vec3 { x: r[0], y: r[1], z: r[2] })
+}
+
 /// Dispatch a special-function call.
 ///
 /// Returns `None` if `name` is not one of ours, so the caller can fall
@@ -240,6 +275,19 @@ pub fn call(name: &str, args: &[Value]) -> Option<Result<Value, String>> {
         "bessel_j_scaled" | "bessel_y_scaled" | "bessel_i_scaled" | "bessel_k_scaled" => 2,
         "hankel_h1_scaled" | "hankel_h2_scaled" => 2,
         "solve_cyclic_tridiag_c" => 6,
+        // Curvilinear coordinate maps (special_functions::coords):
+        // one vector argument, plus scale parameters where the system
+        // has them. 2-D systems take/return a 2-element list.
+        "cart_to_spherical" | "spherical_to_cart" | "cart_to_cylindrical"
+        | "cylindrical_to_cart" | "cart_to_paraboloidal" | "paraboloidal_to_cart"
+        | "cart_to_parabolic_cyl" | "parabolic_cyl_to_cart" | "cart2_to_polar"
+        | "polar_to_cart2" => 1,
+        "cart_to_oblate" | "oblate_to_cart" | "cart_to_prolate" | "prolate_to_cart"
+        | "cart_to_elliptic_cyl" | "elliptic_cyl_to_cart" | "cart_to_bipolar_cyl"
+        | "bipolar_cyl_to_cart" | "cart_to_toroidal" | "toroidal_to_cart"
+        | "cart_to_bispherical" | "bispherical_to_cart" | "cart2_to_elliptic"
+        | "elliptic_to_cart2" | "cart2_to_bipolar" | "bipolar_to_cart2" => 2,
+        "cart_to_ellipsoidal" | "ellipsoidal_to_cart" => 4,
         _ => return None,
     };
     if args.len() != want {
@@ -562,6 +610,76 @@ fn dispatch(name: &str, a: &[Value]) -> Result<Value, String> {
             as_num(name, 1, &a[1])?,
         ))),
 
+        // ---- curvilinear coordinate maps --------------------------------
+        "cart_to_spherical" | "spherical_to_cart" | "cart_to_cylindrical"
+        | "cylindrical_to_cart" | "cart_to_paraboloidal" | "paraboloidal_to_cart"
+        | "cart_to_parabolic_cyl" | "parabolic_cyl_to_cart" => {
+            let v = as_v3(name, 0, &a[0])?;
+            let r = match name {
+                "cart_to_spherical" => sf::coords::cart_to_spherical(v),
+                "spherical_to_cart" => sf::coords::spherical_to_cart(v),
+                "cart_to_cylindrical" => sf::coords::cart_to_cylindrical(v),
+                "cylindrical_to_cart" => sf::coords::cylindrical_to_cart(v),
+                "cart_to_paraboloidal" => sf::coords::cart_to_paraboloidal(v),
+                "paraboloidal_to_cart" => sf::coords::paraboloidal_to_cart(v),
+                "cart_to_parabolic_cyl" => sf::coords::cart_to_parabolic_cyl(v),
+                _ => sf::coords::parabolic_cyl_to_cart(v),
+            }?;
+            Ok(vec3v(r))
+        }
+        "cart_to_oblate" | "oblate_to_cart" | "cart_to_prolate" | "prolate_to_cart"
+        | "cart_to_elliptic_cyl" | "elliptic_cyl_to_cart" | "cart_to_bipolar_cyl"
+        | "bipolar_cyl_to_cart" | "cart_to_toroidal" | "toroidal_to_cart"
+        | "cart_to_bispherical" | "bispherical_to_cart" => {
+            let v = as_v3(name, 0, &a[0])?;
+            let pa = as_num(name, 1, &a[1])?;
+            let r = match name {
+                "cart_to_oblate" => sf::coords::cart_to_oblate(v, pa),
+                "oblate_to_cart" => sf::coords::oblate_to_cart(v, pa),
+                "cart_to_prolate" => sf::coords::cart_to_prolate(v, pa),
+                "prolate_to_cart" => sf::coords::prolate_to_cart(v, pa),
+                "cart_to_elliptic_cyl" => sf::coords::cart_to_elliptic_cyl(v, pa),
+                "elliptic_cyl_to_cart" => sf::coords::elliptic_cyl_to_cart(v, pa),
+                "cart_to_bipolar_cyl" => sf::coords::cart_to_bipolar_cyl(v, pa),
+                "bipolar_cyl_to_cart" => sf::coords::bipolar_cyl_to_cart(v, pa),
+                "cart_to_toroidal" => sf::coords::cart_to_toroidal(v, pa),
+                "toroidal_to_cart" => sf::coords::toroidal_to_cart(v, pa),
+                "cart_to_bispherical" => sf::coords::cart_to_bispherical(v, pa),
+                _ => sf::coords::bispherical_to_cart(v, pa),
+            }?;
+            Ok(vec3v(r))
+        }
+        "cart_to_ellipsoidal" | "ellipsoidal_to_cart" => {
+            let v = as_v3(name, 0, &a[0])?;
+            let (pa, pb, pc) =
+                (as_num(name, 1, &a[1])?, as_num(name, 2, &a[2])?, as_num(name, 3, &a[3])?);
+            let r = if name == "cart_to_ellipsoidal" {
+                sf::coords::cart_to_ellipsoidal(v, pa, pb, pc)
+            } else {
+                sf::coords::ellipsoidal_to_cart(v, pa, pb, pc)
+            }?;
+            Ok(vec3v(r))
+        }
+        "cart2_to_polar" | "polar_to_cart2" => {
+            let v = as_v2(name, 0, &a[0])?;
+            let r = if name == "cart2_to_polar" {
+                sf::coords::cart2_to_polar(v)
+            } else {
+                sf::coords::polar_to_cart2(v)
+            }?;
+            Ok(nums(r.to_vec()))
+        }
+        "cart2_to_elliptic" | "elliptic_to_cart2" | "cart2_to_bipolar" | "bipolar_to_cart2" => {
+            let v = as_v2(name, 0, &a[0])?;
+            let pa = as_num(name, 1, &a[1])?;
+            let r = match name {
+                "cart2_to_elliptic" => sf::coords::cart2_to_elliptic(v, pa),
+                "elliptic_to_cart2" => sf::coords::elliptic_to_cart2(v, pa),
+                "cart2_to_bipolar" => sf::coords::cart2_to_bipolar(v, pa),
+                _ => sf::coords::bipolar_to_cart2(v, pa),
+            }?;
+            Ok(nums(r.to_vec()))
+        }
         _ => unreachable!("call() already filtered the name set"),
     }
 }
@@ -570,6 +688,34 @@ fn dispatch(name: &str, a: &[Value]) -> Result<Value, String> {
 /// reserved-name list so a user function cannot shadow one.
 pub const SPECIAL_NAMES: &[&str] = &[
     "airy_z",
+    "bipolar_cyl_to_cart",
+    "bipolar_to_cart2",
+    "bispherical_to_cart",
+    "cart2_to_bipolar",
+    "cart2_to_elliptic",
+    "cart2_to_polar",
+    "cart_to_bipolar_cyl",
+    "cart_to_bispherical",
+    "cart_to_cylindrical",
+    "cart_to_ellipsoidal",
+    "cart_to_elliptic_cyl",
+    "cart_to_oblate",
+    "cart_to_paraboloidal",
+    "cart_to_parabolic_cyl",
+    "cart_to_prolate",
+    "cart_to_spherical",
+    "cart_to_toroidal",
+    "cylindrical_to_cart",
+    "ellipsoidal_to_cart",
+    "elliptic_cyl_to_cart",
+    "elliptic_to_cart2",
+    "oblate_to_cart",
+    "paraboloidal_to_cart",
+    "parabolic_cyl_to_cart",
+    "polar_to_cart2",
+    "prolate_to_cart",
+    "spherical_to_cart",
+    "toroidal_to_cart",
     "assoc_legendre_p",
     "bessel_i_nu",
     "bessel_i_scaled",

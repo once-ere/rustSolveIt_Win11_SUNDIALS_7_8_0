@@ -213,7 +213,15 @@ datasetcmd := "CREATE" name                   (* fresh dataset at
           | "COPY" name name                  (* src -> dst snapshot *)
           | "SAVEAS" name                     (* open dataset -> new *)
           | "DELETE" name
-          | "PLAY" [ name ] ;                 (* plots in a browser  *)
+          | "PLAY" [ name ]                   (* plots in a browser  *)
+          | "DIFF" name name "AS" name        (* out = a - b, frame-
+                                                 aligned; alignment is
+                                                 CHECKED              *)
+          | "SUM" name name "AS" name         (* out = a + b          *)
+          | "MAP" name "TO" mapsys
+                  [ NUMBER [ NUMBER NUMBER ] ]
+                  "AS" name ;                 (* curvilinear transform
+                                                 of the positions     *)
 moviecmd := "CREATE" name [ "AS" name ]       (* dataset -> movie
                                                  page movies/<n>.html *)
           | "DELETE" name | "LIST"
@@ -221,6 +229,13 @@ moviecmd := "CREATE" name [ "AS" name ]       (* dataset -> movie
 name     := IDENT | STRING ;                  (* quote a name that
                                                  collides with a
                                                  keyword: "box"      *)
+mapsys   := "SPHERICAL" | "CYLINDRICAL" | "ELLIPSOIDAL" | "OBLATE"
+          | "PROLATE" | "PARABOLOIDAL" | "ELLIPTIC_CYL"
+          | "PARABOLIC_CYL" | "BIPOLAR_CYL" | "TOROIDAL"
+          | "BISPHERICAL"                     (* three-dimensional   *)
+          | "POLAR2" | "ELLIPTIC2" | "BIPOLAR2" ;
+                                              (* two-dimensional, in
+                                                 the plane z = 0     *)
 scenecmd := "CREATE" [ NUMBER ]               (* open window [port]  *)
           | "CLOSE"                           (* aka DESTROY         *)
           | "TRANSLATE" term term [ term ]    (* camera dx dy [dz]   *)
@@ -2302,6 +2317,54 @@ Like every page this repository generates, it is vanilla JS + canvas
 with zero external fetches. \code{POSIM\_NO\_BROWSER=1} suppresses the
 browser launch (batch runs); the page is written either way.
 
+\textbf{\kw{dataset diff} \code{<a> <b>} \kw{as} \code{<out>} and
+\kw{dataset sum} \code{<a> <b>} \kw{as} \code{<out>} --- trajectory
+algebra.} The teacher's experiment in one command: run a trial, change
+a mass or a charge, run the second trial over the SAME space-time
+domain, and subtract. \kw{diff} (and \kw{sum}) produce a new dataset
+whose every column is the component-wise difference (sum) of the two
+inputs --- the states table (positions, quaternion components,
+velocities, angular velocities), and the frames table (energy,
+momentum, angular momentum, centre of mass, collision counts). The
+time column is carried through unchanged. \textbf{Alignment is
+checked, not assumed}: the two datasets must have the same number of
+frames, a bit-equal time grid, and the same body-id set at every frame
+--- any mismatch is an error naming the first offending frame and both
+values. A worked consistency check: \code{(a - b) + b - a} comes back
+all-zero to floating-point roundoff (SolveIt example 36 measures
+\code{6.9e-18}). Note the orientation columns of a DIFF/SUM dataset
+hold component-wise quaternion arithmetic --- a difference of
+quaternions is not a rotation, so such a dataset is a difference TABLE
+for plots and SQL, not a rigid state (build movies from the source
+recordings instead).
+
+\textbf{\kw{dataset map} \code{<src>} \kw{to} \code{<system> [params]}
+\kw{as} \code{<out>} --- curvilinear coordinates.} Every recorded
+position is pushed through one of the fourteen classical coordinate
+maps of \S\ref{sec:coords}: eleven three-dimensional
+(\code{spherical}, \code{cylindrical}, \code{ellipsoidal a b c},
+\code{oblate a}, \code{prolate a}, \code{paraboloidal},
+\code{elliptic\_cyl a}, \code{parabolic\_cyl}, \code{bipolar\_cyl a},
+\code{toroidal a}, \code{bispherical a}) and three two-dimensional
+(\code{polar2}, \code{elliptic2 a}, \code{bipolar2 a}), where \code{a}
+(or the ellipsoidal semi-axes \code{a b c}) is the system's scale
+parameter, written as plain numbers after the system word. In the
+output dataset the states table's \code{x, y, z} columns hold the
+curvilinear triple (\code{q1, q2, q3}; a 2-D system stores
+\code{(q1, q2, 0)} and REQUIRES a planar trajectory --- every
+$|z| \le$ \code{1e-9}, checked); orientations are carried unchanged
+(they are still rotation quaternions); the velocity columns are stored
+as \textbf{NULL}, because velocity components in curvilinear
+coordinates require the metric, which a point map does not carry; and
+the frames table ($E$, $P$, $L$, com --- Cartesian bookkeeping) is
+copied verbatim. Everything is checked: an unknown system or a wrong
+parameter count is a PARSE error, and a trajectory that crosses a
+singular locus (a bipolar focus, the toroidal focal ring) errors
+naming the frame and body. A planar orbit mapped with \code{spherical}
+gives the cleanest possible sanity check: the polar-angle column is
+\code{1.5707963267948966} ($\pi/2$) at every frame, \code{MIN = MAX},
+measured in SolveIt example 37.
+
 \textbf{\kw{sql} \code{"<statements>"} --- the whole SQLite language.}
 The quoted string is handed to SQLite \textbf{verbatim} (several
 statements separated by \code{;} are fine), so every SQLite command
@@ -2359,6 +2422,128 @@ errors naming the missing thing and the command that fixes it: a
 missing dataset names the path and suggests \kw{dataset list}; a
 missing sidecar binary prints the exact build command; SQL errors
 carry SQLite's own message plus the offending statement.
+
+\subsection{Coordinate transformations --- the fourteen classical
+curvilinear systems}
+\label{sec:coords}
+
+Pure-Rust, checked, bidirectional maps between Cartesian coordinates
+and every classical curvilinear system (conventions per Morse \&
+Feshbach ch.~5 / Arfken ch.~2), reachable two ways:
+\textbf{value-level}, as ordinary expression functions on vectors, and
+\textbf{dataset-level}, via \kw{dataset map} (\S\ref{sec:dataset}).
+All of them live in \code{special\_functions/src/coords.rs} with
+round-trip, known-value and error-path tests.
+
+\textbf{The three-dimensional systems and their builtins.} Each
+\code{cart\_to\_*} takes a vector \code{[x, y, z]} (plus scale
+parameters where the system has them) and returns the curvilinear
+triple as a vector; each \code{*\_to\_cart} is its inverse. Angle
+ranges: \code{atan2} angles in $(-\pi, \pi]$, \code{acos} angles in
+$[0, \pi]$.
+
+\begin{center}\small
+\begin{tabular}{p{2.2cm}p{4.6cm}p{7.8cm}}
+\textbf{system} & \textbf{builtins} & \textbf{coordinates and convention}\\\hline
+Spherical-polar & \code{cart\_to\_spherical(v)} /
+  \code{spherical\_to\_cart(q)} & $(r, \theta, \phi)$:
+  $x = r\sin\theta\cos\phi$, $y = r\sin\theta\sin\phi$,
+  $z = r\cos\theta$; $\theta$ from the $+z$ axis\\
+Cylindrical & \code{cart\_to\_cylindrical(v)} /
+  \code{cylindrical\_to\_cart(q)} & $(\rho, \phi, z)$:
+  $x = \rho\cos\phi$, $y = \rho\sin\phi$\\
+Ellipsoidal & \code{cart\_to\_ellipsoidal(v, a, b, c)} /
+  \code{ellipsoidal\_to\_cart(q, a, b, c)} & $(\lambda, \mu, \nu)$,
+  semi-axes $a > b > c > 0$: the three real roots of
+  $x^2/(a^2{+}s) + y^2/(b^2{+}s) + z^2/(c^2{+}s) = 1$, interlaced
+  $\lambda > -c^2 > \mu > -b^2 > \nu > -a^2$ (found by safeguarded
+  bisection --- the cubic is strictly decreasing between its poles)\\
+Oblate spheroidal & \code{cart\_to\_oblate(v, a)} /
+  \code{oblate\_to\_cart(q, a)} & $(\mu, \nu, \phi)$, focal ring
+  $\rho = a$: $\rho = a\cosh\mu\cos\nu$, $z = a\sinh\mu\sin\nu$;
+  inverse from $\rho + iz = a\cosh(\mu + i\nu)$ via the ring
+  distances\\
+Prolate spheroidal & \code{cart\_to\_prolate(v, a)} /
+  \code{prolate\_to\_cart(q, a)} & $(\mu, \nu, \phi)$, foci
+  $(0, 0, \pm a)$: $\rho = a\sinh\mu\sin\nu$, $z = a\cosh\mu\cos\nu$\\
+Paraboloidal & \code{cart\_to\_paraboloidal(v)} /
+  \code{paraboloidal\_to\_cart(q)} & $(u, v, \phi)$ (rotational
+  parabolic): $\rho = uv$, $z = (u^2 - v^2)/2$; inverse
+  $u = \sqrt{r + z}$, $v = \sqrt{r - z}$\\
+Elliptic cylindrical & \code{cart\_to\_elliptic\_cyl(v, a)} /
+  \code{elliptic\_cyl\_to\_cart(q, a)} & $(u, v, z)$, foci
+  $(\pm a, 0)$ in the plane: $x = a\cosh u\cos v$,
+  $y = a\sinh u\sin v$\\
+Parabolic cylindrical & \code{cart\_to\_parabolic\_cyl(v)} /
+  \code{parabolic\_cyl\_to\_cart(q)} & $(\sigma, \tau, z)$:
+  $x = \sigma\tau$, $y = (\tau^2 - \sigma^2)/2$, $\tau \ge 0$\\
+Bipolar cylindrical & \code{cart\_to\_bipolar\_cyl(v, a)} /
+  \code{bipolar\_cyl\_to\_cart(q, a)} & $(\sigma, \tau, z)$, foci
+  $(\pm a, 0)$: $x = a\sinh\tau/D$, $y = a\sin\sigma/D$,
+  $D = \cosh\tau - \cos\sigma$\\
+Toroidal & \code{cart\_to\_toroidal(v, a)} /
+  \code{toroidal\_to\_cart(q, a)} & $(\sigma, \tau, \phi)$, focal
+  ring $\rho = a$: $\rho = a\sinh\tau/D$, $z = a\sin\sigma/D$\\
+Bispherical & \code{cart\_to\_bispherical(v, a)} /
+  \code{bispherical\_to\_cart(q, a)} & $(\sigma, \tau, \phi)$, foci
+  $(0, 0, \pm a)$: $\rho = a\sin\sigma/D$, $z = a\sinh\tau/D$\\
+\end{tabular}
+\end{center}
+
+\textbf{The two-dimensional systems.} Points are 2-element lists
+\code{[x, y]}, results likewise:
+
+\begin{center}\small
+\begin{tabular}{p{2.2cm}p{4.6cm}p{7.8cm}}
+\textbf{system} & \textbf{builtins} & \textbf{coordinates and convention}\\\hline
+Plane polar & \code{cart2\_to\_polar(u)} / \code{polar\_to\_cart2(w)}
+  & $(r, \phi)$: $x = r\cos\phi$, $y = r\sin\phi$\\
+Elliptic & \code{cart2\_to\_elliptic(u, a)} /
+  \code{elliptic\_to\_cart2(w, a)} & $(u, v)$, foci $(\pm a, 0)$: the
+  planar section of elliptic cylindrical\\
+Bipolar (special conformal extension) & \code{cart2\_to\_bipolar(u, a)} /
+  \code{bipolar\_to\_cart2(w, a)} & $(\sigma, \tau)$, foci
+  $(\pm a, 0)$: the planar bipolar system; CONFORMAL --- the real form
+  of the analytic map $x + iy = a\coth((\tau - i\sigma)/2)$, so angles
+  are preserved everywhere off the foci (verified numerically in the
+  tests)\\
+\end{tabular}
+\end{center}
+
+\textbf{Error checking, spelled out.} Every map returns an error ---
+never a NaN --- for: non-finite inputs; invalid scale parameters
+($a \le 0$, or an ellipsoidal triple that is not $a > b > c > 0$);
+out-of-range curvilinear coordinates where the range is load-bearing
+($r < 0$, $\rho < 0$, $\mu < 0$, $\tau < 0$, $\nu$ outside its
+interval); points ON a singular locus (a bipolar focus, the toroidal
+focal ring, a bispherical focus --- where $\tau$ diverges);
+$\sigma = \tau = 0$ in the bipolar family (the point at infinity); and
+the coordinate planes for ellipsoidal coordinates, whose chart covers
+open octants (the coordinates encode squares, so the inverse returns
+the positive-octant point). Merely CONVENTIONAL values --- the azimuth
+on the polar axis, the angles at the origin --- use
+\code{atan2(0, 0) = 0}, so every map round-trips exactly on its
+domain.
+
+Captured from this machine (the round trips and the 3-4-5 triangle):
+
+\begin{lstlisting}
+In[32]:= let v = [1.3, 0.7, 2.1]
+Out[32]= v set
+In[33]:= norm(toroidal_to_cart(cart_to_toroidal(v, 1.25), 1.25) - v)
+Out[33]= 0
+In[34]:= norm(ellipsoidal_to_cart(cart_to_ellipsoidal(v, 3, 2, 1), 3, 2, 1) - v)
+Out[34]= 0.0000000000000011957467920563633
+In[35]:= cart2_to_polar([3, 4])
+Out[35]= [5, 0.9272952180016122]
+\end{lstlisting}
+
+And an error path, exactly as a user sees it:
+
+\begin{lstlisting}
+In[36]:= cart_to_toroidal([1, 0, 0], 1)
+Err[36]: cart_to_toroidal: (rho, z) = (1, 0) is on the focal ring — a singular locus of toroidal coordinates (tau diverges there)
+\end{lstlisting}
 
 \section{The notebook (cells, editing, magics)}
 

@@ -1,4 +1,4 @@
-# notebooks/ — one Jupyter notebook per example, 125 of them
+# notebooks/ — one Jupyter notebook per example, 128 of them
 
 Every example in this repository has exactly one Jupyter notebook, and
 every notebook here pairs with exactly one example:
@@ -8,7 +8,7 @@ every notebook here pairs with exactly one example:
 | `video_*` | 13 | `videos/scenes/*.posim` | the scripts behind the recorded browser videos |
 | `rust_*` | 6 | `physical_object/examples/*.rs` | the self-checking compiled Rust examples |
 | `collision_*` | 12 | `scripts/collisions/*.posim` | the collision-detection walkthroughs |
-| `solveit_*` | 35 | `scripts/solveit/*.posim` | the SolveIt worked examples, incl. the 16 dataset/SQL/movie examples |
+| `solveit_*` | 38 | `scripts/solveit/*.posim` | the SolveIt worked examples, incl. the 19 dataset/SQL/movie/coordinate examples |
 | `dynamic_*` | 59 | `dynamic_notebooks/*.posim` | the dynamic notebooks, incl. the 34 Routh problems |
 
 Each notebook is a **Python 3** notebook that starts the simulator as a
@@ -47,7 +47,7 @@ Open any notebook and run the cells top to bottom. The final two cells
 ask you to name the notebook and pick a folder in a save dialog; they
 are interactive and are the only cells the batch runner skips.
 
-## The 125, one by one
+## The 128, one by one
 
 ### Video scenes — 13
 
@@ -101,7 +101,7 @@ Paired with the scripts in `scripts/collisions/`.
 | `collision_11_box_of_shapes.ipynb` | `scripts/collisions/11_box_of_shapes.posim` | The box of shapes: every body type inside a rigid, |
 | `collision_12_two_dumbbells.ipynb` | `scripts/collisions/12_two_dumbbells.posim` | Two colliding dumbbells built by a USER-DEFINED function |
 
-### SolveIt worked examples — 35
+### SolveIt worked examples — 38
 
 Paired with the scripts in `scripts/solveit/`.
 
@@ -142,6 +142,9 @@ Paired with the scripts in `scripts/solveit/`.
 | `solveit_33_dataset_lifecycle_tour.ipynb` | `scripts/solveit/33_dataset_lifecycle_tour.posim` | The complete dataset lifecycle, in one sitting |
 | `solveit_34_dataset_door_movies.ipynb` | `scripts/solveit/34_dataset_door_movies.posim` | Movies are DERIVED, so one dataset can wear several |
 | `solveit_35_dataset_spinning_torus.ipynb` | `scripts/solveit/35_dataset_spinning_torus.posim` | A spinning torus: quaternions in the database, and on the screen |
+| `solveit_36_dataset_teacher_diff.ipynb` | `scripts/solveit/36_dataset_teacher_diff.posim` | The teacher's experiment: change a mass, rerun, SUBTRACT |
+| `solveit_37_dataset_map_spherical.ipynb` | `scripts/solveit/37_dataset_map_spherical.posim` | Convert coordinates: Cartesian -> spherical, and 2-D polar |
+| `solveit_38_dataset_curvilinear_tour.ipynb` | `scripts/solveit/38_dataset_curvilinear_tour.posim` | The grand tour: one helix through every remaining chart |
 
 ### Dynamic notebooks — 59
 
@@ -210,12 +213,12 @@ Paired with the scripts in `dynamic_notebooks/`, including the 34 Routh problems
 | `dynamic_unequal_masses.ipynb` | `dynamic_notebooks/unequal_masses.posim` | Unequal masses: 1-vs-3 head-on, textbook one-dimensional formulas |
 
 
-## Regenerating and re-verifying all 125
+## Regenerating and re-verifying all 128
 
 ```bash
 cargo build --release -p posim
 cd dataset_tools && cargo build --release && cd ..   # the SQLite sidecar
-python3 notebooks/_build/regen.py          # specs -> .ipynb, all 125
+python3 notebooks/_build/regen.py          # specs -> .ipynb, all 128
 ls notebooks/*.ipynb | POSIM_NO_BROWSER=1 xargs -P 6 -I{} \
     python3 notebooks/_build/nbrun.py {}   # execute, embed real outputs
 python3 notebooks/_build/nbcheck.py        # audit the 8 requirements
@@ -226,6 +229,6 @@ python3 notebooks/_build/nbcheck.py        # audit the 8 requirements
 `lang.py` (what every command and field means), `nbgen.py` (derives a
 spec from a `.posim` example), `nbbuild.py` (spec → notebook),
 `nbrun.py` (executes code cells and embeds outputs), `nbcheck.py`
-(audits every requirement), `specs/` (the 125 derived specs), and
+(audits every requirement), `specs/` (the 128 derived specs), and
 `rust_equivalents/` (posim reproductions of the six compiled examples,
 each verified against the same analytic anchors).

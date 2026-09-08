@@ -834,6 +834,32 @@ Pinned contracts:
   words. Documentation moves in lockstep by test:
   `every_dataset_and_movie_subcommand_is_documented_in_lockstep`
   (EBNF ↔ HELP_TEXT ↔ grammar.md ↔ grammar.tex, both directions).
+- **Offline dataset operations** (posim/src/dataset.rs `dataset_binop`,
+  `dataset_map`): DIFF/SUM/MAP read datasets ON DISK via one-shot
+  `solveit_db query` calls and write a fresh output dataset via
+  `append_raw` (explicit bodies payload — never the live system).
+  DIFF/SUM alignment is CHECKED: same frame count, bit-equal t grid,
+  same body-id set per frame; violations error naming the first
+  offending frame. MAP pushes positions through
+  `special_functions::coords` (the fourteen classical curvilinear
+  systems; `Map3`/`Map2` dispatchers); 2-D systems require
+  `|z| <= 1e-9` everywhere (checked) and store `(q1, q2, 0)`; the
+  output's velocity columns are set to NULL (curvilinear velocity
+  components need the metric — a point map must not fake them);
+  orientations and the frames table are carried unchanged. Names
+  aliasing the OPEN dataset are refused (`refuse_open_clobber`).
+- **Coordinate maps are a special_functions contract**
+  (special_functions/src/coords.rs): every map returns `Result`, never
+  NaN — non-finite inputs, bad scale parameters (`a <= 0`, ellipsoidal
+  not `a > b > c > 0`), out-of-range coordinates and singular loci
+  (bipolar foci, the toroidal focal ring, `sigma = tau = 0` = the
+  point at infinity, the ellipsoidal coordinate planes) are named
+  errors. Conventions (angle ranges, sign choices, the
+  positive-octant ellipsoidal inverse) are pinned in the module docs
+  and by round-trip/known-value/error-path tests; the value-level
+  builtins (`cart_to_*`/`*_to_cart`, 28 names) register through
+  posim's special-function dispatcher so the SPECIAL_NAMES lockstep
+  test covers their documentation.
 - **Binary discovery**: `$POSIM_DB_TOOL`, then
   `dataset_tools/target/release/solveit_db` walking up from the working
   directory, then `$PATH`; the error message carries the exact build

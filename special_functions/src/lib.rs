@@ -56,6 +56,7 @@ pub mod airy_uniform;
 pub mod bessel_scaled;
 pub mod wigner;
 pub mod complex;
+pub mod coords;
 pub mod tridiag;
 pub mod eigen;
 pub mod lanczos;

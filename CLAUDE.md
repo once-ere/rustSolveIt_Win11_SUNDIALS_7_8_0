@@ -27,7 +27,7 @@ including which donor sources were deliberately not carried over — is in
 ## Commands
 
 - Build: `cargo build --workspace --all-targets 2>&1 | tee /tmp/build.log`
-- Tests: `cargo test --workspace 2>&1 | tee /tmp/test.log` (622 expected)
+- Tests: `cargo test --workspace 2>&1 | tee /tmp/test.log` (631 expected)
 - Notebook: `cargo run` (type `HELP`); batch: `cargo run -p posim -- --script <f>`
 - Dynamic notebook (loads a file, opens its scene window, stays
   interactive): `cargo run -p posim --release -- --notebook
@@ -44,9 +44,23 @@ including which donor sources were deliberately not carried over — is in
 - Collision example scripts: `cargo run -p posim -- --script
   scripts/collisions/NN_name.posim` (01–12; documented with captured
   output in `collision_detection.md` §9)
-- The sixteen SolveIt examples: `cargo run -p posim --release --
-  --script scripts/solveit/NN_name.posim` (01–16; documented with
-  captured output in `SolveIt.md` §7)
+- The thirty-five SolveIt examples: `cargo run -p posim --release --
+  --script scripts/solveit/NN_name.posim` (01–35; documented with
+  captured output in `SolveIt.md` §7; 20–35 are the dataset/SQL/movie
+  examples and need the sidecar built first)
+- Dataset sidecar (REQUIRED for DATASET/SQL/MOVIE commands, the
+  solveit 20–35 scripts and all notebooks): `cd dataset_tools && cargo
+  build --release` (first build fetches rusqlite/r2d2 from crates.io;
+  Cargo.lock pins versions). Its own tests: `cd dataset_tools && cargo
+  test` (11: WAL + busy-timeout, 10-thread pool stress, two-pool
+  cross-process interleave, serve-protocol round trip). Demo:
+  `./dataset_tools/target/release/solveit_db stress /tmp/s.db 10 500`
+- Datasets/movies from the language: `DATASET CREATE <name>` (arms
+  recording), `RUN`/`STEP` record frames, `SQL "<any SQLite>"`,
+  `DATASET PLAY` (plots page in the browser), `MOVIE CREATE <dataset>`
+  + `MOVIE PLAY <name>` (3-D player from the recording). Files land in
+  `datasets/` and `movies/`; POSIM_NO_BROWSER=1 suppresses browsers.
+  Full reference: `grammar.md` §5.14; worked session: §13
 - Browser video: `cargo build --release -p posim` then
   `recorder/src/record_video.py videos/scenes/<x>.posim -o videos/<x>.html
   --frames N --dt DT --title "..." --caption "..."`
@@ -78,7 +92,18 @@ including which donor sources were deliberately not carried over — is in
   (stack machine) → `notebook` (REPL) / `machine` (JSONL) / `scene`
   (graphical window: `mod.rs` server+playback, `ws.rs` hand-rolled
   SHA-1/base64/RFC 6455, `scene.html` embedded page); `qm`/`qm2`/`qm3`
-  and `special` are the quantum and special-function command families.
+  and `special` are the quantum and special-function command families;
+  `dataset` (DATASET/SQL families + the plots page + the solveit_db
+  handle) and `movie` (dataset-derived 3-D player pages) are the SQLite
+  recording layer (ARCHITECTURE §3.10).
+- `dataset_tools/` — the `solveit_db` SQLite sidecar: the ONE package
+  with external crates (rusqlite bundled + r2d2 + r2d2_sqlite, per the
+  feature's specification), EXCLUDED from the workspace like
+  `sundials_rs`. WAL journal mode + busy_timeout=5000 on every pooled
+  connection; posim spawns it, never links it.
+- `datasets/`, `movies/` — the recorded SQLite datasets (one per
+  notebook and per dataset example, plus `_plots.html` pages) and the
+  movies derived from them.
 - `quantum/`, `special_functions/`, `vendor/spec_math/` — the physics
   and mathematics libraries the language reaches.
 - `jupyter/` — Python wrapper kernel (outside the Rust constraints);
@@ -91,9 +116,12 @@ including which donor sources were deliberately not carried over — is in
 - `gui/` — thirteen live GUI web pages, one per recorded video scene:
   a stdlib-Python server owning a `posim --machine` child plus a
   vanilla-JS canvas page with live physics readouts (`gui/README.md`).
-- `notebooks/` — one executed Jupyter notebook per example, 109 in all
-  (13 video scenes, 6 Rust examples, 12 collision scripts, 19 SolveIt
-  scripts, 59 dynamic notebooks). Python notebooks driving
+- `notebooks/` — one executed Jupyter notebook per example, 125 in all
+  (13 video scenes, 6 Rust examples, 12 collision scripts, 35 SolveIt
+  scripts, 59 dynamic notebooks). **Every notebook owns a SQLite
+  dataset** (section 6 creates it, section 9 reads it back with SQL and
+  plain-Python sqlite3, section 10 derives the movie); nbcheck enforces
+  this as requirement R8. Python notebooks driving
   `posim --machine`; stand-alone by design — every explanation is
   repeated in full in every notebook. Machinery and re-verification
   loop in `notebooks/_build/` (see `notebooks/README.md`).
@@ -132,6 +160,11 @@ including which donor sources were deliberately not carried over — is in
    to networking too: the scene server's HTTP/WebSocket/SHA-1/base64 are
    hand-rolled on `std::net` in `posim/src/scene/ws.rs`, `scene.html`
    uses vanilla JS + canvas, and the recorded video pages fetch nothing.
+   The ONE deliberate exception lives outside the workspace:
+   `dataset_tools/` (see Layout) — excluded in the root Cargo.toml, so
+   `cargo build --workspace` still never touches crates.io and the
+   workspace `Cargo.lock` still lists only local crates. posim reaches
+   SQLite exclusively by SPAWNING `solveit_db`.
 3. **Fidelity to donor physics.** Formulas ported from the legacy types
    (softened gravity, Laplace vector incl. its `r = 0` guard, inertia
    formulas, kinetic energy, SDF central-difference normal) keep their
@@ -214,10 +247,11 @@ that will bite you:
   output. ≤2 attempts per failing command, then switch strategy.
 - Commit after every coherent file group; keep
   `cargo build --workspace --all-targets` warning-free and
-  `cargo test --workspace` green at every commit (**622 tests**:
+  `cargo test --workspace` green at every commit (**631 tests**:
   49 physical_object lib + 19 collision + 9 conservation +
-  42 constrained/DAE + 112 posim + 92 quantum + 233 special_functions +
-  11 vendored identities + 55 doctests).
+  42 constrained/DAE + 121 posim + 92 quantum + 233 special_functions +
+  11 vendored identities + 55 doctests). The sidecar adds its own 11
+  (`cd dataset_tools && cargo test`).
 - New solver features need: a unit or conservation test with an
   **analytic** expectation (not a golden-output snapshot), a grammar
   hook if user-facing (lexer keyword → parser production → VM
@@ -225,7 +259,9 @@ that will bite you:
   ARCHITECTURE.md update if a contract changed.
 - When touching the language, update **all four** in lockstep: the EBNF
   comment in `parser.rs`, `HELP_TEXT` in `vm.rs`, `grammar.md`, and
-  `grammar.tex` (then recompile the PDF). Scene-visible behavior also
+  `grammar.tex` (then recompile the PDF). The DATASET/MOVIE/SQL family has
+  a two-directional test for exactly this:
+  `every_dataset_and_movie_subcommand_is_documented_in_lockstep`. Scene-visible behavior also
   updates `scene_info.md`/`.tex`; user-visible behavior also updates
   `SolveIt.md`/`.tex`.
 - Scene argument parsing is **term-level** (so `scene rotate 15 -5` is

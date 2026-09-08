@@ -21,6 +21,7 @@ Standard library only. Deterministic. Usage:
 import json
 import sys
 from pathlib import Path
+from pathlib import Path as pathlib_Path
 
 WS = Path(__file__).resolve().parents[2]          # workspace root
 ENGINE = WS / "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"
@@ -528,11 +529,50 @@ def header_cell(fam, tag, topic, assets, player_text):
         L.append("```bash")
         L.append(f"python3 SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py data exported_data")
         L.append("```")
-    else:
+    elif fam == "rebound":
         L.append("This notebook's data is its **executed transcript** (every command "
                  "sent to the pure-Rust engine and every reply, embedded as real "
                  "cell outputs) — there is no SQLite database in this family. "
                  "Export the transcript (and any paired artifacts) with:")
+        L.append("```bash")
+        L.append(f"python3 SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py data exported_data")
+        L.append("```")
+        if assets["script"]:
+            L.append(f"The paired source scene/script is `{rel(assets['script'])}`.")
+    else:
+        # Every posim-family notebook owns a SQLite DATASET: executing it
+        # records the run into datasets/<name>.db through the solveit_db
+        # sidecar (r2d2 pool, WAL journal mode, busy_timeout = 5000). The
+        # 16 dataset worked examples name their own dataset in the paired
+        # script; every other notebook uses nb_<tag>.
+        ds = "nb_" + tag
+        script = assets.get("script")
+        if script:
+            try:
+                import re as _re
+                m = _re.search(r"^dataset create (\w+)", pathlib_Path(script).read_text(encoding="utf-8"), _re.M)
+                if m:
+                    ds = m.group(1)
+            except OSError:
+                pass
+        L.append(f"Executing this notebook records the run into a **SQLite dataset**, "
+                 f"`{e}/datasets/{ds}.db` (schema v1: `meta`, `bodies`, `frames`, "
+                 "`states`; w-first quaternions; no timestamps). The simulator "
+                 "records it through the `solveit_db` sidecar — an r2d2 connection "
+                 "pool with WAL journal mode and a 5-second busy timeout, which is "
+                 "why the notebook's own plain-Python `sqlite3` cell can read the "
+                 "file while the simulator still holds it open. Build the sidecar "
+                 "once and open the dataset yourself:")
+        L.append("```bash")
+        L.append(f"cd {e}/dataset_tools && cargo build --release && cd ..")
+        L.append(f"sqlite3 {e}/datasets/{ds}.db \".tables\"")
+        L.append(f"sqlite3 {e}/datasets/{ds}.db \"SELECT COUNT(*) FROM frames;\"")
+        L.append("```")
+        L.append("Inside the notebook the same database answers physics questions "
+                 "through the `sql` command (the COMPLETE SQLite grammar, verbatim), "
+                 "`dataset play` renders its time series to a browser page, and "
+                 "section 10 derives a **movie** from it when there are rigid bodies "
+                 "to animate. Export the transcript (and any paired artifacts) with:")
         L.append("```bash")
         L.append(f"python3 SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py data exported_data")
         L.append("```")

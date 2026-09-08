@@ -21,6 +21,8 @@ from pathlib import Path
 
 WS = Path(__file__).resolve().parents[2]
 ENGINE = WS / "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"
+if not ENGINE.exists():
+    ENGINE = WS                      # fresh-clone layout: the repo root IS the engine
 ROOT = WS / "SolveIt_Notebooks_for_rust"
 MANIFEST = ROOT / "_tools" / "manifest.json"
 

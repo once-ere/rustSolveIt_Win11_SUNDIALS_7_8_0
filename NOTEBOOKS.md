@@ -21,6 +21,18 @@ runs (all script notebooks) reproduce these outputs exactly; the
 final versions were re-run inside a fresh `git clone` of the published
 repository and matched byte-for-byte.
 
+*A later addition to the language, postdating every transcript in this
+file: the SQLite dataset layer (`DATASET ...`, `SQL "..."`,
+`MOVIE ...`), which records runs into `datasets/*.db` through the
+`solveit_db` sidecar (built with `cd dataset_tools && cargo build
+--release`), passes arbitrary SQLite statements through verbatim, and
+derives browser movies from recordings. It is fully specified in
+`grammar.md` §5.14 with a complete worked session in `grammar.md` §13,
+demonstrated by SolveIt worked examples 20–35, and exercised by every
+one of the 125 Jupyter notebooks in `notebooks/`. The transcripts below
+predate it and are preserved unchanged — they remain byte-reproducible
+on the current build.*
+
 ---
 
 ## Part I — the box-of-shapes task (the manager's test problem)

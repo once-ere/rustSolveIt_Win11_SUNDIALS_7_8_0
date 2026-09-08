@@ -2,7 +2,7 @@
 """verify.py — mechanical gate over the whole encyclopedia tree.
 
 Checks (read-only):
-  V1  manifest has 128 entries; topic counts are 2/19/59/12/13/6/17
+  V1  manifest has 144 entries; topic counts are 2/35/59/12/13/6/17
   V2  every copy exists, parses, and its FIRST cell is the tagged header
       with all five required sections
   V3  every player_<tag>.py exists and compiles; the header cell embeds
@@ -29,7 +29,7 @@ REQUIRED_SECTIONS = [
     "## 4. Database / data access",
     "## 5. The full player",
 ]
-EXPECT = {"01_planet_mercury_tidal_locking": 2, "02_solveit_worked_examples": 19,
+EXPECT = {"01_planet_mercury_tidal_locking": 2, "02_solveit_worked_examples": 35,
           "03_dynamics_and_routh": 59, "04_collisions": 12,
           "05_mechanism_videos": 13, "06_rust_compiled_examples": 6,
           "07_nbody_rebound_rust": 17}
@@ -45,7 +45,7 @@ def check(ok, label):
 
 def main():
     entries = json.loads((ROOT / "_tools" / "manifest.json").read_text())
-    check(len(entries) == 128, f"V1: {len(entries)} entries, expected 128")
+    check(len(entries) == 144, f"V1: {len(entries)} entries, expected 144")
     from collections import Counter
     counts = Counter(e["topic"] for e in entries)
     for t, n in EXPECT.items():

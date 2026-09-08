@@ -43,6 +43,18 @@ use ::physical_object::integrate::Snapshot;
 /// `videos/` and `scripts/`).
 pub const DATASET_DIR: &str = "datasets";
 
+/// Every DATASET subcommand the parser implements. The lockstep test
+/// below checks each is documented in the EBNF, HELP_TEXT, grammar.md
+/// and grammar.tex — and, conversely, that the EBNF promises nothing
+/// the parser lacks (the QM2 phantom-`ISO` lesson).
+pub const DATASET_SUBCOMMANDS: &[&str] = &[
+    "create", "open", "close", "record", "snapshot", "list", "info", "copy", "saveas",
+    "delete", "play",
+];
+
+/// Every MOVIE subcommand the parser implements.
+pub const MOVIE_SUBCOMMANDS: &[&str] = &["create", "delete", "list", "play"];
+
 /// Dataset and movie names are file stems: letters, digits, `_`, `-`.
 pub fn valid_name(name: &str) -> Result<(), String> {
     if name.is_empty() {
@@ -847,6 +859,98 @@ mod tests {
     #[test]
     fn db_paths_stay_inside_the_dataset_dir() {
         assert_eq!(db_path("kepler"), Path::new("datasets").join("kepler.db"));
+    }
+
+    /// Every DATASET / MOVIE subcommand must appear in the parser's
+    /// EBNF, in `HELP_TEXT`, and in both grammar documents — and the
+    /// EBNF must promise nothing the parser does not implement. Same
+    /// two-directional discipline as
+    /// `every_qm2_subcommand_is_documented_in_lockstep`.
+    #[test]
+    fn every_dataset_and_movie_subcommand_is_documented_in_lockstep() {
+        let prep = |s: &str| s.replace('\\', "").to_ascii_uppercase();
+        let help = prep(crate::vm::HELP_TEXT);
+        let all = prep(include_str!("parser.rs"));
+        /* Anchor on the PRODUCTIONS (`datasetcmd :=`), not the first
+         * mention — the `command` production's alternatives line quotes
+         * "DATASET" datasetcmd earlier in the file. */
+        let ds_from = all.find("DATASETCMD :=").expect("parser.rs must declare datasetcmd :=");
+        let ds_to = all[ds_from..]
+            .find("MOVIECMD :=")
+            .map_or(all.len(), |k| ds_from + k);
+        let ds_ebnf = all[ds_from..ds_to].to_string();
+        let mv_from = ds_to;
+        let mv_to = all[mv_from..].find("NAME     :=").map_or(all.len(), |k| mv_from + k);
+        let mv_ebnf = all[mv_from..mv_to].to_string();
+        let md = prep(include_str!("../../grammar.md"));
+        let tex = prep(include_str!("../../grammar.tex"));
+
+        let mut missing = Vec::new();
+        let mut check_family =
+            |family: &str, subs: &[&str], ebnf: &str, help: &str, md: &str, tex: &str| {
+                for w in subs {
+                    let up = w.to_ascii_uppercase();
+                    let needle = format!("{family} {up}");
+                    let ebnf_needle = format!("\"{up}\"");
+                    for (what, hay) in [
+                        ("HELP_TEXT", help),
+                        ("parser.rs EBNF", ebnf),
+                        ("grammar.md", md),
+                        ("grammar.tex", tex),
+                    ] {
+                        let want: &str =
+                            if what == "parser.rs EBNF" { &ebnf_needle } else { &needle };
+                        if !hay.contains(want) {
+                            missing.push(format!("{want} is missing from {what}"));
+                        }
+                    }
+                }
+            };
+        check_family("DATASET", crate::dataset::DATASET_SUBCOMMANDS, &ds_ebnf, &help, &md, &tex);
+        check_family("MOVIE", crate::dataset::MOVIE_SUBCOMMANDS, &mv_ebnf, &help, &md, &tex);
+        /* SQL is a one-production family of its own. */
+        for (what, hay) in
+            [("HELP_TEXT", &help), ("grammar.md", &md), ("grammar.tex", &tex)]
+        {
+            if !hay.contains("SQL") {
+                missing.push(format!("SQL is missing from {what}"));
+            }
+        }
+
+        /* Converse: every quoted ALL-CAPS word in the two EBNF blocks
+         * must be a declared subcommand or a declared argument word. */
+        const ARGUMENT_WORDS: &[&str] = &["ON", "OFF", "AS"];
+        let mut phantom = Vec::new();
+        for (name, ebnf, subs) in [
+            ("datasetcmd", &ds_ebnf, crate::dataset::DATASET_SUBCOMMANDS),
+            ("moviecmd", &mv_ebnf, crate::dataset::MOVIE_SUBCOMMANDS),
+        ] {
+            let mut rest = ebnf.as_str();
+            while let Some(i) = rest.find('"') {
+                rest = &rest[i + 1..];
+                let Some(j) = rest.find('"') else { break };
+                let word = &rest[..j];
+                rest = &rest[j + 1..];
+                if word.is_empty() || !word.chars().all(|c| c.is_ascii_uppercase() || c == '_')
+                {
+                    continue;
+                }
+                let known = subs.iter().any(|s| s.eq_ignore_ascii_case(word))
+                    || ARGUMENT_WORDS.contains(&word);
+                if !known {
+                    phantom.push(format!(
+                        "the {name} EBNF quotes `{word}`, which is neither a declared \
+                         subcommand nor a declared argument word"
+                    ));
+                }
+            }
+        }
+        assert!(
+            missing.is_empty() && phantom.is_empty(),
+            "documentation lockstep broken:\n  {}\n  {}",
+            missing.join("\n  "),
+            phantom.join("\n  ")
+        );
     }
 
     #[test]

@@ -83,12 +83,22 @@ and L); **622 passed workspace-wide on macOS/Apple Silicon**
   each a standard-library Python server driving the engine over the
   machine protocol plus a canvas page with Start/Pause/Reset and live
   readouts verifying that scene's closed forms (`gui/README.md`).
-- `notebooks/` — one executed Jupyter notebook per example — 109 in
+- `notebooks/` — one executed Jupyter notebook per example — 125 in
   all, one per video scene, Rust example, collision script, SolveIt
   script and dynamic notebook. Each is a stand-alone Python notebook
   that starts the simulator in machine mode, explains every command it
-  sends, derives the equations of motion and constraint equations, and
-  carries real outputs (`notebooks/README.md`).
+  sends, derives the equations of motion and constraint equations,
+  carries real outputs, and **owns a SQLite dataset**: the run is
+  recorded into `datasets/nb_<name>.db`, read back with SQL and with a
+  plain-Python `sqlite3` cell, and a browser movie is derived from it
+  (`notebooks/README.md`).
+- `datasets/`, `movies/`, `dataset_tools/` — the SQLite recording
+  layer: one dataset per notebook and per dataset example (plus its
+  `_plots.html` page), the movies derived from them, and the
+  `solveit_db` sidecar that owns all SQLite access (rusqlite + r2d2
+  connection pool, WAL journal mode, 5 s busy timeout; build it once
+  with `cd dataset_tools && cargo build --release`). The simulator
+  itself still links zero external crates — it spawns the sidecar.
 - `jupyter/` — JupyterLab wrapper kernel so notebooks can get/set the
   simulator's data (see `jupyter/README.md`).
 - `sundials_rs/` — the numerical engine: a pure-Rust, zero-`unsafe`,
@@ -150,11 +160,14 @@ the worked cases.
 
 - **[SolveIt.md](SolveIt.md) / [SolveIt.pdf](SolveIt.pdf)** — the
   complete solution guide, written for a reader who has never used the
-  program, with **sixteen** fully documented worked examples (scripts in
-  [`scripts/solveit/`](scripts/solveit)).
+  program, with **thirty-five** fully documented worked examples
+  (scripts in [`scripts/solveit/`](scripts/solveit); examples 20–35 are
+  the SQLite dataset / SQL / movie examples).
 - **[grammar.md](grammar.md) / [grammar.pdf](grammar.pdf)** — the
   complete command-language and notebook specification: the lexer, the
-  full EBNF, the type system, every command, the stack machine, the
+  full EBNF, the type system, every command (the SQLite dataset, SQL
+  and movie families in §5.14, with a complete worked session in §13),
+  the stack machine, the
   SUNDIALS 7.8.0 engine, the browser videos, and **eighteen** worked
   examples.
 - [PORT_7.8.0_PROVENANCE.md](PORT_7.8.0_PROVENANCE.md) — the 7.8.0

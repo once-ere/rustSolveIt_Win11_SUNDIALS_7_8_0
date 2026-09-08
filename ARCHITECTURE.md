@@ -763,6 +763,83 @@ force block is byte-for-byte the same arithmetic order as `rhs_full`'s
 names as **STRING** tokens because `mass 0` is two tokens and would be
 ambiguous against a duration followed by a number.
 
+### 3.10 Dataset subsystem (posim/src/dataset.rs + movie.rs ↔ vm ↔ dataset_tools/)
+
+The SQLite recording layer. Its load-bearing property: **posim links no
+SQLite and no external crate** — the dependency policy of §5 is intact.
+All database work happens in the `solveit_db` sidecar binary
+(`dataset_tools/`, a package deliberately EXCLUDED from the simulator
+workspace, like `sundials_rs`), which posim spawns per open dataset and
+drives over line-delimited JSON on stdin/stdout.
+
+Pinned contracts:
+
+- **The sidecar owns the concurrency recipe**, exactly as specified for
+  this feature: an `r2d2` + `r2d2_sqlite` connection pool (size 10; the
+  POOL is cloned across the serve loop's four worker threads, never a
+  connection), `PRAGMA journal_mode=WAL` executed by the pool's
+  `with_init` on every connection, and `PRAGMA busy_timeout = 5000`.
+  WAL is what lets a notebook's Python `sqlite3` reader open the same
+  file the serve child still holds — tests
+  `ten_threads_through_one_pool_lose_nothing` and
+  `two_pools_on_one_file_interleave_writes_and_reads`
+  (dataset_tools/tests/concurrency.rs) pin it.
+- **Schema v1** (dataset_tools/src/db.rs `SCHEMA`): `meta(key, value)`,
+  `bodies(body, name, shape, mass, wall, geometry)`,
+  `frames(frame, t, energy, px..pz, lx..lz, comx..comz, ncollisions)`,
+  `states(frame, body, x..z, qw..qz, vx..vz, wx..wz)`. Quaternions
+  **w-first** (§3.6 applies to the database too). `bodies.body` is the
+  STABLE object id (`get_id()`), never the index — DEL renumbers
+  indices but ids are never reused. **No wall-clock column anywhere**:
+  byte-stable output is a verified repo property.
+- **The serve protocol** (dataset_tools/src/serve.rs): requests
+  `{"id":N,"op":"sql"|"append"|"info"|"checkpoint"|"close",...}`, one
+  JSON object per line; replies carry the same `id` and `"ok"`. A
+  state row in an append is
+  `[body, x,y,z, qw,qx,qy,qz, vx,vy,vz, wx,wy,wz]`. posim's
+  `DatasetHandle::rpc` matches replies by id. `close` (and Drop, best
+  effort) checkpoints the WAL so a closed dataset is ONE tidy `.db`.
+- **Recording hooks** (vm.rs): with a dataset open and recording armed,
+  `Instr::Run` appends every `report.snapshots` entry as one frame
+  batch (one sidecar transaction) and `Instr::Step` appends one frame.
+  The per-body data rides on `integrate::Snapshot`, which carries
+  `body_states: Vec<BodySnap>` and `collision_count` — **purely
+  observational fields filled in the existing `snapshot()` helper; no
+  arithmetic changed anywhere**, which is why the byte-identity gate
+  (`tools/macos_verify_physics.sh`) still passes.
+- **RESET closes the open dataset** (a dataset describes ONE world);
+  the scene window survives a RESET, the dataset deliberately does not.
+  `DATASET CREATE` replaces an existing file of the same name —
+  re-running a script or notebook reproduces the same database; COPY /
+  SAVEAS are the preservation idioms (both are SQLite `VACUUM INTO`).
+- **SQL is a verbatim passthrough**: the quoted string goes to SQLite
+  untouched, which is what makes the COMPLETE SQLite grammar available
+  from the language. Result cells render deterministically: INTEGER
+  without a decimal point, REAL in shortest round-trip form, `NULL`.
+  The sidecar registers `sqrt`/`pow`/`hypot` (deterministic) because
+  the bundled amalgamation omits SQLITE_ENABLE_MATH_FUNCTIONS.
+- **Movies are DERIVED artifacts** (posim/src/movie.rs): `MOVIE CREATE`
+  reads bodies/frames/states back via one-shot `solveit_db query` calls
+  and writes the self-contained player `movies/<name>.html`. The player
+  obeys the pinned drawing rules of §3.7/§7: wall bodies excluded from
+  the draw list AND the camera auto-fit, BOX as dashed wireframe,
+  round shapes quaternion-rotated about local z. `DATASET PLAY` writes
+  `datasets/<name>_plots.html` the same self-contained way. Both pages
+  fetch nothing (tests `the_player_page_is_self_contained`,
+  `the_plots_page_is_self_contained`).
+- **Grammar surface**: `DATASET`, `MOVIE`, `SQL` are CONTEXTUAL
+  keywords (lexer, command position only — `new sphere as movie` and
+  `let sql = 3` stay legal); subcommand words are matched on text (the
+  QM convention), so no new global keyword beyond the three family
+  words. Documentation moves in lockstep by test:
+  `every_dataset_and_movie_subcommand_is_documented_in_lockstep`
+  (EBNF ↔ HELP_TEXT ↔ grammar.md ↔ grammar.tex, both directions).
+- **Binary discovery**: `$POSIM_DB_TOOL`, then
+  `dataset_tools/target/release/solveit_db` walking up from the working
+  directory, then `$PATH`; the error message carries the exact build
+  command. The notebooks' §6/§9/§10 dataset cells and the R8 notebook
+  check (notebooks/_build/nbcheck.py) sit on top of this layer.
+
 ## 4. Error-handling policy
 
 Library and VM return `Result<_, String>` with human-readable,
@@ -775,6 +852,16 @@ error events; a solver failure during playback pauses the scene and
 queues an event.
 
 ## 5. Dependency policy
+
+**The one deliberate exception lives OUTSIDE the workspace:**
+`dataset_tools/` (the `solveit_db` SQLite sidecar) depends on
+`rusqlite` (bundled SQLite amalgamation), `r2d2` and `r2d2_sqlite`,
+exactly as specified for the dataset feature. It is excluded from the
+workspace in the root Cargo.toml (like `sundials_rs`), owns its own
+Cargo.lock, and posim reaches it only by spawning the binary — the
+simulator workspace's `Cargo.lock` still lists local crates only, and
+`cargo build --workspace` never touches crates.io.
+
 
 - Allowed: `std`, and path deps `sundials_core`, `cvode_rs`,
   `arkode_rs` (and the four further `../sundials_rs` crates —

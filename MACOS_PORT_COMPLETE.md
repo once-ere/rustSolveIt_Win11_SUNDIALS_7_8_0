@@ -204,3 +204,30 @@ pdflatex -interaction=nonstopmode SolveIt.tex
   `gui/` — the 13 live GUI pages; `videos/` — the 13 recorded browser
   videos; `evidence/macos/` — the macOS gate logs and the pinned
   divergence diffs.
+
+---
+
+## Addendum (2026-09-08): the SQLite dataset layer
+
+The language gained the DATASET / SQL / MOVIE families (SQLite
+recording through the `solveit_db` sidecar — r2d2 pool, WAL journal
+mode, busy_timeout = 5000), sixteen new SolveIt worked examples
+(20–35), and a dataset in every notebook. Every gate in this file was
+re-run on this machine after that work, plus the new ones. Complete
+commands and captured outputs: this repository's
+`SQLITE_DATASETS_PROVENANCE.md` (self-contained). The re-measured
+figures, verbatim:
+
+| suite | command | verdict |
+|---|---|---|
+| workspace tests | `cargo test --workspace` | **631 passed, 0 failed** (was 622) |
+| sidecar tests | `cd dataset_tools && cargo test` | **11 passed, 0 failed** |
+| byte-identity gate | `bash tools/macos_verify_physics.sh` | exit 0 — same two pinned divergences, nothing new |
+| 35 SolveIt scripts | `for f in scripts/solveit/*.posim; do POSIM_NO_BROWSER=1 target/release/posim --script "$f"; done` | all 35 ok |
+| 12 collision scripts | `for f in scripts/collisions/*.posim; do POSIM_NO_BROWSER=1 target/release/posim --script "$f"; done` | all 12 ok |
+| 125 notebooks executed | `ls notebooks/*.ipynb \| POSIM_NO_BROWSER=1 xargs -P 6 -I{} python3 notebooks/_build/nbrun.py {}` | **125 ok, 0 failed** |
+| 125 notebooks checked | `python3 notebooks/_build/nbcheck.py` | **125/125 pass all eight requirements** |
+| recorded videos | `python3 recorder/src/record_all.py --check` | all 13 reproduce byte for byte |
+| live GUIs | `python3 tools/gui_smoke.py` | 13 of 13 pass |
+| wire protocol | `python3 jupyter/test_protocol.py` | all protocol checks passed |
+| JupyterLab kernel | `POSIM_NO_BROWSER=1 jupyter/.venv/bin/python jupyter/test_kernel.py` | all kernel checks passed |

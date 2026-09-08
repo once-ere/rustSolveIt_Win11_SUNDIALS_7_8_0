@@ -79,11 +79,17 @@ and, for constrained dynamics, equilibrium and sensitivity (§5.13):
 `CONSTRAIN CONSTRAINTS EQUILIBRIUM SENSITIVITY IDA BALL HINGE UNIVERSAL GEAR RACK
 PRISMATIC`
 
-(`BALL`, `HINGE`, `UNIVERSAL`, `GEAR`, `RACK` and `PRISMATIC` are **contextual**: they are commands
+and, for the SQLite dataset layer (§5.14):
+
+`DATASET MOVIE SQL`
+
+(`BALL`, `HINGE`, `UNIVERSAL`, `GEAR`, `RACK`, `PRISMATIC` — and likewise
+`DATASET`, `MOVIE` and `SQL` — are **contextual**: they are commands
 only at the start of a line. Anywhere else they are ordinary
 identifiers, so `new sphere as ball` and `get ball.mass` keep working —
 `ball` is exactly what a physics user calls a sphere, and reserving it
-outright would have broken existing notebooks.)
+outright would have broken existing notebooks. The same protection
+means `new sphere as movie` and `let sql = 3` are legal too.)
 
 (`EQUIL` is an alias for `EQUILIBRIUM`, `SENS` for `SENSITIVITY`.)
 
@@ -169,7 +175,37 @@ command  := "NEW" shape [ "AS" (IDENT | STRING) ]
                                                  expr = inner side
                                                  length; bare = status;
                                                  OFF removes it      *)
+          | "DATASET" datasetcmd              (* SQLite recording    *)
+          | "MOVIE" moviecmd                  (* animations derived
+                                                 from datasets       *)
+          | "SQL" STRING                      (* ANY SQLite statement,
+                                                 or several split on
+                                                 `;`, run verbatim on
+                                                 the open dataset    *)
           | expr ;                            (* bare expression     *)
+datasetcmd := "CREATE" name                   (* fresh dataset at
+                                                 datasets/<name>.db
+                                                 (replaces an existing
+                                                 one), opened with
+                                                 recording armed     *)
+          | "OPEN" name                       (* open an existing    *)
+          | "CLOSE"                           (* checkpoint + close  *)
+          | "RECORD" [ "ON" | "OFF" ]         (* auto-record RUN/STEP
+                                                 frames; bare=status *)
+          | "SNAPSHOT"                        (* record one frame NOW *)
+          | "LIST"                            (* names in datasets/  *)
+          | "INFO" [ name ]                   (* row counts          *)
+          | "COPY" name name                  (* src -> dst snapshot *)
+          | "SAVEAS" name                     (* open dataset -> new *)
+          | "DELETE" name
+          | "PLAY" [ name ] ;                 (* plots in a browser  *)
+moviecmd := "CREATE" name [ "AS" name ]       (* dataset -> movie
+                                                 page movies/<n>.html *)
+          | "DELETE" name | "LIST"
+          | "PLAY" name ;                     (* open in a browser   *)
+name     := IDENT | STRING ;                  (* quote a name that
+                                                 collides with a
+                                                 keyword: "box"      *)
 scenecmd := "CREATE" [ NUMBER ]               (* open window [port]  *)
           | "CLOSE"                           (* aka DESTROY         *)
           | "TRANSLATE" term term [ term ]    (* camera dx dy [dz]   *)
@@ -2380,6 +2416,163 @@ discretisation error at `h = 0.52`.
 
 ---
 
+### 5.14 `DATASET`, `SQL`, `MOVIE` — SQLite recording, queries, and derived movies
+
+Every simulation can record itself into a **dataset**: one ordinary
+SQLite database file under `datasets/<name>.db`. The dataset is the
+canonical artifact of a run — the notebooks build theirs automatically,
+the `SQL` command interrogates it with the complete SQLite language,
+`DATASET PLAY` plots it in your web browser, and a **movie** is a 3-D
+animation *derived from* a dataset, never recorded independently of one.
+
+**The architecture, honestly.** posim itself contains **no SQLite
+code** — the simulator workspace keeps its zero-external-dependency,
+zero-`unsafe` guarantee. All database work happens in a separate
+sidecar binary, `solveit_db` (the `dataset_tools/` package), which
+posim spawns and speaks to in line-delimited JSON. Build it once,
+from the repository root:
+
+```bash
+cd dataset_tools && cargo build --release
+```
+
+The sidecar follows the standard SQLite concurrency recipe, exactly:
+
+1. **A thread-safe connection pool** (`r2d2` + `r2d2_sqlite`, pool
+   size 10). No raw connection ever crosses a thread; the POOL is
+   cloned into the sidecar's four worker threads.
+2. **WAL journal mode**, enabled on every connection the moment the
+   pool creates it (`PRAGMA journal_mode=WAL`). Readers never block
+   the writer and the writer never blocks readers — which is what lets
+   a Jupyter notebook's Python `sqlite3` reader watch a dataset
+   **while posim is still appending to it**.
+3. **A busy timeout** (`PRAGMA busy_timeout = 5000`): a connection
+   that finds the database momentarily locked waits up to five seconds
+   instead of failing with `database is locked`.
+
+The sidecar also registers `sqrt(x)`, `pow(x, y)` and `hypot(x, y)` as
+deterministic SQL functions (the bundled SQLite 3.46.0 is compiled
+without its optional math functions, and physics queries want them).
+
+**Names and places.** Dataset and movie names are file stems — letters,
+digits, `_`, `-` — written as an identifier or, when a name collides
+with a keyword, as a quoted string (`dataset open "box"`). Datasets
+live in `datasets/`, movies in `movies/`, both relative to the working
+directory, exactly like `videos/` and `scripts/`.
+
+**The schema (version 1).** Four tables, no timestamps anywhere
+(byte-stable output is a verified property of this repository, and a
+wall-clock column would silently break it):
+
+| table    | one row per | columns |
+|----------|-------------|---------|
+| `meta`   | key/value pair | `key`, `value` (`schema_version`, `title`, `box`) |
+| `bodies` | body | `body` (the STABLE id — `DEL` renumbers indices but never reuses ids), `name`, `shape`, `mass`, `wall`, `geometry` (JSON text of the shape parameters) |
+| `frames` | recorded instant | `frame`, `t`, `energy`, `px py pz`, `lx ly lz`, `comx comy comz`, `ncollisions` (cumulative) |
+| `states` | body per frame | `frame`, `body`, `x y z`, `qw qx qy qz` (**w-first**, like everywhere in this repository), `vx vy vz`, `wx wy wz` |
+
+**The commands, one by one.**
+
+`DATASET CREATE <name>` makes `datasets/<name>.db` FRESH — an existing
+dataset of the same name is replaced, so re-running a script or
+notebook always reproduces the same database (keep an old run with
+COPY or SAVEAS first). The dataset opens with **recording armed**:
+
+```
+In[5]:= dataset create solveit20_kepler
+Out[5]= dataset solveit20_kepler created (datasets/solveit20_kepler.db, journal_mode=wal, schema v1) — recording armed
+```
+
+While recording is armed, **every output row of a `RUN`** (all `STEPS n`
+of them, captured at the exact output instants the solver visits) and
+**the end of every `STEP`** is appended as one frame, in a single
+sidecar transaction per command. `DATASET RECORD OFF` pauses that,
+`DATASET RECORD ON` resumes it, bare `DATASET RECORD` reports the
+switch. `DATASET SNAPSHOT` appends one frame right now, recording
+switch or no.
+
+`DATASET OPEN <name>` attaches an existing dataset (recording armed);
+`DATASET CLOSE` checkpoints the WAL into the main file — leaving one
+tidy `.db` with no `-wal`/`-shm` sidecar files — and shuts the sidecar
+child down. `RESET` closes the open dataset the same way: a dataset
+describes ONE world, and RESET destroys that world. (The scene window
+survives a RESET; the dataset deliberately does not.)
+
+`DATASET LIST` names everything under `datasets/`; `DATASET INFO
+[<name>]` reports row counts for the named dataset, or for the open one
+with no name:
+
+```
+In[7]:= dataset info
+Out[7]= dataset solveit20_kepler: 2 bodies, 200 frames, 400 states
+```
+
+`DATASET COPY <src> <dst>` snapshot-copies a dataset (SQLite's `VACUUM
+INTO`: compact, checkpointed, safe to take even while the source is
+open). `DATASET SAVEAS <name>` does the same from the OPEN dataset —
+the checkpoint idiom. `DATASET DELETE <name>` removes a dataset and its
+WAL sidecars; deleting the open dataset is refused until you CLOSE it.
+
+`DATASET PLAY [<name>]` renders the recorded time series into a
+self-contained page `datasets/<name>_plots.html` — total energy E(t),
+|P| and |L|, per-body x/y/z components, and a top view of every
+trajectory — and opens it in your web browser. Like every page this
+repository generates, it is vanilla JS + canvas with zero external
+fetches. `POSIM_NO_BROWSER=1` suppresses the browser launch (batch
+runs); the page is written either way.
+
+**`SQL "<statements>"` — the whole SQLite language.** The quoted
+string is handed to SQLite **verbatim** (several statements separated
+by `;` are fine), so every SQLite command works: `SELECT` with joins,
+subqueries, CTEs (`WITH`) and window functions (`LAG ... OVER`),
+`INSERT`, `UPDATE`, `DELETE`, `CREATE TABLE / INDEX / VIEW / TRIGGER`,
+`ALTER TABLE`, `DROP`, `ATTACH DATABASE` / `DETACH DATABASE`,
+`PRAGMA`, `VACUUM`, `EXPLAIN`, transactions — anything SQLite 3.46
+accepts. Row-returning statements print a header line and one line per
+row, columns separated by ` | `; integer values print without a
+decimal point, other reals in Rust's shortest round-trip form, NULL as
+`NULL`. Statements that change rows print `ok (N row(s) changed)`.
+
+```
+In[8]:= sql "SELECT COUNT(*) AS frames FROM frames"
+Out[8]= frames
+200
+```
+
+SQL runs on the **open** dataset; with none open it says so and points
+at DATASET CREATE/OPEN. Cross-dataset work is one `ATTACH` away — the
+worked example in §13 and SolveIt example 31 both do it.
+
+**`MOVIE` — animations derived from datasets.** `MOVIE CREATE
+<dataset> [AS <name>]` reads the `bodies`, `frames` and `states` tables
+and writes the self-contained player page `movies/<name>.html` (the
+name defaults to the dataset's). The player animates the recorded
+bodies in 3-D: play/pause/step, a scrub bar, 0.25×–4× speed, an
+orbiting camera (drag to orbit, wheel or `+`/`-` to zoom, arrow keys to
+pan and step), per-body trails and labels, and a live readout of t, E,
+|P|, |L| and the cumulative collision count. It follows the same
+pinned drawing rules as the scene window and the recorded videos: wall
+slabs are excluded from both the draw list and the camera auto-fit
+(a BOX appears as the dashed wireframe instead), and every round shape
+is rendered quaternion-rotated about its local z axis so spin is
+visible. `MOVIE PLAY <name>` opens a movie in the browser, `MOVIE LIST`
+names what exists, `MOVIE DELETE <name>` removes one. Because the
+dataset is the source of truth, movies can be deleted and rebuilt at
+any time without re-running any physics, and one dataset can carry
+several movies (SolveIt example 34 builds two from one recording).
+
+A movie needs at least 2 frames of at least one body; a dataset that
+has neither gets a plain error saying so. A dataset recorded by a
+purely quantum-mechanical session has frames but no rigid-body states —
+the quantum families draw with `QM ANIMATE`/`QM2 ANIMATE`/`QM3 ISO`
+instead, which is their native picture.
+
+**Error style.** Everything here reports `Result`-style errors naming
+the missing thing and the command that fixes it: a missing dataset
+names the path and suggests `DATASET LIST`; a missing sidecar binary
+prints the exact build command; SQL errors carry SQLite's own message
+plus the offending statement.
+
 ## 6. The notebook (cells, editing, magics)
 
 ### 6.1 Cells
@@ -4136,3 +4329,100 @@ because the hinge, the universal joint and the rod all held at once.
 compare with the freedoms actually left. If the total meets or exceeds
 the freedoms, you have either locked the mechanism or made it singular,
 and a fatal return flag is the honest outcome either way.
+\n
+
+## 13. SQLite datasets and movies: a complete worked session
+
+Everything in §5.14, exercised end to end and captured verbatim from
+this machine (Apple Silicon, macOS). This is SolveIt worked example 20
+(`scripts/solveit/20_dataset_kepler_orbit.posim`): a two-body Kepler
+ellipse whose perihelion and aphelion are measured BY THE DATABASE.
+
+The setup: sun mass 3 and planet mass 1 under G = 1, so the relative
+orbit has gravitational parameter mu = G(M+m) = 4. Starting at
+perihelion separation r_p = a(1−e) = 1 with a = 2.5 and e = 0.6, the
+relative vis-viva speed is sqrt(mu(2/r_p − 1/a)) = sqrt(6.4), split
+about the stationary centre of mass (planet gets 3/4 of it, sun 1/4
+backwards). Aphelion must come out at a(1+e) = 4, and one period is
+T = 2π sqrt(a³/mu) = 12.418264743622237.
+
+```
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun    { mass = 3, radius = 0.15, position = [-0.25, 0, 0], velocity = [0, -0.6324555320336759, 0] }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[3]= obj1 as planet
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit20_kepler
+Out[5]= dataset solveit20_kepler created (datasets/solveit20_kepler.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 12.418264743622237 steps 200
+Out[6]= t = 12.418264743622238 (659 solver steps, 200 snapshots, |dE/E| = 2.096e-9)
+In[7]:= dataset info
+Out[7]= dataset solveit20_kepler: 2 bodies, 200 frames, 400 states
+```
+
+Two hundred RUN outputs became two hundred frames — each holding t, E,
+P, L, the centre of mass, the collision count, and both bodies' full
+states — appended through the sidecar's WAL-mode pool as one
+transaction. Now the physics question, asked in SQL: a **self-join**
+pairs the two bodies frame by frame and takes the extremes of their
+separation:
+
+```
+In[8]:= sql "SELECT MIN(sqrt((p.x-s.x)*(p.x-s.x) + (p.y-s.y)*(p.y-s.y))) AS perihelion, MAX(sqrt((p.x-s.x)*(p.x-s.x) + (p.y-s.y)*(p.y-s.y))) AS aphelion FROM states p JOIN states s ON s.frame = p.frame WHERE p.body = (SELECT body FROM bodies WHERE name = 'planet') AND s.body = (SELECT body FROM bodies WHERE name = 'sun')"
+Out[8]= perihelion | aphelion
+1.000000001093295 | 4.000000026379791
+In[9]:= sql "SELECT MAX(ABS(comx)) AS com_x, MAX(ABS(comy)) AS com_y, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+Out[9]= com_x | com_y | energy_spread
+5.235284428195541e-12 | 5.539403137577725e-12 | 4.5303885087832896e-9
+```
+
+Perihelion 1, aphelion 4, to the solver's tolerance — the analytic
+ellipse, read back out of a database. The centre of mass sat still to
+5e-12 and the energy ledger is flat to 4.5e-9 across the period.
+
+The movie and the plots page are derived artifacts:
+
+```
+In[10]:= movie create solveit20_kepler
+Out[10]= movie solveit20_kepler created from dataset solveit20_kepler (movies/solveit20_kepler.html, 200 frames, 2 bodies)
+In[11]:= movie play solveit20_kepler
+Out[11]= movie solveit20_kepler (movies/solveit20_kepler.html) ready (browser suppressed)
+In[12]:= dataset play solveit20_kepler
+Out[12]= dataset plots written to datasets/solveit20_kepler_plots.html (browser suppressed)
+In[13]:= dataset close
+Out[13]= dataset solveit20_kepler closed
+```
+
+(This transcript was captured under `POSIM_NO_BROWSER=1`, the batch
+switch; run it yourself without that variable and both PLAY commands
+open your web browser — the movie is the 3-D player described in
+§5.14, the plots page shows E(t) flat, |P| and |L| constant, the two
+position traces, and the closed ellipse in the top view.)
+
+Re-run the whole thing any time:
+
+```bash
+cargo build --release -p posim
+cd dataset_tools && cargo build --release && cd ..
+./target/release/posim --script scripts/solveit/20_dataset_kepler_orbit.posim
+```
+
+And the cross-dataset idiom, from SolveIt example 31
+(`scripts/solveit/31_dataset_attach_compare.posim`), captured the same
+way: record the same free fall once under Adams and once under BDF,
+then let SQLite compare the two databases directly —
+
+```
+In[16]:= sql "ATTACH DATABASE 'datasets/solveit31_adams.db' AS adams"
+Out[16]= ok (0 row(s) changed)
+In[17]:= sql "SELECT MAX(ABS(s.y - a.y)) AS worst_method_gap FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body"
+Out[17]= worst_method_gap
+5.615900633415549e-9
+In[18]:= sql "DETACH DATABASE adams"
+Out[18]= ok (0 row(s) changed)
+```
+
+Two independent integrators agreed on every recorded coordinate to
+5.6e-9, and the referee was a SQL JOIN.

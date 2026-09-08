@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check every generated notebook against the seven stated requirements.
+"""Check every generated notebook against the eight stated requirements.
 
   R1  it explains how to launch a notebook from a terminal CLI
   R2  it never sends the reader to another notebook
@@ -9,6 +9,8 @@
   R6  it describes objects, equations of motion, constraint equations,
       and the second-order -> first-order reduction
   R7  it is valid nbformat-4 JSON and pairs with a real example file
+  R8  it owns a SQLite dataset: a dataset section, and a plain-Python
+      sqlite3 read-back cell independent of the simulator
 """
 import json, re, sys
 from pathlib import Path
@@ -78,6 +80,13 @@ def check(path):
         if c["cell_type"] == "code" and "interactive" not in c.get("metadata", {}).get("tags", []):
             if c.get("execution_count") is None:
                 bad.append(f"R7 code cell {i} was never executed")
+    # R8: the dataset section, and a simulator-independent sqlite3 reader
+    if "## 6. This notebook's dataset" not in mdtext:
+        bad.append("R8 missing section '## 6. This notebook's dataset'")
+    if "import sqlite3" not in text:
+        bad.append("R8 no plain-Python sqlite3 read-back cell")
+    if "datasets/" not in mdtext:
+        bad.append("R8 the dataset's file path is never named")
     return bad
 
 if __name__ == "__main__":
@@ -90,5 +99,5 @@ if __name__ == "__main__":
             print(f"FAIL {p}")
             for q in problems:
                 print(f"       {q}")
-    print(f"\n{len(paths) - failed}/{len(paths)} notebooks pass all seven requirements")
+    print(f"\n{len(paths) - failed}/{len(paths)} notebooks pass all eight requirements")
     sys.exit(1 if failed else 0)

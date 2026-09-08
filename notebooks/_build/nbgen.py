@@ -103,6 +103,9 @@ def kind(stmt):
                 "equilibrium", "sensitivity"):
         return "measure"
     if head in ("qm", "qm2", "qm3", "special"): return "special"
+    if head == "dataset": return "dataset"
+    if head == "sql": return "sql"
+    if head == "movie": return "movie"
     return "measure"
 
 # ======================================================================
@@ -698,7 +701,8 @@ def reduction_md(d):
 TITLES = {"world":"Set up the world","bodies":"Create the bodies",
           "joints":"Declare the joints","solver":"Choose the integrator",
           "run":"Integrate","measure":"Measure","scene":"The graphical scene window",
-          "special":"Evaluate"}
+          "special":"Evaluate","dataset":"Record into the SQLite dataset",
+          "sql":"Interrogate the dataset with SQL","movie":"Derive the movie"}
 
 def py_for(stmt):
     esc = stmt.replace("\\", "\\\\").replace('"', '\\"')

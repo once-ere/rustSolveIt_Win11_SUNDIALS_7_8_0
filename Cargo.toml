@@ -16,7 +16,11 @@ default-members = [
 # Without this exclude, cargo would absorb its crates into THIS workspace
 # and they would inherit `version.workspace` from here (0.1.0) instead of
 # their own 7.8.0 — silently misreporting the SUNDIALS version they port.
-exclude = ["sundials_rs", "vendor/spec_math", "rebound_rust", "reboundx_rust", "planet_Mercury"]
+# dataset_tools is the SQLite dataset sidecar (rusqlite + r2d2, per the
+# project owner's specification). It is excluded so the simulator
+# workspace keeps its zero-external-dependency, zero-unsafe guarantee:
+# posim only ever SPAWNS the solveit_db binary, it never links it.
+exclude = ["sundials_rs", "vendor/spec_math", "rebound_rust", "reboundx_rust", "planet_Mercury", "dataset_tools"]
 
 [workspace.package]
 version = "0.1.0"

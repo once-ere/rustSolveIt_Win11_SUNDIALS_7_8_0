@@ -50,7 +50,56 @@
 //!                                                  expr = inner side
 //!                                                  length; bare = status;
 //!                                                  OFF removes it      *)
+//!           | "DATASET" datasetcmd              (* SQLite recording    *)
+//!           | "MOVIE" moviecmd                  (* animations derived
+//!                                                  from datasets       *)
+//!           | "SQL" STRING                      (* ANY SQLite statement
+//!                                                  (or several, split
+//!                                                  on `;`) against the
+//!                                                  open dataset — the
+//!                                                  string is handed to
+//!                                                  SQLite verbatim, so
+//!                                                  the ENTIRE SQLite
+//!                                                  grammar is available:
+//!                                                  SELECT/CTE/window
+//!                                                  functions, INSERT,
+//!                                                  UPDATE, DELETE,
+//!                                                  CREATE/ALTER/DROP,
+//!                                                  ATTACH, PRAGMA,
+//!                                                  VACUUM, EXPLAIN, ... *)
 //!           | expr ;                            (* bare expression     *)
+//! datasetcmd := "CREATE" name                   (* fresh dataset at
+//!                                                  datasets/<name>.db
+//!                                                  (replaces an existing
+//!                                                  one), opened with
+//!                                                  recording armed     *)
+//!           | "OPEN" name                       (* open an existing    *)
+//!           | "CLOSE"                           (* checkpoint + close  *)
+//!           | "RECORD" [ "ON" | "OFF" ]         (* auto-record RUN/STEP
+//!                                                  frames; bare = status *)
+//!           | "SNAPSHOT"                        (* record one frame NOW *)
+//!           | "LIST"                            (* names in datasets/  *)
+//!           | "INFO" [ name ]                   (* row counts          *)
+//!           | "COPY" name name                  (* src -> dst snapshot *)
+//!           | "SAVEAS" name                     (* open dataset -> new *)
+//!           | "DELETE" name
+//!           | "PLAY" [ name ] ;                 (* plots in a browser  *)
+//! moviecmd := "CREATE" name [ "AS" name ]       (* dataset -> movie
+//!                                                  page movies/<n>.html *)
+//!           | "DELETE" name | "LIST"
+//!           | "PLAY" name ;                     (* open in a browser   *)
+//! name     := IDENT | STRING ;                  (* quote a name that
+//!                                                  collides with a
+//!                                                  keyword: "box"      *)
+//!
+//! (* DATASET, MOVIE and SQL are CONTEXTUAL keywords like BALL/HINGE:
+//!    commands only at the start of a line, ordinary identifiers
+//!    everywhere else. The dataset subcommand words are matched on
+//!    their text (the QM convention), so none of OPEN/RECORD/SNAPSHOT/
+//!    INFO/COPY/SAVEAS/PLAY reserves a new word. posim contains no
+//!    SQLite code: these commands drive the `solveit_db` sidecar
+//!    (dataset_tools/), which owns the r2d2 pool, WAL journal mode and
+//!    the 5 s busy timeout.                                            *)
 //! scenecmd := "CREATE" [ NUMBER ]               (* open window [port]  *)
 //!           | "CLOSE"                           (* aka DESTROY         *)
 //!           | "TRANSLATE" term term [ term ]    (* camera dx dy [dz]   *)
@@ -699,11 +748,172 @@ impl Parser {
                     }
                 }
             }
+            TokKind::Keyword(Keyword::Dataset) => {
+                self.pos += 1;
+                self.dataset_command(&mut prog)?;
+            }
+            TokKind::Keyword(Keyword::Movie) => {
+                self.pos += 1;
+                self.movie_command(&mut prog)?;
+            }
+            TokKind::Keyword(Keyword::Sql) => {
+                self.pos += 1;
+                let sql = match self.next() {
+                    Some(Token { kind: TokKind::Str(s), .. }) => s.clone(),
+                    _ => {
+                        return Err(
+                            "parse error: SQL needs one quoted string of SQLite \
+                             statement(s), e.g. sql \"SELECT COUNT(*) FROM frames\""
+                                .into(),
+                        )
+                    }
+                };
+                prog.push(Instr::Sql(sql));
+            }
             _ => {
                 self.expr(&mut prog)?;
             }
         }
         Ok(prog)
+    }
+
+    /// A dataset or movie name: an IDENT (lower-cased, exactly like
+    /// `NEW ... AS`) or a quoted STRING (the escape hatch for a name
+    /// that collides with a keyword, e.g. `"box"`).
+    fn name_arg(&mut self, what: &str) -> Result<String, String> {
+        match self.next() {
+            Some(Token { kind: TokKind::Ident(n), .. }) => Ok(n.to_ascii_lowercase()),
+            Some(Token { kind: TokKind::Str(s), .. }) => Ok(s.clone()),
+            _ => Err(format!(
+                "parse error: expected {what} (a name, or a \"quoted name\")"
+            )),
+        }
+    }
+
+    /// An OPTIONAL trailing name (INFO / PLAY take one or none).
+    fn opt_name_arg(&mut self) -> Option<String> {
+        match self.peek() {
+            Some(Token { kind: TokKind::Ident(n), .. }) => {
+                let n = n.to_ascii_lowercase();
+                self.pos += 1;
+                Some(n)
+            }
+            Some(Token { kind: TokKind::Str(s), .. }) => {
+                let s = s.clone();
+                self.pos += 1;
+                Some(s)
+            }
+            _ => None,
+        }
+    }
+
+    /// The DATASET/MOVIE subcommand word. Matched on TEXT (the QM
+    /// convention) so no new global keywords are reserved; the words
+    /// that already ARE keywords (`create`, `close`, `list`,
+    /// `delete`, `as`, `on`, `off`) are mapped back to their text.
+    fn family_word(&mut self) -> Option<String> {
+        let word = match self.peek() {
+            Some(Token { kind: TokKind::Ident(w), .. }) => w.to_ascii_lowercase(),
+            Some(Token { kind: TokKind::Keyword(k), .. }) => match k {
+                Keyword::Create => "create".to_string(),
+                Keyword::Close => "close".to_string(),
+                Keyword::List => "list".to_string(),
+                Keyword::Del => "delete".to_string(),
+                Keyword::On => "on".to_string(),
+                Keyword::Off => "off".to_string(),
+                Keyword::As => "as".to_string(),
+                _ => return None,
+            },
+            _ => return None,
+        };
+        self.pos += 1;
+        Some(word)
+    }
+
+    /// `datasetcmd` — the sub-command after the `DATASET` keyword.
+    fn dataset_command(&mut self, prog: &mut Vec<Instr>) -> Result<(), String> {
+        use crate::vm::DatasetCmd;
+        const USAGE: &str = "DATASET needs CREATE <name>, OPEN <name>, CLOSE, \
+                             RECORD [ON|OFF], SNAPSHOT, LIST, INFO [<name>], \
+                             COPY <src> <dst>, SAVEAS <name>, DELETE <name> \
+                             or PLAY [<name>]";
+        let word = match self.family_word() {
+            Some(w) => w,
+            None => return Err(format!("parse error: {USAGE}")),
+        };
+        let cmd = match word.as_str() {
+            "create" => DatasetCmd::Create(self.name_arg("the dataset name")?),
+            "open" => DatasetCmd::Open(self.name_arg("the dataset name")?),
+            "close" => DatasetCmd::Close,
+            "record" => match self.peek() {
+                Some(Token { kind: TokKind::Keyword(Keyword::On), .. }) => {
+                    self.pos += 1;
+                    DatasetCmd::Record(Some(true))
+                }
+                Some(Token { kind: TokKind::Keyword(Keyword::Off), .. }) => {
+                    self.pos += 1;
+                    DatasetCmd::Record(Some(false))
+                }
+                None => DatasetCmd::Record(None),
+                _ => {
+                    return Err(
+                        "parse error: DATASET RECORD takes ON, OFF or nothing".into()
+                    )
+                }
+            },
+            "snapshot" => DatasetCmd::Snapshot,
+            "list" => DatasetCmd::List,
+            "info" => DatasetCmd::Info(self.opt_name_arg()),
+            "copy" => {
+                let src = self.name_arg("the source dataset name")?;
+                let dst = self.name_arg("the destination dataset name")?;
+                DatasetCmd::Copy(src, dst)
+            }
+            "saveas" => DatasetCmd::SaveAs(self.name_arg("the new dataset name")?),
+            "delete" => DatasetCmd::Delete(self.name_arg("the dataset name")?),
+            "play" => DatasetCmd::Play(self.opt_name_arg()),
+            other => {
+                return Err(format!(
+                    "parse error: unknown DATASET subcommand `{other}` — {USAGE}"
+                ))
+            }
+        };
+        prog.push(Instr::Dataset(cmd));
+        Ok(())
+    }
+
+    /// `moviecmd` — the sub-command after the `MOVIE` keyword.
+    fn movie_command(&mut self, prog: &mut Vec<Instr>) -> Result<(), String> {
+        use crate::vm::MovieCmd;
+        const USAGE: &str = "MOVIE needs CREATE <dataset> [AS <name>], \
+                             DELETE <name>, LIST or PLAY <name>";
+        let word = match self.family_word() {
+            Some(w) => w,
+            None => return Err(format!("parse error: {USAGE}")),
+        };
+        let cmd = match word.as_str() {
+            "create" => {
+                let dataset = self.name_arg("the source dataset name")?;
+                let name = match self.peek() {
+                    Some(Token { kind: TokKind::Keyword(Keyword::As), .. }) => {
+                        self.pos += 1;
+                        Some(self.name_arg("the movie name")?)
+                    }
+                    _ => None,
+                };
+                MovieCmd::Create { dataset, name }
+            }
+            "delete" => MovieCmd::Delete(self.name_arg("the movie name")?),
+            "list" => MovieCmd::List,
+            "play" => MovieCmd::Play(self.name_arg("the movie name")?),
+            other => {
+                return Err(format!(
+                    "parse error: unknown MOVIE subcommand `{other}` — {USAGE}"
+                ))
+            }
+        };
+        prog.push(Instr::Movie(cmd));
+        Ok(())
     }
 
     /// `scenecmd` — the sub-command after the `SCENE` keyword.
@@ -1725,5 +1935,96 @@ mod tests {
         assert_eq!(compile_line("laplace 0").unwrap(), vec![Instr::Laplace(0)]);
         assert!(compile_line("run 10 steps 3").is_ok());
         assert!(compile_line("scene show 2").is_ok());
+    }
+
+    /// Every DATASET / MOVIE / SQL production compiles to exactly the
+    /// instruction it advertises — names lower-cased for IDENTs and
+    /// taken verbatim for STRINGs, exactly like `NEW ... AS`.
+    #[test]
+    fn dataset_movie_and_sql_productions_compile() {
+        use crate::vm::{DatasetCmd, MovieCmd};
+        let one = |line: &str| {
+            let p = compile_line(line).unwrap_or_else(|e| panic!("`{line}`: {e}"));
+            assert_eq!(p.len(), 1, "`{line}` compiled to {p:?}");
+            p.into_iter().next().unwrap()
+        };
+        assert_eq!(
+            one("dataset create Kepler_E06"),
+            Instr::Dataset(DatasetCmd::Create("kepler_e06".to_string()))
+        );
+        assert_eq!(
+            one("dataset open \"box\""), // quoted: a name that IS a keyword
+            Instr::Dataset(DatasetCmd::Open("box".to_string()))
+        );
+        assert_eq!(one("dataset close"), Instr::Dataset(DatasetCmd::Close));
+        assert_eq!(one("dataset record on"), Instr::Dataset(DatasetCmd::Record(Some(true))));
+        assert_eq!(one("dataset record off"), Instr::Dataset(DatasetCmd::Record(Some(false))));
+        assert_eq!(one("dataset record"), Instr::Dataset(DatasetCmd::Record(None)));
+        assert_eq!(one("dataset snapshot"), Instr::Dataset(DatasetCmd::Snapshot));
+        assert_eq!(one("dataset list"), Instr::Dataset(DatasetCmd::List));
+        assert_eq!(one("dataset info"), Instr::Dataset(DatasetCmd::Info(None)));
+        assert_eq!(
+            one("dataset info kepler"),
+            Instr::Dataset(DatasetCmd::Info(Some("kepler".to_string())))
+        );
+        assert_eq!(
+            one("dataset copy a b"),
+            Instr::Dataset(DatasetCmd::Copy("a".to_string(), "b".to_string()))
+        );
+        assert_eq!(
+            one("dataset saveas kept"),
+            Instr::Dataset(DatasetCmd::SaveAs("kept".to_string()))
+        );
+        assert_eq!(
+            one("dataset delete old"),
+            Instr::Dataset(DatasetCmd::Delete("old".to_string()))
+        );
+        assert_eq!(one("dataset play"), Instr::Dataset(DatasetCmd::Play(None)));
+        assert_eq!(
+            one("dataset play kepler"),
+            Instr::Dataset(DatasetCmd::Play(Some("kepler".to_string())))
+        );
+        assert_eq!(
+            one("movie create kepler"),
+            Instr::Movie(MovieCmd::Create { dataset: "kepler".to_string(), name: None })
+        );
+        assert_eq!(
+            one("movie create kepler as orbit"),
+            Instr::Movie(MovieCmd::Create {
+                dataset: "kepler".to_string(),
+                name: Some("orbit".to_string())
+            })
+        );
+        assert_eq!(one("movie delete orbit"), Instr::Movie(MovieCmd::Delete("orbit".to_string())));
+        assert_eq!(one("movie list"), Instr::Movie(MovieCmd::List));
+        assert_eq!(one("movie play orbit"), Instr::Movie(MovieCmd::Play("orbit".to_string())));
+        assert_eq!(
+            one("sql \"SELECT COUNT(*) FROM frames\""),
+            Instr::Sql("SELECT COUNT(*) FROM frames".to_string())
+        );
+    }
+
+    /// DATASET, MOVIE and SQL are CONTEXTUAL: off the front of a line
+    /// they are ordinary identifiers, so existing vocabulary is safe.
+    #[test]
+    fn dataset_movie_and_sql_stay_identifiers_off_the_front() {
+        // Object names.
+        assert!(compile_line("new sphere as movie { mass = 1 }").is_ok());
+        assert!(compile_line("new sphere as dataset { mass = 1 }").is_ok());
+        assert!(compile_line("get movie.mass").is_ok());
+        // LET variables.
+        assert!(compile_line("let sql = 3").is_ok());
+        assert!(compile_line("let movie = 2 * sql").is_ok());
+        // And the error paths speak the family's usage, not a generic one.
+        let e = compile_line("dataset").unwrap_err();
+        assert!(e.contains("DATASET needs"), "{e}");
+        let e = compile_line("dataset record maybe").unwrap_err();
+        assert!(e.contains("ON, OFF or nothing"), "{e}");
+        let e = compile_line("movie").unwrap_err();
+        assert!(e.contains("MOVIE needs"), "{e}");
+        let e = compile_line("sql 42").unwrap_err();
+        assert!(e.contains("quoted string"), "{e}");
+        let e = compile_line("dataset create ../evil").unwrap_err();
+        assert!(!e.is_empty(), "{e}");
     }
 }

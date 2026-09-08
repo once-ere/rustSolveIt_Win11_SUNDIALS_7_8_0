@@ -19,6 +19,8 @@ mod lexer;
 mod machine;
 mod notebook;
 mod parser;
+mod dataset;
+mod movie;
 mod qm;
 mod qm2;
 mod qm3;

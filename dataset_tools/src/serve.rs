@@ -195,10 +195,13 @@ fn parse_bodies(items: &[Json]) -> Result<Vec<BodyRow>, String> {
         .iter()
         .map(|b| {
             Ok(BodyRow {
+                /* posim's hand-rolled JSON emits every number as a
+                 * double (`0.0`), so accept any numeric form here. */
                 body: b
                     .get("body")
-                    .and_then(Json::as_i64)
-                    .ok_or_else(|| "body needs an integer \"body\"".to_string())?,
+                    .and_then(Json::as_f64)
+                    .map(|v| v as i64)
+                    .ok_or_else(|| "body needs a numeric \"body\"".to_string())?,
                 name: b.get("name").and_then(Json::as_str).unwrap_or("").to_string(),
                 shape: b.get("shape").and_then(Json::as_str).unwrap_or("").to_string(),
                 mass: b.get("mass").and_then(Json::as_f64).unwrap_or(0.0),
@@ -256,7 +259,7 @@ fn parse_frames(items: &[Json]) -> Result<Vec<FrameRow>, String> {
                 p: vec3(f.get("p")),
                 l: vec3(f.get("l")),
                 com: vec3(f.get("c")),
-                ncollisions: f.get("n").and_then(Json::as_i64).unwrap_or(0),
+                ncollisions: f.get("n").and_then(Json::as_f64).unwrap_or(0.0) as i64,
                 states,
             })
         })

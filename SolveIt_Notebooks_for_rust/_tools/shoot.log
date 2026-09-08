@@ -9,9 +9,7 @@ ok   collision_08_colliding_binary
 ok   collision_09_spinning_target
 ok   collision_10_billiard_box
 ok   collision_11_box_of_shapes
-FAIL collision_12_two_dumbbells: used %r: %s" % (cmd, r.get("error")))
-RuntimeError: posim refused 'def create_dumbell(name, m1 = 1, m2 = 1, m_rod = 0.5, r1 = 0.25, r2 = 0.25, rod_radius = 0.1, length = 1, position = [0, 0, 0], velocity = [0, 0, 0], angular_velocity = [0, 0, 0]) {': DEF: missing the closing `}` (unbalanced braces)
-
+ok   collision_12_two_dumbbells
 ok   dynamic_billiard_box
 ok   dynamic_billiard_break
 ok   dynamic_bouncing_ball_restitution
@@ -69,9 +67,7 @@ ok   dynamic_three_bodies
 ok   dynamic_thrown_ball
 ok   dynamic_tumbling_body
 ok   dynamic_tunneling
-FAIL dynamic_two_dumbbells: used %r: %s" % (cmd, r.get("error")))
-RuntimeError: posim refused 'def create_dumbell(name, m1 = 1, m2 = 1, m_rod = 0.5, r1 = 0.25, r2 = 0.25, rod_radius = 0.1, length = 1, position = [0, 0, 0], velocity = [0, 0, 0], angular_velocity = [0, 0, 0]) {': DEF: missing the closing `}` (unbalanced braces)
-
+ok   dynamic_two_dumbbells
 ok   dynamic_unequal_masses
 ok   solveit_01_elastic_head_on
 ok   solveit_02_keplers_third_law
@@ -84,10 +80,7 @@ ok   solveit_08_magnetic_torque
 ok   solveit_09_newtons_cradle
 ok   solveit_10_no_tunnelling
 ok   solveit_11_lagrange_l4
-FAIL solveit_12_dumbbell_inertia: ertia/player_solveit_12_dumbbell_inertia.py", line 106, in rpc
-    raise RuntimeError("posim refused %r: %s" % (cmd, r.get("error")))
-RuntimeError: posim refused 'def barbell(m1 = 1, m2 = 1, m_rod = 0.5, r1 = 0.3, r2 = 0.3, rod_r = 0.05, len = 2) {': DEF: missing the closing `}` (unbalanced braces)
-
+ok   solveit_12_dumbbell_inertia
 ok   solveit_13_tilted_torus
 ok   solveit_14_particle_in_a_box
 ok   solveit_15_tunnelling
@@ -95,6 +88,22 @@ ok   solveit_16_special_functions
 ok   solveit_17_pendulum_dae
 ok   solveit_18_equilibrium_and_sensitivity
 ok   solveit_19_hinged_door
+ok   solveit_20_dataset_kepler_orbit
+ok   solveit_21_dataset_free_fall_check
+ok   solveit_22_dataset_circular_binary
+ok   solveit_23_dataset_restitution_rebounds
+ok   solveit_24_dataset_elastic_exchange
+ok   solveit_25_dataset_helical_cyclotron
+ok   solveit_26_dataset_dzhanibekov_flip
+ok   solveit_27_dataset_record_switch
+ok   solveit_28_dataset_pendulum_drift
+ok   solveit_29_dataset_box_rattle
+ok   solveit_30_dataset_sql_surgery
+ok   solveit_31_dataset_attach_compare
+ok   solveit_32_dataset_window_velocity
+ok   solveit_33_dataset_lifecycle_tour
+ok   solveit_34_dataset_door_movies
+ok   solveit_35_dataset_spinning_torus
 ok   video_ball_joint_chain
 ok   video_box_of_shapes
 ok   video_cardan_compass
@@ -110,4 +119,4 @@ ok   video_tumbling_racket
 ok   video_universal_joint
 ok   mercury_test2_jupiter_gr
 ok   mercury_tidal_locking
-102 captured, 3 failed: ['collision_12_two_dumbbells', 'dynamic_two_dumbbells', 'solveit_12_dumbbell_inertia']
+121 captured, 0 failed

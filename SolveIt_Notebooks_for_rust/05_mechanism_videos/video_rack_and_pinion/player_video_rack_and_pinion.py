@@ -35,9 +35,9 @@ if not ENGINE.exists():
 TAG = "video_rack_and_pinion"
 FAMILY = "video"
 GUI_PAGE = None                      # main browser-GUI artifact (or None)
-MOVIE = ENGINE / "videos/rack_and_pinion.html"                            # recorded movie page (or None)
-GUI_SERVER = ENGINE / "gui/rack_and_pinion/server.py"                  # live-GUI server.py (or None)
-POSIM_SCRIPT = ENGINE / "videos/scenes/rack_and_pinion.posim"              # paired .posim scene (or None)
+MOVIE = WS / "videos/rack_and_pinion.html"                            # recorded movie page (or None)
+GUI_SERVER = WS / "gui/rack_and_pinion/server.py"                  # live-GUI server.py (or None)
+POSIM_SCRIPT = WS / "videos/scenes/rack_and_pinion.posim"              # paired .posim scene (or None)
 DBS = []                                # SQLite database files
 CAPTURE_BUTTON = None          # id of the page's jump button
 

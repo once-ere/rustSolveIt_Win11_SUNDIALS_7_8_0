@@ -37,7 +37,7 @@ FAMILY = "solveit"
 GUI_PAGE = None                      # main browser-GUI artifact (or None)
 MOVIE = None                            # recorded movie page (or None)
 GUI_SERVER = None                  # live-GUI server.py (or None)
-POSIM_SCRIPT = ENGINE / "scripts/solveit/05_cyclotron_bdf.posim"              # paired .posim scene (or None)
+POSIM_SCRIPT = WS / "scripts/solveit/05_cyclotron_bdf.posim"              # paired .posim scene (or None)
 DBS = []                                # SQLite database files
 CAPTURE_BUTTON = None          # id of the page's jump button
 

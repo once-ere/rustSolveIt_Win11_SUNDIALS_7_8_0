@@ -1,53 +1,93 @@
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/04_collisions/collision_03_restitution_ladder/collision_03_restitution_ladder.ipynb  (18 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_03_three_conics/solveit_03_three_conics.ipynb  (10 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/04_collisions/collision_07_thin_wall_toi/collision_07_thin_wall_toi.ipynb  (6 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_07_dzhanibekov/solveit_07_dzhanibekov.ipynb  (24 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/04_collisions/collision_11_box_of_shapes/collision_11_box_of_shapes.ipynb  (10 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_11_lagrange_l4/solveit_11_lagrange_l4.ipynb  (12 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_bouncing_ball_restitution/dynamic_bouncing_ball_restitution.ipynb  (10 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_15_tunnelling/solveit_15_tunnelling.ipynb  (13 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_charged_in_e_field/dynamic_charged_in_e_field.ipynb  (8 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_19_hinged_door/solveit_19_hinged_door.ipynb  (14 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_kepler_orbit/dynamic_kepler_orbit.ipynb  (6 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_23_dataset_restitution_rebounds/solveit_23_dataset_restitution_rebounds.ipynb  (10 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_restitution_ladder/dynamic_restitution_ladder.ipynb  (10 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_27_dataset_record_switch/solveit_27_dataset_record_switch.ipynb  (14 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p1_collinear_three_body/dynamic_routh_p1_collinear_three_body.ipynb  (18 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_31_dataset_attach_compare/solveit_31_dataset_attach_compare.ipynb  (17 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p1_expanding_sphere/dynamic_routh_p1_expanding_sphere.ipynb  (13 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_35_dataset_spinning_torus/solveit_35_dataset_spinning_torus.ipynb  (11 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p1_lambert_theorem/dynamic_routh_p1_lambert_theorem.ipynb  (15 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_box_of_shapes/dynamic_box_of_shapes.ipynb  (15 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p1_three_projectiles/dynamic_routh_p1_three_projectiles.ipynb  (14 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_colliding_binary/dynamic_colliding_binary.ipynb  (10 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p2_impulsive_couple/dynamic_routh_p2_impulsive_couple.ipynb  (14 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_magnetic_spin_up/dynamic_magnetic_spin_up.ipynb  (11 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p2_poinsot_rolling/dynamic_routh_p2_poinsot_rolling.ipynb  (15 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_double_star_period/dynamic_routh_double_star_period.ipynb  (31 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p2_separatrix/dynamic_routh_p2_separatrix.ipynb  (18 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p1_equal_periods/dynamic_routh_p1_equal_periods.ipynb  (19 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p2_two_quadrics/dynamic_routh_p2_two_quadrics.ipynb  (15 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p1_geometric_progression/dynamic_routh_p1_geometric_progression.ipynb  (16 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_spinning_target/dynamic_spinning_target.ipynb  (6 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p1_oblique_impact/dynamic_routh_p1_oblique_impact.ipynb  (17 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_thrown_ball/dynamic_thrown_ball.ipynb  (9 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p1_two_trajectories/dynamic_routh_p1_two_trajectories.ipynb  (21 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_unequal_masses/dynamic_unequal_masses.ipynb  (6 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p2_invariable_line/dynamic_routh_p2_invariable_line.ipynb  (18 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_04_restitution_ladder/solveit_04_restitution_ladder.ipynb  (10 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p2_polhode_quarter_period/dynamic_routh_p2_polhode_quarter_period.ipynb  (18 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_08_magnetic_torque/solveit_08_magnetic_torque.ipynb  (7 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p2_spin_stabilisation/dynamic_routh_p2_spin_stabilisation.ipynb  (16 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_12_dumbbell_inertia/solveit_12_dumbbell_inertia.ipynb  (6 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_routh_p2_uniaxal_precession/dynamic_routh_p2_uniaxal_precession.ipynb  (17 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_16_special_functions/solveit_16_special_functions.ipynb  (9 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_static_anchor/dynamic_static_anchor.ipynb  (11 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_ball_joint_chain/video_ball_joint_chain.ipynb  (7 cells)
+ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_tumbling_body/dynamic_tumbling_body.ipynb  (17 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_double_pendulum_hinges/video_double_pendulum_hinges.ipynb  (6 cells)
+ok   SolveIt_Notebooks_for_rust/04_collisions/collision_01_head_on_exchange/collision_01_head_on_exchange.ipynb  (13 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_rack_and_pinion/video_rack_and_pinion.ipynb  (8 cells)
+ok   SolveIt_Notebooks_for_rust/04_collisions/collision_05_billiard_break/collision_05_billiard_break.ipynb  (12 cells)
+1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_universal_joint/video_universal_joint.ipynb  (8 cells)
-26 ok, 0 failed
+ok   SolveIt_Notebooks_for_rust/04_collisions/collision_09_spinning_target/collision_09_spinning_target.ipynb  (12 cells)
+1 ok, 0 failed
+simulator stopped
+ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_ball_joint_chain/video_ball_joint_chain.ipynb  (11 cells)
+1 ok, 0 failed
+simulator stopped
+ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_double_pendulum_hinges/video_double_pendulum_hinges.ipynb  (10 cells)
+1 ok, 0 failed
+simulator stopped
+ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_rack_and_pinion/video_rack_and_pinion.ipynb  (12 cells)
+1 ok, 0 failed
+simulator stopped
+ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_universal_joint/video_universal_joint.ipynb  (12 cells)
+1 ok, 0 failed
+simulator stopped
+ok   SolveIt_Notebooks_for_rust/06_rust_compiled_examples/rust_newtons_cradle/rust_newtons_cradle.ipynb  (15 cells)
+1 ok, 0 failed

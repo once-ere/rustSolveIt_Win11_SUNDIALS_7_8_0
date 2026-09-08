@@ -104,6 +104,9 @@ ok   solveit_32_dataset_window_velocity
 ok   solveit_33_dataset_lifecycle_tour
 ok   solveit_34_dataset_door_movies
 ok   solveit_35_dataset_spinning_torus
+ok   solveit_36_dataset_teacher_diff
+ok   solveit_37_dataset_map_spherical
+ok   solveit_38_dataset_curvilinear_tour
 ok   video_ball_joint_chain
 ok   video_box_of_shapes
 ok   video_cardan_compass
@@ -119,4 +122,4 @@ ok   video_tumbling_racket
 ok   video_universal_joint
 ok   mercury_test2_jupiter_gr
 ok   mercury_tidal_locking
-121 captured, 0 failed
+124 captured, 0 failed

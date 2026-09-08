@@ -1,26 +1,29 @@
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_04_restitution_ladder/solveit_04_restitution_ladder.ipynb  (14 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_03_three_conics/solveit_03_three_conics.ipynb  (10 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_08_magnetic_torque/solveit_08_magnetic_torque.ipynb  (11 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_07_dzhanibekov/solveit_07_dzhanibekov.ipynb  (24 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_12_dumbbell_inertia/solveit_12_dumbbell_inertia.ipynb  (10 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_11_lagrange_l4/solveit_11_lagrange_l4.ipynb  (12 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_16_special_functions/solveit_16_special_functions.ipynb  (13 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_15_tunnelling/solveit_15_tunnelling.ipynb  (13 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_20_dataset_kepler_orbit/solveit_20_dataset_kepler_orbit.ipynb  (13 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_19_hinged_door/solveit_19_hinged_door.ipynb  (14 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_24_dataset_elastic_exchange/solveit_24_dataset_elastic_exchange.ipynb  (11 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_23_dataset_restitution_rebounds/solveit_23_dataset_restitution_rebounds.ipynb  (10 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_28_dataset_pendulum_drift/solveit_28_dataset_pendulum_drift.ipynb  (13 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_27_dataset_record_switch/solveit_27_dataset_record_switch.ipynb  (14 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_32_dataset_window_velocity/solveit_32_dataset_window_velocity.ipynb  (10 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_31_dataset_attach_compare/solveit_31_dataset_attach_compare.ipynb  (17 cells)
+1 ok, 0 failed
+simulator stopped
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_35_dataset_spinning_torus/solveit_35_dataset_spinning_torus.ipynb  (11 cells)
 1 ok, 0 failed
 simulator stopped
 ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_billiard_box/dynamic_billiard_box.ipynb  (11 cells)
@@ -84,10 +87,4 @@ ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_gyroscope_gimbal/video
 1 ok, 0 failed
 simulator stopped
 ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_rod_pendulum_chain/video_rod_pendulum_chain.ipynb  (12 cells)
-1 ok, 0 failed
-simulator stopped
-ok   SolveIt_Notebooks_for_rust/06_rust_compiled_examples/rust_bouncing_ball_restitution/rust_bouncing_ball_restitution.ipynb  (12 cells)
-1 ok, 0 failed
-simulator stopped
-ok   SolveIt_Notebooks_for_rust/06_rust_compiled_examples/rust_outer_solar_system/rust_outer_solar_system.ipynb  (15 cells)
 1 ok, 0 failed

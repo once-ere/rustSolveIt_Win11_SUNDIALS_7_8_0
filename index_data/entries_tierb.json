@@ -7114,9 +7114,9 @@
    "D"
   ],
   "summary": "Every DATASET subcommand the parser implements.",
-  "definition": "Every DATASET subcommand the parser implements. The lockstep test below checks each is documented in the EBNF, HELP_TEXT, grammar.md and grammar.tex \u2014 and, conversely, that the EBNF promises nothing the parser lacks (the QM2 phantom-`ISO` lesson).  Declared in the `dataset` module of the `posim` crate.",
+  "definition": "Every DATASET subcommand the parser implements. The lockstep test below checks each is documented in the EBNF, HELP_TEXT, grammar.md and grammar.tex \u2014 and, conversely, that the EBNF promises nothing the parser lacks (the QM2 phantom-`ISO` lesson).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`.",
   "syntax": [
-   "pub const DATASET_SUBCOMMANDS: &[&str] = &[ \"create\", \"open\", \"close\", \"record\", \"snapshot\", \"list\", \"info\", \"copy\", \"saveas\", \"delete\", \"play\", ]"
+   "pub const DATASET_SUBCOMMANDS: &[&str] = &[ \"create\", \"open\", \"close\", \"record\", \"snapshot\", \"list\", \"info\", \"copy\", \"saveas\", \"delete\", \"play\", \"diff\", \"sum\", \"map\", ]"
   ],
   "parameters": [],
   "returns": null,
@@ -7126,12 +7126,51 @@
     "file": "posim/src/dataset.rs",
     "line": 50,
     "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
    }
   ],
   "examples": [],
   "seeAlso": [],
   "invariants": [],
-  "status": "stub"
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.MAP_SYSTEMS",
+  "name": "MAP_SYSTEMS",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "M"
+  ],
+  "summary": "Every coordinate system DATASET MAP accepts (the 2-D systems apply in the plane z = 0 and require a planar trajectory).",
+  "definition": "Every coordinate system DATASET MAP accepts (the 2-D systems apply in the plane z = 0 and require a planar trajectory).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`.",
+  "syntax": [
+   "pub const MAP_SYSTEMS: &[&str] = &[ \"spherical\", \"cylindrical\", \"ellipsoidal\", \"oblate\", \"prolate\", \"paraboloidal\", \"elliptic_cyl\", \"parabolic_cyl\", \"bipolar_cyl\", \"toroidal\", \"bispherical\", \"polar2\", \"elliptic2\", \"bipolar2\", ]"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 57,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
  },
  {
   "id": "rs.posim.dataset.MOVIE_SUBCOMMANDS",
@@ -7143,7 +7182,7 @@
    "M"
   ],
   "summary": "Every MOVIE subcommand the parser implements.",
-  "definition": "Every MOVIE subcommand the parser implements.  Declared in the `dataset` module of the `posim` crate.",
+  "definition": "Every MOVIE subcommand the parser implements.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`.",
   "syntax": [
    "pub const MOVIE_SUBCOMMANDS: &[&str] = &[\"create\", \"delete\", \"list\", \"play\"]"
   ],
@@ -7153,14 +7192,19 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 56,
+    "line": 64,
     "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
    }
   ],
   "examples": [],
   "seeAlso": [],
   "invariants": [],
-  "status": "stub"
+  "status": "reference"
  },
  {
   "id": "rs.posim.dataset.valid_name",
@@ -7182,7 +7226,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 59,
+    "line": 67,
     "role": "definition"
    },
    {
@@ -7221,7 +7265,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 71,
+    "line": 79,
     "role": "definition"
    },
    {
@@ -7260,7 +7304,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 80,
+    "line": 88,
     "role": "definition"
    },
    {
@@ -7294,7 +7338,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 117,
+    "line": 125,
     "role": "definition"
    },
    {
@@ -7328,7 +7372,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 134,
+    "line": 142,
     "role": "definition"
    },
    {
@@ -7362,7 +7406,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 172,
+    "line": 180,
     "role": "definition"
    },
    {
@@ -7406,7 +7450,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 193,
+    "line": 201,
     "role": "definition"
    },
    {
@@ -7440,7 +7484,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 243,
+    "line": 251,
     "role": "definition"
    },
    {
@@ -7474,7 +7518,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 274,
+    "line": 282,
     "role": "definition"
    },
    {
@@ -7487,6 +7531,35 @@
   "seeAlso": [],
   "invariants": [],
   "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.DatasetHandle.append_raw",
+  "name": "DatasetHandle::append_raw",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "A"
+  ],
+  "summary": "Appends one batch with an EXPLICIT bodies payload \u2014 the path the offline dataset operations (DIFF / SUM / MAP) use, where the bodies come from a queri.",
+  "definition": "Appends one batch with an EXPLICIT bodies payload \u2014 the path the offline dataset operations (DIFF / SUM / MAP) use, where the bodies come from a queried dataset rather than the live system.  Declared in the `dataset` module of the `posim` crate.",
+  "syntax": [
+   "pub fn append_raw(&mut self, bodies: Json, frames: Vec<Json>) -> Result<(i64, i64), String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 299,
+    "role": "definition"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "stub"
  },
  {
   "id": "rs.posim.dataset.DatasetHandle.counts",
@@ -7508,7 +7581,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 302,
+    "line": 317,
     "role": "definition"
    },
    {
@@ -7542,7 +7615,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 314,
+    "line": 329,
     "role": "definition"
    },
    {
@@ -7586,7 +7659,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 351,
+    "line": 366,
     "role": "definition"
    },
    {
@@ -7630,7 +7703,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 363,
+    "line": 378,
     "role": "definition"
    },
    {
@@ -7669,7 +7742,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 388,
+    "line": 403,
     "role": "definition"
    },
    {
@@ -7703,7 +7776,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 412,
+    "line": 427,
     "role": "definition"
    },
    {
@@ -7742,7 +7815,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 442,
+    "line": 457,
     "role": "definition"
    },
    {
@@ -7776,7 +7849,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 487,
+    "line": 502,
     "role": "definition"
    }
   ],
@@ -7805,7 +7878,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 559,
+    "line": 604,
     "role": "definition"
    },
    {
@@ -7839,7 +7912,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 588,
+    "line": 633,
     "role": "definition"
    },
    {
@@ -7873,7 +7946,7 @@
   "locations": [
    {
     "file": "posim/src/dataset.rs",
-    "line": 612,
+    "line": 657,
     "role": "definition"
    },
    {
@@ -7888,6 +7961,142 @@
    },
    {
     "file": "posim/src/qm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.BinOp",
+  "name": "BinOp",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "B"
+  ],
+  "summary": "The arithmetic DATASET DIFF / DATASET SUM apply, component-wise, to every state column and every frames-table quantity.",
+  "definition": "The arithmetic DATASET DIFF / DATASET SUM apply, component-wise, to every state column and every frames-table quantity.  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/vm.rs`.",
+  "syntax": [
+   "pub enum BinOp"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 755,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.validate_map_spec",
+  "name": "validate_map_spec",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "V"
+  ],
+  "summary": "Validates a DATASET MAP system word and its parameter list \u2014 used at PARSE time so a typo errors before anything runs.",
+  "definition": "Validates a DATASET MAP system word and its parameter list \u2014 used at PARSE time so a typo errors before anything runs. The scale parameters are the focal distance / ring radius `a` (one number) or the ellipsoidal semi-axes `a b c` (three numbers).  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`.",
+  "syntax": [
+   "pub fn validate_map_spec(system: &str, params: &[f64]) -> Result<(), String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 785,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.dataset_binop",
+  "name": "dataset_binop",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "`DATASET DIFF a b AS out` / `DATASET SUM a b AS out`: frame-aligned, component-wise arithmetic on two identically dimensioned recorded trajectories.",
+  "definition": "`DATASET DIFF a b AS out` / `DATASET SUM a b AS out`: frame-aligned, component-wise arithmetic on two identically dimensioned recorded trajectories. Alignment is CHECKED, not assumed: same frame count, bit-equal time grid, and the same body-id set at every frame \u2014 any mismatch errors with the first offending frame named. The orientation columns of the output hold component-wise quaternion arithmet  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn dataset_binop(a: &str, b: &str, out: &str, op: BinOp) -> Result<String, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1000,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.posim.dataset.dataset_map",
+  "name": "dataset_map",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "`DATASET MAP src TO system [params] AS out`: every recorded position is pushed through the chosen curvilinear map; the frames table (t, E, P, L, com, .",
+  "definition": "`DATASET MAP src TO system [params] AS out`: every recorded position is pushed through the chosen curvilinear map; the frames table (t, E, P, L, com, collision count \u2014 Cartesian bookkeeping) is copied unchanged, orientations are carried (they are still rotation quaternions), and the velocity columns are set to NULL because velocity components in curvilinear coordinates require the metric. A 2-D sy  Declared in the `dataset` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn dataset_map(src: &str, system: &str, params: &[f64], out: &str) -> Result<String, String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1086,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/vm.rs",
     "line": 1,
     "role": "used here"
    }
@@ -8845,7 +9054,7 @@
   "locations": [
    {
     "file": "posim/src/parser.rs",
-    "line": 287,
+    "line": 328,
     "role": "definition"
    }
   ],
@@ -8876,7 +9085,7 @@
   "locations": [
    {
     "file": "posim/src/parser.rs",
-    "line": 295,
+    "line": 336,
     "role": "definition"
    },
    {
@@ -8910,7 +9119,7 @@
   "locations": [
    {
     "file": "posim/src/parser.rs",
-    "line": 313,
+    "line": 354,
     "role": "definition"
    },
    {
@@ -9523,7 +9732,7 @@
   "locations": [
    {
     "file": "posim/src/special.rs",
-    "line": 212,
+    "line": 247,
     "role": "definition"
    },
    {
@@ -9559,7 +9768,7 @@
   "summary": "Every name this module answers to.",
   "definition": "Every name this module answers to. `vm.rs` folds this into the reserved-name list so a user function cannot shadow one.  Declared in the `special` module of the `posim` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/vm.rs`.",
   "syntax": [
-   "pub const SPECIAL_NAMES: &[&str] = &[ \"airy_z\", \"assoc_legendre_p\", \"bessel_i_nu\", \"bessel_i_scaled\", \"bessel_i_z\","
+   "pub const SPECIAL_NAMES: &[&str] = &[ \"airy_z\", \"bipolar_cyl_to_cart\", \"bipolar_to_cart2\", \"bispherical_to_cart\", \"cart2_to_bipolar\","
   ],
   "parameters": [],
   "returns": null,
@@ -9567,7 +9776,7 @@
   "locations": [
    {
     "file": "posim/src/special.rs",
-    "line": 571,
+    "line": 689,
     "role": "definition"
    },
    {
@@ -10036,7 +10245,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 262,
+    "line": 270,
     "role": "definition"
    },
    {
@@ -10070,7 +10279,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 272,
+    "line": 280,
     "role": "definition"
    },
    {
@@ -10109,7 +10318,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 373,
+    "line": 381,
     "role": "definition"
    },
    {
@@ -10153,7 +10362,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 455,
+    "line": 463,
     "role": "definition"
    },
    {
@@ -10197,7 +10406,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 822,
+    "line": 868,
     "role": "definition"
    },
    {
@@ -10236,7 +10445,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 2459,
+    "line": 2535,
     "role": "definition"
    },
    {
@@ -10280,7 +10489,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 2517,
+    "line": 2593,
     "role": "definition"
    }
   ],
@@ -10311,7 +10520,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 2572,
+    "line": 2648,
     "role": "definition"
    }
   ],
@@ -10342,7 +10551,7 @@
   "locations": [
    {
     "file": "posim/src/vm.rs",
-    "line": 3373,
+    "line": 3449,
     "role": "definition"
    },
    {
@@ -13953,6 +14162,1374 @@
   "status": "complete"
  },
  {
+  "id": "rs.special_functions.coords.cart_to_spherical",
+  "name": "cart_to_spherical",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 spherical-polar `(r, theta, phi)`: physics (ISO) convention \u2014 `r >= 0`, `theta` in `[0, pi]` measured from the +z axis, `phi = atan2(y, x).",
+  "definition": "Cartesian \u2192 spherical-polar `(r, theta, phi)`: physics (ISO) convention \u2014 `r >= 0`, `theta` in `[0, pi]` measured from the +z axis, `phi = atan2(y, x)` in `(-pi, pi]`.  At the origin `r = 0` both angles are conventional and this returns `[0, 0, 0]` (which `spherical_to_cart` maps back exactly). On the polar axis `phi` is conventional: `atan2(0, 0) = 0`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_spherical(p: [f64; 3]) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 74,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.spherical_to_cart",
+  "name": "spherical_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "S"
+  ],
+  "summary": "Spherical-polar `(r, theta, phi)` \u2192 Cartesian.",
+  "definition": "Spherical-polar `(r, theta, phi)` \u2192 Cartesian. Requires `r >= 0`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn spherical_to_cart(q: [f64; 3]) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 85,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart_to_cylindrical",
+  "name": "cart_to_cylindrical",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 cylindrical `(rho, phi, z)`: `rho = hypot(x, y) >= 0`, `phi = atan2(y, x)`.",
+  "definition": "Cartesian \u2192 cylindrical `(rho, phi, z)`: `rho = hypot(x, y) >= 0`, `phi = atan2(y, x)`. On the axis `phi` is conventional (0).  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_cylindrical(p: [f64; 3]) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 101,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cylindrical_to_cart",
+  "name": "cylindrical_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cylindrical `(rho, phi, z)` \u2192 Cartesian.",
+  "definition": "Cylindrical `(rho, phi, z)` \u2192 Cartesian. Requires `rho >= 0`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cylindrical_to_cart(q: [f64; 3]) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 108,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart_to_ellipsoidal",
+  "name": "cart_to_ellipsoidal",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 ellipsoidal `(lambda, mu, nu)` for semi-axes `a > b > c > 0`: the three real roots of `x^2/(a^2+s) + y^2/(b^2+s) + z^2/(c^2+s) = 1`, inter.",
+  "definition": "Cartesian \u2192 ellipsoidal `(lambda, mu, nu)` for semi-axes `a > b > c > 0`: the three real roots of `x^2/(a^2+s) + y^2/(b^2+s) + z^2/(c^2+s) = 1`, interlaced as `lambda > -c^2 > mu > -b^2 > nu > -a^2` (Morse & Feshbach \u00a75.1).  The chart is degenerate on the coordinate planes \u2014 ellipsoidal coordinates encode `x^2, y^2, z^2` only \u2014 so a point with any zero component is refused rather than silently fol  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_ellipsoidal(p: [f64; 3], a: f64, b: f64, c: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 173,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.ellipsoidal_to_cart",
+  "name": "ellipsoidal_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "E"
+  ],
+  "summary": "Ellipsoidal `(lambda, mu, nu)` \u2192 Cartesian (positive octant \u2014 the coordinates encode squares, so the signs of `x, y, z` are not part of the chart).",
+  "definition": "Ellipsoidal `(lambda, mu, nu)` \u2192 Cartesian (positive octant \u2014 the coordinates encode squares, so the signs of `x, y, z` are not part of the chart). Requires the interlacing `lambda > -c^2 >= mu >= -b^2 >= nu >= -a^2`; violations are reported with the expected ordering spelled out.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn ellipsoidal_to_cart(q: [f64; 3], a: f64, b: f64, c: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 199,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart_to_oblate",
+  "name": "cart_to_oblate",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 oblate spheroidal `(mu, nu, phi)` with focal ring `rho = a, z = 0`: `x = a cosh(mu) cos(nu) cos(phi)`, `y = a cosh(mu) cos(nu) sin(phi)`, .",
+  "definition": "Cartesian \u2192 oblate spheroidal `(mu, nu, phi)` with focal ring `rho = a, z = 0`: `x = a cosh(mu) cos(nu) cos(phi)`, `y = a cosh(mu) cos(nu) sin(phi)`, `z = a sinh(mu) sin(nu)`; `mu >= 0`, `nu` in `[-pi/2, pi/2]` with the sign of `nu` following `z`. The inverse follows from `rho + i z = a cosh(mu + i nu)`: with the ring distances `d\u00b1 = sqrt((rho \u00b1 a)^2 + z^2)`, `cosh(mu) = (d+ + d-)/(2a)` and `cos(n  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_oblate(p: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 234,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.oblate_to_cart",
+  "name": "oblate_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "O"
+  ],
+  "summary": "Oblate spheroidal `(mu, nu, phi)` \u2192 Cartesian.",
+  "definition": "Oblate spheroidal `(mu, nu, phi)` \u2192 Cartesian. Requires `mu >= 0` and `nu` in `[-pi/2, pi/2]`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn oblate_to_cart(q: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 252,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart_to_prolate",
+  "name": "cart_to_prolate",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 prolate spheroidal `(mu, nu, phi)` with foci at `(0, 0, \u00b1a)`: `x = a sinh(mu) sin(nu) cos(phi)`, `y = a sinh(mu) sin(nu) sin(phi)`, `z = a.",
+  "definition": "Cartesian \u2192 prolate spheroidal `(mu, nu, phi)` with foci at `(0, 0, \u00b1a)`: `x = a sinh(mu) sin(nu) cos(phi)`, `y = a sinh(mu) sin(nu) sin(phi)`, `z = a cosh(mu) cos(nu)`; `mu >= 0`, `nu` in `[0, pi]`. Via the focal distances `d\u00b1 = sqrt(rho^2 + (z \u2213 a)^2)`: `cosh(mu) = (d- + d+)/(2a)`, `cos(nu) = (d- - d+)/(2a)`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_prolate(p: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 276,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.prolate_to_cart",
+  "name": "prolate_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "P"
+  ],
+  "summary": "Prolate spheroidal `(mu, nu, phi)` \u2192 Cartesian.",
+  "definition": "Prolate spheroidal `(mu, nu, phi)` \u2192 Cartesian. Requires `mu >= 0` and `nu` in `[0, pi]`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn prolate_to_cart(q: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 290,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart_to_paraboloidal",
+  "name": "cart_to_paraboloidal",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 paraboloidal `(u, v, phi)` (the rotationally symmetric parabolic system): `x = u v cos(phi)`, `y = u v sin(phi)`, `z = (u^2 - v^2)/2`, wit.",
+  "definition": "Cartesian \u2192 paraboloidal `(u, v, phi)` (the rotationally symmetric parabolic system): `x = u v cos(phi)`, `y = u v sin(phi)`, `z = (u^2 - v^2)/2`, with `u, v >= 0`. Inverse: `u = sqrt(r + z)`, `v = sqrt(r - z)` with `r = sqrt(rho^2 + z^2)`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_paraboloidal(p: [f64; 3]) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 312,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.paraboloidal_to_cart",
+  "name": "paraboloidal_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "P"
+  ],
+  "summary": "Paraboloidal `(u, v, phi)` \u2192 Cartesian.",
+  "definition": "Paraboloidal `(u, v, phi)` \u2192 Cartesian. Requires `u, v >= 0`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn paraboloidal_to_cart(q: [f64; 3]) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 320,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart_to_elliptic_cyl",
+  "name": "cart_to_elliptic_cyl",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 elliptic cylindrical `(u, v, z)` with in-plane foci `(\u00b1a, 0)`: `x = a cosh(u) cos(v)`, `y = a sinh(u) sin(v)`; `u >= 0`, `v` in `(-pi, pi].",
+  "definition": "Cartesian \u2192 elliptic cylindrical `(u, v, z)` with in-plane foci `(\u00b1a, 0)`: `x = a cosh(u) cos(v)`, `y = a sinh(u) sin(v)`; `u >= 0`, `v` in `(-pi, pi]` with the sign of `v` following `y`. Via `d\u00b1 = sqrt((x \u00b1 a)^2 + y^2)`: `cosh(u) = (d+ + d-)/(2a)`, `cos(v) = (d+ - d-)/(2a)`.  On the focal segment `|x| < a, y = 0` the chart has `u = 0` and `\u00b1v` coincide; the non-negative `v` is returned.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_elliptic_cyl(p: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 342,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.elliptic_cyl_to_cart",
+  "name": "elliptic_cyl_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "E"
+  ],
+  "summary": "Elliptic cylindrical `(u, v, z)` \u2192 Cartesian.",
+  "definition": "Elliptic cylindrical `(u, v, z)` \u2192 Cartesian. Requires `u >= 0`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn elliptic_cyl_to_cart(q: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 355,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart_to_parabolic_cyl",
+  "name": "cart_to_parabolic_cyl",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 parabolic cylindrical `(sigma, tau, z)`: `x = sigma tau`, `y = (tau^2 - sigma^2)/2`, `z = z`, with `tau >= 0` and the sign of `sigma` foll.",
+  "definition": "Cartesian \u2192 parabolic cylindrical `(sigma, tau, z)`: `x = sigma tau`, `y = (tau^2 - sigma^2)/2`, `z = z`, with `tau >= 0` and the sign of `sigma` following `x`. Inverse: `tau = sqrt(r + y)`, `|sigma| = sqrt(r - y)`, `r = hypot(x, y)`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_parabolic_cyl(p: [f64; 3]) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 373,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.parabolic_cyl_to_cart",
+  "name": "parabolic_cyl_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "P"
+  ],
+  "summary": "Parabolic cylindrical `(sigma, tau, z)` \u2192 Cartesian.",
+  "definition": "Parabolic cylindrical `(sigma, tau, z)` \u2192 Cartesian. Requires `tau >= 0`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn parabolic_cyl_to_cart(q: [f64; 3]) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 385,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart_to_bipolar_cyl",
+  "name": "cart_to_bipolar_cyl",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 bipolar cylindrical `(sigma, tau, z)` with in-plane foci `(\u00b1a, 0)`: `x = a sinh(tau)/D`, `y = a sin(sigma)/D`, `D = cosh(tau) - cos(sigma).",
+  "definition": "Cartesian \u2192 bipolar cylindrical `(sigma, tau, z)` with in-plane foci `(\u00b1a, 0)`: `x = a sinh(tau)/D`, `y = a sin(sigma)/D`, `D = cosh(tau) - cos(sigma)`; `tau = (1/2) ln(d+^2 / d-^2)` with `d\u00b1 = sqrt((x \u00b1 a)^2 + y^2)`, `sigma = atan2(2 a y, x^2 + y^2 - a^2)` in `(-pi, pi]`.  The foci themselves are singular (`tau -> \u00b1inf`) and are refused.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_bipolar_cyl(p: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 405,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.bipolar_cyl_to_cart",
+  "name": "bipolar_cyl_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "B"
+  ],
+  "summary": "Bipolar cylindrical `(sigma, tau, z)` \u2192 Cartesian.",
+  "definition": "Bipolar cylindrical `(sigma, tau, z)` \u2192 Cartesian. `sigma = tau = 0` is the point at infinity and is refused.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn bipolar_cyl_to_cart(q: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 424,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart_to_toroidal",
+  "name": "cart_to_toroidal",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 toroidal `(sigma, tau, phi)` with focal ring `rho = a, z = 0`: `rho = a sinh(tau)/D`, `z = a sin(sigma)/D`, `D = cosh(tau) - cos(sigma)`; .",
+  "definition": "Cartesian \u2192 toroidal `(sigma, tau, phi)` with focal ring `rho = a, z = 0`: `rho = a sinh(tau)/D`, `z = a sin(sigma)/D`, `D = cosh(tau) - cos(sigma)`; `tau = (1/2) ln(((rho+a)^2 + z^2) / ((rho-a)^2 + z^2)) >= 0`, `sigma = atan2(2 a z, rho^2 + z^2 - a^2)` in `(-pi, pi]`, `phi = atan2(y, x)`.  The focal ring itself is singular (`tau -> inf`) and is refused.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_toroidal(p: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 451,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.toroidal_to_cart",
+  "name": "toroidal_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "T"
+  ],
+  "summary": "Toroidal `(sigma, tau, phi)` \u2192 Cartesian.",
+  "definition": "Toroidal `(sigma, tau, phi)` \u2192 Cartesian. Requires `tau >= 0`; `sigma = tau = 0` is the point at infinity and is refused.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn toroidal_to_cart(q: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 471,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart_to_bispherical",
+  "name": "cart_to_bispherical",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "Cartesian \u2192 bispherical `(sigma, tau, phi)` with foci `(0, 0, \u00b1a)`: `rho = a sin(sigma)/D`, `z = a sinh(tau)/D`, `D = cosh(tau) - cos(sigma)`; `tau = .",
+  "definition": "Cartesian \u2192 bispherical `(sigma, tau, phi)` with foci `(0, 0, \u00b1a)`: `rho = a sin(sigma)/D`, `z = a sinh(tau)/D`, `D = cosh(tau) - cos(sigma)`; `tau = (1/2) ln((rho^2 + (z+a)^2) / (rho^2 + (z-a)^2))`, `sigma = atan2(2 a rho, rho^2 + z^2 - a^2)` in `[0, pi]` (non-negative because `rho >= 0`), `phi = atan2(y, x)`.  The two foci are singular (`tau -> \u00b1inf`) and are refused.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart_to_bispherical(p: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 501,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.bispherical_to_cart",
+  "name": "bispherical_to_cart",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "B"
+  ],
+  "summary": "Bispherical `(sigma, tau, phi)` \u2192 Cartesian.",
+  "definition": "Bispherical `(sigma, tau, phi)` \u2192 Cartesian. Requires `sigma` in `[0, pi]`; `sigma = tau = 0` is the point at infinity and is refused.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn bispherical_to_cart(q: [f64; 3], a: f64) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 522,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart2_to_polar",
+  "name": "cart2_to_polar",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "2-D Cartesian \u2192 plane polar `(r, phi)`: `r = hypot(x, y)`, `phi = atan2(y, x)`.",
+  "definition": "2-D Cartesian \u2192 plane polar `(r, phi)`: `r = hypot(x, y)`, `phi = atan2(y, x)`. At the origin `phi` is conventional (0).  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart2_to_polar(p: [f64; 2]) -> Result<[f64; 2], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 547,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.polar_to_cart2",
+  "name": "polar_to_cart2",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "P"
+  ],
+  "summary": "Plane polar `(r, phi)` \u2192 2-D Cartesian.",
+  "definition": "Plane polar `(r, phi)` \u2192 2-D Cartesian. Requires `r >= 0`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn polar_to_cart2(q: [f64; 2]) -> Result<[f64; 2], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 554,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart2_to_elliptic",
+  "name": "cart2_to_elliptic",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "2-D Cartesian \u2192 elliptic `(u, v)` with foci `(\u00b1a, 0)`: `x = a cosh(u) cos(v)`, `y = a sinh(u) sin(v)`; `u >= 0`, `v` in `(-pi, pi]` with the sign of `.",
+  "definition": "2-D Cartesian \u2192 elliptic `(u, v)` with foci `(\u00b1a, 0)`: `x = a cosh(u) cos(v)`, `y = a sinh(u) sin(v)`; `u >= 0`, `v` in `(-pi, pi]` with the sign of `v` following `y`. (The planar section of elliptic cylindrical coordinates.)  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart2_to_elliptic(p: [f64; 2], a: f64) -> Result<[f64; 2], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 571,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.elliptic_to_cart2",
+  "name": "elliptic_to_cart2",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "E"
+  ],
+  "summary": "Elliptic `(u, v)` \u2192 2-D Cartesian.",
+  "definition": "Elliptic `(u, v)` \u2192 2-D Cartesian. Requires `u >= 0`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn elliptic_to_cart2(q: [f64; 2], a: f64) -> Result<[f64; 2], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 578,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.cart2_to_bipolar",
+  "name": "cart2_to_bipolar",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "C"
+  ],
+  "summary": "2-D Cartesian \u2192 bipolar `(sigma, tau)` with foci `(\u00b1a, 0)`.",
+  "definition": "2-D Cartesian \u2192 bipolar `(sigma, tau)` with foci `(\u00b1a, 0)`. This is the planar bipolar system, `x = a sinh(tau)/D`, `y = a sin(sigma)/D`, `D = cosh(tau) - cos(sigma)`, and it is CONFORMAL: it is the real form of the analytic map `x + i y = a coth((tau - i sigma)/2)` \u2014 the \"special conformal extension\" of the two-center geometry \u2014 so angles between crossing curves are preserved everywhere off the f  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn cart2_to_bipolar(p: [f64; 2], a: f64) -> Result<[f64; 2], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 597,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.bipolar_to_cart2",
+  "name": "bipolar_to_cart2",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "B"
+  ],
+  "summary": "Bipolar `(sigma, tau)` \u2192 2-D Cartesian.",
+  "definition": "Bipolar `(sigma, tau)` \u2192 2-D Cartesian. `sigma = tau = 0` is the point at infinity and is refused.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/parser.rs`, `posim/src/special.rs`, `posim/src/vm.rs`.",
+  "syntax": [
+   "pub fn bipolar_to_cart2(q: [f64; 2], a: f64) -> Result<[f64; 2], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 605,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/parser.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/special.rs",
+    "line": 1,
+    "role": "used here"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.Map3",
+  "name": "Map3",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "M"
+  ],
+  "summary": "A named, parameterized 3-D coordinate map (Cartesian \u2192 curvilinear).",
+  "definition": "A named, parameterized 3-D coordinate map (Cartesian \u2192 curvilinear).  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/dataset.rs`.",
+  "syntax": [
+   "pub enum Map3"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 617,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.Map2",
+  "name": "Map2",
+  "kind": "type",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "M"
+  ],
+  "summary": "A named, parameterized 2-D coordinate map (Cartesian \u2192 curvilinear), applied in the plane `z = 0`.",
+  "definition": "A named, parameterized 2-D coordinate map (Cartesian \u2192 curvilinear), applied in the plane `z = 0`.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `posim/src/dataset.rs`.",
+  "syntax": [
+   "pub enum Map2"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 634,
+    "role": "definition"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.Map3.forward",
+  "name": "Map3::forward",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "F"
+  ],
+  "summary": "fn `forward` in `special_functions::coords`.",
+  "definition": "No doc comment in the source.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
+  "syntax": [
+   "pub fn forward(&self, p: [f64; 3]) -> Result<[f64; 3], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 641,
+    "role": "definition"
+   },
+   {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
+  "id": "rs.special_functions.coords.Map2.forward",
+  "name": "Map2::forward",
+  "kind": "function",
+  "tier": "B",
+  "aliases": [],
+  "indexKeys": [
+   "F"
+  ],
+  "summary": "fn `forward` in `special_functions::coords`.",
+  "definition": "No doc comment in the source.  Declared in the `coords` module of the `special_functions` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/tests/dae.rs`.",
+  "syntax": [
+   "pub fn forward(&self, p: [f64; 2]) -> Result<[f64; 2], String>"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [],
+  "locations": [
+   {
+    "file": "special_functions/src/coords.rs",
+    "line": 659,
+    "role": "definition"
+   },
+   {
+    "file": "physical_object/tests/dae.rs",
+    "line": 1,
+    "role": "used here"
+   }
+  ],
+  "examples": [],
+  "seeAlso": [],
+  "invariants": [],
+  "status": "reference"
+ },
+ {
   "id": "rs.special_functions.debye.Uniform",
   "name": "Uniform",
   "kind": "type",
@@ -15452,7 +17029,7 @@
   "locations": [
    {
     "file": "special_functions/src/lib.rs",
-    "line": 78,
+    "line": 79,
     "role": "definition"
    },
    {
@@ -18663,7 +20240,7 @@
    "A"
   ],
   "summary": "Apply `H` to a complex wavefunction, returning `H psi`.",
-  "definition": "Apply `H` to a complex wavefunction, returning `H psi`.  Declared in the `qm1d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/integrate.rs`, `physical_object/src/sensitivity.rs`, `posim/src/parser.rs`.",
+  "definition": "Apply `H` to a complex wavefunction, returning `H psi`.  Declared in the `qm1d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/integrate.rs`, `physical_object/src/sensitivity.rs`, `posim/src/dataset.rs`.",
   "syntax": [
    "pub fn apply(&self, psi: &[C]) -> Vec<C>"
   ],
@@ -18687,7 +20264,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/src/parser.rs",
+    "file": "posim/src/dataset.rs",
     "line": 1,
     "role": "used here"
    }
@@ -20538,7 +22115,7 @@
    "A"
   ],
   "summary": "The full `H psi`, used for `<E>`.",
-  "definition": "The full `H psi`, used for `<E>`. Five-point stencil.  Declared in the `qm2d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/integrate.rs`, `physical_object/src/sensitivity.rs`, `posim/src/parser.rs`.",
+  "definition": "The full `H psi`, used for `<E>`. Five-point stencil.  Declared in the `qm2d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/integrate.rs`, `physical_object/src/sensitivity.rs`, `posim/src/dataset.rs`.",
   "syntax": [
    "pub fn apply(&self, psi: &[C]) -> Vec<C>"
   ],
@@ -20562,7 +22139,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/src/parser.rs",
+    "file": "posim/src/dataset.rs",
     "line": 1,
     "role": "used here"
    }
@@ -22498,7 +24075,7 @@
    "A"
   ],
   "summary": "`H psi` for a complex vector, including any absorber.",
-  "definition": "`H psi` for a complex vector, including any absorber.  Declared in the `qm3d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/integrate.rs`, `physical_object/src/sensitivity.rs`, `posim/src/parser.rs`.",
+  "definition": "`H psi` for a complex vector, including any absorber.  Declared in the `qm3d` module of the `quantum` crate.  No snippet is generated for this signature shape \u2014 see the status page for why an invented one would be worse than none \u2014 but it is called from `physical_object/src/integrate.rs`, `physical_object/src/sensitivity.rs`, `posim/src/dataset.rs`.",
   "syntax": [
    "pub fn apply(&self, psi: &[C]) -> Vec<C>"
   ],
@@ -22522,7 +24099,7 @@
     "role": "used here"
    },
    {
-    "file": "posim/src/parser.rs",
+    "file": "posim/src/dataset.rs",
     "line": 1,
     "role": "used here"
    }

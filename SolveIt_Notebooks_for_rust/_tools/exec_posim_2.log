@@ -1,29 +1,32 @@
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_03_three_conics/solveit_03_three_conics.ipynb  (10 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_02_keplers_third_law/solveit_02_keplers_third_law.ipynb  (23 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_07_dzhanibekov/solveit_07_dzhanibekov.ipynb  (24 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_06_symplectic_vs_adaptive/solveit_06_symplectic_vs_adaptive.ipynb  (16 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_11_lagrange_l4/solveit_11_lagrange_l4.ipynb  (12 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_10_no_tunnelling/solveit_10_no_tunnelling.ipynb  (10 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_15_tunnelling/solveit_15_tunnelling.ipynb  (13 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_14_particle_in_a_box/solveit_14_particle_in_a_box.ipynb  (11 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_19_hinged_door/solveit_19_hinged_door.ipynb  (14 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_18_equilibrium_and_sensitivity/solveit_18_equilibrium_and_sensitivity.ipynb  (16 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_23_dataset_restitution_rebounds/solveit_23_dataset_restitution_rebounds.ipynb  (10 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_22_dataset_circular_binary/solveit_22_dataset_circular_binary.ipynb  (11 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_27_dataset_record_switch/solveit_27_dataset_record_switch.ipynb  (14 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_26_dataset_dzhanibekov_flip/solveit_26_dataset_dzhanibekov_flip.ipynb  (10 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_31_dataset_attach_compare/solveit_31_dataset_attach_compare.ipynb  (17 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_30_dataset_sql_surgery/solveit_30_dataset_sql_surgery.ipynb  (14 cells)
 1 ok, 0 failed
 simulator stopped
-ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_35_dataset_spinning_torus/solveit_35_dataset_spinning_torus.ipynb  (11 cells)
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_34_dataset_door_movies/solveit_34_dataset_door_movies.ipynb  (15 cells)
+1 ok, 0 failed
+simulator stopped
+ok   SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_38_dataset_curvilinear_tour/solveit_38_dataset_curvilinear_tour.ipynb  (18 cells)
 1 ok, 0 failed
 simulator stopped
 ok   SolveIt_Notebooks_for_rust/03_dynamics_and_routh/dynamic_box_of_shapes/dynamic_box_of_shapes.ipynb  (15 cells)
@@ -87,7 +90,4 @@ ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_rack_and_pinion/video_
 1 ok, 0 failed
 simulator stopped
 ok   SolveIt_Notebooks_for_rust/05_mechanism_videos/video_universal_joint/video_universal_joint.ipynb  (12 cells)
-1 ok, 0 failed
-simulator stopped
-ok   SolveIt_Notebooks_for_rust/06_rust_compiled_examples/rust_newtons_cradle/rust_newtons_cradle.ipynb  (15 cells)
 1 ok, 0 failed

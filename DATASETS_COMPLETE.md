@@ -62,10 +62,17 @@ still lists only the 12 local crates.
 ```
 DATASET CREATE <name> | OPEN <name> | CLOSE | RECORD [ON|OFF] |
         SNAPSHOT | LIST | INFO [<name>] | COPY <src> <dst> |
-        SAVEAS <name> | DELETE <name> | PLAY [<name>]
+        SAVEAS <name> | DELETE <name> | PLAY [<name>] |
+        DIFF <a> <b> AS <out> | SUM <a> <b> AS <out> |
+        MAP <src> TO <system> [params] AS <out>
 SQL "<any SQLite statement(s)>"
 MOVIE CREATE <dataset> [AS <name>] | DELETE <name> | LIST | PLAY <name>
 ```
+
+plus 28 value-level coordinate builtins (`cart_to_spherical(v)`,
+`toroidal_to_cart(q, a)`, `cart2_to_polar(u)`, ...) covering all
+fourteen classical curvilinear systems, every one with checked errors
+(grammar.md §5.15).
 
 `SQL` passes its string to SQLite **verbatim**, which is what makes the
 COMPLETE SQLite command language available from a notebook: SELECT
@@ -80,7 +87,7 @@ orbiting camera, trails, labels, live t/E/|P|/|L| readout) and
 `MOVIE PLAY` opens it. Movies are pure derivations: delete and rebuild
 them at will, the physics never re-runs.
 
-**Every Jupyter notebook owns a dataset.** Each of the 125 notebooks
+**Every Jupyter notebook owns a dataset.** Each of the 128 notebooks
 creates `datasets/nb_<name>.db` in its section 6 (the sixteen dataset
 worked examples manage their own, named in the script), records its
 run, reads it back in section 9 three ways — `dataset snapshot`, the
@@ -96,21 +103,21 @@ this as requirement R8.
 | sidecar tests | `cd dataset_tools && cargo test` | **11 passed, 0 failed** |
 | 10-thread WAL stress | `./dataset_tools/target/release/solveit_db stress /tmp/s.db 10 500` | `5000 expected, 5000 written, journal_mode=wal` |
 | workspace build | `cargo build --workspace --all-targets` | warning-free |
-| workspace tests | `cargo test --workspace` | **631 passed, 0 failed** (was 622) |
+| workspace tests | `cargo test --workspace` | **638 passed, 0 failed** (was 622) |
 | physics byte-identity | `bash tools/macos_verify_physics.sh` | exit 0 — collisions IDENTICAL; examples and dynamic notebooks identical modulo the two long-pinned host-libm diffs |
 | 6 compiled examples | `cargo run -p physical_object --release --example <name>` | all print SUCCESS |
 | 12 collision scripts | loop below | all ok |
-| 35 SolveIt scripts | loop below | all ok (01–35; 20–35 are the dataset examples) |
-| 125 notebooks executed | `nbrun` loop below | **125 ok, 0 failed** |
-| 125 notebooks checked | `python3 notebooks/_build/nbcheck.py` | **125/125 pass all eight requirements** |
+| 38 SolveIt scripts | loop below | all ok (01–38; 20–38 are the dataset examples, 36–38 the trajectory-algebra / coordinate examples) |
+| 128 notebooks executed | `nbrun` loop below | **128 ok, 0 failed** |
+| 128 notebooks checked | `python3 notebooks/_build/nbcheck.py` | **128/128 pass all eight requirements** |
 | recorded videos (legacy) | `python3 recorder/src/record_all.py --check` | all 13 byte-identical |
 | 13 live GUI pages | `python3 tools/gui_smoke.py` | 13 of 13 pass |
 | wire protocol | `python3 jupyter/test_protocol.py` | all checks passed |
 | JupyterLab kernel | `POSIM_NO_BROWSER=1 jupyter/.venv/bin/python jupyter/test_kernel.py` | all checks passed |
-| grammar.pdf | `pdflatex -interaction=nonstopmode grammar.tex` (×2) | 72 pages, 0 errors |
-| SolveIt.pdf | `pdflatex -interaction=nonstopmode SolveIt.tex` (×2) | 44 pages, 0 errors |
-| entity index | `python3 tools/verify_index_examples.py` | **PASS 1241/1241 (100.0%)**; tier-B `COMPILED 258/258 (100.0%)`; 120 command entries |
-| encyclopedia | `python3 SolveIt_Notebooks_for_rust/_tools/verify.py` | **ALL VERIFY GATES PASS (144 notebooks)** — 125/125 posim-family copies re-executed ok, 121 GUI captures, 12.4 MB PDF rebuilt |
+| grammar.pdf | `pdflatex -interaction=nonstopmode grammar.tex` (×2) | 75 pages, 0 errors |
+| SolveIt.pdf | `pdflatex -interaction=nonstopmode SolveIt.tex` (×2) | 48 pages, 0 errors |
+| entity index | `python3 tools/verify_index_examples.py` | **PASS 1365/1365 (100.0%)**; tier-B `COMPILED 258/258 (100.0%)`; 123 command entries + 28 coordinate-builtin entries |
+| encyclopedia | `python3 SolveIt_Notebooks_for_rust/_tools/verify.py` | **ALL VERIFY GATES PASS (147 notebooks)** — every posim-family copy re-executed ok, 124 GUI captures, 12.9 MB PDF rebuilt |
 
 Physics answered **by SQL** inside the sixteen new worked examples
 (complete transcripts in `SolveIt.md` §7, examples 20–35):
@@ -132,6 +139,19 @@ Physics answered **by SQL** inside the sixteen new worked examples
 - Backward-difference error vs recorded velocity:
   `0.24525000000025088` against the theoretical g·dt/2 = `0.24525`.
 - Recorded quaternions stay unit to `4.440892098500626e-16`.
+
+And the second wave — trajectory algebra and the fourteen curvilinear
+coordinate systems (examples 36–38, `grammar.md` §5.15):
+
+- The teacher's experiment closes: `(A − B) + B − A` leaves
+  `6.938893903907228e-18` in position, exactly `0` in energy.
+- A planar orbit's spherical polar angle:
+  `theta_min = theta_max = 1.5707963267948966` (pi/2 to the bit).
+- Polar radial range `[0.7500000019886397, 3.0000000158618207]` vs the
+  analytic `[0.75, 3]`.
+- Every value-level round trip `X_to_cart(cart_to_X(w))` within
+  `2.2e-16`; the 2-D charts return their inputs verbatim; singular
+  loci (foci, focal rings) come back as NAMED ERRORS, never NaNs.
 
 ## 4. The complete command set (build → test → verify → execute → display)
 

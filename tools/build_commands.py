@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Phase-3: the 120 command entries for the Index of Entities.
+"""Phase-3: the command entries for the Index of Entities.
 
 Writes index_data/entries_commands.json, which tools/build_catalog.py folds
 into catalog.json. Ladders are hand-authored for the core, SCENE and
@@ -788,6 +788,18 @@ DB2 = ("set system.g_constant = 0\n"
 DBOX = ("set system.g_constant = 0\nbox 4\n"
         "new sphere { mass = 1, radius = 0.5, velocity = [2, 1, 0] }\n")
 
+# For the MAP ladders. DBP stays in the z = 0 plane (so the 2-D systems
+# accept it) but off the origin; DB3 moves through the open positive
+# octant, clear of every coordinate plane (the ellipsoidal chart) and of
+# every singular locus (the a = 1.25 toroidal focal ring lives at z = 0).
+DBP = ("set system.g_constant = 0\n"
+       "new sphere { mass = 1, radius = 0.5, position = [0.4, 0.3, 0], "
+       "velocity = [1, 0.5, 0] }\n")
+
+DB3 = ("set system.g_constant = 0\n"
+       "new sphere { mass = 1, radius = 0.5, position = [0.4, 0.3, 0.2], "
+       "velocity = [1, 0.5, 0.25] }\n")
+
 SIDECAR = ("posim itself contains NO SQLite code — the workspace keeps its "
            "zero-external-dependency, zero-unsafe guarantee. Every DATASET/SQL/MOVIE "
            "command drives the `solveit_db` sidecar (dataset_tools/), which posim "
@@ -1007,6 +1019,158 @@ DATASET = [
      ["dataset `x` has no frames yet — RUN or STEP with recording on, or DATASET SNAPSHOT, "
       "then try again",
       "no dataset is open — DATASET PLAY <name> names one, or DATASET CREATE/OPEN first"]),
+    ("diff", "DATASET DIFF", 'DATASET DIFF name name "AS" name',
+     "The teacher's experiment in one command: run a trial, change a mass or a charge, run "
+     "the second trial over the SAME space-time domain, and subtract. DIFF writes a new "
+     "dataset whose every column is the component-wise difference of the two inputs — the "
+     "states table (positions, quaternion components, velocities, angular velocities) and "
+     "the frames table (energy, momentum, angular momentum, centre of mass, collision "
+     "counts); the time column is carried through unchanged. Alignment is CHECKED, not "
+     "assumed: the two datasets must have the same frame count, a bit-equal time grid, and "
+     "the same body-id set at every frame — any mismatch is an error naming the first "
+     "offending frame and both values, and the output must be a NEW name, never one of the "
+     "inputs. The orientation columns of the result hold component-wise quaternion "
+     "arithmetic — a difference of quaternions is not a rotation — so a DIFF dataset is a "
+     "difference TABLE for SQL and plots, not a rigid state (build movies from the source "
+     "recordings instead). The closure (a - b) + b - a comes back all-zero to "
+     "floating-point roundoff; for the drift-free G = 0 recording in the expert rung the "
+     "residual is exactly 0. " + SIDECAR,
+     [DB + "dataset create idx_ds_diff_t1\nrun 1 steps 4\ndataset close\nreset\n" +
+      DB.replace("velocity = [1, 0, 0]", "velocity = [2, 0, 0]") +
+      "dataset create idx_ds_diff_t2\nrun 1 steps 4\ndataset close\n"
+      "dataset diff idx_ds_diff_t1 idx_ds_diff_t2 as idx_ds_diff_t3\n"
+      "dataset delete idx_ds_diff_t1\ndataset delete idx_ds_diff_t2\n"
+      "dataset delete idx_ds_diff_t3",
+      DB + "dataset create idx_ds_diff_i1\nrun 1 steps 4\ndataset close\n"
+      "dataset diff idx_ds_diff_i1 idx_ds_diff_i1 as idx_ds_diff_i2\n"
+      "dataset open idx_ds_diff_i2\n"
+      'sql "SELECT MAX(ABS(x)) AS x_residual, MAX(ABS(vx)) AS vx_residual FROM states"\n'
+      "dataset close\ndataset delete idx_ds_diff_i1\ndataset delete idx_ds_diff_i2",
+      DB + "dataset create idx_ds_diff_a1\nrun 1 steps 4\ndataset close\nreset\n" +
+      DB.replace("velocity = [1, 0, 0]", "velocity = [1.5, 0, 0]") +
+      "dataset create idx_ds_diff_a2\nrun 1 steps 4\ndataset close\n"
+      "dataset diff idx_ds_diff_a2 idx_ds_diff_a1 as idx_ds_diff_a3\n"
+      "dataset open idx_ds_diff_a3\n"
+      'sql "SELECT frame, t, x FROM states JOIN frames USING(frame) ORDER BY frame"\n'
+      "dataset close\ndataset delete idx_ds_diff_a1\ndataset delete idx_ds_diff_a2\n"
+      "dataset delete idx_ds_diff_a3",
+      DB + "dataset create idx_ds_diff_e1\nrun 1 steps 4\ndataset close\nreset\n" +
+      DB.replace("velocity = [1, 0, 0]", "velocity = [2, 0, 0]") +
+      "dataset create idx_ds_diff_e2\nrun 1 steps 4\ndataset close\n"
+      "dataset diff idx_ds_diff_e1 idx_ds_diff_e2 as idx_ds_diff_e3\n"
+      "dataset sum idx_ds_diff_e3 idx_ds_diff_e2 as idx_ds_diff_e4\n"
+      "dataset diff idx_ds_diff_e4 idx_ds_diff_e1 as idx_ds_diff_e5\n"
+      "dataset open idx_ds_diff_e5\n"
+      'sql "SELECT MAX(ABS(x)) AS x_residual, MAX(ABS(energy)) AS e_residual '
+      'FROM states JOIN frames USING(frame)"\n'
+      "dataset close\ndataset delete idx_ds_diff_e1\ndataset delete idx_ds_diff_e2\n"
+      "dataset delete idx_ds_diff_e3\ndataset delete idx_ds_diff_e4\n"
+      "dataset delete idx_ds_diff_e5"],
+     ["datasets are not identically dimensioned: `a` has 40 frame(s) but `b` has 10 — "
+      "record both over the same space-time domain (same RUN duration and STEPS)",
+      "time grids differ at frame 3: `a` has t = 0.75 but `b` has t = 0.7 — the "
+      "trajectories must share one space-time domain",
+      "body sets differ at frame 0: `a` has bodies [0, 1] but `b` has [0] — the "
+      "trajectories must describe the same bodies",
+      "the output dataset `out` must differ from the inputs (COPY one first to keep it)"]),
+    ("sum", "DATASET SUM", 'DATASET SUM name name "AS" name',
+     "The + of the trajectory algebra: a new dataset whose every column is the "
+     "component-wise SUM of the two inputs, under exactly the rules of DATASET DIFF — the "
+     "states table (positions, quaternion components, velocities, angular velocities) and "
+     "the frames table (energy, momentum, angular momentum, centre of mass, collision "
+     "counts) are added component-wise, the time column is carried through unchanged, and "
+     "alignment (same frame count, bit-equal time grid, same body-id set at every frame) "
+     "is CHECKED, not assumed — any mismatch errors naming the first offending frame. DIFF "
+     "and SUM together close the algebra: summing a difference back onto its subtrahend "
+     "recovers the original dataset, which the expert rung measures — (a - b) + b re-read "
+     "against a leaves residual 0 for a drift-free G = 0 recording. Component-wise "
+     "quaternion sums are not rotations; like a DIFF output, a SUM dataset is a table for "
+     "SQL and plots, not a rigid state. " + SIDECAR,
+     [DB + "dataset create idx_ds_sum_t1\nrun 1 steps 4\ndataset close\n"
+      "dataset sum idx_ds_sum_t1 idx_ds_sum_t1 as idx_ds_sum_t2\n"
+      "dataset delete idx_ds_sum_t1\ndataset delete idx_ds_sum_t2",
+      DB + "dataset create idx_ds_sum_i1\nrun 1 steps 4\ndataset close\n"
+      "dataset sum idx_ds_sum_i1 idx_ds_sum_i1 as idx_ds_sum_i2\n"
+      "dataset open idx_ds_sum_i2\n"
+      'sql "SELECT MAX(ABS(vx - 2)) AS doubled_vx_residual FROM states"\n'
+      "dataset close\ndataset delete idx_ds_sum_i1\ndataset delete idx_ds_sum_i2",
+      DB + "dataset create idx_ds_sum_a1\nrun 1 steps 4\ndataset close\nreset\n" +
+      DB.replace("velocity = [1, 0, 0]", "velocity = [2, 0, 0]") +
+      "dataset create idx_ds_sum_a2\nrun 1 steps 4\ndataset close\n"
+      "dataset sum idx_ds_sum_a1 idx_ds_sum_a2 as idx_ds_sum_a3\n"
+      "dataset open idx_ds_sum_a3\n"
+      'sql "SELECT MIN(vx) AS vx_min, MAX(vx) AS vx_max FROM states"\n'
+      "dataset close\ndataset delete idx_ds_sum_a1\ndataset delete idx_ds_sum_a2\n"
+      "dataset delete idx_ds_sum_a3",
+      DB + "dataset create idx_ds_sum_e1\nrun 1 steps 4\ndataset close\nreset\n" +
+      DB.replace("velocity = [1, 0, 0]", "velocity = [2, 0, 0]") +
+      "dataset create idx_ds_sum_e2\nrun 1 steps 4\ndataset close\n"
+      "dataset sum idx_ds_sum_e1 idx_ds_sum_e2 as idx_ds_sum_e3\n"
+      "dataset diff idx_ds_sum_e3 idx_ds_sum_e2 as idx_ds_sum_e4\n"
+      "dataset open idx_ds_sum_e4\n"
+      'sql "SELECT MAX(ABS(vx - 1)) AS recovered_vx_residual, COUNT(*) AS frames '
+      'FROM states"\n'
+      "dataset close\ndataset delete idx_ds_sum_e1\ndataset delete idx_ds_sum_e2\n"
+      "dataset delete idx_ds_sum_e3\ndataset delete idx_ds_sum_e4"],
+     ["datasets are not identically dimensioned: `a` has 40 frame(s) but `b` has 10 — "
+      "record both over the same space-time domain (same RUN duration and STEPS)",
+      "body sets differ at frame 0: `a` has bodies [0, 1] but `b` has [0] — the "
+      "trajectories must describe the same bodies",
+      "the output dataset `out` must differ from the inputs (COPY one first to keep it)"]),
+    ("map", "DATASET MAP", 'DATASET MAP name "TO" system [ NUMBER [ NUMBER NUMBER ] ] "AS" name',
+     "Every recorded position is pushed through one of the fourteen classical curvilinear "
+     "maps of grammar.md section 5.15 — eleven three-dimensional (spherical, cylindrical, "
+     "ellipsoidal a b c, oblate a, prolate a, paraboloidal, elliptic_cyl a, parabolic_cyl, "
+     "bipolar_cyl a, toroidal a, bispherical a) and three two-dimensional (polar2, "
+     "elliptic2 a, bipolar2 a) — where a (or the ellipsoidal semi-axes a b c, which must "
+     "satisfy a > b > c > 0) is the system's scale parameter, written as plain numbers "
+     "after the system word. In the output dataset the states table's x, y, z columns hold "
+     "the curvilinear triple (q1, q2, q3; a 2-D system stores (q1, q2, 0) and REQUIRES a "
+     "planar trajectory — every |z| <= 1e-9, checked); orientations are carried unchanged "
+     "(they are still rotation quaternions); the velocity columns are stored as NULL, "
+     "because velocity components in curvilinear coordinates require the metric, which a "
+     "point map does not carry; and the frames table (E, P, L, com — Cartesian "
+     "bookkeeping) is copied verbatim. Everything is checked: an unknown system or a wrong "
+     "parameter count is a PARSE error, and a trajectory that crosses a singular locus (a "
+     "bipolar focus, the toroidal focal ring) errors naming the frame and body. A planar "
+     "orbit mapped with spherical gives the cleanest sanity check: the polar-angle column "
+     "is 1.5707963267948966 (pi/2) at every frame, MIN = MAX. The same fourteen maps are "
+     "available value-level as expression builtins (cart_to_spherical and friends, "
+     "grammar.md section 5.15). " + SIDECAR,
+     [DBP + "dataset create idx_ds_map_t1\nrun 1 steps 3\ndataset close\n"
+      "dataset map idx_ds_map_t1 to spherical as idx_ds_map_t2\n"
+      "dataset delete idx_ds_map_t1\ndataset delete idx_ds_map_t2",
+      DB3 + "dataset create idx_ds_map_i1\nrun 1 steps 4\ndataset close\n"
+      "dataset map idx_ds_map_i1 to cylindrical as idx_ds_map_i2\n"
+      "dataset open idx_ds_map_i2\n"
+      'sql "SELECT COUNT(*) AS null_velocity_rows FROM states WHERE vx IS NULL"\n'
+      "dataset close\ndataset delete idx_ds_map_i1\ndataset delete idx_ds_map_i2",
+      DBP + "dataset create idx_ds_map_a1\nrun 1 steps 5\ndataset close\n"
+      "dataset map idx_ds_map_a1 to spherical as idx_ds_map_a2\n"
+      "dataset open idx_ds_map_a2\n"
+      'sql "SELECT MIN(y) AS theta_min, MAX(y) AS theta_max FROM states"\n'
+      "dataset close\n"
+      "dataset map idx_ds_map_a1 to polar2 as idx_ds_map_a3\n"
+      "dataset open idx_ds_map_a3\n"
+      'sql "SELECT COUNT(*) AS rows_at_z0 FROM states WHERE z = 0"\n'
+      "dataset close\ndataset delete idx_ds_map_a1\ndataset delete idx_ds_map_a2\n"
+      "dataset delete idx_ds_map_a3",
+      DB3 + "dataset create idx_ds_map_e1\nrun 1 steps 4\ndataset close\n"
+      "dataset map idx_ds_map_e1 to toroidal 1.25 as idx_ds_map_e2\n"
+      "dataset map idx_ds_map_e1 to ellipsoidal 3 2 1 as idx_ds_map_e3\n"
+      "dataset open idx_ds_map_e3\n"
+      'sql "SELECT COUNT(*) AS mapped_rows FROM states"\n'
+      "dataset close\ndataset delete idx_ds_map_e1\ndataset delete idx_ds_map_e2\n"
+      "dataset delete idx_ds_map_e3"],
+     ["parse error: DATASET MAP TO needs a coordinate system — one of spherical, "
+      "cylindrical, ellipsoidal, oblate, prolate, paraboloidal, elliptic_cyl, "
+      "parabolic_cyl, bipolar_cyl, toroidal, bispherical, polar2, elliptic2, bipolar2",
+      "the polar2 map is two-dimensional and needs a planar trajectory (|z| <= 1e-9 "
+      "everywhere), but frame 0 body 0 has z = 0.2 — use a 3-D system, or simulate in "
+      "the z = 0 plane",
+      "DATASET MAP toroidal: frame 2, body 0: cart_to_toroidal: (rho, z) = (1.25, 0) is "
+      "on the focal ring — a singular locus of toroidal coordinates (tau diverges there)",
+      "the output dataset `out` must differ from the source"]),
 ]
 
 # Explicit one-liners: the SCENE trick of cutting the definition at its
@@ -1023,6 +1187,17 @@ DS_SUMMARY = {
     "saveas": "Checkpoint the OPEN dataset under a new name.",
     "delete": "Remove a dataset and its WAL sidecars; close it first if open.",
     "play": "Render the recorded time series as a plots page in your browser.",
+    "diff": "Frame-aligned trajectory algebra: out = a - b, alignment checked.",
+    "sum": "Frame-aligned trajectory algebra: out = a + b, alignment checked.",
+    "map": "Push every recorded position through a curvilinear coordinate map.",
+}
+
+# The algebra/map sub-commands cross-reference each other and the
+# value-level coordinate builtins they share machinery with.
+DS_SEEALSO_EXTRA = {
+    "diff": ["cmd.dataset.sum", "cmd.dataset.map"],
+    "sum": ["cmd.dataset.diff", "cmd.dataset.map"],
+    "map": ["cmd.dataset.diff", "fn.cart_to_spherical", "fn.cart2_to_polar"],
 }
 
 for did, nm, syn, defn, rungs, errs in DATASET:
@@ -1033,7 +1208,8 @@ for did, nm, syn, defn, rungs, errs in DATASET:
                    {"file": "posim/src/dataset.rs", "line": 1, "role": "the sidecar handle"},
                    {"file": V, "line": 2077, "role": "exec_dataset"},
                    {"file": G, "line": gsec("5.14"), "role": "spec (5.14)"}],
-        seeAlso=["cmd.sql", "cmd.movie.create", "cmd.dataset.create", "cmd.run"],
+        seeAlso=["cmd.sql", "cmd.movie.create", "cmd.dataset.create", "cmd.run"]
+                + DS_SEEALSO_EXTRA.get(did, []),
         invariants=["posim contains NO SQLite code: every DATASET/SQL/MOVIE command drives "
                     "the solveit_db sidecar (dataset_tools/), spawned, never linked.",
                     "The schema has no timestamps anywhere — byte-stable output is a "

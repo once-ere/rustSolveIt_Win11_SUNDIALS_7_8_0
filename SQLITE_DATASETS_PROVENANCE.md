@@ -17,8 +17,8 @@ full.
 
 - **Datasets**: every simulation can record itself into a SQLite
   database `datasets/<name>.db` (schema v1: `meta`, `bodies`, `frames`,
-  `states`; w-first quaternions; no timestamps). Every one of the 125
-  Jupyter notebooks owns one, and SolveIt worked examples 20–35 are
+  `states`; w-first quaternions; no timestamps). Every one of the 128
+  Jupyter notebooks owns one, and SolveIt worked examples 20–38 are
   built around them.
 - **The `solveit_db` sidecar** (`dataset_tools/`): the ONE package with
   external crates — `rusqlite` (bundled SQLite amalgamation), `r2d2`,
@@ -35,6 +35,22 @@ full.
   CREATE/DELETE/LIST/PLAY` (movies are 3-D player pages DERIVED from
   datasets). Full reference: `grammar.md` §5.14; complete worked
   session: `grammar.md` §13.
+- **Trajectory algebra and curvilinear coordinates** (added in the
+  same series of work): `DATASET DIFF <a> <b> AS <out>` and
+  `DATASET SUM ...` — frame-aligned component arithmetic with the
+  alignment CHECKED (same frame count, bit-equal t grid, same body
+  ids; mismatches error naming the frame); `DATASET MAP <src> TO
+  <system> [params] AS <out>` — positions through any of the fourteen
+  classical curvilinear systems (eleven 3-D + three 2-D, the 2-D ones
+  requiring |z| <= 1e-9; output velocities NULL because curvilinear
+  components need the metric); and 28 value-level builtins
+  (`cart_to_spherical(v)` ... `bipolar_to_cart2(w, a)`), all in pure
+  Rust (`special_functions/src/coords.rs`) with round-trip,
+  known-value and error-path tests. Reference: `grammar.md` §5.15;
+  worked examples 36–38. Measured on this machine: the teacher's
+  (A−B)+B−A closure residual `6.938893903907228e-18`; a planar orbit's
+  spherical polar angle `1.5707963267948966` with MIN = MAX over 100
+  frames; every value-level round trip within `2.2e-16`.
 
 ## 2. Build everything
 
@@ -98,8 +114,9 @@ stress: 10 threads x 500 rows = 5000 expected, 5000 written, journal_mode=wal
 cargo test --workspace
 ```
 
-Measured: **631 passed, 0 failed** (was 622 before the dataset layer;
-posim went 112 → 121). The new posim tests:
+Measured: **638 passed, 0 failed** (622 before the dataset layer, 631
+before the coordinate layer; posim 112 → 121, special_functions
+233 → 240 with the seven coordinate-map suites). The new posim tests:
 `dataset_movie_and_sql_productions_compile`,
 `dataset_movie_and_sql_stay_identifiers_off_the_front`,
 `dataset_records_run_frames_and_sql_reads_them_back` (end-to-end
@@ -149,14 +166,14 @@ for f in scripts/collisions/*.posim; do
   POSIM_NO_BROWSER=1 ./target/release/posim --script "$f" || echo "FAILED $f"
 done
 
-# the THIRTY-FIVE SolveIt scripts (20-35 are the dataset examples)
+# the THIRTY-EIGHT SolveIt scripts (20-38 are the dataset examples)
 for f in scripts/solveit/*.posim; do
   POSIM_NO_BROWSER=1 ./target/release/posim --script "$f" || echo "FAILED $f"
 done
 ```
 
 Measured: all six examples print SUCCESS and exit 0; **all 12 collision
-scripts ok**; **all 35 SolveIt scripts ok** (no FAILED line printed).
+scripts ok**; **all 38 SolveIt scripts ok** (no FAILED line printed).
 
 Highlights measured inside the 16 dataset examples (each number is in
 the committed transcripts in `SolveIt.md` §7):
@@ -184,8 +201,8 @@ ls notebooks/*.ipynb | POSIM_NO_BROWSER=1 xargs -P 6 -I{} \
 python3 notebooks/_build/nbcheck.py
 ```
 
-Measured: regen renders **125** notebooks; nbrun ends **125 ok, 0
-failed**; nbcheck ends **125/125 notebooks pass all eight
+Measured: regen renders **128** notebooks; nbrun ends **128 ok, 0
+failed**; nbcheck ends **128/128 notebooks pass all eight
 requirements** (R8 — the dataset section and a simulator-independent
 `sqlite3` read-back cell — included). The run leaves one dataset per
 notebook in `datasets/` and derives the movies in `movies/`.
@@ -240,7 +257,7 @@ pdflatex -interaction=nonstopmode SolveIt.tex
 pdflatex -interaction=nonstopmode SolveIt.tex
 ```
 
-Measured: **grammar.pdf 72 pages**, **SolveIt.pdf 44 pages**, zero
+Measured: **grammar.pdf 75 pages**, **SolveIt.pdf 48 pages**, zero
 LaTeX errors in either final pass (`grep -c "^!" <log>` = 0).
 
 ## 11. The entity index and the encyclopedia
@@ -256,7 +273,7 @@ python3 tools/build_app.py
 python3 tools/verify_index_examples.py
 python3 tools/verify_tierb_examples.py
 
-# the notebook encyclopedia (SolveIt_Notebooks_for_rust/, 144 notebooks)
+# the notebook encyclopedia (SolveIt_Notebooks_for_rust/, 147 notebooks)
 python3 SolveIt_Notebooks_for_rust/_tools/gen.py
 # execute every posim-family copy (the mercury and rebound families are
 # unchanged and keep their verified runs):
@@ -267,18 +284,22 @@ python3 SolveIt_Notebooks_for_rust/_tools/encyclo.py
 python3 SolveIt_Notebooks_for_rust/_tools/verify.py
 ```
 
-Measured, index: **120 command entries** (16 new: `cmd.dataset.*` ×11,
-`cmd.sql`, `cmd.movie.*` ×4, with 64 runnable example fragments);
-verifiers end **`PASS 1241/1241  (100.0%)`** and
-**`COMPILED 258/258  (100.0%)`**.
+Measured, index (final pass): **123 command entries** (the dataset
+layer added `cmd.dataset.*` ×11 + `cmd.sql` + `cmd.movie.*` ×4, then
+`cmd.dataset.{diff,sum,map}`) plus **28 coordinate-builtin entries**
+(`fn.cart_to_spherical` … `fn.bipolar_to_cart2`); verifiers end
+**`PASS 1365/1365  (100.0%)`** and **`COMPILED 258/258  (100.0%)`**
+(tier-B grew with the public `special_functions::coords` module), and
+`index_of_entities.html` embeds 1623/1623 verified examples.
 
-Measured, encyclopedia: gen.py writes **144** entries (topic counts
-2/35/59/12/13/6/17); all **125** posim-family copies re-execute ok
-(chunk logs `_tools/exec_posim_0..3.log`: 32+31+31+31 ok, 0 FAIL);
-shoot.py captures **121** GUI images, 0 failed; ENCYCLOPEDIA.md /
-.html / .pdf rebuilt (12.4 MB PDF, Appendix B populated with 72
-vendored upstream notebook names); verify.py ends
-**`ALL VERIFY GATES PASS (144 notebooks)`**.
+Measured, encyclopedia (final pass): gen.py writes **147** entries
+(topic counts 2/38/59/12/13/6/17); the posim-family copies re-execute
+ok (final incremental pass: 122/122 ok, 0 FAIL across the four chunk
+logs `_tools/exec_posim_0..3.log`; the six rust copies were
+byte-identical and needed no re-run); shoot.py captures **124** GUI
+images, 0 failed; ENCYCLOPEDIA.md / .html / .pdf rebuilt (12.9 MB PDF,
+Appendix B populated); verify.py ends
+**`ALL VERIFY GATES PASS (147 notebooks)`**.
 
 ## 12. What is committed where
 
@@ -288,12 +309,12 @@ vendored upstream notebook names); verify.py ends
 | `posim/src/dataset.rs`, `posim/src/movie.rs` | the language side: handle, recording payloads, plots page, movie player |
 | `datasets/` | one `.db` per notebook and per dataset example, plus the generated `_plots.html` pages |
 | `movies/` | the movies derived from datasets |
-| `scripts/solveit/20..35_*.posim` | the sixteen dataset worked examples |
-| `notebooks/` | 125 executed notebooks, each owning a dataset (sections 6, 9, 10) |
-| `grammar.md` §5.14, §13 / `grammar.tex` / `grammar.pdf` | the full command reference and the complete worked session |
-| `SolveIt.md` §7 (20–35), §8.3–8.4 / `SolveIt.tex` / `SolveIt.pdf` | the sixteen additional worked examples and the dataset/movie guide |
+| `scripts/solveit/20..38_*.posim` | the sixteen dataset worked examples plus the three trajectory-algebra / coordinate examples |
+| `notebooks/` | 128 executed notebooks, each owning a dataset (sections 6, 9, 10) |
+| `grammar.md` §5.14–§5.15, §13 / `grammar.tex` / `grammar.pdf` (75 pp) | the full command reference (datasets, SQL, movies, trajectory algebra, the fourteen coordinate systems) and the complete worked session |
+| `SolveIt.md` §7 (20–38), §8.3–8.4 / `SolveIt.tex` / `SolveIt.pdf` (48 pp) | the nineteen additional worked examples and the dataset/movie guide |
 | `ARCHITECTURE.md` §3.10 | the pinned dataset-subsystem contracts |
-| `SolveIt_Notebooks_for_rust/` | the encyclopedia, regenerated with the dataset sections |
+| `SolveIt_Notebooks_for_rust/` | the encyclopedia, regenerated at 147 entries with the dataset sections |
 
 ## 13. Design decisions recorded
 

@@ -393,11 +393,151 @@
    "name": "clebsch_gordan",
    "file": "posim/src/special.rs",
    "line": 550
+  },
+  {
+   "name": "cart_to_spherical",
+   "file": "posim/src/special.rs",
+   "line": 281
+  },
+  {
+   "name": "spherical_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 281
+  },
+  {
+   "name": "cart_to_cylindrical",
+   "file": "posim/src/special.rs",
+   "line": 281
+  },
+  {
+   "name": "cylindrical_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 282
+  },
+  {
+   "name": "cart_to_ellipsoidal",
+   "file": "posim/src/special.rs",
+   "line": 290
+  },
+  {
+   "name": "ellipsoidal_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 290
+  },
+  {
+   "name": "cart_to_oblate",
+   "file": "posim/src/special.rs",
+   "line": 285
+  },
+  {
+   "name": "oblate_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 285
+  },
+  {
+   "name": "cart_to_prolate",
+   "file": "posim/src/special.rs",
+   "line": 285
+  },
+  {
+   "name": "prolate_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 285
+  },
+  {
+   "name": "cart_to_paraboloidal",
+   "file": "posim/src/special.rs",
+   "line": 282
+  },
+  {
+   "name": "paraboloidal_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 282
+  },
+  {
+   "name": "cart_to_elliptic_cyl",
+   "file": "posim/src/special.rs",
+   "line": 286
+  },
+  {
+   "name": "elliptic_cyl_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 286
+  },
+  {
+   "name": "cart_to_parabolic_cyl",
+   "file": "posim/src/special.rs",
+   "line": 283
+  },
+  {
+   "name": "parabolic_cyl_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 283
+  },
+  {
+   "name": "cart_to_bipolar_cyl",
+   "file": "posim/src/special.rs",
+   "line": 286
+  },
+  {
+   "name": "bipolar_cyl_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 287
+  },
+  {
+   "name": "cart_to_toroidal",
+   "file": "posim/src/special.rs",
+   "line": 287
+  },
+  {
+   "name": "toroidal_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 287
+  },
+  {
+   "name": "cart_to_bispherical",
+   "file": "posim/src/special.rs",
+   "line": 288
+  },
+  {
+   "name": "bispherical_to_cart",
+   "file": "posim/src/special.rs",
+   "line": 288
+  },
+  {
+   "name": "cart2_to_polar",
+   "file": "posim/src/special.rs",
+   "line": 283
+  },
+  {
+   "name": "polar_to_cart2",
+   "file": "posim/src/special.rs",
+   "line": 284
+  },
+  {
+   "name": "cart2_to_elliptic",
+   "file": "posim/src/special.rs",
+   "line": 288
+  },
+  {
+   "name": "elliptic_to_cart2",
+   "file": "posim/src/special.rs",
+   "line": 289
+  },
+  {
+   "name": "cart2_to_bipolar",
+   "file": "posim/src/special.rs",
+   "line": 289
+  },
+  {
+   "name": "bipolar_to_cart2",
+   "file": "posim/src/special.rs",
+   "line": 289
   }
  ],
  "_counts": {
   "core": 10,
   "constants": 2,
-  "special": 61
+  "special": 89
  }
 }

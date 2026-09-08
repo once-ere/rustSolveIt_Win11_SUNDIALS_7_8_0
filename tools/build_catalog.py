@@ -565,6 +565,193 @@ RETURNS_LIST = {"sph_harm", "bessel_j_array", "gauss_legendre", "eigenvalues",
                 "jacobi_eigen", "airy_z", "solve_tridiag", "solve_tridiag_c",
                 "solve_cyclic_tridiag_c"}
 
+# --------------------------------------------------------------------------
+# the 28 curvilinear coordinate builtins (grammar.md section 5.15) — the
+# value-level twins of DATASET MAP. Hand-authored three-rung ladders like
+# SPECIAL_LADDER: a known value, a second point exercising the system's
+# range (a negative angle, an on-axis point), and a round trip through the
+# inverse. The 3-D maps return vec3, so the round-trip rung is
+# norm(inverse(forward(v)) - v); the 2-D maps return 2-element LISTS,
+# which have no `-` or norm(), so their round trip prints the recovered
+# pair instead. Scale parameters use a = 1.25 (and 3, 2, 1 for the
+# ellipsoidal semi-axes, which must satisfy a > b > c > 0); every sample
+# point stays off the singular loci (foci, focal rings, the ellipsoidal
+# coordinate planes).
+# --------------------------------------------------------------------------
+COORD_LADDER = {
+    "cart_to_spherical": [
+        "cart_to_spherical([0, 0, 2])",
+        "cart_to_spherical([3, 4, 0])",
+        "norm(spherical_to_cart(cart_to_spherical([1.3, 0.7, 2.1])) - [1.3, 0.7, 2.1])"],
+    "spherical_to_cart": [
+        "spherical_to_cart([2, 0, 0])",
+        "spherical_to_cart([1, pi / 2, pi / 4])",
+        "norm(spherical_to_cart(cart_to_spherical([1.3, 0.7, 2.1])) - [1.3, 0.7, 2.1])"],
+    "cart_to_cylindrical": [
+        "cart_to_cylindrical([3, 4, 5])",
+        "cart_to_cylindrical([0, 2, 1])",
+        "norm(cylindrical_to_cart(cart_to_cylindrical([1.3, 0.7, 2.1])) - [1.3, 0.7, 2.1])"],
+    "cylindrical_to_cart": [
+        "cylindrical_to_cart([2, 0, 1])",
+        "cylindrical_to_cart([2, pi / 2, 1])",
+        "norm(cart_to_cylindrical(cylindrical_to_cart([2, 1.1, 0.7])) - [2, 1.1, 0.7])"],
+    "cart_to_ellipsoidal": [
+        "cart_to_ellipsoidal([1.3, 0.7, 2.1], 3, 2, 1)",
+        "cart_to_ellipsoidal([0.5, 0.4, 0.3], 3, 2, 1)",
+        "norm(ellipsoidal_to_cart(cart_to_ellipsoidal([1.3, 0.7, 2.1], 3, 2, 1), 3, 2, 1) "
+        "- [1.3, 0.7, 2.1])"],
+    "ellipsoidal_to_cart": [
+        "ellipsoidal_to_cart([2, -2.5, -6], 3, 2, 1)",
+        "ellipsoidal_to_cart([0.5, -1.5, -5], 3, 2, 1)",
+        "norm(cart_to_ellipsoidal(ellipsoidal_to_cart([2, -2.5, -6], 3, 2, 1), 3, 2, 1) "
+        "- [2, -2.5, -6])"],
+    "cart_to_oblate": [
+        "cart_to_oblate([1.3, 0.7, 2.1], 1.25)",
+        "cart_to_oblate([0, 0, 1.5], 1.25)",
+        "norm(oblate_to_cart(cart_to_oblate([1.3, 0.7, 2.1], 1.25), 1.25) - [1.3, 0.7, 2.1])"],
+    "oblate_to_cart": [
+        "oblate_to_cart([0.8, 0.3, 0.5], 1.25)",
+        "oblate_to_cart([0.8, -0.3, 0.5], 1.25)",
+        "norm(cart_to_oblate(oblate_to_cart([0.8, 0.3, 0.5], 1.25), 1.25) - [0.8, 0.3, 0.5])"],
+    "cart_to_prolate": [
+        "cart_to_prolate([1.3, 0.7, 2.1], 1.25)",
+        "cart_to_prolate([0, 0, 2], 1.25)",
+        "norm(prolate_to_cart(cart_to_prolate([1.3, 0.7, 2.1], 1.25), 1.25) - [1.3, 0.7, 2.1])"],
+    "prolate_to_cart": [
+        "prolate_to_cart([0.8, 0.6, 0.4], 1.25)",
+        "prolate_to_cart([1.2, 0.9, 0.3], 1.25)",
+        "norm(cart_to_prolate(prolate_to_cart([0.8, 0.6, 0.4], 1.25), 1.25) - [0.8, 0.6, 0.4])"],
+    "cart_to_paraboloidal": [
+        "cart_to_paraboloidal([1.3, 0.7, 2.1])",
+        "cart_to_paraboloidal([0, 3, 0])",
+        "norm(paraboloidal_to_cart(cart_to_paraboloidal([1.3, 0.7, 2.1])) - [1.3, 0.7, 2.1])"],
+    "paraboloidal_to_cart": [
+        "paraboloidal_to_cart([1.2, 0.8, 0.4])",
+        "paraboloidal_to_cart([2, 1, pi / 2])",
+        "norm(cart_to_paraboloidal(paraboloidal_to_cart([1.2, 0.8, 0.4])) - [1.2, 0.8, 0.4])"],
+    "cart_to_elliptic_cyl": [
+        "cart_to_elliptic_cyl([1.3, 0.7, 2.1], 1.25)",
+        "cart_to_elliptic_cyl([2, 0, 0.5], 1.25)",
+        "norm(elliptic_cyl_to_cart(cart_to_elliptic_cyl([1.3, 0.7, 2.1], 1.25), 1.25) "
+        "- [1.3, 0.7, 2.1])"],
+    "elliptic_cyl_to_cart": [
+        "elliptic_cyl_to_cart([0.9, 0.7, 0.3], 1.25)",
+        "elliptic_cyl_to_cart([0.9, -0.7, 0.3], 1.25)",
+        "norm(cart_to_elliptic_cyl(elliptic_cyl_to_cart([0.9, 0.7, 0.3], 1.25), 1.25) "
+        "- [0.9, 0.7, 0.3])"],
+    "cart_to_parabolic_cyl": [
+        "cart_to_parabolic_cyl([1.3, 0.7, 2.1])",
+        "cart_to_parabolic_cyl([0, 2, 1])",
+        "norm(parabolic_cyl_to_cart(cart_to_parabolic_cyl([1.3, 0.7, 2.1])) "
+        "- [1.3, 0.7, 2.1])"],
+    "parabolic_cyl_to_cart": [
+        "parabolic_cyl_to_cart([0.6, 1.1, 0.4])",
+        "parabolic_cyl_to_cart([-0.6, 1.1, 0.4])",
+        "norm(cart_to_parabolic_cyl(parabolic_cyl_to_cart([0.6, 1.1, 0.4])) "
+        "- [0.6, 1.1, 0.4])"],
+    "cart_to_bipolar_cyl": [
+        "cart_to_bipolar_cyl([1.3, 0.7, 2.1], 1.25)",
+        "cart_to_bipolar_cyl([0, 0.5, 1], 1.25)",
+        "norm(bipolar_cyl_to_cart(cart_to_bipolar_cyl([1.3, 0.7, 2.1], 1.25), 1.25) "
+        "- [1.3, 0.7, 2.1])"],
+    "bipolar_cyl_to_cart": [
+        "bipolar_cyl_to_cart([0.7, 1.1, 0.3], 1.25)",
+        "bipolar_cyl_to_cart([-0.7, 1.1, 0.3], 1.25)",
+        "norm(cart_to_bipolar_cyl(bipolar_cyl_to_cart([0.7, 1.1, 0.3], 1.25), 1.25) "
+        "- [0.7, 1.1, 0.3])"],
+    "cart_to_toroidal": [
+        "cart_to_toroidal([1.3, 0.7, 2.1], 1.25)",
+        "cart_to_toroidal([0.3, 0.2, 0.1], 1.25)",
+        "norm(toroidal_to_cart(cart_to_toroidal([1.3, 0.7, 2.1], 1.25), 1.25) "
+        "- [1.3, 0.7, 2.1])"],
+    "toroidal_to_cart": [
+        "toroidal_to_cart([0.7, 1.1, 0.5], 1.25)",
+        "toroidal_to_cart([-0.7, 1.1, 0.5], 1.25)",
+        "norm(cart_to_toroidal(toroidal_to_cart([0.7, 1.1, 0.5], 1.25), 1.25) "
+        "- [0.7, 1.1, 0.5])"],
+    "cart_to_bispherical": [
+        "cart_to_bispherical([1.3, 0.7, 2.1], 1.25)",
+        "cart_to_bispherical([0.5, 0.4, 0.3], 1.25)",
+        "norm(bispherical_to_cart(cart_to_bispherical([1.3, 0.7, 2.1], 1.25), 1.25) "
+        "- [1.3, 0.7, 2.1])"],
+    "bispherical_to_cart": [
+        "bispherical_to_cart([0.7, 1.1, 0.5], 1.25)",
+        "bispherical_to_cart([0.7, -1.1, 0.5], 1.25)",
+        "norm(cart_to_bispherical(bispherical_to_cart([0.7, 1.1, 0.5], 1.25), 1.25) "
+        "- [0.7, 1.1, 0.5])"],
+    "cart2_to_polar": [
+        "cart2_to_polar([3, 4])",
+        "cart2_to_polar([0, 2])",
+        "polar_to_cart2(cart2_to_polar([1.3, 0.7]))"],
+    "polar_to_cart2": [
+        "polar_to_cart2([5, 0.9272952180016122])",
+        "polar_to_cart2([2, pi / 2])",
+        "cart2_to_polar(polar_to_cart2([2, 1.1]))"],
+    "cart2_to_elliptic": [
+        "cart2_to_elliptic([1.3, 0.7], 1.25)",
+        "cart2_to_elliptic([2, 0], 1.25)",
+        "elliptic_to_cart2(cart2_to_elliptic([1.3, 0.7], 1.25), 1.25)"],
+    "elliptic_to_cart2": [
+        "elliptic_to_cart2([0.9, 0.7], 1.25)",
+        "elliptic_to_cart2([0.9, -0.7], 1.25)",
+        "cart2_to_elliptic(elliptic_to_cart2([0.9, 0.7], 1.25), 1.25)"],
+    "cart2_to_bipolar": [
+        "cart2_to_bipolar([1.3, 0.7], 1.25)",
+        "cart2_to_bipolar([0, 0.5], 1.25)",
+        "bipolar_to_cart2(cart2_to_bipolar([1.3, 0.7], 1.25), 1.25)"],
+    "bipolar_to_cart2": [
+        "bipolar_to_cart2([0.7, 1.1], 1.25)",
+        "bipolar_to_cart2([-0.7, 1.1], 1.25)",
+        "cart2_to_bipolar(bipolar_to_cart2([0.7, 1.1], 1.25), 1.25)"],
+}
+SPECIAL_LADDER.update(COORD_LADDER)
+
+# vec3 (3-D maps) and 2-element lists (2-D maps) support neither abs()
+# nor a scalar reading, so the templated fourth rung must not append the
+# abs(v) line — same reason as the list-returning families above.
+RETURNS_LIST |= set(COORD_LADDER)
+
+# What each coordinate builtin is, in one clause — folded into FAMILY_DOC
+# so the summary line names the system and the direction.
+COORD_SYSTEMS = {
+    "spherical": ("spherical-polar (r, theta, phi), theta from the +z axis", ""),
+    "cylindrical": ("cylindrical (rho, phi, z)", ""),
+    "ellipsoidal": ("ellipsoidal (lambda, mu, nu), semi-axes a > b > c > 0", "a, b, c"),
+    "oblate": ("oblate spheroidal (mu, nu, phi), focal ring rho = a", "a"),
+    "prolate": ("prolate spheroidal (mu, nu, phi), foci (0, 0, +/-a)", "a"),
+    "paraboloidal": ("rotational parabolic (u, v, phi)", ""),
+    "elliptic_cyl": ("elliptic cylindrical (u, v, z), foci (+/-a, 0)", "a"),
+    "parabolic_cyl": ("parabolic cylindrical (sigma, tau, z)", ""),
+    "bipolar_cyl": ("bipolar cylindrical (sigma, tau, z), foci (+/-a, 0)", "a"),
+    "toroidal": ("toroidal (sigma, tau, phi), focal ring rho = a", "a"),
+    "bispherical": ("bispherical (sigma, tau, phi), foci (0, 0, +/-a)", "a"),
+    "polar2": ("plane polar (r, phi) on 2-element lists", ""),
+    "elliptic2": ("planar elliptic (u, v), foci (+/-a, 0), on 2-element lists", "a"),
+    "bipolar2": ("planar bipolar (sigma, tau), foci (+/-a, 0) — conformal — "
+                 "on 2-element lists", "a"),
+}
+COORD_PAIRS = {  # builtin pair -> system key
+    ("cart_to_spherical", "spherical_to_cart"): "spherical",
+    ("cart_to_cylindrical", "cylindrical_to_cart"): "cylindrical",
+    ("cart_to_ellipsoidal", "ellipsoidal_to_cart"): "ellipsoidal",
+    ("cart_to_oblate", "oblate_to_cart"): "oblate",
+    ("cart_to_prolate", "prolate_to_cart"): "prolate",
+    ("cart_to_paraboloidal", "paraboloidal_to_cart"): "paraboloidal",
+    ("cart_to_elliptic_cyl", "elliptic_cyl_to_cart"): "elliptic_cyl",
+    ("cart_to_parabolic_cyl", "parabolic_cyl_to_cart"): "parabolic_cyl",
+    ("cart_to_bipolar_cyl", "bipolar_cyl_to_cart"): "bipolar_cyl",
+    ("cart_to_toroidal", "toroidal_to_cart"): "toroidal",
+    ("cart_to_bispherical", "bispherical_to_cart"): "bispherical",
+    ("cart2_to_polar", "polar_to_cart2"): "polar2",
+    ("cart2_to_elliptic", "elliptic_to_cart2"): "elliptic2",
+    ("cart2_to_bipolar", "bipolar_to_cart2"): "bipolar2",
+}
+COORD_INFO = {}   # name -> (description clause, inverse name, params)
+for (fwd, inv), sys_key in COORD_PAIRS.items():
+    desc, params = COORD_SYSTEMS[sys_key]
+    COORD_INFO[fwd] = ("Cartesian -> " + desc, inv, params)
+    COORD_INFO[inv] = (desc + " -> Cartesian", fwd, params)
+
 BESSEL_Z = ["bessel_j_z", "bessel_i_z", "bessel_y_z", "bessel_k_z"]
 BESSEL_NU = ["bessel_j_nu", "bessel_i_nu", "bessel_y_nu", "bessel_k_nu"]
 SCALED = ["bessel_j_scaled", "bessel_y_scaled", "bessel_i_scaled", "bessel_k_scaled",
@@ -633,6 +820,9 @@ def build_builtins():
         ))
     for s in bi["special"]:
         n = s["name"]
+        if n in COORD_INFO:
+            out.append(coord_entry(n, s))
+            continue
         fam = FAMILY_DOC.get(n, "special function of the `special_functions` crate")
         out.append(entry(
             id=f"fn.{n}", name=n, kind="builtin",
@@ -657,6 +847,77 @@ def build_builtins():
             seeAlso=["fn.abs", "type.complex"],
         ))
     return out
+
+
+def grammar_section_line(sec):
+    """Line of `### <sec> …` in grammar.md, resolved at build time.
+
+    Same rationale as build_commands.gsec: grammar.md is edited, so a
+    hardcoded citation line rots into a confidently wrong one.
+    """
+    if not hasattr(grammar_section_line, "_idx"):
+        grammar_section_line._idx = {}
+        for i, line in enumerate(open("grammar.md", encoding="utf-8"), 1):
+            m = re.match(r"^#{2,3} (\d+(?:\.\d+)?)[ .]", line)
+            if m:
+                grammar_section_line._idx[m.group(1)] = i
+    return grammar_section_line._idx.get(sec, 1)
+
+
+def coord_entry(n, s):
+    """One of the 28 curvilinear coordinate builtins (grammar.md 5.15).
+
+    These are registered special functions like the rest of build_builtins'
+    special loop, but the canned integer-order error and the abs() rung do
+    not apply: they take and return VECTORS (vec3 for the eleven 3-D
+    systems, 2-element lists for the three planar ones), their failure
+    modes are geometric (singular loci, invalid scale parameters), and
+    their natural fourth rung is the value bound to a LET, unchanged.
+    """
+    desc, inv, params = COORD_INFO[n]
+    two_d = "cart2" in n or n.endswith("_to_cart2")
+    comp = 2 if two_d else 3
+    sig = f"{n}(v" + (", " + params if params else "") + ")"
+    return entry(
+        id=f"fn.{n}", name=n, kind="builtin",
+        summary=f"{sig} — curvilinear coordinate map: {desc}.",
+        definition=(
+            f"Curvilinear coordinate map ({desc}) — one of the fourteen classical "
+            "systems of grammar.md section 5.15 (conventions per Morse & Feshbach "
+            "ch. 5 / Arfken ch. 2), implemented in special_functions::coords and "
+            "REGISTERED like every special function: the call production already "
+            "admits any builtin name. The value level is the twin of DATASET MAP, "
+            "which pushes a whole recorded trajectory through the same map. "
+            f"Takes {'a 2-element list' if two_d else 'a vector'} "
+            f"{'[x, y]' if n.startswith('cart') else 'of curvilinear coordinates'}"
+            + (f" plus the scale parameter(s) {params}" if params else "")
+            + f" and returns the {'2-element list' if two_d else 'vec3'} of "
+            f"{'curvilinear' if n.startswith('cart') else 'Cartesian'} components. "
+            "Checked, never NaN: non-finite inputs, invalid scale parameters "
+            "(a <= 0, or an ellipsoidal triple that is not a > b > c > 0), "
+            "out-of-range curvilinear coordinates, and points ON a singular locus "
+            "(a bipolar focus, the toroidal focal ring, a bispherical focus) are "
+            "ERRORS naming the offending value. Merely CONVENTIONAL points — the "
+            "azimuth on the polar axis — use atan2(0, 0) = 0, so "
+            f"{inv} round-trips {n} exactly on its domain. Angle ranges: atan2 "
+            "angles in (-pi, pi], acos angles in [0, pi]."),
+        syntax=[sig],
+        errors=[f"{n}(): argument 1 must have exactly {comp} components, got {comp - 1}"]
+               + (["cart_to_toroidal: (rho, z) = (1, 0) is on the focal ring — a "
+                   "singular locus of toroidal coordinates (tau diverges there)"]
+                  if n == "cart_to_toroidal" else [])
+               + ([f"{n}: the scale parameter a must be finite and > 0, got 0"]
+                  if params == "a" else []),
+        locations=[{"file": s["file"], "line": s["line"], "role": "registration"},
+                   {"file": "special_functions/src/coords.rs", "line": 1,
+                    "role": "implementation"},
+                   {"file": "grammar.md", "line": grammar_section_line("5.15"),
+                    "role": "spec (section 5.15)"}],
+        examples=[ex(l, c) for l, c in zip(LEVELS, special_ladder(n) + [
+            f"let v = {special_ladder(n)[0]}\nv"])],
+        seeAlso=[f"fn.{inv}", "cmd.dataset.map", "fn.norm",
+                 "type.vec3" if not two_d else "fn.cart2_to_polar"],
+    )
 
 
 # --------------------------------------------------------------------------

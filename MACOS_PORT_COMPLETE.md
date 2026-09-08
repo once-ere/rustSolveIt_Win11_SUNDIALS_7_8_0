@@ -220,13 +220,13 @@ figures, verbatim:
 
 | suite | command | verdict |
 |---|---|---|
-| workspace tests | `cargo test --workspace` | **631 passed, 0 failed** (was 622) |
+| workspace tests | `cargo test --workspace` | **638 passed, 0 failed** (was 622; the dataset layer added 9, the fourteen curvilinear coordinate systems added 7 more) |
 | sidecar tests | `cd dataset_tools && cargo test` | **11 passed, 0 failed** |
 | byte-identity gate | `bash tools/macos_verify_physics.sh` | exit 0 — same two pinned divergences, nothing new |
-| 35 SolveIt scripts | `for f in scripts/solveit/*.posim; do POSIM_NO_BROWSER=1 target/release/posim --script "$f"; done` | all 35 ok |
+| 38 SolveIt scripts | `for f in scripts/solveit/*.posim; do POSIM_NO_BROWSER=1 target/release/posim --script "$f"; done` | all 38 ok |
 | 12 collision scripts | `for f in scripts/collisions/*.posim; do POSIM_NO_BROWSER=1 target/release/posim --script "$f"; done` | all 12 ok |
-| 125 notebooks executed | `ls notebooks/*.ipynb \| POSIM_NO_BROWSER=1 xargs -P 6 -I{} python3 notebooks/_build/nbrun.py {}` | **125 ok, 0 failed** |
-| 125 notebooks checked | `python3 notebooks/_build/nbcheck.py` | **125/125 pass all eight requirements** |
+| 128 notebooks executed | `ls notebooks/*.ipynb \| POSIM_NO_BROWSER=1 xargs -P 6 -I{} python3 notebooks/_build/nbrun.py {}` | **128 ok, 0 failed** |
+| 128 notebooks checked | `python3 notebooks/_build/nbcheck.py` | **128/128 pass all eight requirements** |
 | recorded videos | `python3 recorder/src/record_all.py --check` | all 13 reproduce byte for byte |
 | live GUIs | `python3 tools/gui_smoke.py` | 13 of 13 pass |
 | wire protocol | `python3 jupyter/test_protocol.py` | all protocol checks passed |

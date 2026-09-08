@@ -27,7 +27,7 @@ including which donor sources were deliberately not carried over — is in
 ## Commands
 
 - Build: `cargo build --workspace --all-targets 2>&1 | tee /tmp/build.log`
-- Tests: `cargo test --workspace 2>&1 | tee /tmp/test.log` (631 expected)
+- Tests: `cargo test --workspace 2>&1 | tee /tmp/test.log` (638 expected)
 - Notebook: `cargo run` (type `HELP`); batch: `cargo run -p posim -- --script <f>`
 - Dynamic notebook (loads a file, opens its scene window, stays
   interactive): `cargo run -p posim --release -- --notebook
@@ -248,10 +248,11 @@ that will bite you:
   output. ≤2 attempts per failing command, then switch strategy.
 - Commit after every coherent file group; keep
   `cargo build --workspace --all-targets` warning-free and
-  `cargo test --workspace` green at every commit (**631 tests**:
+  `cargo test --workspace` green at every commit (**638 tests**:
   49 physical_object lib + 19 collision + 9 conservation +
-  42 constrained/DAE + 121 posim + 92 quantum + 233 special_functions +
-  11 vendored identities + 55 doctests). The sidecar adds its own 11
+  42 constrained/DAE + 121 posim + 92 quantum + 240 special_functions
+  (incl. the 7 coordinate-map suites) + 11 vendored identities +
+  55 doctests). The sidecar adds its own 11
   (`cd dataset_tools && cargo test`).
 - New solver features need: a unit or conservation test with an
   **analytic** expectation (not a golden-output snapshot), a grammar

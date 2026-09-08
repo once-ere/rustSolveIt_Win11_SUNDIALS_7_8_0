@@ -4256,6 +4256,790 @@
   "reasons": []
  },
  {
+  "id": "fn.cart_to_spherical",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_spherical",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_spherical",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_spherical",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.spherical_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.spherical_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.spherical_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.spherical_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_cylindrical",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_cylindrical",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_cylindrical",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_cylindrical",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cylindrical_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cylindrical_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cylindrical_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cylindrical_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_ellipsoidal",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_ellipsoidal",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_ellipsoidal",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_ellipsoidal",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.ellipsoidal_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.ellipsoidal_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.ellipsoidal_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.ellipsoidal_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_oblate",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_oblate",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_oblate",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_oblate",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.oblate_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.oblate_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.oblate_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.oblate_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_prolate",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_prolate",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_prolate",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_prolate",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.prolate_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.prolate_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.prolate_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.prolate_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_paraboloidal",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_paraboloidal",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_paraboloidal",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_paraboloidal",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.paraboloidal_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.paraboloidal_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.paraboloidal_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.paraboloidal_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_elliptic_cyl",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_elliptic_cyl",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_elliptic_cyl",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_elliptic_cyl",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.elliptic_cyl_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.elliptic_cyl_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.elliptic_cyl_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.elliptic_cyl_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_parabolic_cyl",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_parabolic_cyl",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_parabolic_cyl",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_parabolic_cyl",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.parabolic_cyl_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.parabolic_cyl_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.parabolic_cyl_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.parabolic_cyl_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_bipolar_cyl",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_bipolar_cyl",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_bipolar_cyl",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_bipolar_cyl",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bipolar_cyl_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bipolar_cyl_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bipolar_cyl_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bipolar_cyl_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_toroidal",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_toroidal",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_toroidal",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_toroidal",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.toroidal_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.toroidal_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.toroidal_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.toroidal_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_bispherical",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_bispherical",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_bispherical",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart_to_bispherical",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bispherical_to_cart",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bispherical_to_cart",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bispherical_to_cart",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bispherical_to_cart",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_polar",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_polar",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_polar",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_polar",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.polar_to_cart2",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.polar_to_cart2",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.polar_to_cart2",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.polar_to_cart2",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_elliptic",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_elliptic",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_elliptic",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_elliptic",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.elliptic_to_cart2",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.elliptic_to_cart2",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.elliptic_to_cart2",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.elliptic_to_cart2",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_bipolar",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_bipolar",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_bipolar",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.cart2_to_bipolar",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bipolar_to_cart2",
+  "kind": "builtin",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bipolar_to_cart2",
+  "kind": "builtin",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bipolar_to_cart2",
+  "kind": "builtin",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "fn.bipolar_to_cart2",
+  "kind": "builtin",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
   "id": "magic.history",
   "kind": "magic",
   "level": "trivial",
@@ -6805,6 +7589,90 @@
  },
  {
   "id": "cmd.dataset.play",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.diff",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.diff",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.diff",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.diff",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.sum",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.sum",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.sum",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.sum",
+  "kind": "command",
+  "level": "expert",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.map",
+  "kind": "command",
+  "level": "trivial",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.map",
+  "kind": "command",
+  "level": "intermediate",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.map",
+  "kind": "command",
+  "level": "advanced",
+  "ok": true,
+  "reasons": []
+ },
+ {
+  "id": "cmd.dataset.map",
   "kind": "command",
   "level": "expert",
   "ok": true,

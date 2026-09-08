@@ -1,13 +1,13 @@
 # The SolveIt Notebooks for Rust — an encyclopedia
 
-**144 Jupyter notebooks**, every one project-authored, every one executed for real against the pure-Rust SUNDIALS 7.8.0 engine on this machine (144/144 green), organized into seven major topics. Each notebook lives in its own tagged subfolder together with its companion player script (`player_<tag>.py`), and each carries a prepended header cell with the exact commands to execute it, display its browser GUI, create/access its movies, and access its data — plus the full player script inline.
+**147 Jupyter notebooks**, every one project-authored, every one executed for real against the pure-Rust SUNDIALS 7.8.0 engine on this machine (141/147 green), organized into seven major topics. Each notebook lives in its own tagged subfolder together with its companion player script (`player_<tag>.py`), and each carries a prepended header cell with the exact commands to execute it, display its browser GUI, create/access its movies, and access its data — plus the full player script inline.
 
 Every simulation below was integrated by the vendored pure-Rust port of SUNDIALS 7.8.0 CVODE (BDF + Newton + dense solver) — no C, no FFI, no unsafe code — and every notebook checks its own physics against closed forms before it is allowed to say ok.
 
 ## Contents
 
 - **01_planet_mercury_tidal_locking** — 2 notebooks
-- **02_solveit_worked_examples** — 35 notebooks
+- **02_solveit_worked_examples** — 38 notebooks
 - **03_dynamics_and_routh** — 59 notebooks
 - **04_collisions** — 12 notebooks
 - **05_mechanism_videos** — 13 notebooks
@@ -468,6 +468,42 @@ This notebook is one half of a pair. The other half is the example file scripts/
 - **Player**: `python3 SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_35_dataset_spinning_torus/player_solveit_35_dataset_spinning_torus.py run|gui|jump|capture out.png|data outdir`
 
 ![solveit_35_dataset_spinning_torus GUI](encyclopedia/images/solveit_35_dataset_spinning_torus.png)
+
+### `solveit_36_dataset_teacher_diff`
+
+This notebook is one half of a pair. The other half is the example file scripts/solveit/36_dataset_teacher_diff.posim in this repository, which contains the same simulation written directly in the simulator's own command language. This notebook runs that same simulation from Python, and explains every line of it.
+
+- **Executed**: PASS — every cell green (20 code cells)
+- **Copy**: `SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_36_dataset_teacher_diff/solveit_36_dataset_teacher_diff.ipynb` (header cell prepended: run commands, GUI commands, movies, data access, full player script)
+- **Canonical source**: `notebooks/solveit_36_dataset_teacher_diff.ipynb`
+- **Paired scene/source**: `scripts/solveit/36_dataset_teacher_diff.posim`
+- **Player**: `python3 SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_36_dataset_teacher_diff/player_solveit_36_dataset_teacher_diff.py run|gui|jump|capture out.png|data outdir`
+
+![solveit_36_dataset_teacher_diff GUI](encyclopedia/images/solveit_36_dataset_teacher_diff.png)
+
+### `solveit_37_dataset_map_spherical`
+
+This notebook is one half of a pair. The other half is the example file scripts/solveit/37_dataset_map_spherical.posim in this repository, which contains the same simulation written directly in the simulator's own command language. This notebook runs that same simulation from Python, and explains every line of it.
+
+- **Executed**: PASS — every cell green (14 code cells)
+- **Copy**: `SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_37_dataset_map_spherical/solveit_37_dataset_map_spherical.ipynb` (header cell prepended: run commands, GUI commands, movies, data access, full player script)
+- **Canonical source**: `notebooks/solveit_37_dataset_map_spherical.ipynb`
+- **Paired scene/source**: `scripts/solveit/37_dataset_map_spherical.posim`
+- **Player**: `python3 SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_37_dataset_map_spherical/player_solveit_37_dataset_map_spherical.py run|gui|jump|capture out.png|data outdir`
+
+![solveit_37_dataset_map_spherical GUI](encyclopedia/images/solveit_37_dataset_map_spherical.png)
+
+### `solveit_38_dataset_curvilinear_tour`
+
+This notebook is one half of a pair. The other half is the example file scripts/solveit/38_dataset_curvilinear_tour.posim in this repository, which contains the same simulation written directly in the simulator's own command language. This notebook runs that same simulation from Python, and explains every line of it.
+
+- **Executed**: PASS — every cell green (18 code cells)
+- **Copy**: `SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_38_dataset_curvilinear_tour/solveit_38_dataset_curvilinear_tour.ipynb` (header cell prepended: run commands, GUI commands, movies, data access, full player script)
+- **Canonical source**: `notebooks/solveit_38_dataset_curvilinear_tour.ipynb`
+- **Paired scene/source**: `scripts/solveit/38_dataset_curvilinear_tour.posim`
+- **Player**: `python3 SolveIt_Notebooks_for_rust/02_solveit_worked_examples/solveit_38_dataset_curvilinear_tour/player_solveit_38_dataset_curvilinear_tour.py run|gui|jump|capture out.png|data outdir`
+
+![solveit_38_dataset_curvilinear_tour GUI](encyclopedia/images/solveit_38_dataset_curvilinear_tour.png)
 
 ## 03_dynamics_and_routh
 
@@ -1523,7 +1559,7 @@ The compiled, self-checking Rust examples: each notebook builds and runs one phy
 
 This notebook is one half of a pair. The other half is the example file physical_object/examples/bouncing_ball_restitution.rs in this repository, which contains the same simulation written directly in the simulator's own command language. This notebook runs that same simulation from Python, and explains every line of it.
 
-- **Executed**: PASS — every cell green (12 code cells)
+- **Executed**: NOT RUN (0 code cells)
 - **Copy**: `SolveIt_Notebooks_for_rust/06_rust_compiled_examples/rust_bouncing_ball_restitution/rust_bouncing_ball_restitution.ipynb` (header cell prepended: run commands, GUI commands, movies, data access, full player script)
 - **Canonical source**: `notebooks/rust_bouncing_ball_restitution.ipynb`
 - **Paired scene/source**: `physical_object/examples/bouncing_ball_restitution.rs`
@@ -1535,7 +1571,7 @@ This notebook is one half of a pair. The other half is the example file physical
 
 This notebook is one half of a pair. The other half is the example file physical_object/examples/charged_in_b_field.rs in this repository, which contains the same simulation written directly in the simulator's own command language. This notebook runs that same simulation from Python, and explains every line of it.
 
-- **Executed**: PASS — every cell green (14 code cells)
+- **Executed**: NOT RUN (0 code cells)
 - **Copy**: `SolveIt_Notebooks_for_rust/06_rust_compiled_examples/rust_charged_in_b_field/rust_charged_in_b_field.ipynb` (header cell prepended: run commands, GUI commands, movies, data access, full player script)
 - **Canonical source**: `notebooks/rust_charged_in_b_field.ipynb`
 - **Paired scene/source**: `physical_object/examples/charged_in_b_field.rs`
@@ -1547,7 +1583,7 @@ This notebook is one half of a pair. The other half is the example file physical
 
 This notebook is one half of a pair. The other half is the example file physical_object/examples/kepler_orbit.rs in this repository, which contains the same simulation written directly in the simulator's own command language. This notebook runs that same simulation from Python, and explains every line of it.
 
-- **Executed**: PASS — every cell green (14 code cells)
+- **Executed**: NOT RUN (0 code cells)
 - **Copy**: `SolveIt_Notebooks_for_rust/06_rust_compiled_examples/rust_kepler_orbit/rust_kepler_orbit.ipynb` (header cell prepended: run commands, GUI commands, movies, data access, full player script)
 - **Canonical source**: `notebooks/rust_kepler_orbit.ipynb`
 - **Paired scene/source**: `physical_object/examples/kepler_orbit.rs`
@@ -1559,7 +1595,7 @@ This notebook is one half of a pair. The other half is the example file physical
 
 This notebook is one half of a pair. The other half is the example file physical_object/examples/newtons_cradle.rs in this repository, which contains the same simulation written directly in the simulator's own command language. This notebook runs that same simulation from Python, and explains every line of it.
 
-- **Executed**: PASS — every cell green (15 code cells)
+- **Executed**: NOT RUN (0 code cells)
 - **Copy**: `SolveIt_Notebooks_for_rust/06_rust_compiled_examples/rust_newtons_cradle/rust_newtons_cradle.ipynb` (header cell prepended: run commands, GUI commands, movies, data access, full player script)
 - **Canonical source**: `notebooks/rust_newtons_cradle.ipynb`
 - **Paired scene/source**: `physical_object/examples/newtons_cradle.rs`
@@ -1571,7 +1607,7 @@ This notebook is one half of a pair. The other half is the example file physical
 
 This notebook is one half of a pair. The other half is the example file physical_object/examples/outer_solar_system.rs in this repository, which contains the same simulation written directly in the simulator's own command language. This notebook runs that same simulation from Python, and explains every line of it.
 
-- **Executed**: PASS — every cell green (15 code cells)
+- **Executed**: NOT RUN (0 code cells)
 - **Copy**: `SolveIt_Notebooks_for_rust/06_rust_compiled_examples/rust_outer_solar_system/rust_outer_solar_system.ipynb` (header cell prepended: run commands, GUI commands, movies, data access, full player script)
 - **Canonical source**: `notebooks/rust_outer_solar_system.ipynb`
 - **Paired scene/source**: `physical_object/examples/outer_solar_system.rs`
@@ -1583,7 +1619,7 @@ This notebook is one half of a pair. The other half is the example file physical
 
 This notebook is one half of a pair. The other half is the example file physical_object/examples/tumbling_body.rs in this repository, which contains the same simulation written directly in the simulator's own command language. This notebook runs that same simulation from Python, and explains every line of it.
 
-- **Executed**: PASS — every cell green (13 code cells)
+- **Executed**: NOT RUN (0 code cells)
 - **Copy**: `SolveIt_Notebooks_for_rust/06_rust_compiled_examples/rust_tumbling_body/rust_tumbling_body.ipynb` (header cell prepended: run commands, GUI commands, movies, data access, full player script)
 - **Canonical source**: `notebooks/rust_tumbling_body.ipynb`
 - **Paired scene/source**: `physical_object/examples/tumbling_body.rs`

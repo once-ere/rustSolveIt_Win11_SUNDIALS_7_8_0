@@ -34,7 +34,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1139,
+    "line": 1154,
     "role": "spec (5.1)"
    }
   ],
@@ -118,7 +118,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1246,
+    "line": 1261,
     "role": "spec (5.2)"
    }
   ],
@@ -198,7 +198,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1246,
+    "line": 1261,
     "role": "spec (5.2)"
    }
   ],
@@ -273,7 +273,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1356,
+    "line": 1371,
     "role": "spec (5.5)"
    }
   ],
@@ -347,7 +347,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1356,
+    "line": 1371,
     "role": "spec (5.5)"
    }
   ],
@@ -423,7 +423,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1315,
+    "line": 1330,
     "role": "spec (5.3)"
    }
   ],
@@ -503,7 +503,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1315,
+    "line": 1330,
     "role": "spec (5.3)"
    }
   ],
@@ -641,7 +641,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1334,
+    "line": 1349,
     "role": "spec (5.4)"
    }
   ],
@@ -715,7 +715,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1356,
+    "line": 1371,
     "role": "spec (5.5)"
    }
   ],
@@ -785,7 +785,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1356,
+    "line": 1371,
     "role": "spec (5.5)"
    }
   ],
@@ -855,7 +855,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1356,
+    "line": 1371,
     "role": "spec (5.5)"
    }
   ],
@@ -925,7 +925,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1356,
+    "line": 1371,
     "role": "spec (5.5)"
    }
   ],
@@ -995,7 +995,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1356,
+    "line": 1371,
     "role": "spec (5.5)"
    }
   ],
@@ -1067,7 +1067,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1356,
+    "line": 1371,
     "role": "spec (5.5)"
    }
   ],
@@ -1213,7 +1213,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1453,
+    "line": 1468,
     "role": "spec (5.7)"
    }
   ],
@@ -1294,7 +1294,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1453,
+    "line": 1468,
     "role": "spec (5.7)"
    }
   ],
@@ -1372,7 +1372,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1574,
+    "line": 1589,
     "role": "spec (5.9)"
    }
   ],
@@ -1446,7 +1446,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1574,
+    "line": 1589,
     "role": "spec (5.9)"
    }
   ],
@@ -1518,7 +1518,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1574,
+    "line": 1589,
     "role": "spec (5.9)"
    }
   ],
@@ -1594,7 +1594,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1512,
+    "line": 1527,
     "role": "spec (5.8)"
    }
   ],
@@ -1680,7 +1680,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1054,
+    "line": 1069,
     "role": "spec (4.2)"
    }
   ],
@@ -1764,7 +1764,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1574,
+    "line": 1589,
     "role": "spec (5.9)"
    }
   ],
@@ -1839,7 +1839,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1574,
+    "line": 1589,
     "role": "spec (5.9)"
    }
   ],
@@ -3245,7 +3245,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -3332,7 +3332,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -3419,7 +3419,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -3506,7 +3506,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -3593,7 +3593,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -3678,7 +3678,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -3766,7 +3766,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -3854,7 +3854,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -3941,7 +3941,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -4029,7 +4029,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -4117,7 +4117,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -4168,6 +4168,282 @@
   "status": "complete"
  },
  {
+  "id": "cmd.dataset.diff",
+  "name": "DATASET DIFF",
+  "kind": "command",
+  "tier": "A",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "Frame-aligned trajectory algebra: out = a - b, alignment checked.",
+  "definition": "The teacher's experiment in one command: run a trial, change a mass or a charge, run the second trial over the SAME space-time domain, and subtract. DIFF writes a new dataset whose every column is the component-wise difference of the two inputs \u2014 the states table (positions, quaternion components, velocities, angular velocities) and the frames table (energy, momentum, angular momentum, centre of mass, collision counts); the time column is carried through unchanged. Alignment is CHECKED, not assumed: the two datasets must have the same frame count, a bit-equal time grid, and the same body-id set at every frame \u2014 any mismatch is an error naming the first offending frame and both values, and the output must be a NEW name, never one of the inputs. The orientation columns of the result hold component-wise quaternion arithmetic \u2014 a difference of quaternions is not a rotation \u2014 so a DIFF dataset is a difference TABLE for SQL and plots, not a rigid state (build movies from the source recordings instead). The closure (a - b) + b - a comes back all-zero to floating-point roundoff; for the drift-free G = 0 recording in the expert rung the residual is exactly 0. posim itself contains NO SQLite code \u2014 the workspace keeps its zero-external-dependency, zero-unsafe guarantee. Every DATASET/SQL/MOVIE command drives the `solveit_db` sidecar (dataset_tools/), which posim SPAWNS and never links; build it once with `cd dataset_tools && cargo build --release`.",
+  "syntax": [
+   "DATASET DIFF name name \"AS\" name"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [
+   "datasets are not identically dimensioned: `a` has 40 frame(s) but `b` has 10 \u2014 record both over the same space-time domain (same RUN duration and STEPS)",
+   "time grids differ at frame 3: `a` has t = 0.75 but `b` has t = 0.7 \u2014 the trajectories must share one space-time domain",
+   "body sets differ at frame 0: `a` has bodies [0, 1] but `b` has [0] \u2014 the trajectories must describe the same bodies",
+   "the output dataset `out` must differ from the inputs (COPY one first to keep it)"
+  ],
+  "locations": [
+   {
+    "file": "posim/src/parser.rs",
+    "line": 71,
+    "role": "datasetcmd production"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "the sidecar handle"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 2077,
+    "role": "exec_dataset"
+   },
+   {
+    "file": "grammar.md",
+    "line": 2434,
+    "role": "spec (5.14)"
+   }
+  ],
+  "examples": [
+   {
+    "level": "trivial",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [1, 0, 0] }\ndataset create idx_ds_diff_t1\nrun 1 steps 4\ndataset close\nreset\nset system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [2, 0, 0] }\ndataset create idx_ds_diff_t2\nrun 1 steps 4\ndataset close\ndataset diff idx_ds_diff_t1 idx_ds_diff_t2 as idx_ds_diff_t3\ndataset delete idx_ds_diff_t1\ndataset delete idx_ds_diff_t2\ndataset delete idx_ds_diff_t3",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   },
+   {
+    "level": "intermediate",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [1, 0, 0] }\ndataset create idx_ds_diff_i1\nrun 1 steps 4\ndataset close\ndataset diff idx_ds_diff_i1 idx_ds_diff_i1 as idx_ds_diff_i2\ndataset open idx_ds_diff_i2\nsql \"SELECT MAX(ABS(x)) AS x_residual, MAX(ABS(vx)) AS vx_residual FROM states\"\ndataset close\ndataset delete idx_ds_diff_i1\ndataset delete idx_ds_diff_i2",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   },
+   {
+    "level": "advanced",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [1, 0, 0] }\ndataset create idx_ds_diff_a1\nrun 1 steps 4\ndataset close\nreset\nset system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [1.5, 0, 0] }\ndataset create idx_ds_diff_a2\nrun 1 steps 4\ndataset close\ndataset diff idx_ds_diff_a2 idx_ds_diff_a1 as idx_ds_diff_a3\ndataset open idx_ds_diff_a3\nsql \"SELECT frame, t, x FROM states JOIN frames USING(frame) ORDER BY frame\"\ndataset close\ndataset delete idx_ds_diff_a1\ndataset delete idx_ds_diff_a2\ndataset delete idx_ds_diff_a3",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   },
+   {
+    "level": "expert",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [1, 0, 0] }\ndataset create idx_ds_diff_e1\nrun 1 steps 4\ndataset close\nreset\nset system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [2, 0, 0] }\ndataset create idx_ds_diff_e2\nrun 1 steps 4\ndataset close\ndataset diff idx_ds_diff_e1 idx_ds_diff_e2 as idx_ds_diff_e3\ndataset sum idx_ds_diff_e3 idx_ds_diff_e2 as idx_ds_diff_e4\ndataset diff idx_ds_diff_e4 idx_ds_diff_e1 as idx_ds_diff_e5\ndataset open idx_ds_diff_e5\nsql \"SELECT MAX(ABS(x)) AS x_residual, MAX(ABS(energy)) AS e_residual FROM states JOIN frames USING(frame)\"\ndataset close\ndataset delete idx_ds_diff_e1\ndataset delete idx_ds_diff_e2\ndataset delete idx_ds_diff_e3\ndataset delete idx_ds_diff_e4\ndataset delete idx_ds_diff_e5",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   }
+  ],
+  "seeAlso": [
+   "cmd.sql",
+   "cmd.movie.create",
+   "cmd.dataset.create",
+   "cmd.run",
+   "cmd.dataset.sum",
+   "cmd.dataset.map"
+  ],
+  "invariants": [
+   "posim contains NO SQLite code: every DATASET/SQL/MOVIE command drives the solveit_db sidecar (dataset_tools/), spawned, never linked.",
+   "The schema has no timestamps anywhere \u2014 byte-stable output is a verified property, and a wall-clock column would silently break it."
+  ],
+  "status": "complete"
+ },
+ {
+  "id": "cmd.dataset.sum",
+  "name": "DATASET SUM",
+  "kind": "command",
+  "tier": "A",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "Frame-aligned trajectory algebra: out = a + b, alignment checked.",
+  "definition": "The + of the trajectory algebra: a new dataset whose every column is the component-wise SUM of the two inputs, under exactly the rules of DATASET DIFF \u2014 the states table (positions, quaternion components, velocities, angular velocities) and the frames table (energy, momentum, angular momentum, centre of mass, collision counts) are added component-wise, the time column is carried through unchanged, and alignment (same frame count, bit-equal time grid, same body-id set at every frame) is CHECKED, not assumed \u2014 any mismatch errors naming the first offending frame. DIFF and SUM together close the algebra: summing a difference back onto its subtrahend recovers the original dataset, which the expert rung measures \u2014 (a - b) + b re-read against a leaves residual 0 for a drift-free G = 0 recording. Component-wise quaternion sums are not rotations; like a DIFF output, a SUM dataset is a table for SQL and plots, not a rigid state. posim itself contains NO SQLite code \u2014 the workspace keeps its zero-external-dependency, zero-unsafe guarantee. Every DATASET/SQL/MOVIE command drives the `solveit_db` sidecar (dataset_tools/), which posim SPAWNS and never links; build it once with `cd dataset_tools && cargo build --release`.",
+  "syntax": [
+   "DATASET SUM name name \"AS\" name"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [
+   "datasets are not identically dimensioned: `a` has 40 frame(s) but `b` has 10 \u2014 record both over the same space-time domain (same RUN duration and STEPS)",
+   "body sets differ at frame 0: `a` has bodies [0, 1] but `b` has [0] \u2014 the trajectories must describe the same bodies",
+   "the output dataset `out` must differ from the inputs (COPY one first to keep it)"
+  ],
+  "locations": [
+   {
+    "file": "posim/src/parser.rs",
+    "line": 71,
+    "role": "datasetcmd production"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "the sidecar handle"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 2077,
+    "role": "exec_dataset"
+   },
+   {
+    "file": "grammar.md",
+    "line": 2434,
+    "role": "spec (5.14)"
+   }
+  ],
+  "examples": [
+   {
+    "level": "trivial",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [1, 0, 0] }\ndataset create idx_ds_sum_t1\nrun 1 steps 4\ndataset close\ndataset sum idx_ds_sum_t1 idx_ds_sum_t1 as idx_ds_sum_t2\ndataset delete idx_ds_sum_t1\ndataset delete idx_ds_sum_t2",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   },
+   {
+    "level": "intermediate",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [1, 0, 0] }\ndataset create idx_ds_sum_i1\nrun 1 steps 4\ndataset close\ndataset sum idx_ds_sum_i1 idx_ds_sum_i1 as idx_ds_sum_i2\ndataset open idx_ds_sum_i2\nsql \"SELECT MAX(ABS(vx - 2)) AS doubled_vx_residual FROM states\"\ndataset close\ndataset delete idx_ds_sum_i1\ndataset delete idx_ds_sum_i2",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   },
+   {
+    "level": "advanced",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [1, 0, 0] }\ndataset create idx_ds_sum_a1\nrun 1 steps 4\ndataset close\nreset\nset system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [2, 0, 0] }\ndataset create idx_ds_sum_a2\nrun 1 steps 4\ndataset close\ndataset sum idx_ds_sum_a1 idx_ds_sum_a2 as idx_ds_sum_a3\ndataset open idx_ds_sum_a3\nsql \"SELECT MIN(vx) AS vx_min, MAX(vx) AS vx_max FROM states\"\ndataset close\ndataset delete idx_ds_sum_a1\ndataset delete idx_ds_sum_a2\ndataset delete idx_ds_sum_a3",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   },
+   {
+    "level": "expert",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [1, 0, 0] }\ndataset create idx_ds_sum_e1\nrun 1 steps 4\ndataset close\nreset\nset system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, velocity = [2, 0, 0] }\ndataset create idx_ds_sum_e2\nrun 1 steps 4\ndataset close\ndataset sum idx_ds_sum_e1 idx_ds_sum_e2 as idx_ds_sum_e3\ndataset diff idx_ds_sum_e3 idx_ds_sum_e2 as idx_ds_sum_e4\ndataset open idx_ds_sum_e4\nsql \"SELECT MAX(ABS(vx - 1)) AS recovered_vx_residual, COUNT(*) AS frames FROM states\"\ndataset close\ndataset delete idx_ds_sum_e1\ndataset delete idx_ds_sum_e2\ndataset delete idx_ds_sum_e3\ndataset delete idx_ds_sum_e4",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   }
+  ],
+  "seeAlso": [
+   "cmd.sql",
+   "cmd.movie.create",
+   "cmd.dataset.create",
+   "cmd.run",
+   "cmd.dataset.diff",
+   "cmd.dataset.map"
+  ],
+  "invariants": [
+   "posim contains NO SQLite code: every DATASET/SQL/MOVIE command drives the solveit_db sidecar (dataset_tools/), spawned, never linked.",
+   "The schema has no timestamps anywhere \u2014 byte-stable output is a verified property, and a wall-clock column would silently break it."
+  ],
+  "status": "complete"
+ },
+ {
+  "id": "cmd.dataset.map",
+  "name": "DATASET MAP",
+  "kind": "command",
+  "tier": "A",
+  "aliases": [],
+  "indexKeys": [
+   "D"
+  ],
+  "summary": "Push every recorded position through a curvilinear coordinate map.",
+  "definition": "Every recorded position is pushed through one of the fourteen classical curvilinear maps of grammar.md section 5.15 \u2014 eleven three-dimensional (spherical, cylindrical, ellipsoidal a b c, oblate a, prolate a, paraboloidal, elliptic_cyl a, parabolic_cyl, bipolar_cyl a, toroidal a, bispherical a) and three two-dimensional (polar2, elliptic2 a, bipolar2 a) \u2014 where a (or the ellipsoidal semi-axes a b c, which must satisfy a > b > c > 0) is the system's scale parameter, written as plain numbers after the system word. In the output dataset the states table's x, y, z columns hold the curvilinear triple (q1, q2, q3; a 2-D system stores (q1, q2, 0) and REQUIRES a planar trajectory \u2014 every |z| <= 1e-9, checked); orientations are carried unchanged (they are still rotation quaternions); the velocity columns are stored as NULL, because velocity components in curvilinear coordinates require the metric, which a point map does not carry; and the frames table (E, P, L, com \u2014 Cartesian bookkeeping) is copied verbatim. Everything is checked: an unknown system or a wrong parameter count is a PARSE error, and a trajectory that crosses a singular locus (a bipolar focus, the toroidal focal ring) errors naming the frame and body. A planar orbit mapped with spherical gives the cleanest sanity check: the polar-angle column is 1.5707963267948966 (pi/2) at every frame, MIN = MAX. The same fourteen maps are available value-level as expression builtins (cart_to_spherical and friends, grammar.md section 5.15). posim itself contains NO SQLite code \u2014 the workspace keeps its zero-external-dependency, zero-unsafe guarantee. Every DATASET/SQL/MOVIE command drives the `solveit_db` sidecar (dataset_tools/), which posim SPAWNS and never links; build it once with `cd dataset_tools && cargo build --release`.",
+  "syntax": [
+   "DATASET MAP name \"TO\" system [ NUMBER [ NUMBER NUMBER ] ] \"AS\" name"
+  ],
+  "parameters": [],
+  "returns": null,
+  "errors": [
+   "parse error: DATASET MAP TO needs a coordinate system \u2014 one of spherical, cylindrical, ellipsoidal, oblate, prolate, paraboloidal, elliptic_cyl, parabolic_cyl, bipolar_cyl, toroidal, bispherical, polar2, elliptic2, bipolar2",
+   "the polar2 map is two-dimensional and needs a planar trajectory (|z| <= 1e-9 everywhere), but frame 0 body 0 has z = 0.2 \u2014 use a 3-D system, or simulate in the z = 0 plane",
+   "DATASET MAP toroidal: frame 2, body 0: cart_to_toroidal: (rho, z) = (1.25, 0) is on the focal ring \u2014 a singular locus of toroidal coordinates (tau diverges there)",
+   "the output dataset `out` must differ from the source"
+  ],
+  "locations": [
+   {
+    "file": "posim/src/parser.rs",
+    "line": 71,
+    "role": "datasetcmd production"
+   },
+   {
+    "file": "posim/src/dataset.rs",
+    "line": 1,
+    "role": "the sidecar handle"
+   },
+   {
+    "file": "posim/src/vm.rs",
+    "line": 2077,
+    "role": "exec_dataset"
+   },
+   {
+    "file": "grammar.md",
+    "line": 2434,
+    "role": "spec (5.14)"
+   }
+  ],
+  "examples": [
+   {
+    "level": "trivial",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, position = [0.4, 0.3, 0], velocity = [1, 0.5, 0] }\ndataset create idx_ds_map_t1\nrun 1 steps 3\ndataset close\ndataset map idx_ds_map_t1 to spherical as idx_ds_map_t2\ndataset delete idx_ds_map_t1\ndataset delete idx_ds_map_t2",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   },
+   {
+    "level": "intermediate",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, position = [0.4, 0.3, 0.2], velocity = [1, 0.5, 0.25] }\ndataset create idx_ds_map_i1\nrun 1 steps 4\ndataset close\ndataset map idx_ds_map_i1 to cylindrical as idx_ds_map_i2\ndataset open idx_ds_map_i2\nsql \"SELECT COUNT(*) AS null_velocity_rows FROM states WHERE vx IS NULL\"\ndataset close\ndataset delete idx_ds_map_i1\ndataset delete idx_ds_map_i2",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   },
+   {
+    "level": "advanced",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, position = [0.4, 0.3, 0], velocity = [1, 0.5, 0] }\ndataset create idx_ds_map_a1\nrun 1 steps 5\ndataset close\ndataset map idx_ds_map_a1 to spherical as idx_ds_map_a2\ndataset open idx_ds_map_a2\nsql \"SELECT MIN(y) AS theta_min, MAX(y) AS theta_max FROM states\"\ndataset close\ndataset map idx_ds_map_a1 to polar2 as idx_ds_map_a3\ndataset open idx_ds_map_a3\nsql \"SELECT COUNT(*) AS rows_at_z0 FROM states WHERE z = 0\"\ndataset close\ndataset delete idx_ds_map_a1\ndataset delete idx_ds_map_a2\ndataset delete idx_ds_map_a3",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   },
+   {
+    "level": "expert",
+    "medium": "posim",
+    "code": "set system.g_constant = 0\nnew sphere { mass = 1, radius = 0.5, position = [0.4, 0.3, 0.2], velocity = [1, 0.5, 0.25] }\ndataset create idx_ds_map_e1\nrun 1 steps 4\ndataset close\ndataset map idx_ds_map_e1 to toroidal 1.25 as idx_ds_map_e2\ndataset map idx_ds_map_e1 to ellipsoidal 3 2 1 as idx_ds_map_e3\ndataset open idx_ds_map_e3\nsql \"SELECT COUNT(*) AS mapped_rows FROM states\"\ndataset close\ndataset delete idx_ds_map_e1\ndataset delete idx_ds_map_e2\ndataset delete idx_ds_map_e3",
+    "expected": null,
+    "verified": null,
+    "runner": "posim --script"
+   }
+  ],
+  "seeAlso": [
+   "cmd.sql",
+   "cmd.movie.create",
+   "cmd.dataset.create",
+   "cmd.run",
+   "cmd.dataset.diff",
+   "fn.cart_to_spherical",
+   "fn.cart2_to_polar"
+  ],
+  "invariants": [
+   "posim contains NO SQLite code: every DATASET/SQL/MOVIE command drives the solveit_db sidecar (dataset_tools/), spawned, never linked.",
+   "The schema has no timestamps anywhere \u2014 byte-stable output is a verified property, and a wall-clock column would silently break it."
+  ],
+  "status": "complete"
+ },
+ {
   "id": "cmd.sql",
   "name": "SQL",
   "kind": "command",
@@ -4204,7 +4480,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -4292,7 +4568,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -4379,7 +4655,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -4464,7 +4740,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -4551,7 +4827,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 2419,
+    "line": 2434,
     "role": "spec (5.14)"
    }
   ],
@@ -4631,7 +4907,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -4708,7 +4984,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -4785,7 +5061,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -4862,7 +5138,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -4939,7 +5215,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5016,7 +5292,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5095,7 +5371,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5172,7 +5448,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5249,7 +5525,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5326,7 +5602,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5403,7 +5679,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5480,7 +5756,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5557,7 +5833,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5634,7 +5910,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5711,7 +5987,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5788,7 +6064,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5865,7 +6141,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -5942,7 +6218,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6019,7 +6295,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6096,7 +6372,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6173,7 +6449,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6250,7 +6526,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6327,7 +6603,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6404,7 +6680,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6481,7 +6757,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6558,7 +6834,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6635,7 +6911,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6712,7 +6988,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6789,7 +7065,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6866,7 +7142,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -6943,7 +7219,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7022,7 +7298,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7101,7 +7377,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7178,7 +7454,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7255,7 +7531,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7334,7 +7610,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7411,7 +7687,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7488,7 +7764,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7565,7 +7841,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7642,7 +7918,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7719,7 +7995,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7796,7 +8072,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7873,7 +8149,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -7952,7 +8228,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8029,7 +8305,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8106,7 +8382,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8183,7 +8459,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8260,7 +8536,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8337,7 +8613,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8416,7 +8692,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8495,7 +8771,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8572,7 +8848,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8649,7 +8925,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8726,7 +9002,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8805,7 +9081,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],
@@ -8882,7 +9158,7 @@
    },
    {
     "file": "grammar.md",
-    "line": 1974,
+    "line": 1989,
     "role": "spec (5.10-5.12)"
    }
   ],

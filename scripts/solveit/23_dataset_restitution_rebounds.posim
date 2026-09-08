@@ -1,0 +1,18 @@
+# 23. Three restitutions, one query.
+# Three balls drop 5 m (centres at 5.5, radius 0.5) onto a static slab
+# under g = 10, so every impact arrives at speed 10. A ball with
+# restitution e leaves at speed 10 e: the recorded maxima of vy must be
+# 10, 7 and 5. One GROUP BY reads all three ladders out of the dataset.
+set system.g_constant = 0
+set system.uniform_gravity = [0, -10, 0]
+collide on
+new cuboid as floor { mass = 1, half_extents = [50, 0.05, 50], position = [0, -0.05, 0], inverse_mass = 0 }
+new sphere as elastic { mass = 1, radius = 0.5, position = [-2, 5.5, 0], restitution = 1.0 }
+new sphere as lively  { mass = 1, radius = 0.5, position = [ 0, 5.5, 0], restitution = 0.7 }
+new sphere as dull    { mass = 1, radius = 0.5, position = [ 2, 5.5, 0], restitution = 0.5 }
+dataset create solveit23_rebounds
+run 3 steps 300
+sql "SELECT b.name, MAX(s.vy) AS rebound_speed FROM states s JOIN bodies b ON b.body = s.body WHERE b.wall = 0 AND b.name <> 'floor' GROUP BY b.name ORDER BY rebound_speed DESC"
+sql "SELECT MAX(ncollisions) AS collisions FROM frames"
+movie create solveit23_rebounds
+dataset close

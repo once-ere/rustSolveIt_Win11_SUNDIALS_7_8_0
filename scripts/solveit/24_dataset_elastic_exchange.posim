@@ -1,0 +1,17 @@
+# 24. The elastic exchange of example 1, replayed from the database.
+# m1 = 3 at +2 meets m2 = 1 at -4. Closed form: v1' = -1, v2' = 5.
+# The dataset records the whole approach and separation; two scalar
+# subqueries pull the first and last recorded velocity of each ball,
+# which must bracket the collision exactly.
+set system.g_constant = 0
+collide on
+new sphere as heavy { mass = 3, radius = 0.5, position = [-3, 0, 0], velocity = [2, 0, 0] }
+new sphere as light { mass = 1, radius = 0.5, position = [ 3, 0, 0], velocity = [-4, 0, 0] }
+dataset create solveit24_exchange
+run 2 steps 200
+sql "SELECT (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='heavy') ORDER BY frame ASC  LIMIT 1) AS heavy_before, (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='heavy') ORDER BY frame DESC LIMIT 1) AS heavy_after"
+sql "SELECT (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='light') ORDER BY frame ASC  LIMIT 1) AS light_before, (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='light') ORDER BY frame DESC LIMIT 1) AS light_after"
+# and the conserved pair, straight off the frames table
+sql "SELECT MAX(px) - MIN(px) AS momentum_spread, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+movie create solveit24_exchange
+dataset close

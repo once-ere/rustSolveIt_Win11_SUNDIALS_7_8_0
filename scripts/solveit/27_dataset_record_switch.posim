@@ -1,0 +1,20 @@
+# 27. RECORD ON/OFF: the dataset captures exactly what you ask it to.
+# The recording switch is part of the grammar, and this example proves
+# it does what it says: frames are appended only while the switch is
+# on. A run with recording OFF advances physics but adds nothing; the
+# frame count and t range in the database show the gap.
+set system.g_constant = 0
+set system.uniform_gravity = [0, -9.81, 0]
+new sphere as probe { mass = 1, radius = 0.2, position = [0, 20, 0] }
+dataset create solveit27_switch
+run 0.5 steps 5
+dataset record off
+run 0.5 steps 5
+dataset record
+dataset record on
+run 0.5 steps 5
+sql "SELECT COUNT(*) AS frames, MIN(t) AS t_first, MAX(t) AS t_last FROM frames"
+# the gap is visible: no frame between t = 0.5 and t = 1.0
+sql "SELECT COUNT(*) AS frames_in_gap FROM frames WHERE t > 0.501 AND t < 0.999"
+dataset info
+dataset close

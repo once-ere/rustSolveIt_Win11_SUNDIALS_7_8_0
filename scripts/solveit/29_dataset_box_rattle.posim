@@ -1,0 +1,20 @@
+# 29. The mixed-shape box rattle, with its energy ledger in SQLite.
+# The regression scene: a rigid BOX 4, G = 0, three shapes thrown across
+# it, every bounce a real CVODE rootfinding event. The dataset's frames
+# table carries the cumulative collision count and the total energy, so
+# the whole conservation claim is one SQL line. The movie shows the box
+# as the dashed wireframe - the six wall slabs are never drawn.
+set system.g_constant = 0
+box 4
+collide on
+new cylinder { mass = 2, radius = 0.25, height = 1.5, position = [-1, 0.3, 0], velocity = [2, 0.5, -1] }
+new disk     { mass = 0.66666666666666663, radius = 1, position = [1, -0.8, 0.5], velocity = [-1, 1, 0.6] }
+new cuboid   { mass = 1.6666666666666667, half_extents = [0.5, 0.5, 0.5], position = [0.2, 1.1, -0.9], velocity = [0.5, -2, 1] }
+method adams
+dataset create solveit29_box_rattle
+run 6 steps 300
+sql "SELECT MAX(ncollisions) AS collisions, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+sql "SELECT b.shape, COUNT(*) AS recorded_states FROM states s JOIN bodies b ON b.body = s.body WHERE b.wall = 0 GROUP BY b.shape ORDER BY b.shape"
+movie create solveit29_box_rattle
+movie play solveit29_box_rattle
+dataset close

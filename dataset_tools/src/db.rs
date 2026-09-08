@@ -84,10 +84,38 @@ CREATE INDEX IF NOT EXISTS idx_states_body ON states(body, frame);\n";
 pub const SCHEMA_VERSION: &str = "1";
 
 /// Builds the thread-safe pool for `path`. Every connection the pool
-/// hands out has already executed [`CONNECTION_PRAGMAS`].
+/// hands out has already executed [`CONNECTION_PRAGMAS`] and carries
+/// the math scalar functions physics queries want (`sqrt`, `pow`,
+/// `hypot`) — the bundled SQLite amalgamation is compiled without
+/// SQLITE_ENABLE_MATH_FUNCTIONS, so the sidecar registers its own,
+/// marked DETERMINISTIC so the query planner may fold them.
 pub fn make_pool(path: &Path, max_size: u32) -> Result<Pool, String> {
-    let manager = SqliteConnectionManager::file(path)
-        .with_init(|conn| conn.execute_batch(CONNECTION_PRAGMAS));
+    use rusqlite::functions::FunctionFlags;
+    let flags = FunctionFlags::SQLITE_UTF8 | FunctionFlags::SQLITE_DETERMINISTIC;
+    let manager = SqliteConnectionManager::file(path).with_init(move |conn| {
+        conn.execute_batch(CONNECTION_PRAGMAS)?;
+        conn.create_scalar_function("sqrt", 1, flags, |ctx| {
+            let x: Option<f64> = ctx.get(0)?;
+            Ok(x.map(f64::sqrt))
+        })?;
+        conn.create_scalar_function("pow", 2, flags, |ctx| {
+            let x: Option<f64> = ctx.get(0)?;
+            let y: Option<f64> = ctx.get(1)?;
+            Ok(match (x, y) {
+                (Some(x), Some(y)) => Some(x.powf(y)),
+                _ => None,
+            })
+        })?;
+        conn.create_scalar_function("hypot", 2, flags, |ctx| {
+            let x: Option<f64> = ctx.get(0)?;
+            let y: Option<f64> = ctx.get(1)?;
+            Ok(match (x, y) {
+                (Some(x), Some(y)) => Some(x.hypot(y)),
+                _ => None,
+            })
+        })?;
+        Ok(())
+    });
     r2d2::Pool::builder()
         .max_size(max_size)
         .build(manager)

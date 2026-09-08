@@ -1,0 +1,14 @@
+# 26. The intermediate-axis instability, with the flips COUNTED by SQL.
+# The racket of example 7: three unequal moments, spun almost exactly
+# about the middle axis. While the body tumbles, the recorded frames
+# hold the invariant |L| bit-still; a window function (LAG) watches the
+# orientation component qx cross zero and counts the half-flips.
+new cuboid as racket { mass = 1, half_extents = [1.6, 0.9, 0.25], angular_momentum = [0.02, 3, 0.02] }
+dataset create solveit26_dzhanibekov
+run 8 steps 400
+sql "SELECT MIN(sqrt(lx*lx + ly*ly + lz*lz)) AS L_min, MAX(sqrt(lx*lx + ly*ly + lz*lz)) AS L_max FROM frames"
+sql "SELECT MIN(qx) AS qx_min, MAX(qx) AS qx_max FROM states"
+sql "WITH sgn AS (SELECT frame, SIGN(qx) AS s, LAG(SIGN(qx)) OVER (ORDER BY frame) AS prev FROM states WHERE ABS(qx) > 0.05) SELECT COUNT(*) AS zero_crossings FROM sgn WHERE prev IS NOT NULL AND s <> prev"
+dataset play
+movie create solveit26_dzhanibekov
+dataset close

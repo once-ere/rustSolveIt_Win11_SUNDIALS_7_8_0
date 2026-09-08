@@ -1,0 +1,16 @@
+# 35. A spinning torus: quaternions in the database, and on the screen.
+# A torus is symmetric about its local z axis, so only the recorded
+# orientation quaternion makes its spin visible - the movie player
+# rotates every ring by it (w-first, like everywhere in this
+# repository). SQL checks the recorded quaternions stay unit to
+# roundoff, and that the tilted spin axis makes qx and qy both move.
+new torus as wheel { mass = 2, ring_radius = 1.5, tube_radius = 0.4, angular_velocity = [1.5, 0, 2.5] }
+new sphere as marker { mass = 1, radius = 0.1, position = [3, 0, 0], velocity = [0, 0.6, 0], inverse_mass = 0 }
+set system.g_constant = 0
+dataset create solveit35_torus
+run 6 steps 240
+sql "SELECT MAX(ABS(qw*qw + qx*qx + qy*qy + qz*qz - 1.0)) AS worst_unit_error FROM states"
+sql "SELECT b.name, MAX(ABS(s.qx)) AS qx_swing, MAX(ABS(s.qy)) AS qy_swing FROM states s JOIN bodies b ON b.body = s.body GROUP BY b.name ORDER BY b.name"
+angmom
+movie create solveit35_torus
+dataset close

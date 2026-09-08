@@ -1,0 +1,19 @@
+# 28. The DAE pendulum of example 17, with the constraint AUDITED in SQL.
+# A rod is an algebraic equation, and the GGL index-2 formulation keeps
+# it satisfied to roundoff while IDA integrates. The dataset records the
+# bob at every output; the rod length recomputed from the recorded
+# coordinates must stay 1 to solver accuracy over a full period.
+set system.g_constant = 0
+set system.uniform_gravity = [0, -9.81, 0]
+collide off
+new sphere as pivot { mass = 1, radius = 0.02, position = [0, 0, 0], inverse_mass = 0 }
+new sphere as bob { mass = 1, radius = 0.05, position = [0.019998666693333084, -0.9998000066665778, 0] }
+constrain pivot bob
+method ida
+dataset create solveit28_pendulum
+run 2.0060666807106475 steps 200
+sql "SELECT MAX(ABS(sqrt(x*x + y*y + z*z) - 1.0)) AS worst_rod_stretch FROM states WHERE body = (SELECT body FROM bodies WHERE name = 'bob')"
+sql "SELECT MIN(y) AS lowest_bob_y FROM states WHERE body = (SELECT body FROM bodies WHERE name = 'bob')"
+constraints
+movie create solveit28_pendulum
+dataset close

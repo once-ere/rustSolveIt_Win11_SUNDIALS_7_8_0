@@ -1,0 +1,25 @@
+# 31. Two integrators, two datasets, ONE query: ATTACH.
+# The same free fall is recorded once under CVODE Adams and once under
+# BDF. SQLite's ATTACH then mounts the first database inside the second
+# session and a single JOIN reports the largest disagreement between
+# the two solvers, frame by frame - a cross-dataset diff with no
+# application code at all.
+set system.g_constant = 0
+set system.uniform_gravity = [0, -9.81, 0]
+new sphere as probe { mass = 1, radius = 0.2, position = [0, 10, 0] }
+method adams
+dataset create solveit31_adams
+run 1 steps 10
+dataset close
+reset
+set system.g_constant = 0
+set system.uniform_gravity = [0, -9.81, 0]
+new sphere as probe { mass = 1, radius = 0.2, position = [0, 10, 0] }
+method bdf
+dataset create solveit31_bdf
+run 1 steps 10
+sql "ATTACH DATABASE 'datasets/solveit31_adams.db' AS adams"
+sql "SELECT COUNT(*) AS paired_frames FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body"
+sql "SELECT MAX(ABS(s.y - a.y)) AS worst_method_gap FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body"
+sql "DETACH DATABASE adams"
+dataset close

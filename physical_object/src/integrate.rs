@@ -182,6 +182,25 @@ pub struct Snapshot {
     pub total_momentum: Vec3,
     pub total_angular_momentum: Vec3,
     pub center_of_mass: Vec3,
+    /// Cumulative collision count at this output time (a copy of
+    /// `system.collision_count` — cheap, and what a dataset frame
+    /// wants to store).
+    pub collision_count: u64,
+    /// Per-body kinematic state at this output time, keyed by each
+    /// body's STABLE id (`get_id()`, which DEL never reuses). Purely
+    /// observational: capturing it changes no arithmetic anywhere —
+    /// the byte-identity gates still hold.
+    pub body_states: Vec<BodySnap>,
+}
+
+/// One body's kinematic state inside a [`Snapshot`].
+#[derive(Clone, Debug)]
+pub struct BodySnap {
+    pub id: usize,
+    pub position: Vec3,
+    pub orientation: Quat,
+    pub velocity: Vec3,
+    pub angular_velocity: Vec3,
 }
 
 /// Result of a solver run: per-output snapshots plus solver statistics.
@@ -490,6 +509,18 @@ fn snapshot(system: &PhysicalObjectSystem, t: f64) -> Snapshot {
         total_momentum: system.total_momentum(),
         total_angular_momentum: system.total_angular_momentum(Vec3::zeros()),
         center_of_mass: system.center_of_mass(),
+        collision_count: system.collision_count,
+        body_states: system
+            .objects
+            .iter()
+            .map(|o| BodySnap {
+                id: o.get_id(),
+                position: o.get_position(),
+                orientation: o.get_orientation(),
+                velocity: o.get_velocity(),
+                angular_velocity: o.angular_velocity(),
+            })
+            .collect(),
     }
 }
 

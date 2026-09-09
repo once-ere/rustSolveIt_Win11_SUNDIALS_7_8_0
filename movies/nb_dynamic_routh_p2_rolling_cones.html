@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>movie nb_dynamic_routh_p2_rolling_cones</title>
+<style>
+  body { margin: 0; background: #0e1116; color: #cdd6e4; overflow: hidden;
+         font: 13px/1.4 -apple-system, "Segoe UI", Roboto, sans-serif; }
+  #bar { position: fixed; left: 0; right: 0; bottom: 0; display: flex; gap: 8px;
+         align-items: center; padding: 8px 12px; background: rgba(14,17,22,.92);
+         border-top: 1px solid #232b37; }
+  button, select { background: #1d2530; color: #cdd6e4; border: 1px solid #2c3846;
+         border-radius: 5px; padding: 4px 10px; font: inherit; cursor: pointer; }
+  button:hover { background: #263140; }
+  input[type=range] { flex: 1; }
+  #hud { position: fixed; top: 10px; left: 12px; color: #9fb0c6; white-space: pre;
+         font: 12px/1.5 ui-monospace, Menlo, monospace; pointer-events: none; }
+  #title { position: fixed; top: 10px; right: 14px; color: #7d8797; text-align: right; }
+  #title b { color: #cdd6e4; }
+  label { user-select: none; }
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div id="hud"></div>
+<div id="title"><b>movie nb_dynamic_routh_p2_rolling_cones</b><br>from dataset nb_dynamic_routh_p2_rolling_cones (SQLite)</div>
+<div id="bar">
+  <button id="play">&#9654;</button>
+  <button id="back">&#9664;&#9664;</button>
+  <button id="fwd">&#9654;&#9654;</button>
+  <input type="range" id="scrub" min="0" value="0" step="1">
+  <select id="speed">
+    <option value="0.25">0.25&times;</option><option value="0.5">0.5&times;</option>
+    <option value="1" selected>1&times;</option><option value="2">2&times;</option>
+    <option value="4">4&times;</option>
+  </select>
+  <label><input type="checkbox" id="trails" checked> trails</label>
+  <label><input type="checkbox" id="labels" checked> labels</label>
+  <button id="home">Reset view</button>
+</div>
+<script>
+"use strict";
+const BODIES = [{"id":0,"name":"obj0","shape":"cuboid","wall":false,"geom":{"half_extents":[1,1,2]}}];
+const FRAMES = [{"t":0.6,"E":9.900000000000016,"P":[0.0,0.0,0.0],"L":[3.0,0.0,6.0],"n":0,"o":{"0":[0.0,0.0,0.0,0.609035254228671,0.15025273307187914,-0.0900659391644103,0.7735556230249262]}},{"t":1.2,"E":9.899999999999753,"P":[0.0,0.0,0.0],"L":[3.0,0.0,6.0],"n":0,"o":{"0":[0.0,0.0,0.0,-0.24192837141817916,0.1519376237317549,-0.2843083158059454,0.9151799840257009]}},{"t":1.7999999999999998,"E":9.899999999999403,"P":[0.0,0.0,0.0],"L":[3.0,0.0,6.0],"n":0,"o":{"0":[0.0,0.0,0.0,-0.8525080776615606,-0.020559845804168236,-0.4175145874659067,0.31382931589555735]}},{"t":2.4,"E":9.89999999999953,"P":[0.0,0.0,0.0],"L":[3.0,0.0,6.0],"n":0,"o":{"0":[0.0,0.0,0.0,-0.7212788893330481,-0.24832556428258415,-0.3715207561969555,-0.5292102660012022]}}];
+const BOX = null;
+const HUES = ["#6db1e0","#e0a56d","#8fd08f","#d98fb8","#b9a5e8","#e8d06d","#7fd6c9","#e08383"];
+const cv = document.getElementById("cv"), g = cv.getContext("2d");
+let W, H;
+function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; draw(); }
+addEventListener("resize", resize);
+
+/* ---- camera: orbit about a target + perspective divide ---- */
+const HOME = { yaw: 0.6, pitch: 0.35, dist: 10, target: [0, 0, 0], ty: 0 };
+let cam = null;
+function autoFit() {
+  let lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity], pad = 0.5;
+  const wall = new Set(BODIES.filter(b => b.wall).map(b => String(b.id)));
+  for (const b of BODIES) {
+    if (b.wall) continue;
+    const gm = b.geom || {};
+    pad = Math.max(pad, gm.radius || 0, (gm.ring_radius || 0) + (gm.tube_radius || 0),
+                   gm.half_height || 0, ...(gm.half_extents || [0]),
+                   Math.abs(gm.z1 || 0) + (gm.r1 || 0), Math.abs(gm.z2 || 0) + (gm.r2 || 0));
+  }
+  for (const f of FRAMES) for (const id in f.o) {
+    if (wall.has(id)) continue;
+    const s = f.o[id];
+    for (let k = 0; k < 3; k++) {
+      if (s[k] < lo[k]) lo[k] = s[k];
+      if (s[k] > hi[k]) hi[k] = s[k];
+    }
+  }
+  if (!isFinite(lo[0])) { lo = [-1, -1, -1]; hi = [1, 1, 1]; }
+  if (BOX !== null) for (let k = 0; k < 3; k++) {
+    lo[k] = Math.min(lo[k], -BOX / 2); hi[k] = Math.max(hi[k], BOX / 2);
+  }
+  HOME.target = [(lo[0]+hi[0])/2, (lo[1]+hi[1])/2, (lo[2]+hi[2])/2];
+  const half = Math.max(hi[0]-lo[0], hi[1]-lo[1], hi[2]-lo[2]) / 2 + pad;
+  HOME.dist = Math.max(2, half * 2.4);
+  cam = { ...HOME, target: HOME.target.slice() };
+}
+function project(p) {
+  const cy = Math.cos(cam.yaw), sy = Math.sin(cam.yaw);
+  const cp = Math.cos(cam.pitch), sp = Math.sin(cam.pitch);
+  let x = p[0] - cam.target[0], y = p[1] - cam.target[1], z = p[2] - cam.target[2];
+  let X = cy * x + sy * z, Z1 = -sy * x + cy * z;
+  let Y = cp * y - sp * Z1, Z = sp * y + cp * Z1;
+  const d = cam.dist - Z;
+  if (d <= 0.05) return null;
+  const s = (H * 0.9) / d;
+  return [W / 2 + X * s, H / 2 - Y * s + cam.ty, s, Z];
+}
+function qrot(q, v) {  /* w-first quaternion rotation */
+  const [w, x, y, z] = q, [vx, vy, vz] = v;
+  const tx = 2*(y*vz - z*vy), ty = 2*(z*vx - x*vz), tz = 2*(x*vy - y*vx);
+  return [vx + w*tx + y*tz - z*ty, vy + w*ty + z*tx - x*tz, vz + w*tz + x*ty - y*tx];
+}
+function ring(center, q, radius, n, phase, zoff) {
+  const pts = [];
+  for (let k = 0; k <= n; k++) {
+    const a = phase + k / n * 2 * Math.PI;
+    const local = [radius * Math.cos(a), radius * Math.sin(a), zoff || 0];
+    const wpt = qrot(q, local);
+    pts.push([center[0]+wpt[0], center[1]+wpt[1], center[2]+wpt[2]]);
+  }
+  return pts;
+}
+function stroke(pts, color, width, dash) {
+  g.strokeStyle = color; g.lineWidth = width || 1.2;
+  g.setLineDash(dash || []);
+  g.beginPath();
+  let started = false;
+  for (const p of pts) {
+    const s = project(p);
+    if (!s) { started = false; continue; }
+    if (!started) { g.moveTo(s[0], s[1]); started = true; } else { g.lineTo(s[0], s[1]); }
+  }
+  g.stroke(); g.setLineDash([]);
+}
+
+/* ---- drawing ---- */
+let frame = 0, playing = false, speed = 1, lastTick = 0;
+const scrub = document.getElementById("scrub");
+scrub.max = FRAMES.length - 1;
+function shapePoints(b, pos, q) {
+  const gm = b.geom || {};
+  switch (b.shape) {
+    case "cuboid": {
+      const [hx, hy, hz] = gm.half_extents || [0.5, 0.5, 0.5];
+      const cs = [];
+      for (const sx of [-1, 1]) for (const sy of [-1, 1]) for (const sz of [-1, 1]) {
+        const w = qrot(q, [sx*hx, sy*hy, sz*hz]);
+        cs.push([pos[0]+w[0], pos[1]+w[1], pos[2]+w[2]]);
+      }
+      const E = [[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]];
+      return { edges: E.map(([a, b2]) => [cs[a], cs[b2]]) };
+    }
+    case "torus": {
+      const R = gm.ring_radius || 1, r = gm.tube_radius || 0.3;
+      return { rings: [ring(pos, q, R + r, 40, 0, 0), ring(pos, q, R - r, 40, 0, 0),
+                       ring(pos, q, R, 36, 0, r), ring(pos, q, R, 36, 0, -r)] };
+    }
+    case "disk": {
+      const r = gm.radius || 1;
+      const rim = ring(pos, q, r, 36, 0, 0);
+      const d1 = [qrot(q, [-r,0,0]), qrot(q, [r,0,0])].map(w => [pos[0]+w[0],pos[1]+w[1],pos[2]+w[2]]);
+      const d2 = [qrot(q, [0,-r,0]), qrot(q, [0,r,0])].map(w => [pos[0]+w[0],pos[1]+w[1],pos[2]+w[2]]);
+      return { rings: [rim], edges: [d1, d2] };
+    }
+    case "cylinder": {
+      const r = gm.radius || 0.5, h = gm.half_height || 0.5;
+      const top = ring(pos, q, r, 30, 0, h), bot = ring(pos, q, r, 30, 0, -h);
+      const edges = [];
+      for (let k = 0; k < 4; k++) {
+        const a = k / 4 * 2 * Math.PI;
+        const l1 = qrot(q, [r*Math.cos(a), r*Math.sin(a), h]);
+        const l2 = qrot(q, [r*Math.cos(a), r*Math.sin(a), -h]);
+        edges.push([[pos[0]+l1[0],pos[1]+l1[1],pos[2]+l1[2]],
+                    [pos[0]+l2[0],pos[1]+l2[1],pos[2]+l2[2]]]);
+      }
+      return { rings: [top, bot], edges };
+    }
+    case "dumbbell": {
+      const w1 = qrot(q, [0, 0, gm.z1 || -1]), w2 = qrot(q, [0, 0, gm.z2 || 1]);
+      const c1 = [pos[0]+w1[0], pos[1]+w1[1], pos[2]+w1[2]];
+      const c2 = [pos[0]+w2[0], pos[1]+w2[1], pos[2]+w2[2]];
+      return { discs: [[c1, gm.r1 || 0.3], [c2, gm.r2 || 0.3]], edges: [[c1, c2]] };
+    }
+    default:
+      return { discs: [[pos, gm.radius || (b.shape === "point" ? 0.04 : 0.5)]] };
+  }
+}
+function drawBox() {
+  if (BOX === null) return;
+  const h = BOX / 2, c = [];
+  for (const sx of [-1,1]) for (const sy of [-1,1]) for (const sz of [-1,1])
+    c.push([sx*h, sy*h, sz*h]);
+  const E = [[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]];
+  for (const [a, b] of E) stroke([c[a], c[b]], "#5d84a8", 1, [5, 5]);
+}
+function draw() {
+  if (!cam) return;
+  g.fillStyle = "#0e1116"; g.fillRect(0, 0, W, H);
+  /* ground grid */
+  const span = HOME.dist / 3.2, N = 9;
+  for (let k = 0; k < N; k++) {
+    const u = -span + 2 * span * k / (N - 1);
+    stroke([[u, 0, -span], [u, 0, span]], "#1a2029", 1);
+    stroke([[-span, 0, u], [span, 0, u]], "#1a2029", 1);
+  }
+  drawBox();
+  const f = FRAMES[frame];
+  /* trails */
+  if (document.getElementById("trails").checked) {
+    BODIES.forEach((b, bi) => {
+      if (b.wall) return;
+      const pts = [];
+      for (let k = Math.max(0, frame - 220); k <= frame; k++) {
+        const s = FRAMES[k].o[b.id];
+        if (s) pts.push([s[0], s[1], s[2]]);
+      }
+      g.globalAlpha = 0.5;
+      stroke(pts, HUES[bi % 8], 1);
+      g.globalAlpha = 1;
+    });
+  }
+  /* bodies, painter-sorted by camera z */
+  const draws = [];
+  BODIES.forEach((b, bi) => {
+    if (b.wall) return;
+    const s = f.o[b.id];
+    if (!s) return;
+    const pos = [s[0], s[1], s[2]], q = [s[3], s[4], s[5], s[6]];
+    const pr = project(pos);
+    draws.push({ b, bi, pos, q, z: pr ? pr[3] : -1e9 });
+  });
+  draws.sort((a, b) => a.z - b.z);
+  for (const d of draws) {
+    const color = HUES[d.bi % 8];
+    const sp = shapePoints(d.b, d.pos, d.q);
+    for (const r of sp.rings || []) stroke(r, color, 1.4);
+    for (const e of sp.edges || []) stroke(e, color, 1.4);
+    for (const [c, r] of sp.discs || []) {
+      const pr = project(c);
+      if (!pr) continue;
+      const rad = Math.max(1.5, r * pr[2]);
+      const grad = g.createRadialGradient(pr[0]-rad/3, pr[1]-rad/3, rad/6, pr[0], pr[1], rad);
+      grad.addColorStop(0, "#e8eef7"); grad.addColorStop(0.25, color); grad.addColorStop(1, "#10151c");
+      g.fillStyle = grad;
+      g.beginPath(); g.arc(pr[0], pr[1], rad, 0, 2 * Math.PI); g.fill();
+    }
+    if (document.getElementById("labels").checked) {
+      const pr = project(d.pos);
+      if (pr) {
+        g.fillStyle = "#9fb0c6"; g.font = "11px sans-serif"; g.textAlign = "center";
+        g.fillText(d.b.name, pr[0], pr[1] - 14);
+      }
+    }
+  }
+  const mag = v => Math.hypot(v[0], v[1], v[2]);
+  document.getElementById("hud").textContent =
+    `frame ${frame + 1}/${FRAMES.length}   t = ${f.t.toPrecision(8)}\n` +
+    `E = ${f.E.toPrecision(8)}   |P| = ${mag(f.P).toPrecision(8)}   |L| = ${mag(f.L).toPrecision(8)}\n` +
+    `collisions so far: ${f.n}`;
+  scrub.value = frame;
+}
+
+/* ---- controls ---- */
+function tick(now) {
+  requestAnimationFrame(tick);
+  if (playing && now - lastTick > 33 / speed) {
+    lastTick = now;
+    frame = (frame + 1) % FRAMES.length;
+    draw();
+  }
+}
+const playBtn = document.getElementById("play");
+function setPlaying(p) { playing = p; playBtn.innerHTML = p ? "&#10073;&#10073;" : "&#9654;"; }
+playBtn.onclick = () => setPlaying(!playing);
+document.getElementById("back").onclick = () => { setPlaying(false); frame = (frame + FRAMES.length - 1) % FRAMES.length; draw(); };
+document.getElementById("fwd").onclick = () => { setPlaying(false); frame = (frame + 1) % FRAMES.length; draw(); };
+document.getElementById("home").onclick = () => { cam = { ...HOME, target: HOME.target.slice() }; draw(); };
+document.getElementById("speed").onchange = e => { speed = parseFloat(e.target.value); };
+scrub.oninput = () => { setPlaying(false); frame = +scrub.value; draw(); };
+document.getElementById("trails").onchange = draw;
+document.getElementById("labels").onchange = draw;
+let dragging = false, lx = 0, ly = 0;
+cv.addEventListener("pointerdown", e => { dragging = true; lx = e.clientX; ly = e.clientY; });
+addEventListener("pointerup", () => { dragging = false; });
+addEventListener("pointermove", e => {
+  if (!dragging) return;
+  cam.yaw += (e.clientX - lx) * 0.008;
+  cam.pitch = Math.max(-1.5, Math.min(1.5, cam.pitch + (e.clientY - ly) * 0.008));
+  lx = e.clientX; ly = e.clientY; draw();
+});
+addEventListener("wheel", e => { cam.dist *= e.deltaY > 0 ? 1.1 : 1 / 1.1; draw(); });
+addEventListener("keydown", e => {
+  if (e.key === " ") { e.preventDefault(); setPlaying(!playing); }
+  else if (e.key === "ArrowLeft") { setPlaying(false); frame = (frame + FRAMES.length - 1) % FRAMES.length; draw(); }
+  else if (e.key === "ArrowRight") { setPlaying(false); frame = (frame + 1) % FRAMES.length; draw(); }
+  else if (e.key === "ArrowUp") { cam.ty -= 20; draw(); }
+  else if (e.key === "ArrowDown") { cam.ty += 20; draw(); }
+  else if (e.key === "+" || e.key === "=") { cam.dist /= 1.15; draw(); }
+  else if (e.key === "-") { cam.dist *= 1.15; draw(); }
+});
+autoFit();
+resize();
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

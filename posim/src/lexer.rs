@@ -83,6 +83,12 @@ pub enum Keyword {
     Equilibrium,
     Sensitivity,
     Ida,
+    /* SQLite datasets and the movies derived from them. All three are
+     * CONTEXTUAL keywords (command position only), like BALL/HINGE:
+     * `new sphere as movie` and `let sql = 3` must keep working. */
+    Dataset,
+    Movie,
+    Sql,
 }
 
 impl Keyword {
@@ -156,6 +162,9 @@ impl Keyword {
             "ida" => Some(Keyword::Ida),
             "on" => Some(Keyword::On),
             "off" => Some(Keyword::Off),
+            "dataset" => Some(Keyword::Dataset),
+            "movie" => Some(Keyword::Movie),
+            "sql" => Some(Keyword::Sql),
             _ => None,
         }
     }
@@ -417,6 +426,9 @@ pub fn tokenize(line: &str) -> Result<Vec<Token>, String> {
                                     | Keyword::Gear
                                     | Keyword::Rack
                                     | Keyword::Prismatic
+                                    | Keyword::Dataset
+                                    | Keyword::Movie
+                                    | Keyword::Sql
                             ) =>
                     {
                         TokKind::Ident(word)

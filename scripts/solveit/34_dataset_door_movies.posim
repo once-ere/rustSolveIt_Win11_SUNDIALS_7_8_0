@@ -1,0 +1,23 @@
+# 34. Movies are DERIVED, so one dataset can wear several.
+# The hinged door of example 19 swings under IDA. A movie built halfway
+# through the recording and a movie built at the end come from the SAME
+# dataset - MOVIE CREATE just reads whatever frames exist. Movies can be
+# listed, replaced and deleted without touching the physics at all.
+set system.g_constant = 0
+set system.uniform_gravity = [0, -9.81, 0]
+collide off
+new sphere as jamb { mass = 1, radius = 0.02, position = [0, 0, 0], inverse_mass = 0 }
+new cuboid as door { mass = 1, half_extents = [0.2, 0.4, 0.2], position = [0.0199986666933331, -0.9998000066665778, 0] }
+hinge jamb door [0, 0, 1]
+method ida
+dataset create solveit34_door
+run 1 steps 50
+movie create solveit34_door as door_half
+run 1 steps 50
+movie create solveit34_door as door_full
+movie list
+sql "SELECT COUNT(*) AS frames FROM frames"
+movie delete door_half
+movie list
+movie play door_full
+dataset close

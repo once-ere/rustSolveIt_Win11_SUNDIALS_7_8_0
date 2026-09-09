@@ -1,0 +1,29 @@
+# 33. The complete dataset lifecycle, in one sitting.
+# CREATE starts fresh; SNAPSHOT records by hand; STEP records once per
+# step while the switch is on; SAVEAS checkpoints the open dataset;
+# COPY duplicates a closed one; LIST and INFO report; DELETE removes.
+# VACUUM (plain SQL) compacts the file. Every subcommand in the DATASET
+# production appears below at least once.
+set system.g_constant = 0
+set system.uniform_gravity = [0, -3.7, 0]
+new sphere as mars_rock { mass = 2, radius = 0.4, position = [0, 15, 0] }
+dataset create solveit33_tour
+dataset snapshot
+step 0.5
+step 0.5
+dataset info
+dataset saveas solveit33_checkpoint
+step 0.5
+dataset info
+dataset info solveit33_checkpoint
+sql "VACUUM"
+dataset list
+dataset close
+dataset copy solveit33_checkpoint solveit33_twin
+dataset list
+dataset delete solveit33_checkpoint
+dataset delete solveit33_twin
+dataset list
+dataset open solveit33_tour
+sql "SELECT COUNT(*) AS frames FROM frames"
+dataset close

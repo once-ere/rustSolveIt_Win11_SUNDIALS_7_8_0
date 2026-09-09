@@ -1,0 +1,27 @@
+# 20. A Kepler ellipse, RECORDED: the dataset is the experiment's lab book.
+# A true two-body problem (an anchored body exerts no gravity here, by
+# design - walls must not attract). Sun mass 3, planet mass 1, G = 1,
+# so the RELATIVE orbit has mu = G(M+m) = 4. Starting at perihelion
+# separation r_p = a(1-e) = 1 with a = 2.5, e = 0.6, the relative
+# vis-viva speed is sqrt(mu(2/r_p - 1/a)) = sqrt(6.4). Split about the
+# stationary centre of mass: planet gets 3/4 of it, sun 1/4 backwards.
+# Aphelion separation must be a(1+e) = 4, and the period is
+# T = 2 pi sqrt(a^3/mu) = 12.418264743622237. The dataset records one
+# full period; a SELF-JOIN of the states table then measures the
+# separation extremes - the database answers the physics question.
+set system.g_constant = 1
+new sphere as sun    { mass = 3, radius = 0.15, position = [-0.25, 0, 0], velocity = [0, -0.6324555320336759, 0] }
+new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+method adams
+dataset create solveit20_kepler
+run 12.418264743622237 steps 200
+dataset info
+# perihelion and aphelion of the SEPARATION, asked of the DATABASE:
+# a self-join pairs the two bodies frame by frame.
+sql "SELECT MIN(sqrt((p.x-s.x)*(p.x-s.x) + (p.y-s.y)*(p.y-s.y))) AS perihelion, MAX(sqrt((p.x-s.x)*(p.x-s.x) + (p.y-s.y)*(p.y-s.y))) AS aphelion FROM states p JOIN states s ON s.frame = p.frame WHERE p.body = (SELECT body FROM bodies WHERE name = 'planet') AND s.body = (SELECT body FROM bodies WHERE name = 'sun')"
+# the centre of mass never moves, and the energy ledger stays flat
+sql "SELECT MAX(ABS(comx)) AS com_x, MAX(ABS(comy)) AS com_y, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+movie create solveit20_kepler
+movie play solveit20_kepler
+dataset play solveit20_kepler
+dataset close

@@ -134,3 +134,44 @@ A. B. Olde Daalhuis, D. W. Lozier, B. I. Schneider, R. F. Boisvert,
 C. W. Clark, B. R. Miller, B. V. Saunders, H. S. Cohl and M. A. McClain,
 eds. NIST publishes **no** reference implementation; its "Software" page
 is a bibliography of third-party packages.
+
+---
+
+## `rebound_rust/` and `reboundx_rust/` — the N-body ports
+
+| | |
+|---|---|
+| Upstream (rebound_rust) | `hannorein/rebound` **5.1.1** @ `dad5f978` — translated, not vendored |
+| Upstream (reboundx_rust) | `dtamayo/reboundx` **5.1.0** — translated, not vendored |
+| What they are | Pure-Rust, zero-`unsafe`, dependency-free translations of the REBOUND N-body code and its REBOUNDx extra-physics library |
+| Licence | **GPL-3.0-or-later** (each folder's own `LICENSE`) — note: unlike the BSD-3-Clause code elsewhere in this repository, these two folders are GPL; they are self-contained works that share the repository without sharing code with it |
+| Modified here? | Translation by this project's authors; verified bit-for-bit against the upstream C compiled locally (see `REBOUND_REBOUNDX_MACOS_PROVENANCE.md`) |
+
+The upstream C trees themselves are **not** committed: `.gitignore`
+reserves `/rebound/` and `/reboundx/` for local reference clones used by
+the verification harnesses.
+
+---
+
+## `dataset_tools/` — the SQLite dataset sidecar's dependencies
+
+The `solveit_db` sidecar is the ONE package in this repository that
+depends on crates.io, exactly as specified for the dataset feature. It
+is excluded from the simulator workspace (root `Cargo.toml`), so
+`cargo build --workspace` never touches a registry; the sidecar's own
+`Cargo.lock` pins every version. Nothing is vendored — the sources are
+fetched from crates.io on the sidecar's first build.
+
+| crate | version | licence | role |
+|---|---|---|---|
+| `rusqlite` | 0.32.1 | MIT | the SQLite binding (features `bundled`, `functions`) |
+| `libsqlite3-sys` | 0.30.1 | MIT | bundles and compiles the **SQLite 3.46.0 amalgamation** (SQLite itself is public domain) |
+| `r2d2` | 0.8.10 | MIT / Apache-2.0 | the thread-safe connection pool |
+| `r2d2_sqlite` | 0.25.0 | MIT / Apache-2.0 | the rusqlite connection manager for r2d2 |
+
+(Their transitive dependencies — `hashlink`, `parking_lot`,
+`scheduled-thread-pool`, `cc`, etc. — carry MIT / Apache-2.0-style
+licences; the pinned set is enumerated in `dataset_tools/Cargo.lock`.)
+No sidecar code is linked into `posim` or any workspace crate: the
+simulator spawns the `solveit_db` binary and talks to it over pipes.
+

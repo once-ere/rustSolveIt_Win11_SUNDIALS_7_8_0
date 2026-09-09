@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>dataset nb_dynamic_routh_p2_thin_rod — plots</title>
+<style>
+  body { margin: 0; background: #0e1116; color: #cdd6e4;
+         font: 13px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif; }
+  h1 { font-size: 16px; margin: 14px 18px 4px; font-weight: 600; }
+  h1 code { color: #7fb4e6; }
+  p.sub { margin: 0 18px 10px; color: #7d8797; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
+          gap: 12px; padding: 0 14px 18px; }
+  .card { background: #151a22; border: 1px solid #232b37; border-radius: 8px; padding: 8px; }
+  .card h2 { font-size: 12.5px; font-weight: 600; margin: 2px 4px 6px; color: #9fb0c6; }
+  canvas { width: 100%; height: 240px; display: block; }
+</style>
+</head>
+<body>
+<h1>dataset <code>nb_dynamic_routh_p2_thin_rod</code></h1>
+<p class="sub">Recorded by posim into SQLite (WAL). Every panel is drawn from the
+frames / states tables of <code>datasets/nb_dynamic_routh_p2_thin_rod.db</code>.</p>
+<div class="grid" id="grid"></div>
+<script>
+"use strict";
+const DATA = {"name":"nb_dynamic_routh_p2_thin_rod","frames":[[1.0,2.750150000107536,0.0,0.0,0.0,4.0003,0.0,0.030000000000000002],[2.0,2.7501500003115282,0.0,0.0,0.0,4.0003,0.0,0.030000000000000002],[3.0,2.7501500005520625,0.0,0.0,0.0,4.0003,0.0,0.030000000000000002],[4.0,2.7501500007018724,0.0,0.0,0.0,4.0003,0.0,0.030000000000000002],[5.0,2.7501500008662263,0.0,0.0,0.0,4.0003,0.0,0.030000000000000002]],"bodies":[{"id":0.0,"name":"obj0","wall":false}],"paths":[[0.0,1.0,0.0,0.0,0.0],[0.0,2.0,0.0,0.0,0.0],[0.0,3.0,0.0,0.0,0.0],[0.0,4.0,0.0,0.0,0.0],[0.0,5.0,0.0,0.0,0.0]]};
+const HUES = ["#6db1e0","#e0a56d","#8fd08f","#d98fb8","#b9a5e8","#e8d06d","#7fd6c9","#e08383"];
+
+function card(title) {
+  const div = document.createElement("div");
+  div.className = "card";
+  const h = document.createElement("h2");
+  h.textContent = title;
+  const c = document.createElement("canvas");
+  div.appendChild(h); div.appendChild(c);
+  document.getElementById("grid").appendChild(div);
+  return c;
+}
+
+/* A minimal line chart: autoscaled axes, ticks, legend. */
+function chart(canvas, series, xlabel) {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.clientWidth * dpr, H = 240 * dpr;
+  canvas.width = W; canvas.height = H;
+  const g = canvas.getContext("2d");
+  const L = 58 * dpr, R = 10 * dpr, T = 10 * dpr, B = 30 * dpr;
+  let xmin = Infinity, xmax = -Infinity, ymin = Infinity, ymax = -Infinity;
+  for (const s of series) for (let i = 0; i < s.x.length; i++) {
+    const x = s.x[i], y = s.y[i];
+    if (x === null || y === null) continue;
+    if (x < xmin) xmin = x; if (x > xmax) xmax = x;
+    if (y < ymin) ymin = y; if (y > ymax) ymax = y;
+  }
+  if (!isFinite(xmin)) { xmin = 0; xmax = 1; }
+  if (!isFinite(ymin)) { ymin = 0; ymax = 1; }
+  if (xmax === xmin) { xmax = xmin + 1; }
+  if (ymax === ymin) { const c0 = ymin; ymin = c0 - (Math.abs(c0) || 1) * 1e-3; ymax = c0 + (Math.abs(c0) || 1) * 1e-3; }
+  const pad = (ymax - ymin) * 0.06; ymin -= pad; ymax += pad;
+  const px = x => L + (x - xmin) / (xmax - xmin) * (W - L - R);
+  const py = y => H - B - (y - ymin) / (ymax - ymin) * (H - T - B);
+  g.fillStyle = "#151a22"; g.fillRect(0, 0, W, H);
+  g.strokeStyle = "#26303e"; g.fillStyle = "#7d8797";
+  g.lineWidth = dpr; g.font = `${11 * dpr}px sans-serif`;
+  const fmt = v => { const a = Math.abs(v);
+    return (a !== 0 && (a < 1e-3 || a >= 1e5)) ? v.toExponential(2) : +v.toPrecision(6) + ""; };
+  for (let k = 0; k <= 4; k++) {
+    const y = ymin + (ymax - ymin) * k / 4;
+    g.beginPath(); g.moveTo(L, py(y)); g.lineTo(W - R, py(y)); g.stroke();
+    g.textAlign = "right"; g.fillText(fmt(y), L - 5 * dpr, py(y) + 4 * dpr);
+    const x = xmin + (xmax - xmin) * k / 4;
+    g.textAlign = "center"; g.fillText(fmt(x), px(x), H - B + 16 * dpr);
+  }
+  g.textAlign = "center";
+  g.fillText(xlabel, (L + W - R) / 2, H - 4 * dpr);
+  series.forEach((s, si) => {
+    g.strokeStyle = s.color || HUES[si % HUES.length];
+    g.lineWidth = 1.6 * dpr;
+    g.beginPath();
+    let started = false;
+    for (let i = 0; i < s.x.length; i++) {
+      if (s.x[i] === null || s.y[i] === null) { started = false; continue; }
+      const X = px(s.x[i]), Y = py(s.y[i]);
+      if (!started) { g.moveTo(X, Y); started = true; } else { g.lineTo(X, Y); }
+    }
+    g.stroke();
+  });
+  let lx = L + 8 * dpr;
+  series.forEach((s, si) => {
+    if (!s.label) return;
+    g.fillStyle = s.color || HUES[si % HUES.length];
+    g.fillRect(lx, T + 2 * dpr, 10 * dpr, 3 * dpr);
+    g.textAlign = "left"; g.fillStyle = "#9fb0c6";
+    g.fillText(s.label, lx + 14 * dpr, T + 8 * dpr);
+    lx += (14 + 8 * s.label.length) * dpr;
+  });
+}
+
+const F = DATA.frames;                 /* [t, E, px,py,pz, lx,ly,lz] */
+const ts = F.map(f => f[0]);
+const mag = (a,b,c) => (a===null||b===null||c===null) ? null : Math.hypot(a,b,c);
+
+chart(card("total energy E(t)"),
+      [{ x: ts, y: F.map(f => f[1]), label: "E", color: HUES[0] }], "t");
+chart(card("momentum and angular momentum magnitudes"),
+      [{ x: ts, y: F.map(f => mag(f[2],f[3],f[4])), label: "|P|", color: HUES[1] },
+       { x: ts, y: F.map(f => mag(f[5],f[6],f[7])), label: "|L|", color: HUES[2] }], "t");
+
+/* Per-body position components — one card per (non-wall) body. */
+const byBody = new Map();
+for (const [id, t, x, y, z] of DATA.paths) {
+  if (!byBody.has(id)) byBody.set(id, { t: [], x: [], y: [], z: [] });
+  const s = byBody.get(id);
+  s.t.push(t); s.x.push(x); s.y.push(y); s.z.push(z);
+}
+const walls = new Set(DATA.bodies.filter(b => b.wall).map(b => b.id));
+const nameOf = id => (DATA.bodies.find(b => b.id === id) || { name: "body " + id }).name;
+let shown = 0;
+for (const [id, s] of byBody) {
+  if (walls.has(id)) continue;
+  if (++shown > 8) break;             /* keep the page readable */
+  chart(card(`position of ${nameOf(id)} — x, y, z over t`),
+        [{ x: s.t, y: s.x, label: "x", color: HUES[0] },
+         { x: s.t, y: s.y, label: "y", color: HUES[2] },
+         { x: s.t, y: s.z, label: "z", color: HUES[1] }], "t");
+}
+
+/* Top view: y against x for every non-wall body. */
+/* `top` is a reserved global (window.top), so: topview. */
+const topview = [];
+let ci = 0;
+for (const [id, s] of byBody) {
+  if (walls.has(id)) continue;
+  topview.push({ x: s.x, y: s.y, label: nameOf(id), color: HUES[ci++ % HUES.length] });
+}
+if (topview.length) chart(card("top view — y against x"), topview, "x");
+</script>
+</body>
+</html>

@@ -10,7 +10,7 @@ import subprocess, sys
 from pathlib import Path
 
 HERE = Path(__file__).parent
-ROOT = HERE.parents[1]          # version-7.8.0/
+ROOT = HERE.parents[1]          # the repository root
 
 def sh(*args):
     r = subprocess.run([sys.executable, *map(str, args)], cwd=ROOT)

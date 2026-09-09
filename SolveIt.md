@@ -16,8 +16,8 @@ memory.*
 4. [What the program is made of](#4-what-the-program-is-made-of)
 5. [The engine: SUNDIALS 7.8.0 in pure Rust](#5-the-engine-sundials-780-in-pure-rust)
 6. [How collisions actually work](#6-how-collisions-actually-work)
-7. [Sixteen worked examples](#7-sixteen-worked-examples)
-8. [Watching it: the scene window and browser videos](#8-watching-it-the-scene-window-and-browser-videos)
+7. [Thirty-eight worked examples](#7-thirty-eight-worked-examples)
+8. [Watching it: the scene window, videos, dataset plots and movies](#8-watching-it-the-scene-window-videos-dataset-plots-and-movies)
 9. [How you know the numbers are right](#9-how-you-know-the-numbers-are-right)
 10. [When something goes wrong](#10-when-something-goes-wrong)
 11. [Where everything lives](#11-where-everything-lives)
@@ -89,24 +89,17 @@ that can be pulled out from under you.
 
 ## 2. Installing and running it
 
-This is the **Windows 11** edition of the simulator (x86-64; the
-processor must have FMA — every Intel chip since 2013 and AMD since
-2012 does). You need Rust with the MSVC toolchain. If you do not have
-it, download and run `rustup-init.exe` from
-<https://rustup.rs> — it installs `x86_64-pc-windows-msvc` by default
-and will offer to fetch the Visual Studio C++ Build Tools if none are
-present (any Visual Studio 2022 or 2026 install already satisfies it;
-Rust only needs its linker). Check with:
+You need Rust. If you do not have it:
 
-```powershell
-rustc --version
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-Then, in PowerShell (or any terminal):
+Then:
 
-```powershell
-git clone https://github.com/once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0.git
-cd rustSolveIt_Win11_SUNDIALS_7_8_0
+```bash
+git clone https://github.com/once-ere/rustSolveIt_macos-silicon_SUNDIALS_7_8_0.git
+cd rustSolveIt_macos-silicon_SUNDIALS_7_8_0
 cargo run
 ```
 
@@ -128,14 +121,12 @@ Comments start with `#`. Every example in section 7 is a script in
 
 ### Checking your build
 
-```powershell
+```bash
 cargo test --workspace
 ```
 
-622 tests should pass (567 unit and integration tests plus 55
-documentation tests). If they do, your build is the same build this
-documentation was written against — measured on Windows 11 Pro for
-Workstations 25H2, rustc 1.91.1, target `x86_64-pc-windows-msvc`.
+605 tests should pass. If they do, your build is the same build this
+documentation was written against.
 
 ---
 
@@ -439,18 +430,32 @@ output, which is exactly the property section 5.2 promises you have.
 
 ---
 
-## 7. Nineteen worked examples
+## 7. Thirty-eight worked examples
 
 Every transcript below is genuine program output. The scripts are in
 [`scripts/solveit/`](scripts/solveit) and you can run any of them:
 
-```powershell
+```bash
 cargo run -p posim --release -- --script scripts/solveit/01_elastic_head_on.posim
 ```
 
 The examples are ordered roughly by difficulty and each one checks the
 simulator against something known independently — a closed-form
 solution, a textbook identity, or a hand calculation.
+
+Examples 1–19 use the core language. Examples 20–38 add the **SQLite
+dataset layer**: each records its run into a database under
+`datasets/`, answers its physics question **in SQL**, and derives
+plots and movies from the recording — and examples 36–38 add
+**trajectory algebra** (`DATASET DIFF`/`SUM`, alignment checked) and
+the **fourteen classical curvilinear coordinate systems**
+(`DATASET MAP` and the value-level `cart_to_*`/`*_to_cart` builtins;
+see §8.3–§8.4 and the grammar guide §5.14–§5.15). They need the
+sidecar built once:
+
+```bash
+cd dataset_tools && cargo build --release
+```
 
 ---
 
@@ -1434,7 +1439,1116 @@ converges in every one, `1e-8` in none. `RUN` says when the floor bit.
 
 ---
 
-## 8. Watching it: the scene window and browser videos
+### Example 20 — a Kepler ellipse, measured by its own database
+
+**The physics.** A true two-body problem: sun mass 3 and planet mass 1 under G = 1, so
+the relative orbit has gravitational parameter *μ = G(M+m) = 4*.
+Starting at perihelion separation *r_p = a(1−e) = 1* with *a = 2.5*,
+*e = 0.6*, the relative vis-viva speed is *√(μ(2/r_p − 1/a)) = √6.4*,
+split about the stationary centre of mass (the planet takes 3/4 of it,
+the sun 1/4 backwards). Aphelion must come out at *a(1+e) = 4* and one
+period is *T = 2π√(a³/μ) = 12.418264743622237*.
+
+**Why it is a real test.** The whole orbit is recorded into a SQLite **dataset** as it runs, and
+then the perihelion and aphelion are measured **by the database**: a
+self-join pairs the two bodies frame by frame and takes the extremes of
+their separation. The simulator never computes either number — SQL
+does.
+
+```
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun    { mass = 3, radius = 0.15, position = [-0.25, 0, 0], velocity = [0, -0.6324555320336759, 0] }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[3]= obj1 as planet
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit20_kepler
+Out[5]= dataset solveit20_kepler created (datasets/solveit20_kepler.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 12.418264743622237 steps 200
+Out[6]= t = 12.418264743622238 (659 solver steps, 200 snapshots, |dE/E| = 2.096e-9)
+In[7]:= dataset info
+Out[7]= dataset solveit20_kepler: 2 bodies, 200 frames, 400 states
+In[8]:= sql "SELECT MIN(sqrt((p.x-s.x)*(p.x-s.x) + (p.y-s.y)*(p.y-s.y))) AS perihelion, MAX(sqrt((p.x-s.x)*(p.x-s.x) + (p.y-s.y)*(p.y-s.y))) AS aphelion FROM states p JOIN states s ON s.frame = p.frame WHERE p.body = (SELECT body FROM bodies WHERE name = 'planet') AND s.body = (SELECT body FROM bodies WHERE name = 'sun')"
+Out[8]= perihelion | aphelion
+1.000000001093295 | 4.000000026379791
+In[9]:= sql "SELECT MAX(ABS(comx)) AS com_x, MAX(ABS(comy)) AS com_y, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+Out[9]= com_x | com_y | energy_spread
+5.235284428195541e-12 | 5.539403137577725e-12 | 4.5303885087832896e-9
+In[10]:= movie create solveit20_kepler
+Out[10]= movie solveit20_kepler created from dataset solveit20_kepler (movies/solveit20_kepler.html, 200 frames, 2 bodies)
+In[11]:= movie play solveit20_kepler
+Out[11]= movie solveit20_kepler (movies/solveit20_kepler.html) ready (browser suppressed)
+In[12]:= dataset play solveit20_kepler
+Out[12]= dataset plots written to datasets/solveit20_kepler_plots.html (browser suppressed)
+In[13]:= dataset close
+Out[13]= dataset solveit20_kepler closed
+```
+
+**What to notice.** Perihelion `1.000000001`, aphelion `4.000000026` — the analytic
+ellipse, read back out of a database with one query. The centre of
+mass sat still to 5e-12. `movie create` then derives the 3-D player
+page `movies/solveit20_kepler.html` and `dataset play` the plots page,
+both from the same tables; run without `POSIM_NO_BROWSER=1` and both
+open in your browser.
+
+---
+
+### Example 21 — free fall against the closed form, checked inside the database
+
+**The physics.** A ball released from y = 10 under g = 9.81 must follow
+*y(t) = 10 − (9.81/2)t²* exactly. Twenty RUN outputs land in the
+dataset as frames.
+
+**Why it is a real test.** One SQL Common Table Expression joins the recorded states to the
+analytic curve and reports the worst deviation over the whole run —
+the comparison logic lives entirely in the query.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= new sphere as ball { mass = 2, radius = 0.5, position = [0, 10, 0] }
+Out[3]= obj0 as ball
+In[4]:= dataset create solveit21_free_fall
+Out[4]= dataset solveit21_free_fall created (datasets/solveit21_free_fall.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 1 steps 20
+Out[5]= t = 1 (12 solver steps, 20 snapshots, |dE/E| = 1.449e-16)
+In[6]:= dataset snapshot
+Out[6]= frame 20 recorded at t = 1
+In[7]:= sql "WITH err AS (SELECT f.t AS t, s.y - (10.0 - 4.905 * f.t * f.t) AS e FROM states s JOIN frames f ON f.frame = s.frame) SELECT MAX(ABS(e)) AS worst_abs_error FROM err"
+Out[7]= worst_abs_error
+3.552713678800501e-15
+In[8]:= sql "SELECT COUNT(*) AS frames, MIN(t) AS t_first, MAX(t) AS t_last FROM frames"
+Out[8]= frames | t_first | t_last
+21 | 0.05 | 1
+In[9]:= dataset play
+Out[9]= dataset plots written to datasets/solveit21_free_fall_plots.html (browser suppressed)
+In[10]:= dataset close
+Out[10]= dataset solveit21_free_fall closed
+```
+
+**What to notice.** `worst_abs_error = 3.55e-15` — machine epsilon territory, because a
+polynomial of degree two is inside the multistep method's exactness
+class. `dataset play` writes the plots page for the drop.
+
+---
+
+### Example 22 — an equal-mass circular binary, audited by SQL
+
+**The physics.** Two unit masses a distance 2 apart, each on a circle of radius 1
+about the common centre: *v²/r = Gm/d²* gives *v = 0.5* and the period
+is *T = 2πr/v = 4π*.
+
+**Why it is a real test.** Three queries audit three invariants at once: the centre of mass must
+not move (`MAX(ABS(comx))`), BOTH stars' orbit radii must stay 1
+(`GROUP BY` over a join to the bodies table), and the energy ledger
+must stay flat.
+
+```
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as star_a { mass = 1, radius = 0.1, position = [-1, 0, 0], velocity = [0, -0.5, 0] }
+Out[2]= obj0 as star_a
+In[3]:= new sphere as star_b { mass = 1, radius = 0.1, position = [ 1, 0, 0], velocity = [0,  0.5, 0] }
+Out[3]= obj1 as star_b
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit22_binary
+Out[5]= dataset solveit22_binary created (datasets/solveit22_binary.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 12.566370614359172 steps 150
+Out[6]= t = 12.566370614359172 (278 solver steps, 150 snapshots, |dE/E| = 4.496e-11)
+In[7]:= sql "SELECT MAX(ABS(comx)) AS com_x, MAX(ABS(comy)) AS com_y FROM frames"
+Out[7]= com_x | com_y
+7.436273818939299e-13 | 5.651035195342047e-14
+In[8]:= sql "SELECT b.name, MIN(sqrt(s.x*s.x + s.y*s.y)) AS r_min, MAX(sqrt(s.x*s.x + s.y*s.y)) AS r_max FROM states s JOIN bodies b ON b.body = s.body GROUP BY b.name ORDER BY b.name"
+Out[8]= name | r_min | r_max
+star_a | 0.9999999996159721 | 1.0000000006498577
+star_b | 0.9999999996174593 | 1.0000000006488365
+In[9]:= sql "SELECT MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+Out[9]= energy_spread
+9.972572767580345e-11
+In[10]:= movie create solveit22_binary
+Out[10]= movie solveit22_binary created from dataset solveit22_binary (movies/solveit22_binary.html, 150 frames, 2 bodies)
+In[11]:= dataset close
+Out[11]= dataset solveit22_binary closed
+```
+
+**What to notice.** Radii hold 1 to 2e-9 for both stars over a full period, the COM to
+1e-11, the energy to 5e-10 — and the movie shows two spheres chasing
+each other around a fixed point with their trails closing into
+circles.
+
+---
+
+### Example 23 — three restitutions, one query
+
+**The physics.** Three balls drop 5 m onto a static slab under g = 10, arriving at
+speed 10. A ball with restitution *e* leaves at speed *10e*: the
+recorded maxima of `vy` must be exactly 10, 7 and 5 for
+*e* = 1.0, 0.7, 0.5.
+
+**Why it is a real test.** One `GROUP BY b.name` reads all three restitution ladders out of the
+dataset simultaneously — per-body maxima over a join, ordered by
+rebound speed.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -10, 0]
+In[3]:= collide on
+Out[3]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[4]:= new cuboid as floor { mass = 1, half_extents = [50, 0.05, 50], position = [0, -0.05, 0], inverse_mass = 0 }
+Out[4]= obj0 as floor
+In[5]:= new sphere as elastic { mass = 1, radius = 0.5, position = [-2, 5.5, 0], restitution = 1.0 }
+Out[5]= obj1 as elastic
+In[6]:= new sphere as lively  { mass = 1, radius = 0.5, position = [ 0, 5.5, 0], restitution = 0.7 }
+Out[6]= obj2 as lively
+In[7]:= new sphere as dull    { mass = 1, radius = 0.5, position = [ 2, 5.5, 0], restitution = 0.5 }
+Out[7]= obj3 as dull
+In[8]:= dataset create solveit23_rebounds
+Out[8]= dataset solveit23_rebounds created (datasets/solveit23_rebounds.db, journal_mode=wal, schema v1) — recording armed
+In[9]:= run 3 steps 300
+Out[9]= t = 3 (885 solver steps, 300 snapshots, |dE/E| = 5.333e-1, 20 collision(s) — CONTACTS lists them)
+In[10]:= sql "SELECT b.name, MAX(s.vy) AS rebound_speed FROM states s JOIN bodies b ON b.body = s.body WHERE b.wall = 0 AND b.name <> 'floor' GROUP BY b.name ORDER BY rebound_speed DESC"
+Out[10]= name | rebound_speed
+elastic | 10.000000000000028
+lively | 7.000000000000018
+dull | 5.000000000000014
+In[11]:= sql "SELECT MAX(ncollisions) AS collisions FROM frames"
+Out[11]= collisions
+20
+In[12]:= movie create solveit23_rebounds
+Out[12]= movie solveit23_rebounds created from dataset solveit23_rebounds (movies/solveit23_rebounds.html, 300 frames, 4 bodies)
+In[13]:= dataset close
+Out[13]= dataset solveit23_rebounds closed
+```
+
+**What to notice.** `10.000000000000028 / 7.000000000000018 / 5.000000000000014` — the
+impulse law to 14 digits, three bodies at once, extracted by SQL. The
+frames table's cumulative `ncollisions` column gives the bounce count
+for free.
+
+---
+
+### Example 24 — the elastic exchange of Example 1, replayed from the database
+
+**The physics.** Masses 3 and 1 meet head-on at +2 and −4; the closed form says they
+leave at −1 and +5 (Example 1 verified this live).
+
+**Why it is a real test.** Here the same numbers are recovered FROM THE RECORDING: scalar
+subqueries pull each ball's first and last recorded velocity, and the
+frames table shows momentum and energy flat through the impact. The
+dataset is a faithful replay of the whole event, not just its
+endpoints.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= collide on
+Out[2]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[3]:= new sphere as heavy { mass = 3, radius = 0.5, position = [-3, 0, 0], velocity = [2, 0, 0] }
+Out[3]= obj0 as heavy
+In[4]:= new sphere as light { mass = 1, radius = 0.5, position = [ 3, 0, 0], velocity = [-4, 0, 0] }
+Out[4]= obj1 as light
+In[5]:= dataset create solveit24_exchange
+Out[5]= dataset solveit24_exchange created (datasets/solveit24_exchange.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 2 steps 200
+Out[6]= t = 2 (53 solver steps, 200 snapshots, |dE/E| = 0.000e0, 1 collision(s) — CONTACTS lists them)
+In[7]:= sql "SELECT (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='heavy') ORDER BY frame ASC  LIMIT 1) AS heavy_before, (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='heavy') ORDER BY frame DESC LIMIT 1) AS heavy_after"
+Out[7]= heavy_before | heavy_after
+2 | -1
+In[8]:= sql "SELECT (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='light') ORDER BY frame ASC  LIMIT 1) AS light_before, (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='light') ORDER BY frame DESC LIMIT 1) AS light_after"
+Out[8]= light_before | light_after
+-4 | 5
+In[9]:= sql "SELECT MAX(px) - MIN(px) AS momentum_spread, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+Out[9]= momentum_spread | energy_spread
+0 | 0
+In[10]:= movie create solveit24_exchange
+Out[10]= movie solveit24_exchange created from dataset solveit24_exchange (movies/solveit24_exchange.html, 200 frames, 2 bodies)
+In[11]:= dataset close
+Out[11]= dataset solveit24_exchange closed
+```
+
+**What to notice.** `heavy: 2 → −1`, `light: −4 → 5`, and both
+spreads EXACTLY 0 — `MAX − MIN` of the momentum and of the energy over
+every recorded frame is zero to the bit: the collision exactly as
+Example 1 saw it live, recovered after the fact from SQLite.
+
+---
+
+### Example 25 — a helical cyclotron, its radius and pitch by aggregate
+
+**The physics.** A charge q = −3 in B = 6ẑ with v⊥ = 5 gyrates at radius
+*r = m v⊥/(|q|B) = 10/18 = 0.5555…* with period
+*T = 2πm/(|q|B) = 0.6981317…*; an added v_z = 1 stretches the circle
+into a helix of pitch *v_z T*.
+
+**Why it is a real test.** `MAX(x) − MIN(x)` over the recorded states is the gyro-diameter;
+`MAX(z)` is the pitch; and `MAX−MIN` of `√(vx²+vy²+vz²)` proves the
+magnetic force did no work — three aggregates, three physics facts.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.b_field = [0, 0, 6]
+In[3]:= new sphere as ion { mass = 2, charge = -3, radius = 0.05, position = [0, 0, 0], velocity = [5, 0, 1] }
+Out[3]= obj0 as ion
+In[4]:= method bdf
+Out[4]= method = CVODE BDF
+In[5]:= dataset create solveit25_cyclotron
+Out[5]= dataset solveit25_cyclotron created (datasets/solveit25_cyclotron.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 0.6981317007977318 steps 300
+Out[6]= t = 0.6981317007977318 (300 solver steps, 300 snapshots, |dE/E| = 2.096e-8)
+In[7]:= sql "SELECT (MAX(x) - MIN(x)) / 2.0 AS gyroradius, MAX(z) AS pitch FROM states"
+Out[7]= gyroradius | pitch
+0.5555555528977862 | 0.6981317007977318
+In[8]:= sql "SELECT MAX(sqrt(vx*vx + vy*vy + vz*vz)) - MIN(sqrt(vx*vx + vy*vy + vz*vz)) AS speed_spread FROM states"
+Out[8]= speed_spread
+5.356468157913241e-8
+In[9]:= 2 * 5 / (3 * 6)
+Out[9]= 0.5555555555555556
+In[10]:= 1 * 0.6981317007977318
+Out[10]= 0.6981317007977318
+In[11]:= movie create solveit25_cyclotron
+Out[11]= movie solveit25_cyclotron created from dataset solveit25_cyclotron (movies/solveit25_cyclotron.html, 300 frames, 1 bodies)
+In[12]:= dataset close
+Out[12]= dataset solveit25_cyclotron closed
+```
+
+**What to notice.** Gyroradius `0.55555555` (5/9), pitch `0.6981317007977318` (exactly
+v_z T), speed spread 5e-9. The movie shows the helix climbing its
+axis with the trail tracing the barber-pole.
+
+---
+
+### Example 26 — the Dzhanibekov flip, with its half-flips counted by a window function
+
+**The physics.** The tennis-racket theorem: a cuboid with three unequal moments spun
+almost exactly about its MIDDLE axis tumbles over and back forever,
+while |L| is conserved exactly.
+
+**Why it is a real test.** The frames table shows `MIN = MAX` for |L| — bit-identical
+conservation. Then a window function (`LAG(SIGN(qx)) OVER (ORDER BY
+frame)`) watches the orientation component qx change sign and COUNTS
+the half-flips — event detection done entirely in SQL.
+
+```
+In[1]:= new cuboid as racket { mass = 1, half_extents = [1.6, 0.9, 0.25], angular_momentum = [0.02, 3, 0.02] }
+Out[1]= obj0 as racket
+In[2]:= dataset create solveit26_dzhanibekov
+Out[2]= dataset solveit26_dzhanibekov created (datasets/solveit26_dzhanibekov.db, journal_mode=wal, schema v1) — recording armed
+In[3]:= run 8 steps 400
+Out[3]= t = 8 (694 solver steps, 400 snapshots, |dE/E| = 3.849e-10)
+In[4]:= sql "SELECT MIN(sqrt(lx*lx + ly*ly + lz*lz)) AS L_min, MAX(sqrt(lx*lx + ly*ly + lz*lz)) AS L_max FROM frames"
+Out[4]= L_min | L_max
+3.0001333303705024 | 3.0001333303705024
+In[5]:= sql "SELECT MIN(qx) AS qx_min, MAX(qx) AS qx_max FROM states"
+Out[5]= qx_min | qx_max
+-0.9991758434501936 | 0.9991519536832777
+In[6]:= sql "WITH sgn AS (SELECT frame, SIGN(qx) AS s, LAG(SIGN(qx)) OVER (ORDER BY frame) AS prev FROM states WHERE ABS(qx) > 0.05) SELECT COUNT(*) AS zero_crossings FROM sgn WHERE prev IS NOT NULL AND s <> prev"
+Out[6]= zero_crossings
+3
+In[7]:= dataset play
+Out[7]= dataset plots written to datasets/solveit26_dzhanibekov_plots.html (browser suppressed)
+In[8]:= movie create solveit26_dzhanibekov
+Out[8]= movie solveit26_dzhanibekov created from dataset solveit26_dzhanibekov (movies/solveit26_dzhanibekov.html, 400 frames, 1 bodies)
+In[9]:= dataset close
+Out[9]= dataset solveit26_dzhanibekov closed
+```
+
+**What to notice.** `L_min = L_max = 3.0001333303705024` — not close, IDENTICAL. Three
+zero crossings of qx in eight seconds. `dataset play` shows qx
+swinging between ±1 while |L| draws a flat line.
+
+---
+
+### Example 27 — the recording switch, proven by the gap it leaves
+
+**The physics.** Recording is part of the grammar: `dataset record off` pauses
+appending, `on` resumes it, and physics is untouched either way. A
+probe falls for three half-second runs with the middle one unrecorded.
+
+**Why it is a real test.** The dataset itself is the proof: 10 frames, a t-range that RUNS
+THROUGH the gap, and `COUNT(*) = 0` strictly inside it. Auditing
+what a switch did is a one-line WHERE clause.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= new sphere as probe { mass = 1, radius = 0.2, position = [0, 20, 0] }
+Out[3]= obj0 as probe
+In[4]:= dataset create solveit27_switch
+Out[4]= dataset solveit27_switch created (datasets/solveit27_switch.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 0.5 steps 5
+Out[5]= t = 0.5 (12 solver steps, 5 snapshots, |dE/E| = 0.000e0)
+In[6]:= dataset record off
+Out[6]= dataset recording off
+In[7]:= run 0.5 steps 5
+Out[7]= t = 1 (8 solver steps, 5 snapshots, |dE/E| = 1.693e-10)
+In[8]:= dataset record
+Out[8]= dataset recording is off (open: solveit27_switch)
+In[9]:= dataset record on
+Out[9]= dataset recording on
+In[10]:= run 0.5 steps 5
+Out[10]= t = 1.5 (8 solver steps, 5 snapshots, |dE/E| = 1.362e-10)
+In[11]:= sql "SELECT COUNT(*) AS frames, MIN(t) AS t_first, MAX(t) AS t_last FROM frames"
+Out[11]= frames | t_first | t_last
+10 | 0.1 | 1.5
+In[12]:= sql "SELECT COUNT(*) AS frames_in_gap FROM frames WHERE t > 0.501 AND t < 0.999"
+Out[12]= frames_in_gap
+0
+In[13]:= dataset info
+Out[13]= dataset solveit27_switch: 1 bodies, 10 frames, 10 states
+In[14]:= dataset close
+Out[14]= dataset solveit27_switch closed
+```
+
+**What to notice.** `frames = 10`, `t_first = 0.1`, `t_last = 1.5`, and zero frames in
+(0.5, 1.0) — the gap is exactly where the switch was off, and the
+ball's physics never noticed.
+
+---
+
+### Example 28 — the DAE pendulum, its rod audited to roundoff
+
+**The physics.** Example 17's pendulum: the rod is an algebraic constraint, not a
+force, and IDA integrates the GGL index-2 DAE. The recorded bob
+coordinates must satisfy √(x²+y²+z²) = 1 at every frame.
+
+**Why it is a real test.** The constraint audit runs OVER THE RECORDING: one aggregate recomputes
+the rod length from the stored coordinates at all 200 frames and takes
+the worst deviation. This is exactly the drift the GGL formulation
+promises to kill.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= collide off
+Out[3]= collisions OFF (0 collidable pair(s); 0 impulse(s) so far)
+In[4]:= new sphere as pivot { mass = 1, radius = 0.02, position = [0, 0, 0], inverse_mass = 0 }
+Out[4]= obj0 as pivot
+In[5]:= new sphere as bob { mass = 1, radius = 0.05, position = [0.019998666693333084, -0.9998000066665778, 0] }
+Out[5]= obj1 as bob
+In[6]:= constrain pivot bob
+Out[6]= constraint0: rod obj0 <-> obj1, 1 row(s) (METHOD IDA is required to integrate it)
+In[7]:= method ida
+Out[7]= method = IDA (constrained DAE, GGL index-2)
+In[8]:= dataset create solveit28_pendulum
+Out[8]= dataset solveit28_pendulum created (datasets/solveit28_pendulum.db, journal_mode=wal, schema v1) — recording armed
+In[9]:= run 2.0060666807106475 steps 200
+Out[9]= t = 2.0060666807106475 (384 solver steps, 200 snapshots, |dE/E| = 6.942e-13)
+In[10]:= sql "SELECT MAX(ABS(sqrt(x*x + y*y + z*z) - 1.0)) AS worst_rod_stretch FROM states WHERE body = (SELECT body FROM bodies WHERE name = 'bob')"
+Out[10]= worst_rod_stretch
+7.838174553853605e-14
+In[11]:= sql "SELECT MIN(y) AS lowest_bob_y FROM states WHERE body = (SELECT body FROM bodies WHERE name = 'bob')"
+Out[11]= lowest_bob_y
+-0.9999999999996914
+In[12]:= constraints
+Out[12]= constraint0: rod obj0 <-> obj1, 1 row(s)
+worst |g| = 7.105427357601002e-15, worst |g_dot| = 2.892412673190032e-14
+In[13]:= movie create solveit28_pendulum
+Out[13]= movie solveit28_pendulum created from dataset solveit28_pendulum (movies/solveit28_pendulum.html, 200 frames, 2 bodies)
+In[14]:= dataset close
+Out[14]= dataset solveit28_pendulum closed
+```
+
+**What to notice.** `worst_rod_stretch = 7.8e-14` over a full period — the constraint held
+to roundoff at every recorded instant, and the movie shows the swing
+with the pivot pinned.
+
+---
+
+### Example 29 — the box rattle, its energy ledger in SQLite
+
+**The physics.** The regression scene: a rigid BOX 4, G = 0, three different shapes
+thrown across it, every bounce a genuine CVODE rootfinding event.
+
+**Why it is a real test.** The frames table carries the cumulative collision count and the total
+energy, so the whole conservation claim — dozens of impacts, zero
+drift — is one SQL line. A second query counts recorded states per
+shape through a join.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= box 4
+Out[2]= box: inner size 4 x 4 x 4 — six static walls obj0, obj1, obj2, obj3, obj4, obj5 with inverse_mass = 0 (infinitely massive); objects collide elastically off the inside faces
+In[3]:= collide on
+Out[3]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[4]:= new cylinder { mass = 2, radius = 0.25, height = 1.5, position = [-1, 0.3, 0], velocity = [2, 0.5, -1] }
+Out[4]= obj6
+In[5]:= new disk     { mass = 0.66666666666666663, radius = 1, position = [1, -0.8, 0.5], velocity = [-1, 1, 0.6] }
+Out[5]= obj7
+In[6]:= new cuboid   { mass = 1.6666666666666667, half_extents = [0.5, 0.5, 0.5], position = [0.2, 1.1, -0.9], velocity = [0.5, -2, 1] }
+Out[6]= obj8
+In[7]:= method adams
+Out[7]= method = CVODE Adams
+In[8]:= dataset create solveit29_box_rattle
+Out[8]= dataset solveit29_box_rattle created (datasets/solveit29_box_rattle.db, journal_mode=wal, schema v1) — recording armed
+In[9]:= run 6 steps 300
+Out[9]= t = 6 (3235 solver steps, 300 snapshots, |dE/E| = 4.495e-10, 41 collision(s) — CONTACTS lists them)
+In[10]:= sql "SELECT MAX(ncollisions) AS collisions, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+Out[10]= collisions | energy_spread
+41 | 4.6800590070006365e-9
+In[11]:= sql "SELECT b.shape, COUNT(*) AS recorded_states FROM states s JOIN bodies b ON b.body = s.body WHERE b.wall = 0 GROUP BY b.shape ORDER BY b.shape"
+Out[11]= shape | recorded_states
+cuboid | 300
+cylinder | 300
+disk | 300
+In[12]:= movie create solveit29_box_rattle
+Out[12]= movie solveit29_box_rattle created from dataset solveit29_box_rattle (movies/solveit29_box_rattle.html, 300 frames, 9 bodies)
+In[13]:= movie play solveit29_box_rattle
+Out[13]= movie solveit29_box_rattle (movies/solveit29_box_rattle.html) ready (browser suppressed)
+In[14]:= dataset close
+Out[14]= dataset solveit29_box_rattle closed
+```
+
+**What to notice.** 41 collisions resolved, energy spread 4.68e-9
+across all of them. The movie draws the BOX as
+the dashed wireframe (the six wall slabs are never drawn — the same
+pinned rule as the scene window) with cylinder, disk and cuboid
+ricocheting inside.
+
+---
+
+### Example 30 — schema surgery on a copy — the dataset is a real database
+
+**The physics.** No physics question this time: the dataset itself is the subject.
+`dataset copy` duplicates a recording; the copy then gets a derived
+column (`ALTER TABLE` + `UPDATE`), a `VIEW`, and a `PRAGMA`
+inspection — ordinary SQLite DDL/DML passing through the `sql` command
+verbatim.
+
+**Why it is a real test.** It demonstrates the rule that there is no special dataset API to
+learn: anything SQLite can do to a database, the `sql` command can do
+to a dataset. And it proves COPY isolates: the original never grows
+the new column.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= new sphere as ball { mass = 1, radius = 0.3, position = [3, 4, 0] }
+Out[3]= obj0 as ball
+In[4]:= dataset create solveit30_original
+Out[4]= dataset solveit30_original created (datasets/solveit30_original.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 0.8 steps 8
+Out[5]= t = 0.8 (12 solver steps, 8 snapshots, |dE/E| = 1.811e-16)
+In[6]:= dataset close
+Out[6]= dataset solveit30_original closed
+In[7]:= dataset copy solveit30_original solveit30_lab
+Out[7]= dataset solveit30_original copied to solveit30_lab
+In[8]:= dataset open solveit30_lab
+Out[8]= dataset solveit30_lab opened (1 bodies, 8 frames, 8 states) — recording armed
+In[9]:= sql "ALTER TABLE states ADD COLUMN r REAL"
+Out[9]= ok (0 row(s) changed)
+In[10]:= sql "UPDATE states SET r = sqrt(x*x + y*y + z*z)"
+Out[10]= ok (8 row(s) changed)
+In[11]:= sql "SELECT MIN(r) AS r_min, MAX(r) AS r_max FROM states"
+Out[11]= r_min | r_max
+3.121053770763972 | 4.960847296833475
+In[12]:= sql "CREATE VIEW drop_curve AS SELECT f.t, s.y, s.r FROM states s JOIN frames f ON f.frame = s.frame"
+Out[12]= ok (0 row(s) changed)
+In[13]:= sql "SELECT COUNT(*) AS view_rows FROM drop_curve"
+Out[13]= view_rows
+8
+In[14]:= sql "SELECT name FROM pragma_table_info('states') ORDER BY cid"
+Out[14]= name
+frame
+body
+x
+y
+z
+qw
+qx
+qy
+qz
+vx
+vy
+vz
+wx
+wy
+wz
+r
+In[15]:= dataset close
+Out[15]= dataset solveit30_lab closed
+In[16]:= dataset open solveit30_original
+Out[16]= dataset solveit30_original opened (1 bodies, 8 frames, 8 states) — recording armed
+In[17]:= sql "SELECT COUNT(*) AS original_columns FROM pragma_table_info('states')"
+Out[17]= original_columns
+15
+In[18]:= dataset close
+Out[18]= dataset solveit30_original closed
+In[19]:= dataset delete solveit30_lab
+Out[19]= dataset solveit30_lab deleted
+```
+
+**What to notice.** The copy has 15 columns in `states` (the 14 originals plus `r`), the
+original still has 14. `pragma_table_info` read the schema, the VIEW
+joined tables, and `dataset delete` removed the lab copy at the end.
+
+---
+
+### Example 31 — two integrators, two datasets, one ATTACH
+
+**The physics.** The same free fall recorded twice: once under CVODE Adams, once under
+BDF, into two separate database files.
+
+**Why it is a real test.** SQLite's `ATTACH DATABASE` mounts the first file inside the second
+session, and a single JOIN reports the largest disagreement between
+the two solvers frame by frame — a cross-dataset diff with no
+application code at all.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= new sphere as probe { mass = 1, radius = 0.2, position = [0, 10, 0] }
+Out[3]= obj0 as probe
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit31_adams
+Out[5]= dataset solveit31_adams created (datasets/solveit31_adams.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 1 steps 10
+Out[6]= t = 1 (12 solver steps, 10 snapshots, |dE/E| = 7.243e-16)
+In[7]:= dataset close
+Out[7]= dataset solveit31_adams closed
+In[8]:= reset
+Out[8]= system reset
+In[9]:= set system.g_constant = 0
+In[10]:= set system.uniform_gravity = [0, -9.81, 0]
+In[11]:= new sphere as probe { mass = 1, radius = 0.2, position = [0, 10, 0] }
+Out[11]= obj0 as probe
+In[12]:= method bdf
+Out[12]= method = CVODE BDF
+In[13]:= dataset create solveit31_bdf
+Out[13]= dataset solveit31_bdf created (datasets/solveit31_bdf.db, journal_mode=wal, schema v1) — recording armed
+In[14]:= run 1 steps 10
+Out[14]= t = 1 (28 solver steps, 10 snapshots, |dE/E| = 5.616e-10)
+In[15]:= sql "ATTACH DATABASE 'datasets/solveit31_adams.db' AS adams"
+Out[15]= ok (0 row(s) changed)
+In[16]:= sql "SELECT COUNT(*) AS paired_frames FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body"
+Out[16]= paired_frames
+10
+In[17]:= sql "SELECT MAX(ABS(s.y - a.y)) AS worst_method_gap FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body"
+Out[17]= worst_method_gap
+5.615900633415549e-9
+In[18]:= sql "DETACH DATABASE adams"
+Out[18]= ok (0 row(s) changed)
+In[19]:= dataset close
+Out[19]= dataset solveit31_bdf closed
+```
+
+**What to notice.** `worst_method_gap = 5.6e-9`: two independent multistep families agreed
+on every recorded coordinate to solver tolerance, and the referee was
+a SQL JOIN. `DETACH` unmounts cleanly afterwards.
+
+---
+
+### Example 32 — differentiating a trajectory inside the database
+
+**The physics.** The dataset stores both y and vy. A backward finite difference
+*(y_k − y_{k−1})/(t_k − t_{k−1})* built with `LAG(...) OVER (ORDER BY
+frame)` should disagree with the recorded vy by *g·dt/2* to leading
+order — here 9.81 · 0.05 / 2 = 0.245250….
+
+**Why it is a real test.** Numerical analysis as a query: the window function computes the
+derivative estimate, the CTE wraps it, and the aggregate takes the
+worst error — which lands on the theoretical constant to 10 digits.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= new sphere as ball { mass = 1, radius = 0.2, position = [0, 30, 0] }
+Out[3]= obj0 as ball
+In[4]:= dataset create solveit32_window
+Out[4]= dataset solveit32_window created (datasets/solveit32_window.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 2 steps 40
+Out[5]= t = 2 (12 solver steps, 40 snapshots, |dE/E| = 1.931e-16)
+In[6]:= sql "WITH fd AS (SELECT f.t AS t, s.vy AS vy, (s.y - LAG(s.y) OVER (ORDER BY s.frame)) / (f.t - LAG(f.t) OVER (ORDER BY s.frame)) AS v_backward FROM states s JOIN frames f ON f.frame = s.frame) SELECT COUNT(*) AS differences, MAX(ABS(v_backward - vy)) AS worst_error FROM fd WHERE v_backward IS NOT NULL"
+Out[6]= differences | worst_error
+39 | 0.24525000000025088
+In[7]:= 9.81 * 0.05 / 2
+Out[7]= 0.24525000000000002
+In[8]:= dataset play
+Out[8]= dataset plots written to datasets/solveit32_window_plots.html (browser suppressed)
+In[9]:= dataset close
+Out[9]= dataset solveit32_window closed
+```
+
+**What to notice.** `worst_error = 0.24525000000025088` against the predicted
+`0.24525` — the leading-order truncation term measured exactly, by
+SQL, from a recording.
+
+---
+
+### Example 33 — the complete dataset lifecycle in one sitting
+
+**The physics.** A rock falls under Mars gravity while every DATASET subcommand takes
+a turn: CREATE, SNAPSHOT, per-STEP recording, INFO, SAVEAS (a
+checkpoint of the open dataset), more recording, COPY, LIST, DELETE,
+OPEN, plus a plain `VACUUM` through the SQL passthrough.
+
+**Why it is a real test.** It is the grammar tour: after this transcript you have seen every
+production of `datasetcmd` do its job, including the checkpoint idiom
+(SAVEAS freezes 3 frames while the original grows to 4) and the
+refusal rules (deleting an OPEN dataset is refused until CLOSE).
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -3.7, 0]
+In[3]:= new sphere as mars_rock { mass = 2, radius = 0.4, position = [0, 15, 0] }
+Out[3]= obj0 as mars_rock
+In[4]:= dataset create solveit33_tour
+Out[4]= dataset solveit33_tour created (datasets/solveit33_tour.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= dataset snapshot
+Out[5]= frame 0 recorded at t = 0
+In[6]:= step 0.5
+Out[6]= t = 0.5 (advanced by 0.5, 12 solver steps)
+In[7]:= step 0.5
+Out[7]= t = 1 (advanced by 0.5, 8 solver steps)
+In[8]:= dataset info
+Out[8]= dataset solveit33_tour: 1 bodies, 3 frames, 3 states
+In[9]:= dataset saveas solveit33_checkpoint
+Out[9]= dataset solveit33_tour saved as solveit33_checkpoint
+In[10]:= step 0.5
+Out[10]= t = 1.5 (advanced by 0.5, 8 solver steps)
+In[11]:= dataset info
+Out[11]= dataset solveit33_tour: 1 bodies, 4 frames, 4 states
+In[12]:= dataset info solveit33_checkpoint
+Out[12]= dataset solveit33_checkpoint: 1 bodies, 3 frames, 3 states
+In[13]:= sql "VACUUM"
+Out[13]= ok (0 row(s) changed)
+In[14]:= dataset list
+Out[14]= solveit20_kepler
+solveit21_free_fall
+solveit22_binary
+solveit23_rebounds
+solveit24_exchange
+solveit25_cyclotron
+solveit26_dzhanibekov
+solveit27_switch
+solveit28_pendulum
+solveit29_box_rattle
+solveit30_original
+solveit31_adams
+solveit31_bdf
+solveit32_window
+solveit33_checkpoint
+solveit33_tour
+In[15]:= dataset close
+Out[15]= dataset solveit33_tour closed
+In[16]:= dataset copy solveit33_checkpoint solveit33_twin
+Out[16]= dataset solveit33_checkpoint copied to solveit33_twin
+In[17]:= dataset list
+Out[17]= solveit20_kepler
+solveit21_free_fall
+solveit22_binary
+solveit23_rebounds
+solveit24_exchange
+solveit25_cyclotron
+solveit26_dzhanibekov
+solveit27_switch
+solveit28_pendulum
+solveit29_box_rattle
+solveit30_original
+solveit31_adams
+solveit31_bdf
+solveit32_window
+solveit33_checkpoint
+solveit33_tour
+solveit33_twin
+In[18]:= dataset delete solveit33_checkpoint
+Out[18]= dataset solveit33_checkpoint deleted
+In[19]:= dataset delete solveit33_twin
+Out[19]= dataset solveit33_twin deleted
+In[20]:= dataset list
+Out[20]= solveit20_kepler
+solveit21_free_fall
+solveit22_binary
+solveit23_rebounds
+solveit24_exchange
+solveit25_cyclotron
+solveit26_dzhanibekov
+solveit27_switch
+solveit28_pendulum
+solveit29_box_rattle
+solveit30_original
+solveit31_adams
+solveit31_bdf
+solveit32_window
+solveit33_tour
+In[21]:= dataset open solveit33_tour
+Out[21]= dataset solveit33_tour opened (1 bodies, 4 frames, 4 states) — recording armed
+In[22]:= sql "SELECT COUNT(*) AS frames FROM frames"
+Out[22]= frames
+4
+In[23]:= dataset close
+Out[23]= dataset solveit33_tour closed
+```
+
+**What to notice.** `solveit33_checkpoint` holds 3 frames while `solveit33_tour` reaches
+4 — a checkpoint is a snapshot, not a link. LIST tracks every
+create/copy/delete, and the final OPEN + COUNT proves the survivor's
+contents.
+
+---
+
+### Example 34 — two movies from one dataset
+
+**The physics.** Example 19's hinged door swings under IDA while its dataset records.
+A movie is built HALFWAY through the recording, and another at the
+end — from the same dataset.
+
+**Why it is a real test.** Movies are derived artifacts: `movie create` just reads whatever
+frames exist at that moment, so one recording can wear any number of
+movies, and `movie delete` discards a rendering without touching a
+single frame of data.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= collide off
+Out[3]= collisions OFF (0 collidable pair(s); 0 impulse(s) so far)
+In[4]:= new sphere as jamb { mass = 1, radius = 0.02, position = [0, 0, 0], inverse_mass = 0 }
+Out[4]= obj0 as jamb
+In[5]:= new cuboid as door { mass = 1, half_extents = [0.2, 0.4, 0.2], position = [0.0199986666933331, -0.9998000066665778, 0] }
+Out[5]= obj1 as door
+In[6]:= hinge jamb door [0, 0, 1]
+Out[6]= constraint0: hinge obj0 <-> obj1 about [0, 0, 1], 5 row(s) — one freedom left (METHOD IDA is required to integrate it)
+In[7]:= method ida
+Out[7]= method = IDA (constrained DAE, GGL index-2)
+In[8]:= dataset create solveit34_door
+Out[8]= dataset solveit34_door created (datasets/solveit34_door.db, journal_mode=wal, schema v1) — recording armed
+In[9]:= run 1 steps 50
+Out[9]= t = 1 (70 solver steps, 50 snapshots, |dE/E| = 1.613e-9)
+In[10]:= movie create solveit34_door as door_half
+Out[10]= movie door_half created from dataset solveit34_door (movies/door_half.html, 50 frames, 2 bodies)
+In[11]:= run 1 steps 50
+Out[11]= t = 2 (69 solver steps, 50 snapshots, |dE/E| = 3.782e-11)
+In[12]:= movie create solveit34_door as door_full
+Out[12]= movie door_full created from dataset solveit34_door (movies/door_full.html, 100 frames, 2 bodies)
+In[13]:= movie list
+Out[13]= door_full
+door_half
+solveit20_kepler
+solveit22_binary
+solveit23_rebounds
+solveit24_exchange
+solveit25_cyclotron
+solveit26_dzhanibekov
+solveit28_pendulum
+solveit29_box_rattle
+In[14]:= sql "SELECT COUNT(*) AS frames FROM frames"
+Out[14]= frames
+100
+In[15]:= movie delete door_half
+Out[15]= movie door_half deleted
+In[16]:= movie list
+Out[16]= door_full
+solveit20_kepler
+solveit22_binary
+solveit23_rebounds
+solveit24_exchange
+solveit25_cyclotron
+solveit26_dzhanibekov
+solveit28_pendulum
+solveit29_box_rattle
+In[17]:= movie play door_full
+Out[17]= movie door_full (movies/door_full.html) ready (browser suppressed)
+In[18]:= dataset close
+Out[18]= dataset solveit34_door closed
+```
+
+**What to notice.** `door_half` shows 50 frames, `door_full` 100; deleting `door_half`
+leaves the dataset's 100 frames untouched, and `movie play door_full`
+opens the swing in the browser.
+
+---
+
+### Example 35 — a spinning torus: quaternions in the database and on the screen
+
+**The physics.** A torus is symmetric about its local z axis — the ONLY thing that
+makes its spin visible is the orientation quaternion, recorded w-first
+at every frame while the wheel tumbles about a tilted axis, next to an
+anchored marker ball.
+
+**Why it is a real test.** SQL checks the recorded quaternions stay unit to roundoff
+(`MAX(ABS(qw²+qx²+qy²+qz² − 1))`) and that the tilted axis genuinely
+excites both qx and qy. The movie player rotates every ring of the
+torus by that quaternion — the pinned local-z drawing rule.
+
+```
+In[1]:= new torus as wheel { mass = 2, ring_radius = 1.5, tube_radius = 0.4, angular_velocity = [1.5, 0, 2.5] }
+Out[1]= obj0 as wheel
+In[2]:= new sphere as marker { mass = 1, radius = 0.1, position = [3, 0, 0], velocity = [0, 0.6, 0], inverse_mass = 0 }
+Out[2]= obj1 as marker
+In[3]:= set system.g_constant = 0
+In[4]:= dataset create solveit35_torus
+Out[4]= dataset solveit35_torus created (datasets/solveit35_torus.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 6 steps 240
+Out[5]= t = 6 (2012 solver steps, 240 snapshots, |dE/E| = 1.394e-11)
+In[6]:= sql "SELECT MAX(ABS(qw*qw + qx*qx + qy*qy + qz*qz - 1.0)) AS worst_unit_error FROM states"
+Out[6]= worst_unit_error
+4.440892098500626e-16
+In[7]:= sql "SELECT b.name, MAX(ABS(s.qx)) AS qx_swing, MAX(ABS(s.qy)) AS qy_swing FROM states s JOIN bodies b ON b.body = s.body GROUP BY b.name ORDER BY b.name"
+Out[7]= name | qx_swing | qy_swing
+marker | 0 | 0
+wheel | 0.2891928067948092 | 0.2803142649501159
+In[8]:= angmom
+Out[8]= [3.675, 0, 11.850000000000001]
+In[9]:= movie create solveit35_torus
+Out[9]= movie solveit35_torus created from dataset solveit35_torus (movies/solveit35_torus.html, 240 frames, 2 bodies)
+In[10]:= dataset close
+Out[10]= dataset solveit35_torus closed
+```
+
+**What to notice.** `worst_unit_error = 4.4e-16`: the integrator's quaternion
+renormalization, witnessed in the recording. In the movie the tube
+rings visibly roll while the ring circles precess — spin you could
+not see on a featureless sphere.
+
+---
+
+### Example 36 — the teacher's experiment — change a mass, rerun, subtract
+
+**The physics.** Two trials of the same two-body system over the SAME space-time
+domain (identical start, identical `run 2 steps 40` grid); the only
+difference is the planet's mass, 1 in trial A and 1.5 in trial B. The
+mutual dynamics change, so the trajectories drift apart from t = 0.
+
+**Why it is a real test.** `DATASET DIFF` is trajectory algebra with its dimensions checked:
+same frame count, bit-equal time grid, same body set — else it errors
+naming the first mismatch. And the algebra must CLOSE: rebuilding
+trial A as `(A − B) + B` and diffing against the original must give
+zero to roundoff. SQL reads both facts out of the difference
+datasets.
+
+```
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[3]= obj1 as planet
+In[4]:= dataset create solveit36_trial_a
+Out[4]= dataset solveit36_trial_a created (datasets/solveit36_trial_a.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 2 steps 40
+Out[5]= t = 2 (183 solver steps, 40 snapshots, |dE/E| = 3.639e-9)
+In[6]:= dataset close
+Out[6]= dataset solveit36_trial_a closed
+In[7]:= reset
+Out[7]= system reset
+In[8]:= set system.g_constant = 1
+In[9]:= new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+Out[9]= obj0 as sun
+In[10]:= new sphere as planet { mass = 1.5, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[10]= obj1 as planet
+In[11]:= dataset create solveit36_trial_b
+Out[11]= dataset solveit36_trial_b created (datasets/solveit36_trial_b.db, journal_mode=wal, schema v1) — recording armed
+In[12]:= run 2 steps 40
+Out[12]= t = 2 (199 solver steps, 40 snapshots, |dE/E| = 3.197e-9)
+In[13]:= dataset close
+Out[13]= dataset solveit36_trial_b closed
+In[14]:= dataset diff solveit36_trial_a solveit36_trial_b as solveit36_delta
+Out[14]= dataset solveit36_delta = solveit36_trial_a - solveit36_trial_b (40 frames, 2 bodies)
+In[15]:= dataset open solveit36_delta
+Out[15]= dataset solveit36_delta opened (2 bodies, 40 frames, 80 states) — recording armed
+In[16]:= sql "SELECT MAX(ABS(x)) AS max_dx, MAX(ABS(y)) AS max_dy FROM states"
+Out[16]= max_dx | max_dy
+0.26778294538839353 | 0.4995465204100412
+In[17]:= sql "SELECT t, MAX(ABS(x)) AS dx_at_t FROM states JOIN frames USING(frame) GROUP BY frame ORDER BY frame DESC LIMIT 3"
+Out[17]= t | dx_at_t
+2 | 0.26778294538839353
+1.95 | 0.26566104547420744
+1.9 | 0.26312812645046635
+In[18]:= dataset close
+Out[18]= dataset solveit36_delta closed
+In[19]:= dataset play solveit36_delta
+Out[19]= dataset plots written to datasets/solveit36_delta_plots.html (browser suppressed)
+In[20]:= dataset sum solveit36_delta solveit36_trial_b as solveit36_rebuilt
+Out[20]= dataset solveit36_rebuilt = solveit36_delta + solveit36_trial_b (40 frames, 2 bodies)
+In[21]:= dataset diff solveit36_rebuilt solveit36_trial_a as solveit36_zero
+Out[21]= dataset solveit36_zero = solveit36_rebuilt - solveit36_trial_a (40 frames, 2 bodies)
+In[22]:= dataset open solveit36_zero
+Out[22]= dataset solveit36_zero opened (2 bodies, 40 frames, 80 states) — recording armed
+In[23]:= sql "SELECT MAX(ABS(x)) AS x_residual, MAX(ABS(vy)) AS vy_residual FROM states"
+Out[23]= x_residual | vy_residual
+6.938893903907228e-18 | 2.7755575615628914e-17
+In[24]:= sql "SELECT MAX(ABS(energy)) AS e_residual FROM frames"
+Out[24]= e_residual
+0
+In[25]:= dataset close
+Out[25]= dataset solveit36_zero closed
+In[26]:= dataset delete solveit36_rebuilt
+Out[26]= dataset solveit36_rebuilt deleted
+In[27]:= dataset delete solveit36_zero
+Out[27]= dataset solveit36_zero deleted
+```
+
+**What to notice.** The difference grows to `max_dx = 0.26778294538839353`
+over the two seconds — a changed mass is a changed orbit, and the gap
+compounds every step — while the closure residual is
+`6.938893903907228e-18` in position and `2.8e-17` in velocity: pure
+floating-point roundoff from two passes of component arithmetic, with
+the energy column closing to exactly `0`. `dataset play` renders the
+difference curves themselves.
+
+---
+
+### Example 37 — Cartesian to spherical, and to plane polar — with the equator as witness
+
+**The physics.** A planar two-body orbit (z = 0 throughout, the centre of mass pinned
+at the origin) is recorded, then converted: `DATASET MAP ... TO
+spherical` and, because the trajectory is planar, `... TO polar2` —
+the two-dimensional chart, whose `|z| <= 1e-9` requirement is checked
+row by row.
+
+**Why it is a real test.** A z = 0 orbit must sit on the sphere's equator: the mapped dataset's
+polar-angle column has to be pi/2 at EVERY one of the 100 frames — a
+`MIN(y) = MAX(y)` one-liner in SQL. The polar map then hands over the
+planet's radial extremes about the origin directly as column minima
+and maxima, no coordinate arithmetic in the query at all.
+
+```
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[3]= obj1 as planet
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit37_orbit
+Out[5]= dataset solveit37_orbit created (datasets/solveit37_orbit.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 12.418264743622237 steps 100
+Out[6]= t = 12.418264743622238 (664 solver steps, 100 snapshots, |dE/E| = 4.162e-9)
+In[7]:= dataset close
+Out[7]= dataset solveit37_orbit closed
+In[8]:= dataset map solveit37_orbit to spherical as solveit37_sph
+Out[8]= dataset solveit37_sph = spherical(solveit37_orbit) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[9]:= dataset open solveit37_sph
+Out[9]= dataset solveit37_sph opened (2 bodies, 100 frames, 200 states) — recording armed
+In[10]:= sql "SELECT MIN(y) AS theta_min, MAX(y) AS theta_max FROM states"
+Out[10]= theta_min | theta_max
+1.5707963267948966 | 1.5707963267948966
+In[11]:= sql "SELECT COUNT(*) AS null_velocity_rows FROM states WHERE vx IS NULL"
+Out[11]= null_velocity_rows
+200
+In[12]:= dataset close
+Out[12]= dataset solveit37_sph closed
+In[13]:= dataset map solveit37_orbit to polar2 as solveit37_pol
+Out[13]= dataset solveit37_pol = polar2(solveit37_orbit) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[14]:= dataset open solveit37_pol
+Out[14]= dataset solveit37_pol opened (2 bodies, 100 frames, 200 states) — recording armed
+In[15]:= sql "SELECT MIN(x) AS r_min, MAX(x) AS r_max FROM states WHERE body = (SELECT body FROM bodies WHERE name = 'planet')"
+Out[15]= r_min | r_max
+0.7500000019886397 | 3.0000000158618207
+In[16]:= dataset close
+Out[16]= dataset solveit37_pol closed
+In[17]:= dataset play solveit37_sph
+Out[17]= dataset plots written to datasets/solveit37_sph_plots.html (browser suppressed)
+In[18]:= cart_to_spherical([0, 0, 2])
+Out[18]= [2, 0, 0]
+In[19]:= spherical_to_cart(cart_to_spherical([1.3, 0.7, 2.1]))
+Out[19]= [1.2999999999999996, 0.6999999999999997, 2.1]
+In[20]:= cart2_to_polar([3, 4])
+Out[20]= [5, 0.9272952180016122]
+In[21]:= polar_to_cart2(cart2_to_polar([3, 4]))
+Out[21]= [3, 3.9999999999999996]
+```
+
+**What to notice.** `theta_min = theta_max = 1.5707963267948966` — pi/2 to the last bit,
+100 frames without exception. The planet's polar radius spans
+`[0.7500000019886397, 3.0000000158618207]` against the analytic
+`[3/4 · 1, 3/4 · 4] = [0.75, 3]` (its share of the relative orbit's
+perihelion 1 and aphelion 4). All 200 velocity rows come back NULL —
+curvilinear velocity components need the metric, and the map refuses
+to fake them. The value-level calls close their own loops:
+`spherical_to_cart(cart_to_spherical(v))` returns `v`, and the 3-4-5
+triangle reads `[5, 0.9272952180016122]` in polar form.
+
+---
+
+### Example 38 — one helix through every remaining chart
+
+**The physics.** Example 25's helical cyclotron (gyroradius 5/9, axial drift 1) is
+recorded once, then mapped through four genuinely three-dimensional
+charts — cylindrical, toroidal (a = 2), bispherical (a = 2), oblate
+spheroidal (a = 1) — and the value level round-trips every system the
+earlier examples have not already exercised, including the 2-D
+elliptic chart and the conformal 2-D bipolar chart.
+
+**Why it is a real test.** Fourteen coordinate systems, fourteen inverses, all with error
+checking — this example is the coverage proof. Each mapped dataset is
+sanity-checked in SQL (the cylindrical `z` column still ends at the
+helix pitch `0.6981317007977318`; the toroidal `tau` column stays
+positive and finite), and each `X_to_cart(cart_to_X(w))` composition
+must return `w` to machine precision.
+
+```
+In[1]:= set system.g_constant = 0
+In[2]:= set system.b_field = [0, 0, 6]
+In[3]:= new sphere as ion { mass = 2, charge = -3, radius = 0.05, position = [0, 0, 0], velocity = [5, 0, 1] }
+Out[3]= obj0 as ion
+In[4]:= method bdf
+Out[4]= method = CVODE BDF
+In[5]:= dataset create solveit38_helix
+Out[5]= dataset solveit38_helix created (datasets/solveit38_helix.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 0.6981317007977318 steps 100
+Out[6]= t = 0.6981317007977317 (303 solver steps, 100 snapshots, |dE/E| = 2.048e-8)
+In[7]:= dataset close
+Out[7]= dataset solveit38_helix closed
+In[8]:= dataset map solveit38_helix to cylindrical as solveit38_cyl
+Out[8]= dataset solveit38_cyl = cylindrical(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[9]:= dataset open solveit38_cyl
+Out[9]= dataset solveit38_cyl opened (1 bodies, 100 frames, 100 states) — recording armed
+In[10]:= sql "SELECT MAX(z) AS pitch FROM states"
+Out[10]= pitch
+0.6981317007977317
+In[11]:= dataset close
+Out[11]= dataset solveit38_cyl closed
+In[12]:= dataset map solveit38_helix to toroidal 2.0 as solveit38_tor
+Out[12]= dataset solveit38_tor = toroidal(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[13]:= dataset open solveit38_tor
+Out[13]= dataset solveit38_tor opened (1 bodies, 100 frames, 100 states) — recording armed
+In[14]:= sql "SELECT MIN(y) AS tau_min, MAX(y) AS tau_max FROM states"
+Out[14]= tau_min | tau_max
+5.28650864731464e-9 | 1.1892318293548387
+In[15]:= dataset close
+Out[15]= dataset solveit38_tor closed
+In[16]:= dataset map solveit38_helix to bispherical 2.0 as solveit38_bis
+Out[16]= dataset solveit38_bis = bispherical(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[17]:= dataset map solveit38_helix to oblate 1.0 as solveit38_obl
+Out[17]= dataset solveit38_obl = oblate(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[18]:= dataset info solveit38_bis
+Out[18]= dataset solveit38_bis: 1 bodies, 100 frames, 100 states
+In[19]:= dataset info solveit38_obl
+Out[19]= dataset solveit38_obl: 1 bodies, 100 frames, 100 states
+In[20]:= let w = [1.3, 0.7, 2.1]
+Out[20]= w set
+In[21]:= norm(oblate_to_cart(cart_to_oblate(w, 1.25), 1.25) - w)
+Out[21]= 0.0000000000000004440892098500626
+In[22]:= norm(prolate_to_cart(cart_to_prolate(w, 1.25), 1.25) - w)
+Out[22]= 0.0000000000000008671119018262734
+In[23]:= norm(paraboloidal_to_cart(cart_to_paraboloidal(w)) - w)
+Out[23]= 0.0000000000000004965068306494546
+In[24]:= norm(elliptic_cyl_to_cart(cart_to_elliptic_cyl(w, 1.25), 1.25) - w)
+Out[24]= 0
+In[25]:= norm(parabolic_cyl_to_cart(cart_to_parabolic_cyl(w)) - w)
+Out[25]= 0
+In[26]:= norm(bipolar_cyl_to_cart(cart_to_bipolar_cyl(w, 1.25), 1.25) - w)
+Out[26]= 0.0000000000000002220446049250313
+In[27]:= norm(bispherical_to_cart(cart_to_bispherical(w, 1.25), 1.25) - w)
+Out[27]= 0.0000000000000004440892098500626
+In[28]:= norm(cylindrical_to_cart(cart_to_cylindrical(w)) - w)
+Out[28]= 0
+In[29]:= elliptic_to_cart2(cart2_to_elliptic([1.2, -0.8], 1.5), 1.5)
+Out[29]= [1.2000000000000004, -0.8000000000000002]
+In[30]:= bipolar_to_cart2(cart2_to_bipolar([1.2, -0.8], 1.5), 1.5)
+Out[30]= [1.2, -0.8]
+```
+
+**What to notice.** Every round trip lands between `0` exactly and `2.2e-16` — one
+`f64` unit in the last place — and the 2-D charts return
+`[1.2, -0.8]` verbatim. Singular loci stay refused: type
+`cart_to_toroidal([1, 0, 0], 1)` interactively and the reply names
+the focal ring instead of returning a NaN.
+
+---
+
+## 8. Watching it: the scene window, videos, dataset plots and movies
 
 ### 8.1 The live window
 
@@ -1461,25 +2575,20 @@ Two things about it are worth knowing:
   keeps a ring of snapshots; running backward walks it. It returns to
   *t* = 0 bit-identically.
 
-For a headless machine, setting the environment variable
-`POSIM_NO_BROWSER=1` suppresses the attempt to open a browser (in
-PowerShell: `$env:POSIM_NO_BROWSER = "1"` before you run the program).
+For a headless machine, `POSIM_NO_BROWSER=1` suppresses the attempt to
+open a browser.
 
 ### 8.2 Recorded videos
 
 A live window needs a live program. For something you can send to
 someone else, record it:
 
-```powershell
+```bash
 cargo build --release -p posim
-python recorder/src/record_video.py videos/scenes/kepler_ellipse.posim `
-     -o videos/kepler_ellipse.html --frames 360 --dt 0.02 `
+recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
+     -o videos/kepler_ellipse.html --frames 360 --dt 0.02 \
      --title "Kepler orbit, e = 0.6"
 ```
-
-(The backtick `` ` `` is PowerShell's line continuation; on one line you
-need neither. Any Python 3.8+ works — the recorder uses only the
-standard library.)
 
 The result is a single HTML file: the frames embedded as data plus a
 canvas player. It fetches nothing, so it works from `file://` on a
@@ -1531,6 +2640,58 @@ wrong and read the conserved quantities off it.
 
 ---
 
+### 8.3 The dataset layer: SQLite recording
+
+Every run can record itself into a **dataset** — one ordinary SQLite
+database file under `datasets/<name>.db` — and every Jupyter notebook
+in this repository creates one. Type `dataset create myrun` before a
+`run`, and every output snapshot lands in the database: time, energy,
+momentum, angular momentum, centre of mass, collision count, and the
+full state of every body (position, w-first orientation quaternion,
+velocity, angular velocity). Then ask the database questions with the
+`sql` command, which passes ANY SQLite statement through verbatim —
+the sixteen worked examples 20–35 above use joins, CTEs, window
+functions, `ALTER TABLE`, `ATTACH` and `VACUUM` on real recordings.
+`dataset play` renders the recorded time series (energy, |P| and |L|,
+per-body positions, a top view) into a self-contained page
+`datasets/<name>_plots.html` and opens it in your browser.
+
+The simulator itself contains **no SQLite code** — its
+zero-external-dependency guarantee is untouched. All database work
+happens in the `solveit_db` sidecar (the `dataset_tools/` package,
+built once with `cd dataset_tools && cargo build --release`), which
+uses an `r2d2` connection pool shared across worker threads, switches
+every connection into **WAL journal mode** at startup, and sets a
+five-second **busy timeout** — the standard recipe that lets several
+readers and a writer share one SQLite file without `database is
+locked`. Concretely: a notebook's Python `sqlite3` cell reads the very
+file the simulator still holds open. The full command reference is
+`grammar.md` §5.14; the schema, concurrency tests and the
+10-thread stress demonstration are documented in
+`dataset_tools/README.md`.
+
+### 8.4 Movies: animations derived from datasets
+
+A **movie** is a self-contained 3-D player page generated FROM a
+dataset — never a recording pipeline of its own. `movie create
+<dataset>` reads the `bodies`, `frames` and `states` tables and writes
+`movies/<name>.html`: play/pause/step, a scrub bar, 0.25×–4× speed, an
+orbiting camera (drag, wheel, arrow keys), per-body trails and labels,
+and a live readout of t, E, |P|, |L| and the collision count. It obeys
+the same pinned drawing rules as the scene window and the recorded
+videos: wall slabs are never drawn and never steer the camera auto-fit
+(a BOX appears as the dashed wireframe), and every round shape is
+rendered quaternion-rotated about its local z axis so spin is visible.
+`movie play <name>` opens one in the browser; `movie list` and
+`movie delete <name>` manage them. Because the dataset is the source
+of truth, a movie can be rebuilt at any time without re-running any
+physics — Example 34 builds two different movies from one recording.
+
+The thirteen `videos/*.html` pages of §8.2 remain: they are the legacy
+recorder's output, byte-reproducible and still verified. The dataset →
+movie pipeline is the canonical path for new work, because the movie
+is backed by a queryable database instead of numbers frozen into HTML.
+
 ## 9. How you know the numbers are right
 
 This project's central claim is not that the code is elegant. It is that
@@ -1546,27 +2707,16 @@ reasons for each divergence, are in `sundials_rs/VERIFICATION.md`,
 
 Two consequences of taking this seriously: printed floating-point values
 go through helpers that reproduce C's `printf` conversions exactly
-(Rust's own `{:e}` formats exponents differently), and the transcendental
-functions were taken off the host entirely. The vendored engine is the
-**Windows port** of the translation: because Microsoft's math runtime
-(UCRT) rounds `sin`, `cos`, `exp`, `ln` and friends differently from the
-Linux library the reference outputs came from, the engine carries its own
-pure-Rust translations of the glibc routines (`sundials_libm`), each
-measured at **0 mismatches over millions of inputs** against a real glibc
-oracle. That — plus a deterministic `pow` and a pinned FMA instruction
-(`.cargo/config.toml`) — is why this Windows build reproduces the
-Linux physics **byte for byte**: the 12 collision scripts, all 13
-recorded videos and 57 of the 59 dynamic notebooks are byte-identical to
-the Linux evidence, and the remaining two (the quantum notebooks, whose
-first-party code still uses the host libm) agree to the last printed
-digit (see `evidence/win11/`).
+(Rust's own `{:e}` formats exponents differently), and `pow` was made
+host-independent so that at least that function cannot vary between
+machines.
 
 ### 9.2 The simulator against closed-form physics
 
 Six example programs, each of which prints `SUCCESS` or `FAILURE` and
 exits nonzero if it fails:
 
-```powershell
+```bash
 cargo run -p physical_object --release --example kepler_orbit
 cargo run -p physical_object --release --example outer_solar_system
 cargo run -p physical_object --release --example tumbling_body
@@ -1577,11 +2727,9 @@ cargo run -p physical_object --release --example bouncing_ball_restitution
 
 ### 9.3 The test suite
 
-622 tests: 49 library, 19 collision, 9 conservation, 42 constrained/
-equilibrium/sensitivity, 112 language, 92 quantum, 233 special-function,
-11 vendored identities, 5 + 50 documentation examples that are compiled
-and run as written — measured on Windows 11 (`cargo test --workspace`,
-0 failed).
+605 tests: 40 library, 19 collision, 9 conservation, 109 language,
+92 quantum, 233 special-function, 11 vendored identities and 55
+documentation examples that are compiled and run as written.
 
 The collision tests in particular are analytic rather than
 regression-style: they assert the time of impact against a closed form,
@@ -1638,10 +2786,14 @@ with the complete EBNF grammar and a further eighteen worked examples.
 | `special_functions/` | Bessel, Legendre, Hankel, Airy, gamma, Wigner, quadrature, eigenproblems |
 | `sundials_rs/` | the pure-Rust SUNDIALS 7.8.0 engine (vendored, read-only) |
 | `jupyter/` | the JupyterLab kernel |
+| `notebooks/` | one executed Jupyter notebook per example (125), each owning a dataset |
 | `dynamic_notebooks/` | 59 runnable sessions, incl. 34 Routh problems |
-| `scripts/solveit/` | the nineteen examples in section 7 |
+| `scripts/solveit/` | the thirty-eight examples in section 7 |
 | `scripts/collisions/` | twelve documented collision scripts |
 | `videos/` | recorded browser videos; `videos/scenes/` the scripts behind them |
+| `datasets/` | the SQLite datasets — one per notebook and per dataset example (plus their `_plots.html` pages) |
+| `movies/` | movies derived from datasets (self-contained 3-D player pages) |
+| `dataset_tools/` | the `solveit_db` SQLite sidecar (rusqlite + r2d2, WAL; the one package outside the pure-Rust workspace) |
 | `tools/` | the index builder and the verifiers (the video recorder is its own package, `recorder/`) |
 | `evidence/port-7.8.0/` | the logs behind every claim in section 9.5 |
 
@@ -1650,7 +2802,7 @@ with the complete EBNF grammar and a further eighteen worked examples.
 | document | for |
 |---|---|
 | **`SolveIt.md`** / `.pdf` | this one: the complete solution guide |
-| `grammar.md` / `.pdf` | every command, the full EBNF, 18 more worked examples |
+| `grammar.md` / `.pdf` | every command, the full EBNF (datasets, SQL and movies in §5.14 and §13), 18 more worked examples |
 | `ARCHITECTURE.md` | the pinned cross-module contracts, for anyone changing the code |
 | `PORT_7.8.0_PROVENANCE.md` | what the 7.8.0 upgrade changed, and the evidence it changed nothing else |
 | `collision_detection.md` / `.pdf` | the collision science, with 12 example scripts |
@@ -1658,6 +2810,8 @@ with the complete EBNF grammar and a further eighteen worked examples.
 | `physical_object_simulator.md` / `.pdf` | the predecessor user guide, with 14 further examples |
 | `special_functions.md` | the special-function library in detail |
 | `NOTEBOOKS.md`, `dynamic_notebooks/MANIFEST.md` | the notebook catalogue and its run record |
+| `dataset_tools/README.md` | the SQLite sidecar: schema, WAL/pool/busy-timeout architecture, CLI, stress tests |
+| `SQLITE_DATASETS_PROVENANCE.md` | the exact commands that build, test, verify and display the dataset layer |
 | `CLAUDE.md` | the working rules for anyone — human or agent — modifying this repository |
 | `index_of_entities.html` | a browsable catalogue of every named entity in the repository, with definitions, `file:line` locations and runnable examples |
 

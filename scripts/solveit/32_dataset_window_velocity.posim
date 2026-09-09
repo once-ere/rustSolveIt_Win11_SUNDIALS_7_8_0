@@ -1,0 +1,14 @@
+# 32. Window functions: differentiate the trajectory INSIDE the database.
+# The dataset stores both y and vy. LAG(y) over the frame order gives a
+# backward finite difference (y_k - y_{k-1}) / (t_k - t_{k-1}), whose
+# error against the recorded vy is g dt / 2 + O(dt^2) - here
+# 9.81 * 0.05 / 2 = 0.245250..., and SQL itself verifies that.
+set system.g_constant = 0
+set system.uniform_gravity = [0, -9.81, 0]
+new sphere as ball { mass = 1, radius = 0.2, position = [0, 30, 0] }
+dataset create solveit32_window
+run 2 steps 40
+sql "WITH fd AS (SELECT f.t AS t, s.vy AS vy, (s.y - LAG(s.y) OVER (ORDER BY s.frame)) / (f.t - LAG(f.t) OVER (ORDER BY s.frame)) AS v_backward FROM states s JOIN frames f ON f.frame = s.frame) SELECT COUNT(*) AS differences, MAX(ABS(v_backward - vy)) AS worst_error FROM fd WHERE v_backward IS NOT NULL"
+9.81 * 0.05 / 2
+dataset play
+dataset close

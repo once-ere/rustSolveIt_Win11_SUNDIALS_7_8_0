@@ -19,10 +19,11 @@ A spec is a JSON document with these keys:
 Every notebook gets the full invariant prose, verbatim. Nothing is ever
 elided with a pointer to another notebook.
 """
-import json, sys
+import json, re, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+import nbdataset
 import nbtext
 
 def md(text, **meta):
@@ -94,38 +95,78 @@ f"""## 4. The physical situation
     cells.append(md(nbtext.DRIVER_MD.replace("## 4.", "## 5.")))
     cells.append(code(nbtext.DRIVER_CODE))
 
+    # ---- the dataset (SQLite recording) ---------------------------------
+    # A script that carries its own `dataset ...` commands (the dataset
+    # worked examples) keeps them; every other notebook gets a dataset
+    # created here, named nb_<key>, recorded during the steps below and
+    # read back afterwards.
+    all_code = "\n".join(step["code"] for step in spec["steps"])
+    self_managed = 'sim.do("dataset ' in all_code
+    if self_managed:
+        m = re.search(r'dataset create (\w+)', all_code)
+        dataset = m.group(1) if m else f"nb_{key}"
+        cells.append(md(nbdataset.DATASET_SELF_MD.replace("__DATASET__", dataset)))
+    else:
+        dataset = f"nb_{key}"
+        cells.append(md(nbdataset.DATASET_MD.replace("__DATASET__", dataset)))
+        cells.append(code(nbdataset.DATASET_CREATE_CODE.replace("__DATASET__", dataset)))
+
     # ---- the run, one explained step at a time -------------------------
     cells.append(md(
-"""## 6. Building and running the simulation
+"""## 7. Building and running the simulation
 
 From here on, the notebook alternates: a section of text explaining
 exactly what the next cell asks the simulator to do and what each value
 in it means, then the cell itself. Run them in order from here down.
 """))
     for n, step in enumerate(spec["steps"], start=1):
-        cells.append(md(f"### 6.{n} {step['title']}\n\n{step['explain']}"))
+        cells.append(md(f"### 7.{n} {step['title']}\n\n{step['explain']}"))
         cells.append(code(step["code"]))
 
     # ---- discussion ----------------------------------------------------
-    cells.append(md(f"""## 7. What those numbers mean
+    cells.append(md(f"""## 8. What those numbers mean
 
 {spec["discussion"]}
 """))
 
+    # ---- read the dataset back (SQL + plain-Python sqlite3) -------------
+    # A bare `reset` among the steps closes the dataset (a dataset
+    # describes ONE world), so those notebooks reopen it here instead
+    # of snapshotting into it.
+    has_reset = 'sim.do("reset")' in all_code
+    if self_managed:
+        cells.append(md(nbdataset.READBACK_SELF_MD.replace("__DATASET__", dataset)))
+        cells.append(code(nbdataset.PY_READBACK_CODE.replace("__DATASET__", dataset)))
+        cells.append(md(nbdataset.MOVIE_SELF_MD.replace("__DATASET__", dataset)))
+    else:
+        if has_reset:
+            cells.append(md(nbdataset.READBACK_RESET_MD.replace("__DATASET__", dataset)))
+            cells.append(code(nbdataset.READBACK_REOPEN_CODE.replace("__DATASET__", dataset)))
+        else:
+            cells.append(md(nbdataset.READBACK_MD.replace("__DATASET__", dataset)))
+            cells.append(code(nbdataset.READBACK_SQL_CODE.replace("__DATASET__", dataset)))
+        cells.append(md(nbdataset.PY_READBACK_MD.replace("__DATASET__", dataset)))
+        cells.append(code(nbdataset.PY_READBACK_CODE.replace("__DATASET__", dataset)))
+        cells.append(md(nbdataset.MOVIE_MD.replace("__DATASET__", dataset)))
+        cells.append(code(nbdataset.MOVIE_GUARD_CODE.replace("__DATASET__", dataset)))
+
     # ---- shut down ------------------------------------------------------
     cells.append(md(
-"""## 8. Close the simulator
+"""## 11. Close the simulator
 
 The simulator is a separate operating-system process that this notebook
-started. Closing it releases that process and its two pipes. If you skip
-this cell the process is closed anyway when the Jupyter kernel shuts
-down, but doing it explicitly means you can re-run the notebook from the
-top without leaving a stray process behind each time.
+started. Closing it releases that process and its two pipes (an open
+dataset is checkpointed and closed first, so the SQLite file on disk is
+left as one tidy `.db`). If you skip this cell the process is closed
+anyway when the Jupyter kernel shuts down, but doing it explicitly means
+you can re-run the notebook from the top without leaving a stray process
+behind each time.
 """))
-    cells.append(code("sim.close()"))
+    cells.append(code(
+        "sim.close()" if self_managed else nbdataset.CLOSE_GUARDED_CODE))
 
     # ---- name and save (requirements 4 and 5) ---------------------------
-    cells.append(md(nbtext.SAVE_MD))
+    cells.append(md(nbtext.SAVE_MD.replace("## 9.", "## 12.")))
     cells.append(code(
         nbtext.SAVE_CODE
             .replace("__DEFAULT_NAME__", nbfile)

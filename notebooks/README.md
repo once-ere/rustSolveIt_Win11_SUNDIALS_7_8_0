@@ -1,4 +1,4 @@
-# notebooks/ — one Jupyter notebook per example, 109 of them
+# notebooks/ — one Jupyter notebook per example, 128 of them
 
 Every example in this repository has exactly one Jupyter notebook, and
 every notebook here pairs with exactly one example:
@@ -8,7 +8,7 @@ every notebook here pairs with exactly one example:
 | `video_*` | 13 | `videos/scenes/*.posim` | the scripts behind the recorded browser videos |
 | `rust_*` | 6 | `physical_object/examples/*.rs` | the self-checking compiled Rust examples |
 | `collision_*` | 12 | `scripts/collisions/*.posim` | the collision-detection walkthroughs |
-| `solveit_*` | 19 | `scripts/solveit/*.posim` | the SolveIt worked examples |
+| `solveit_*` | 38 | `scripts/solveit/*.posim` | the SolveIt worked examples, incl. the 19 dataset/SQL/movie/coordinate examples |
 | `dynamic_*` | 59 | `dynamic_notebooks/*.posim` | the dynamic notebooks, incl. the 34 Routh problems |
 
 Each notebook is a **Python 3** notebook that starts the simulator as a
@@ -25,6 +25,16 @@ The committed notebooks carry **real outputs**: every code cell was
 executed against the release build, and the `rust_*` six also run their
 compiled example and assert its `SUCCESS` verdict.
 
+**Every notebook owns a SQLite dataset.** Section 6 of each notebook
+creates `datasets/nb_<key>.db` (the 16 dataset worked examples manage
+their own, named in the script), the run is recorded into it frame by
+frame, section 9 reads it back three ways — `dataset snapshot` + the
+`sql` passthrough + a plain-Python `sqlite3` cell that opens the very
+file the simulator still holds (WAL journal mode is what makes that
+safe) — and section 10 derives a browser **movie** from it when there
+are rigid bodies to animate. The dataset layer needs the sidecar built
+once: `cd dataset_tools && cargo build --release`.
+
 ## Running one
 
 ```bash
@@ -37,7 +47,7 @@ Open any notebook and run the cells top to bottom. The final two cells
 ask you to name the notebook and pick a folder in a save dialog; they
 are interactive and are the only cells the batch runner skips.
 
-## The 109, one by one
+## The 128, one by one
 
 ### Video scenes — 13
 
@@ -91,7 +101,7 @@ Paired with the scripts in `scripts/collisions/`.
 | `collision_11_box_of_shapes.ipynb` | `scripts/collisions/11_box_of_shapes.posim` | The box of shapes: every body type inside a rigid, |
 | `collision_12_two_dumbbells.ipynb` | `scripts/collisions/12_two_dumbbells.posim` | Two colliding dumbbells built by a USER-DEFINED function |
 
-### SolveIt worked examples — 19
+### SolveIt worked examples — 38
 
 Paired with the scripts in `scripts/solveit/`.
 
@@ -116,6 +126,25 @@ Paired with the scripts in `scripts/solveit/`.
 | `solveit_17_pendulum_dae.ipynb` | `scripts/solveit/17_pendulum_dae.posim` | A pendulum as a CONSTRAINT, not a force |
 | `solveit_18_equilibrium_and_sensitivity.ipynb` | `scripts/solveit/18_equilibrium_and_sensitivity.posim` | Two questions that are not "what happens next" |
 | `solveit_19_hinged_door.ipynb` | `scripts/solveit/19_hinged_door.posim` | A door on a hinge: an ORIENTATION constraint |
+| `solveit_20_dataset_kepler_orbit.ipynb` | `scripts/solveit/20_dataset_kepler_orbit.posim` | A Kepler ellipse, RECORDED: the dataset is the experiment's lab book |
+| `solveit_21_dataset_free_fall_check.ipynb` | `scripts/solveit/21_dataset_free_fall_check.posim` | Free fall against the closed form, checked INSIDE the database |
+| `solveit_22_dataset_circular_binary.ipynb` | `scripts/solveit/22_dataset_circular_binary.posim` | An equal-mass circular binary, audited by SQL |
+| `solveit_23_dataset_restitution_rebounds.ipynb` | `scripts/solveit/23_dataset_restitution_rebounds.posim` | Three restitutions, one query |
+| `solveit_24_dataset_elastic_exchange.ipynb` | `scripts/solveit/24_dataset_elastic_exchange.posim` | The elastic exchange of example 1, replayed from the database |
+| `solveit_25_dataset_helical_cyclotron.ipynb` | `scripts/solveit/25_dataset_helical_cyclotron.posim` | A charged sphere in a uniform B field, with a drift along the axis |
+| `solveit_26_dataset_dzhanibekov_flip.ipynb` | `scripts/solveit/26_dataset_dzhanibekov_flip.posim` | The intermediate-axis instability, with the flips COUNTED by SQL |
+| `solveit_27_dataset_record_switch.ipynb` | `scripts/solveit/27_dataset_record_switch.posim` | RECORD ON/OFF: the dataset captures exactly what you ask it to |
+| `solveit_28_dataset_pendulum_drift.ipynb` | `scripts/solveit/28_dataset_pendulum_drift.posim` | The DAE pendulum of example 17, with the constraint AUDITED in SQL |
+| `solveit_29_dataset_box_rattle.ipynb` | `scripts/solveit/29_dataset_box_rattle.posim` | The mixed-shape box rattle, with its energy ledger in SQLite |
+| `solveit_30_dataset_sql_surgery.ipynb` | `scripts/solveit/30_dataset_sql_surgery.posim` | The dataset is a REAL database: schema surgery on a copy |
+| `solveit_31_dataset_attach_compare.ipynb` | `scripts/solveit/31_dataset_attach_compare.posim` | Two integrators, two datasets, ONE query: ATTACH |
+| `solveit_32_dataset_window_velocity.ipynb` | `scripts/solveit/32_dataset_window_velocity.posim` | Window functions: differentiate the trajectory INSIDE the database |
+| `solveit_33_dataset_lifecycle_tour.ipynb` | `scripts/solveit/33_dataset_lifecycle_tour.posim` | The complete dataset lifecycle, in one sitting |
+| `solveit_34_dataset_door_movies.ipynb` | `scripts/solveit/34_dataset_door_movies.posim` | Movies are DERIVED, so one dataset can wear several |
+| `solveit_35_dataset_spinning_torus.ipynb` | `scripts/solveit/35_dataset_spinning_torus.posim` | A spinning torus: quaternions in the database, and on the screen |
+| `solveit_36_dataset_teacher_diff.ipynb` | `scripts/solveit/36_dataset_teacher_diff.posim` | The teacher's experiment: change a mass, rerun, SUBTRACT |
+| `solveit_37_dataset_map_spherical.ipynb` | `scripts/solveit/37_dataset_map_spherical.posim` | Convert coordinates: Cartesian -> spherical, and 2-D polar |
+| `solveit_38_dataset_curvilinear_tour.ipynb` | `scripts/solveit/38_dataset_curvilinear_tour.posim` | The grand tour: one helix through every remaining chart |
 
 ### Dynamic notebooks — 59
 
@@ -184,20 +213,22 @@ Paired with the scripts in `dynamic_notebooks/`, including the 34 Routh problems
 | `dynamic_unequal_masses.ipynb` | `dynamic_notebooks/unequal_masses.posim` | Unequal masses: 1-vs-3 head-on, textbook one-dimensional formulas |
 
 
-## Regenerating and re-verifying all 109
+## Regenerating and re-verifying all 128
 
 ```bash
 cargo build --release -p posim
-python3 notebooks/_build/regen.py          # specs -> .ipynb, all 109
+cd dataset_tools && cargo build --release && cd ..   # the SQLite sidecar
+python3 notebooks/_build/regen.py          # specs -> .ipynb, all 128
 ls notebooks/*.ipynb | POSIM_NO_BROWSER=1 xargs -P 6 -I{} \
     python3 notebooks/_build/nbrun.py {}   # execute, embed real outputs
-python3 notebooks/_build/nbcheck.py        # audit the 7 requirements
+python3 notebooks/_build/nbcheck.py        # audit the 8 requirements
 ```
 
 `_build/` holds the machinery: `nbtext.py` (the invariant prose),
+`nbdataset.py` (the invariant dataset/SQL/movie prose and templates),
 `lang.py` (what every command and field means), `nbgen.py` (derives a
 spec from a `.posim` example), `nbbuild.py` (spec → notebook),
 `nbrun.py` (executes code cells and embeds outputs), `nbcheck.py`
-(audits every requirement), `specs/` (the 109 derived specs), and
+(audits every requirement), `specs/` (the 128 derived specs), and
 `rust_equivalents/` (posim reproductions of the six compiled examples,
 each verified against the same analytic anchors).

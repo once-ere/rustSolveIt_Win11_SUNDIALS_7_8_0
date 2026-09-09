@@ -1,66 +1,33 @@
-# rustSolveIt — on pure-Rust SUNDIALS 7.8.0, for Windows 11
+# rustSolveIt — on pure-Rust SUNDIALS 7.8.0, for macOS on Apple Silicon
 
-Pure-Rust physics simulator, the **Windows 11 (x86-64)** port of
+Pure-Rust physics simulator, the **macOS on Apple Silicon (arm64)**
+port of
 [`once-ere/rustSolveIt_Using_SUNDIALS_7_8_0`](https://github.com/once-ere/rustSolveIt_Using_SUNDIALS_7_8_0)
 — which is
 [`once-ere/rustSolveIt`](https://github.com/once-ere/rustSolveIt) with
 its numerical engine upgraded from a pure-Rust translation of SUNDIALS
-**7.7.0** to one of **7.8.0**. The engine vendored here is the
-**Windows port** of that translation
-([`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11`](https://github.com/once-ere/SUNDIALS_7_8_Rust_port_for_Windows11)),
-whose own pure-Rust glibc-translated math library is what lets this
-build reproduce the Linux physics **byte for byte**: the six
-self-checking examples, the twelve collision scripts, all 13 recorded
-videos and 57 of the 59 dynamic notebooks are byte-identical to the
-Linux evidence — the other two, the quantum notebooks, agree to the
-last printed digit. See
-[PORT_WIN11_PROVENANCE.md](PORT_WIN11_PROVENANCE.md),
+**7.7.0** to one of **7.8.0**. The engine vendored here is
+**byte-identical** to the Linux release's engine
+(`once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916`), whose pure-Rust
+glibc-translated math library (`sundials_libm`) is host-independent —
+which is what lets this build reproduce the Linux physics **byte for
+byte** on Apple Silicon: the six self-checking examples, the twelve
+collision scripts, twelve of the thirteen recorded videos and 57 of
+the 59 dynamic notebooks are byte-identical to the Linux evidence.
+The other two notebooks — the quantum pair — agree to the last printed
+digit, and the one re-recorded video (`rack_and_pinion`) diverges only
+in rounding noise, because those paths evaluate `sin`/`cos` through
+the host libm (Apple libm here, glibc there). See
+[PORT_MACOS_PROVENANCE.md](PORT_MACOS_PROVENANCE.md),
+[VERIFICATION_MACOS.md](VERIFICATION_MACOS.md),
 [PORT_7.8.0_PROVENANCE.md](PORT_7.8.0_PROVENANCE.md),
-[evidence/win11/](evidence/win11) and
+[evidence/macos/](evidence/macos) and
 [evidence/port-7.8.0/](evidence/port-7.8.0).
 
 rustSolveIt itself is the refined and refactored export of
 [`once-ere/rustSimulate`](https://github.com/once-ere/rustSimulate)
 (full history preserved; the refinement pass and its evidence are
 recorded in [REFINE_PROVENANCE.md](REFINE_PROVENANCE.md)).
-
-## The REBOUND and REBOUNDx ports
-
-Two further pure-Rust translations were born from this port's physics
-acceptance test, and are carried here in [`rebound_rust/`](rebound_rust)
-and [`reboundx_rust/`](reboundx_rust):
-
-- **`rebound_rs` 5.1.1** — Hanno Rein et al.'s
-  [REBOUND](https://github.com/hannorein/rebound) N-body code, also
-  published on its own at
-  [`once-ere/rebound_rust`](https://github.com/once-ere/rebound_rust).
-- **`reboundx_rs` 5.1.0** — Dan Tamayo, Hanno Rein et al.'s
-  [REBOUNDx](https://github.com/dtamayo/reboundx) library of additional
-  forces and effects for REBOUND, also published on its own at
-  [`once-ere/reboundx_rust`](https://github.com/once-ere/reboundx_rust).
-
-Both are built with the same discipline as this repository (zero
-`unsafe`, zero external dependencies, zero warnings, C names preserved)
-and verified by the same methodology: bit-for-bit comparison against the
-MSVC-compiled C reference. The record is 63 integrator configurations, a
-1,482-particle shearing-sheet run with ~10⁵ collisions (identical
-SHA-256 state dumps), Simulationarchive files interchangeable with
-C-REBOUND in both directions, all three REBOUNDx `tides_spin` examples
-identical at short and long run lengths, REBOUNDx binary files
-interchangeable in both directions, and 531 automated tests passing.
-
-They are **not** dependencies of the simulator — they are excluded from
-this Cargo workspace and build on their own:
-
-```bash
-cd rebound_rust  && cargo test --release
-cd reboundx_rust && cargo test --release
-```
-
-The complete provenance of both ports, every command used, and full
-usage instructions are in
-[`rebound_rust/rebound_rust.md`](rebound_rust/rebound_rust.md), also
-typeset as `rebound_rust/rebound_rust.pdf`.
 
 
 
@@ -76,17 +43,16 @@ The repository is **self-contained**: an ordinary clone is all you need
 — no submodules, no network access during the build, nothing from
 crates.io.
 
-```powershell
-git clone https://github.com/once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0.git
-cd rustSolveIt_Win11_SUNDIALS_7_8_0
+```bash
+git clone https://github.com/once-ere/rustSolveIt_macos-silicon_SUNDIALS_7_8_0.git
+cd rustSolveIt_macos-silicon_SUNDIALS_7_8_0
 cargo run                 # the notebook REPL (type HELP)
 ```
 
-You need Rust with the MSVC toolchain (`rustup-init.exe` from
-<https://rustup.rs>; any installed Visual Studio 2022/2026 supplies the
-linker) and a CPU with FMA (every Intel since 2013, AMD since 2012 —
-the vendored engine's deterministic math library requires it, pinned in
-`.cargo/config.toml`).
+You need Rust (`rustup` from <https://rustup.rs>; the default
+`aarch64-apple-darwin` toolchain) and the Xcode Command Line Tools for
+the linker (`xcode-select --install`). Apple Silicon has FMA natively,
+which the vendored engine's deterministic math library uses.
 
 This project is a standalone export of the simulator; its lineage,
 byte-identity manifest and full verification transcript are recorded in
@@ -101,10 +67,10 @@ rod as ONE rigid body, exact part-wise collisions conserving E, P and
 L through real solver events); the scene window gains a permanent
 Reset button (with `SCENE RESET` — bit-identical re-initialization,
 Start re-runs) and a live labeled conserved-quantities readout (E, P
-and L); **622 passed workspace-wide on Windows 11** (49 physical_object
-lib + 19 collision + 9 conservation + 42 constrained/DAE + 112 posim +
-92 quantum + 233 special_functions + 11 vendored identities +
-55 doctests).
+and L); **622 passed workspace-wide on macOS/Apple Silicon**
+(49 physical_object lib + 19 collision + 9 conservation +
+42 constrained/DAE + 112 posim + 92 quantum + 233 special_functions +
+11 vendored identities + 55 doctests).
 
 - `physical_object/` — library: `pub struct physical_object`, the
   unique union of the legacy `PointParticle`, `RigidBody` and
@@ -117,12 +83,22 @@ lib + 19 collision + 9 conservation + 42 constrained/DAE + 112 posim +
   each a standard-library Python server driving the engine over the
   machine protocol plus a canvas page with Start/Pause/Reset and live
   readouts verifying that scene's closed forms (`gui/README.md`).
-- `notebooks/` — one executed Jupyter notebook per example — 109 in
+- `notebooks/` — one executed Jupyter notebook per example — 128 in
   all, one per video scene, Rust example, collision script, SolveIt
   script and dynamic notebook. Each is a stand-alone Python notebook
   that starts the simulator in machine mode, explains every command it
-  sends, derives the equations of motion and constraint equations, and
-  carries real outputs (`notebooks/README.md`).
+  sends, derives the equations of motion and constraint equations,
+  carries real outputs, and **owns a SQLite dataset**: the run is
+  recorded into `datasets/nb_<name>.db`, read back with SQL and with a
+  plain-Python `sqlite3` cell, and a browser movie is derived from it
+  (`notebooks/README.md`).
+- `datasets/`, `movies/`, `dataset_tools/` — the SQLite recording
+  layer: one dataset per notebook and per dataset example (plus its
+  `_plots.html` page), the movies derived from them, and the
+  `solveit_db` sidecar that owns all SQLite access (rusqlite + r2d2
+  connection pool, WAL journal mode, 5 s busy timeout; build it once
+  with `cd dataset_tools && cargo build --release`). The simulator
+  itself still links zero external crates — it spawns the sidecar.
 - `jupyter/` — JupyterLab wrapper kernel so notebooks can get/set the
   simulator's data (see `jupyter/README.md`).
 - `sundials_rs/` — the numerical engine: a pure-Rust, zero-`unsafe`,
@@ -130,6 +106,35 @@ lib + 19 collision + 9 conservation + 42 constrained/DAE + 112 posim +
   self-contained workspace (read-only; upstream any changes).
 - `PLAN.md` — the integration plan / design record (union mapping,
   grammar, solver mapping, verification results).
+
+## The REBOUND / REBOUNDx N-body ports
+
+This repository also carries two further pure-Rust astronomy libraries,
+built with the same discipline (zero `unsafe`, zero dependencies, zero
+warnings, C names preserved) and verified bit-for-bit against their
+originals compiled with Apple clang **on this machine**:
+
+- [`rebound_rust/`](rebound_rust) — `rebound_rs` 5.1.1, a translation of
+  Hanno Rein et al.'s [REBOUND](https://github.com/hannorein/rebound)
+  N-body code: 63 integrator configurations bit-identical, the
+  1,482-particle shearing sheet byte-identical (equal SHA-256),
+  Simulationarchive files interchangeable with the C build in all six
+  directions, 394 tests, 13 examples — each with its own Jupyter
+  notebook.
+- [`reboundx_rust/`](reboundx_rust) — `reboundx_rs` 5.1.0, a translation
+  of Dan Tamayo et al.'s [REBOUNDx](https://github.com/dtamayo/reboundx)
+  extra-physics library: all six `tides_spin` acceptance runs
+  bit-identical (including the full Kozai run's thousands of adaptive
+  steps), binary files interchangeable with C-REBOUNDx, 137 tests,
+  4 examples with notebooks.
+
+Both folders are GPL-3.0-or-later (their own LICENSE files — unlike the
+BSD-3-Clause simulator around them). The complete guide, written for a
+reader who has never programmed, is
+[`rebound_rust/rebound_rust.md`](rebound_rust/rebound_rust.md) (also as
+a 36-page PDF); the macOS port provenance with every command and
+measured result is
+[`REBOUND_REBOUNDX_MACOS_PROVENANCE.md`](REBOUND_REBOUNDX_MACOS_PROVENANCE.md).
 
 ## Six solver families, four questions
 
@@ -155,11 +160,14 @@ the worked cases.
 
 - **[SolveIt.md](SolveIt.md) / [SolveIt.pdf](SolveIt.pdf)** — the
   complete solution guide, written for a reader who has never used the
-  program, with **sixteen** fully documented worked examples (scripts in
-  [`scripts/solveit/`](scripts/solveit)).
+  program, with **thirty-eight** fully documented worked examples
+  (scripts in [`scripts/solveit/`](scripts/solveit); examples 20–38 are
+  the SQLite dataset / SQL / movie / curvilinear-coordinate examples).
 - **[grammar.md](grammar.md) / [grammar.pdf](grammar.pdf)** — the
   complete command-language and notebook specification: the lexer, the
-  full EBNF, the type system, every command, the stack machine, the
+  full EBNF, the type system, every command (the SQLite dataset, SQL
+  and movie families in §5.14, with a complete worked session in §13),
+  the stack machine, the
   SUNDIALS 7.8.0 engine, the browser videos, and **eighteen** worked
   examples.
 - [PORT_7.8.0_PROVENANCE.md](PORT_7.8.0_PROVENANCE.md) — the 7.8.0
@@ -204,10 +212,10 @@ frame you stopped on.
 
 Record your own from any posim script:
 
-```powershell
+```bash
 cargo build --release -p posim
-python recorder/src/record_video.py videos/scenes/kepler_ellipse.posim `
-     -o mine.html --frames 360 --dt 0.02 --title "..."
+recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
+     -o /tmp/mine.html --frames 360 --dt 0.02 --title "..."
 ```
 
 Every advance in a recording is a real SUNDIALS step — the recorder
@@ -252,7 +260,7 @@ then checks it against the integrator, so the numbers below are measured, not
 quoted. Launch any of them by name:
 
 ```bash
-tools\posim_notebook.cmd routh_p1_hodograph_circle
+tools/posim_notebook routh_p1_hodograph_circle
 ```
 
 ### Part I — *Dynamics of a Particle* (1898)
@@ -311,8 +319,8 @@ repository** — 6,309 of them — with a definition, the `file:line` where it i
 defined, its complete syntax, and examples you can paste into a notebook and
 run. Open it directly; it needs no server and fetches nothing.
 
-```powershell
-start index_of_entities.html         # Windows (open on macOS, xdg-open on Linux)
+```bash
+open index_of_entities.html          # macOS  (xdg-open on Linux)
 ```
 
 Keep `catalog-c.js` beside it: the page loads that second payload on demand
@@ -378,17 +386,17 @@ and the index carries the code's behaviour.
 
 ### Rebuilding it
 
-```powershell
-python tools/extract_rust_items.py > index_data/rust_items.jsonl
-python tools/build_commands.py; python tools/build_tierb.py; python tools/build_tierc.py
-python tools/build_catalog.py; python tools/build_app.py
-python tools/verify_index_examples.py      # runs every posim fragment
-python tools/verify_tierb_examples.py      # compiles every Rust snippet
+```bash
+python3 tools/extract_rust_items.py > index_data/rust_items.jsonl
+python3 tools/build_commands.py && python3 tools/build_tierb.py && python3 tools/build_tierc.py
+python3 tools/build_catalog.py && python3 tools/build_app.py
+python3 tools/verify_index_examples.py      # runs every posim fragment
+python3 tools/verify_tierb_examples.py      # compiles every Rust snippet
 ```
 
 ## Quick start
 
-```powershell
+```bash
 cargo run                 # notebook REPL (type HELP)
 cargo test --workspace    # all tests
 cargo run -p physical_object --release --example kepler_orbit

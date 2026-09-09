@@ -1,0 +1,15 @@
+# 21. Free fall against the closed form, checked INSIDE the database.
+# y(t) = 10 - (9.81/2) t^2. Every RUN output lands in the dataset, and a
+# single SQL Common Table Expression joins the recorded states to the
+# analytic curve and reports the worst deviation. The solver's local
+# error control (rtol ~ 1e-8) is what bounds it.
+set system.g_constant = 0
+set system.uniform_gravity = [0, -9.81, 0]
+new sphere as ball { mass = 2, radius = 0.5, position = [0, 10, 0] }
+dataset create solveit21_free_fall
+run 1 steps 20
+dataset snapshot
+sql "WITH err AS (SELECT f.t AS t, s.y - (10.0 - 4.905 * f.t * f.t) AS e FROM states s JOIN frames f ON f.frame = s.frame) SELECT MAX(ABS(e)) AS worst_abs_error FROM err"
+sql "SELECT COUNT(*) AS frames, MIN(t) AS t_first, MAX(t) AS t_last FROM frames"
+dataset play
+dataset close

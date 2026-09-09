@@ -1,0 +1,31 @@
+# solveit_db — the SQLite dataset sidecar for rustSolveIt.
+#
+# This package is DELIBERATELY OUTSIDE the pure-Rust simulator workspace
+# (the root Cargo.toml lists `dataset_tools` in `exclude`, exactly as it
+# does `sundials_rs` and `vendor/spec_math`). The simulator workspace
+# keeps its zero-external-dependency, zero-unsafe guarantee; this sidecar
+# is where the SQLite engine lives, per the project owner's explicit
+# specification: rusqlite + r2d2 + r2d2_sqlite, WAL journal mode, and a
+# busy timeout, with the connection pool shared across threads.
+#
+# `posim` never links this code. It spawns the `solveit_db` binary and
+# speaks line-delimited JSON over stdin/stdout (see src/serve.rs), so the
+# simulator's own dependency posture is unchanged.
+[package]
+name = "solveit_db"
+version = "0.1.0"
+edition = "2021"
+license = "BSD-3-Clause"
+
+[dependencies]
+# "bundled" compiles the SQLite amalgamation into the binary: no reliance
+# on a system libsqlite3, identical behavior on every machine.
+# "functions" lets the sidecar register sqrt/pow/hypot as SQL scalar
+# functions (the bundled amalgamation is compiled without
+# SQLITE_ENABLE_MATH_FUNCTIONS, and physics queries want them).
+rusqlite = { version = "0.32", features = ["bundled", "functions"] }
+r2d2 = "0.8"
+r2d2_sqlite = "0.25"
+
+# Detach from the parent workspace: this package owns its Cargo.lock.
+[workspace]

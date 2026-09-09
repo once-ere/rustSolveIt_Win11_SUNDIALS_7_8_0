@@ -1,0 +1,39 @@
+# 36. The teacher's experiment: change a mass, rerun, SUBTRACT.
+# Trial A: a two-body orbit with planet mass 1. Trial B: the SAME
+# space-time domain (same start, same RUN duration, same output grid)
+# with the planet's mass changed to 1.5 - which changes the mutual
+# dynamics, so the trajectories drift apart. DATASET DIFF subtracts
+# the two recordings frame by frame (alignment CHECKED: same frame
+# count, bit-equal t grid, same bodies); SQL then examines the
+# difference. Finally the algebra is closed: (A - B) + B - A must be
+# zero to floating-point roundoff, and a second DIFF proves it.
+set system.g_constant = 1
+new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+dataset create solveit36_trial_a
+run 2 steps 40
+dataset close
+reset
+set system.g_constant = 1
+new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+new sphere as planet { mass = 1.5, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+dataset create solveit36_trial_b
+run 2 steps 40
+dataset close
+dataset diff solveit36_trial_a solveit36_trial_b as solveit36_delta
+dataset open solveit36_delta
+sql "SELECT MAX(ABS(x)) AS max_dx, MAX(ABS(y)) AS max_dy FROM states"
+sql "SELECT t, MAX(ABS(x)) AS dx_at_t FROM states JOIN frames USING(frame) GROUP BY frame ORDER BY frame DESC LIMIT 3"
+dataset close
+dataset play solveit36_delta
+dataset sum solveit36_delta solveit36_trial_b as solveit36_rebuilt
+dataset diff solveit36_rebuilt solveit36_trial_a as solveit36_zero
+dataset open solveit36_zero
+sql "SELECT MAX(ABS(x)) AS x_residual, MAX(ABS(vy)) AS vy_residual FROM states"
+sql "SELECT MAX(ABS(energy)) AS e_residual FROM frames"
+dataset close
+# alignment errors are CHECKED, not assumed: a 10-frame run cannot be
+# subtracted from a 40-frame run (shown in the notebook; here the
+# grammar guarantees it errors naming both counts)
+dataset delete solveit36_rebuilt
+dataset delete solveit36_zero

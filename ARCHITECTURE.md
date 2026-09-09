@@ -115,19 +115,10 @@ literals, the JSON protocol, the scene frame messages, the docs).
 ### 3.3 Solver driving (integrate.rs ↔ sundials_rs 7.8.0)
 
 The vendored engine is the pure-Rust translation of **SUNDIALS 7.8.0**
-— here the **Windows 11 / x86-64 port**
-(`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11`; its crate tree,
-examples, docs and tools, with `.git`, `target/` and bulk `logs/`
-corpora excluded). Its public API is identical to the Linux port the
-donor repository vendored; the Windows port additionally replaces every
-host-libm transcendental inside the engine with pure-Rust translations
-of the glibc routines (`sundials_libm`, 0 mismatches over millions of
-inputs vs. a glibc oracle) — which is what keeps this port's physics
-byte-identical to the Linux evidence (`PORT_WIN11_PROVENANCE.md`). The
-deterministic routines require real FMA: the root `.cargo/config.toml`
-pins `-C target-feature=+fma` (cargo config does NOT flow up from the
-vendored workspace). The API models C's opaque pointers directly, which
-fixes the shape of everything in `integrate.rs`.
+(`once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916`, byte-identical,
+2,929 files; verified on macOS/Apple Silicon in this repository — see
+`VERIFICATION_MACOS.md`). Its API models C's opaque pointers directly,
+which fixes the shape of everything in `integrate.rs`.
 
 **Handle model.**
 
@@ -395,11 +386,10 @@ crate root (module/type namespace collision) — do not try.
   handle (SCENE CLOSE, quit) sets `shutdown`, clears outboxes, and all
   threads exit on their next poll tick (reader timeout 500 ms, accept
   poll 50 ms). `RESET` keeps the window open and re-syncs it.
-- **Browser opening** is best-effort via the platform opener —
-  `cmd /C start` on Windows (this port's platform), `open` on macOS,
+- **Browser opening** is best-effort and platform-dispatched:
+  `open` on macOS (this port's platform), `cmd /C start` on Windows,
   `xdg-open` elsewhere — suppressed by `$POSIM_NO_BROWSER` (set in
-  every headless test). Whether a launch was actually attempted is
-  reported in `SceneHandle::browser_launched`, never assumed.
+  every headless test).
 
 ### 3.8 Collision subsystem (physical_object/src/collide.rs ↔ integrate.rs ↔ vm ↔ scene)
 
@@ -773,6 +763,109 @@ force block is byte-for-byte the same arithmetic order as `rhs_full`'s
 names as **STRING** tokens because `mass 0` is two tokens and would be
 ambiguous against a duration followed by a number.
 
+### 3.10 Dataset subsystem (posim/src/dataset.rs + movie.rs ↔ vm ↔ dataset_tools/)
+
+The SQLite recording layer. Its load-bearing property: **posim links no
+SQLite and no external crate** — the dependency policy of §5 is intact.
+All database work happens in the `solveit_db` sidecar binary
+(`dataset_tools/`, a package deliberately EXCLUDED from the simulator
+workspace, like `sundials_rs`), which posim spawns per open dataset and
+drives over line-delimited JSON on stdin/stdout.
+
+Pinned contracts:
+
+- **The sidecar owns the concurrency recipe**, exactly as specified for
+  this feature: an `r2d2` + `r2d2_sqlite` connection pool (size 10; the
+  POOL is cloned across the serve loop's four worker threads, never a
+  connection), `PRAGMA journal_mode=WAL` executed by the pool's
+  `with_init` on every connection, and `PRAGMA busy_timeout = 5000`.
+  WAL is what lets a notebook's Python `sqlite3` reader open the same
+  file the serve child still holds — tests
+  `ten_threads_through_one_pool_lose_nothing` and
+  `two_pools_on_one_file_interleave_writes_and_reads`
+  (dataset_tools/tests/concurrency.rs) pin it.
+- **Schema v1** (dataset_tools/src/db.rs `SCHEMA`): `meta(key, value)`,
+  `bodies(body, name, shape, mass, wall, geometry)`,
+  `frames(frame, t, energy, px..pz, lx..lz, comx..comz, ncollisions)`,
+  `states(frame, body, x..z, qw..qz, vx..vz, wx..wz)`. Quaternions
+  **w-first** (§3.6 applies to the database too). `bodies.body` is the
+  STABLE object id (`get_id()`), never the index — DEL renumbers
+  indices but ids are never reused. **No wall-clock column anywhere**:
+  byte-stable output is a verified repo property.
+- **The serve protocol** (dataset_tools/src/serve.rs): requests
+  `{"id":N,"op":"sql"|"append"|"info"|"checkpoint"|"close",...}`, one
+  JSON object per line; replies carry the same `id` and `"ok"`. A
+  state row in an append is
+  `[body, x,y,z, qw,qx,qy,qz, vx,vy,vz, wx,wy,wz]`. posim's
+  `DatasetHandle::rpc` matches replies by id. `close` (and Drop, best
+  effort) checkpoints the WAL so a closed dataset is ONE tidy `.db`.
+- **Recording hooks** (vm.rs): with a dataset open and recording armed,
+  `Instr::Run` appends every `report.snapshots` entry as one frame
+  batch (one sidecar transaction) and `Instr::Step` appends one frame.
+  The per-body data rides on `integrate::Snapshot`, which carries
+  `body_states: Vec<BodySnap>` and `collision_count` — **purely
+  observational fields filled in the existing `snapshot()` helper; no
+  arithmetic changed anywhere**, which is why the byte-identity gate
+  (`tools/macos_verify_physics.sh`) still passes.
+- **RESET closes the open dataset** (a dataset describes ONE world);
+  the scene window survives a RESET, the dataset deliberately does not.
+  `DATASET CREATE` replaces an existing file of the same name —
+  re-running a script or notebook reproduces the same database; COPY /
+  SAVEAS are the preservation idioms (both are SQLite `VACUUM INTO`).
+- **SQL is a verbatim passthrough**: the quoted string goes to SQLite
+  untouched, which is what makes the COMPLETE SQLite grammar available
+  from the language. Result cells render deterministically: INTEGER
+  without a decimal point, REAL in shortest round-trip form, `NULL`.
+  The sidecar registers `sqrt`/`pow`/`hypot` (deterministic) because
+  the bundled amalgamation omits SQLITE_ENABLE_MATH_FUNCTIONS.
+- **Movies are DERIVED artifacts** (posim/src/movie.rs): `MOVIE CREATE`
+  reads bodies/frames/states back via one-shot `solveit_db query` calls
+  and writes the self-contained player `movies/<name>.html`. The player
+  obeys the pinned drawing rules of §3.7/§7: wall bodies excluded from
+  the draw list AND the camera auto-fit, BOX as dashed wireframe,
+  round shapes quaternion-rotated about local z. `DATASET PLAY` writes
+  `datasets/<name>_plots.html` the same self-contained way. Both pages
+  fetch nothing (tests `the_player_page_is_self_contained`,
+  `the_plots_page_is_self_contained`).
+- **Grammar surface**: `DATASET`, `MOVIE`, `SQL` are CONTEXTUAL
+  keywords (lexer, command position only — `new sphere as movie` and
+  `let sql = 3` stay legal); subcommand words are matched on text (the
+  QM convention), so no new global keyword beyond the three family
+  words. Documentation moves in lockstep by test:
+  `every_dataset_and_movie_subcommand_is_documented_in_lockstep`
+  (EBNF ↔ HELP_TEXT ↔ grammar.md ↔ grammar.tex, both directions).
+- **Offline dataset operations** (posim/src/dataset.rs `dataset_binop`,
+  `dataset_map`): DIFF/SUM/MAP read datasets ON DISK via one-shot
+  `solveit_db query` calls and write a fresh output dataset via
+  `append_raw` (explicit bodies payload — never the live system).
+  DIFF/SUM alignment is CHECKED: same frame count, bit-equal t grid,
+  same body-id set per frame; violations error naming the first
+  offending frame. MAP pushes positions through
+  `special_functions::coords` (the fourteen classical curvilinear
+  systems; `Map3`/`Map2` dispatchers); 2-D systems require
+  `|z| <= 1e-9` everywhere (checked) and store `(q1, q2, 0)`; the
+  output's velocity columns are set to NULL (curvilinear velocity
+  components need the metric — a point map must not fake them);
+  orientations and the frames table are carried unchanged. Names
+  aliasing the OPEN dataset are refused (`refuse_open_clobber`).
+- **Coordinate maps are a special_functions contract**
+  (special_functions/src/coords.rs): every map returns `Result`, never
+  NaN — non-finite inputs, bad scale parameters (`a <= 0`, ellipsoidal
+  not `a > b > c > 0`), out-of-range coordinates and singular loci
+  (bipolar foci, the toroidal focal ring, `sigma = tau = 0` = the
+  point at infinity, the ellipsoidal coordinate planes) are named
+  errors. Conventions (angle ranges, sign choices, the
+  positive-octant ellipsoidal inverse) are pinned in the module docs
+  and by round-trip/known-value/error-path tests; the value-level
+  builtins (`cart_to_*`/`*_to_cart`, 28 names) register through
+  posim's special-function dispatcher so the SPECIAL_NAMES lockstep
+  test covers their documentation.
+- **Binary discovery**: `$POSIM_DB_TOOL`, then
+  `dataset_tools/target/release/solveit_db` walking up from the working
+  directory, then `$PATH`; the error message carries the exact build
+  command. The notebooks' §6/§9/§10 dataset cells and the R8 notebook
+  check (notebooks/_build/nbcheck.py) sit on top of this layer.
+
 ## 4. Error-handling policy
 
 Library and VM return `Result<_, String>` with human-readable,
@@ -785,6 +878,16 @@ error events; a solver failure during playback pauses the scene and
 queues an event.
 
 ## 5. Dependency policy
+
+**The one deliberate exception lives OUTSIDE the workspace:**
+`dataset_tools/` (the `solveit_db` SQLite sidecar) depends on
+`rusqlite` (bundled SQLite amalgamation), `r2d2` and `r2d2_sqlite`,
+exactly as specified for the dataset feature. It is excluded from the
+workspace in the root Cargo.toml (like `sundials_rs`), owns its own
+Cargo.lock, and posim reaches it only by spawning the binary — the
+simulator workspace's `Cargo.lock` still lists local crates only, and
+`cargo build --workspace` never touches crates.io.
+
 
 - Allowed: `std`, and path deps `sundials_core`, `cvode_rs`,
   `arkode_rs` (and the four further `../sundials_rs` crates —
@@ -819,11 +922,11 @@ queues an event.
 | wire/kernel | `jupyter/test_protocol.py`, `jupyter/test_kernel.py` | machine protocol incl. the scene command family and the `events` op; full Jupyter ZMQ path |
 | real-browser gestures | scratchpad `verify_gestures.py` (headless Chrome CDP; not committed) | genuine key/mouse/wheel input: arrows translate right/left/up/down, left-drag rotates, wheel and +/- zoom, toolbar Start/Pause/Reverse, statusbar reporting |
 
-Regression invariant: `cargo test --workspace` green (**622 tests**:
-49 physical_object lib + 19 collision + 9 conservation +
-42 constrained/DAE + 112 posim + 92 quantum + 233 special_functions +
-11 vendored identities + 55 doctests — the Windows 11 measurement) and
-`cargo build --workspace --all-targets` warning-free at every commit.
+Regression invariant: `cargo test --workspace` green (**605 tests**:
+52 physical_object lib + 19 collision + 9 conservation +
+25 constrained/DAE + 113 posim + 92 quantum + 233 special_functions +
+11 vendored identities + 55 doctests) and `cargo build --workspace --all-targets` warning-free at
+every commit.
 
 ## 7. The video recorder (`recorder/`)
 

@@ -231,6 +231,50 @@ pub enum SceneCmd {
     Events,
 }
 
+/// The `DATASET` family: SQLite recording via the `solveit_db` sidecar
+/// (see [`crate::dataset`]). Names are embedded at parse time — none of
+/// these arguments is an expression.
+#[derive(Clone, Debug, PartialEq)]
+pub enum DatasetCmd {
+    /// Fresh dataset (replaces an existing one), opened, recording armed.
+    Create(String),
+    /// Open an existing dataset, recording armed.
+    Open(String),
+    Close,
+    /// `Some(on)` sets auto-recording; `None` reports the status.
+    Record(Option<bool>),
+    /// Record the current state as one frame, right now.
+    Snapshot,
+    List,
+    /// Row counts for the named dataset, or the open one when `None`.
+    Info(Option<String>),
+    Copy(String, String),
+    /// Snapshot-copy the OPEN dataset under a new name.
+    SaveAs(String),
+    Delete(String),
+    /// Plots page in the browser for the named (or open) dataset.
+    Play(Option<String>),
+    /// Frame-aligned trajectory difference: `out = a - b`.
+    Diff { a: String, b: String, out: String },
+    /// Frame-aligned trajectory sum: `out = a + b`.
+    Sum { a: String, b: String, out: String },
+    /// Coordinate transform of a recorded trajectory:
+    /// `out = system(src)`, positions mapped through one of the
+    /// classical curvilinear systems (see [`crate::dataset::resolve_map`]).
+    Map { src: String, system: String, params: Vec<f64>, out: String },
+}
+
+/// The `MOVIE` family: browser animations DERIVED from datasets (see
+/// [`crate::movie`]).
+#[derive(Clone, Debug, PartialEq)]
+pub enum MovieCmd {
+    /// Build `movies/<name>.html` from `datasets/<dataset>.db`.
+    Create { dataset: String, name: Option<String> },
+    Delete(String),
+    List,
+    Play(String),
+}
+
 /// Stack-machine instructions (the compiled program is pure postfix).
 #[derive(Clone, Debug, PartialEq)]
 pub enum Instr {
@@ -272,6 +316,12 @@ pub enum Instr {
     Help,
     /// Graphical scene window command (see [`SceneCmd`]).
     Scene(SceneCmd),
+    /// SQLite dataset command (see [`DatasetCmd`]).
+    Dataset(DatasetCmd),
+    /// Dataset-derived movie command (see [`MovieCmd`]).
+    Movie(MovieCmd),
+    /// Arbitrary SQLite statement(s) against the open dataset.
+    Sql(String),
     Qm(crate::qm::QmCmd),
     Qm2(crate::qm2::Qm2Cmd),
     Qm3(crate::qm3::Qm3Cmd),
@@ -369,6 +419,13 @@ pub struct SimState {
     pub qm2: crate::qm2::Qm2State,
     /// The three-dimensional quantum problem, if any.
     pub qm3: crate::qm3::Qm3State,
+    /// The open SQLite dataset, when `DATASET CREATE/OPEN` has run: a
+    /// handle to the `solveit_db serve` child that owns the r2d2 pool.
+    pub dataset: Option<crate::dataset::DatasetHandle>,
+    /// Auto-recording switch: while true (and a dataset is open),
+    /// every RUN output snapshot and every STEP end is appended as a
+    /// dataset frame. Armed by CREATE/OPEN, toggled by DATASET RECORD.
+    pub dataset_recording: bool,
     /// User names registered with `NEW ... AS name` → object index
     /// (kept renumbered by DEL / BOX OFF).
     pub names: BTreeMap<String, usize>,
@@ -395,6 +452,8 @@ impl Default for SimState {
             qm: crate::qm::QmState::default(),
             qm2: crate::qm2::Qm2State::fresh(),
             qm3: crate::qm3::Qm3State::fresh(),
+            dataset: None,
+            dataset_recording: false,
             names: BTreeMap::new(),
             env_stack: Vec::new(),
         }
@@ -737,6 +796,70 @@ graphical scene window (opens in your web browser):
   SCENE EVENTS              read async events sent by the window
   in the window: arrow keys translate, left-drag rotates,
                  wheel or +/- zooms, H shows all controls
+SQLite datasets and movies (the solveit_db sidecar; see grammar.md):
+  DATASET CREATE <name>     fresh datasets/<name>.db (replaces any old
+                            one), opened with recording armed: every
+                            RUN output snapshot and every STEP end is
+                            appended as one frame
+  DATASET OPEN <name>       open an existing dataset (recording armed)
+  DATASET CLOSE             checkpoint the WAL and close
+  DATASET RECORD [ON|OFF]   arm/disarm auto-recording (bare = status)
+  DATASET SNAPSHOT          record the current state as one frame
+  DATASET LIST              list datasets/
+  DATASET INFO [<name>]     row counts (open dataset when no name)
+  DATASET COPY <src> <dst>  snapshot-copy a dataset
+  DATASET SAVEAS <name>     save the OPEN dataset under a new name
+  DATASET DELETE <name>     remove a dataset (close it first if open)
+  DATASET PLAY [<name>]     time-series plots in your web browser
+  DATASET DIFF <a> <b> AS <out>
+                            out = a - b, frame-aligned trajectory
+                            difference: same frame count, bit-equal t
+                            grid and same body ids required (checked;
+                            mismatches error naming the frame)
+  DATASET SUM <a> <b> AS <out>
+                            out = a + b, same alignment rules
+  DATASET MAP <src> TO <system> [<a> [<b> <c>]] AS <out>
+                            positions mapped to a curvilinear system:
+                            spherical | cylindrical | ellipsoidal a b c
+                            | oblate a | prolate a | paraboloidal
+                            | elliptic_cyl a | parabolic_cyl
+                            | bipolar_cyl a | toroidal a
+                            | bispherical a | polar2 | elliptic2 a
+                            | bipolar2 a  (2-D systems need a planar
+                            trajectory, |z| <= 1e-9; velocities are
+                            stored as NULL - curvilinear components
+                            need the metric)
+  SQL \"<statements>\"        run ANY SQLite statement(s) on the open
+                            dataset - the whole SQLite grammar: SELECT
+                            (CTEs, window functions), INSERT, UPDATE,
+                            DELETE, CREATE/ALTER/DROP, ATTACH, PRAGMA,
+                            VACUUM, EXPLAIN, ...
+  MOVIE CREATE <ds> [AS <name>]
+                            build the movie movies/<name>.html from
+                            dataset <ds> (bodies + recorded frames)
+  MOVIE PLAY <name>         play a movie in your web browser
+  MOVIE LIST | MOVIE DELETE <name>
+                            what exists / remove one
+coordinate transformations (expression-level; vectors are [x, y, z],
+2-D points are 2-element lists [x, y]; see grammar.md):
+  cart_to_spherical(v) | spherical_to_cart(q)
+  cart_to_cylindrical(v) | cylindrical_to_cart(q)
+  cart_to_ellipsoidal(v, a, b, c) | ellipsoidal_to_cart(q, a, b, c)
+  cart_to_oblate(v, a) | oblate_to_cart(q, a)
+  cart_to_prolate(v, a) | prolate_to_cart(q, a)
+  cart_to_paraboloidal(v) | paraboloidal_to_cart(q)
+  cart_to_elliptic_cyl(v, a) | elliptic_cyl_to_cart(q, a)
+  cart_to_parabolic_cyl(v) | parabolic_cyl_to_cart(q)
+  cart_to_bipolar_cyl(v, a) | bipolar_cyl_to_cart(q, a)
+  cart_to_toroidal(v, a) | toroidal_to_cart(q, a)
+  cart_to_bispherical(v, a) | bispherical_to_cart(q, a)
+  cart2_to_polar(u) | polar_to_cart2(w)
+  cart2_to_elliptic(u, a) | elliptic_to_cart2(w, a)
+  cart2_to_bipolar(u, a) | bipolar_to_cart2(w, a)
+                            every map validates its domain: invalid
+                            scale parameters, out-of-range coordinates
+                            and singular loci (foci, focal rings, the
+                            point at infinity) are ERRORS, not NaNs
 notebook magics: %history  %edit <n> <text>  %rerun <n>  %save <file>
                  %load <file>  %reset  %quit";
 
@@ -1255,6 +1378,7 @@ fn exec_one(instr: &Instr, state: &mut SimState, stack: &mut Vec<Value>) -> Resu
         Instr::Step => {
             let dt = pop_num(stack)?;
             let report = sundials_step(&mut state.system, dt)?;
+            record_after_step(state)?;
             /* the collision suffix appears only when something collided,
              * so collision-free output keeps its historical shape */
             let coll = if report.ncollisions > 0 {
@@ -1272,6 +1396,7 @@ fn exec_one(instr: &Instr, state: &mut SimState, stack: &mut Vec<Value>) -> Resu
             let e0 = state.system.total_energy();
             let t_end = state.system.time + duration;
             let report = sundials_run(&mut state.system, t_end, *outputs)?;
+            record_after_run(state, &report)?;
             let e1 = state.system.total_energy();
             let drift = if e0 != 0.0 { ((e1 - e0) / e0).abs() } else { (e1 - e0).abs() };
             let coll = if report.ncollisions > 0 {
@@ -1318,6 +1443,11 @@ fn exec_one(instr: &Instr, state: &mut SimState, stack: &mut Vec<Value>) -> Resu
              * (now empty) system instead of closing */
             let scene = state.scene.take();
             let machine_mode = state.machine_mode;
+            /* the open dataset does NOT survive: the world it was
+             * recording is gone, so checkpoint the WAL and close */
+            if let Some(h) = state.dataset.take() {
+                let _ = h.close();
+            }
             *state = SimState::default();
             state.machine_mode = machine_mode;
             if let Some(s) = scene {
@@ -1330,6 +1460,18 @@ fn exec_one(instr: &Instr, state: &mut SimState, stack: &mut Vec<Value>) -> Resu
             stack.push(Value::Str("system reset".to_string()));
         }
         Instr::Help => stack.push(Value::Str(HELP_TEXT.to_string())),
+        Instr::Dataset(cmd) => {
+            let msg = exec_dataset(cmd, state)?;
+            stack.push(Value::Str(msg));
+        }
+        Instr::Movie(cmd) => {
+            let msg = exec_movie(cmd)?;
+            stack.push(Value::Str(msg));
+        }
+        Instr::Sql(sql) => {
+            let msg = exec_sql_cmd(sql, state)?;
+            stack.push(Value::Str(msg));
+        }
         Instr::Scene(cmd) => {
             let out = exec_scene(cmd, state, stack)?;
             stack.push(Value::Str(out));
@@ -1900,6 +2042,279 @@ fn exec_box(mode: BoxMode, state: &mut SimState, stack: &mut Vec<Value>) -> Resu
 
 /// Executes one `SCENE` sub-command. Every command except `CREATE`
 /// needs an open scene window.
+/// Records one frame (the current system state) after a STEP, when a
+/// dataset is open and recording is armed. The handle must be taken
+/// OUT of the state for the call: `append` reads `&SimState` (bodies,
+/// names, walls, box) while the handle itself needs `&mut`.
+fn record_after_step(state: &mut SimState) -> Result<(), String> {
+    if !state.dataset_recording || state.dataset.is_none() {
+        return Ok(());
+    }
+    let frame = crate::dataset::frame_from_system(state);
+    let mut h = state.dataset.take().expect("dataset presence checked above");
+    let r = h.append(state, vec![frame]);
+    state.dataset = Some(h);
+    r.map(|_| ())
+}
+
+/// Records every output snapshot of a RUN as one dataset frame batch
+/// (a single sidecar transaction).
+fn record_after_run(
+    state: &mut SimState,
+    report: &::physical_object::integrate::RunReport,
+) -> Result<(), String> {
+    if !state.dataset_recording || state.dataset.is_none() || report.snapshots.is_empty() {
+        return Ok(());
+    }
+    let frames: Vec<crate::machine::Json> =
+        report.snapshots.iter().map(crate::dataset::frame_from_snapshot).collect();
+    let mut h = state.dataset.take().expect("dataset presence checked above");
+    let r = h.append(state, frames);
+    state.dataset = Some(h);
+    r.map(|_| ())
+}
+
+/// One SQL result cell as display text. Integers print without a
+/// decimal point; other reals print in Rust's shortest round-trip form
+/// (both are deterministic, which is what the byte-stable output gates
+/// need).
+fn sql_cell_text(v: &crate::machine::Json) -> String {
+    use crate::machine::Json;
+    match v {
+        Json::Null => "NULL".to_string(),
+        Json::Bool(b) => b.to_string(),
+        Json::Num(n) => {
+            if n.fract() == 0.0 && n.abs() < 9.007199254740992e15 {
+                format!("{}", *n as i64)
+            } else {
+                format!("{n:?}")
+            }
+        }
+        Json::Str(s) => s.clone(),
+        other => crate::machine::to_string(other),
+    }
+}
+
+/// `SQL "<statements>"` — the passthrough that exposes the COMPLETE
+/// SQLite command language on the open dataset.
+fn exec_sql_cmd(sql: &str, state: &mut SimState) -> Result<String, String> {
+    let mut h = state.dataset.take().ok_or_else(|| {
+        "no dataset is open — SQL runs on the open dataset; \
+         DATASET CREATE <name> or DATASET OPEN <name> first"
+            .to_string()
+    })?;
+    let r = h.sql(sql);
+    state.dataset = Some(h);
+    let (cols, rows, changes) = r?;
+    if cols.is_empty() {
+        return Ok(format!("ok ({changes} row(s) changed)"));
+    }
+    let mut out = cols.join(" | ");
+    if rows.is_empty() {
+        out.push_str("\n(no rows)");
+    }
+    for row in &rows {
+        out.push('\n');
+        out.push_str(&row.iter().map(sql_cell_text).collect::<Vec<_>>().join(" | "));
+    }
+    Ok(out)
+}
+
+/// DIFF/SUM/MAP work on datasets ON DISK. While one is open through
+/// the serve child, its file may be read (WAL guarantees readers see
+/// every committed transaction) but must not be REPLACED or aliased as
+/// an output — so any name involved that matches the open dataset is
+/// refused with the fix spelled out.
+fn refuse_open_clobber(state: &SimState, names: &[&String]) -> Result<(), String> {
+    if let Some(h) = &state.dataset {
+        if names.iter().any(|n| ***n == *h.name) {
+            return Err(format!(
+                "dataset {} is open — DATASET CLOSE first (DIFF/SUM/MAP operate on \
+                 datasets on disk)",
+                h.name
+            ));
+        }
+    }
+    Ok(())
+}
+
+fn exec_dataset(cmd: &DatasetCmd, state: &mut SimState) -> Result<String, String> {
+    use crate::dataset as ds;
+    match cmd {
+        DatasetCmd::Create(name) => {
+            if let Some(h) = state.dataset.take() {
+                let _ = h.close();
+            }
+            let handle = ds::DatasetHandle::create(name)?;
+            state.dataset = Some(handle);
+            state.dataset_recording = true;
+            Ok(format!(
+                "dataset {name} created (datasets/{name}.db, journal_mode=wal, \
+                 schema v1) — recording armed"
+            ))
+        }
+        DatasetCmd::Open(name) => {
+            if let Some(h) = state.dataset.take() {
+                let _ = h.close();
+            }
+            let mut handle = ds::DatasetHandle::open(name)?;
+            let (b, f, s) = handle.counts()?;
+            state.dataset = Some(handle);
+            state.dataset_recording = true;
+            Ok(format!(
+                "dataset {name} opened ({b} bodies, {f} frames, {s} states) — \
+                 recording armed"
+            ))
+        }
+        DatasetCmd::Close => match state.dataset.take() {
+            Some(h) => {
+                state.dataset_recording = false;
+                h.close()
+            }
+            None => Err("no dataset is open".to_string()),
+        },
+        DatasetCmd::Record(Some(on)) => {
+            if state.dataset.is_none() {
+                return Err(
+                    "no dataset is open — DATASET CREATE <name> or DATASET OPEN <name> first"
+                        .to_string(),
+                );
+            }
+            state.dataset_recording = *on;
+            Ok(format!("dataset recording {}", if *on { "on" } else { "off" }))
+        }
+        DatasetCmd::Record(None) => match &state.dataset {
+            Some(h) => Ok(format!(
+                "dataset recording is {} (open: {})",
+                if state.dataset_recording { "on" } else { "off" },
+                h.name
+            )),
+            None => Ok("no dataset is open".to_string()),
+        },
+        DatasetCmd::Snapshot => {
+            if state.dataset.is_none() {
+                return Err(
+                    "no dataset is open — DATASET CREATE <name> or DATASET OPEN <name> first"
+                        .to_string(),
+                );
+            }
+            let frame = ds::frame_from_system(state);
+            let mut h = state.dataset.take().expect("dataset presence checked above");
+            let r = h.append(state, vec![frame]);
+            state.dataset = Some(h);
+            let (first, _) = r?;
+            Ok(format!("frame {first} recorded at t = {}", state.system.time))
+        }
+        DatasetCmd::List => {
+            let names = ds::list()?;
+            if names.is_empty() {
+                Ok("no datasets (DATASET CREATE <name> makes one)".to_string())
+            } else {
+                Ok(names.join("\n"))
+            }
+        }
+        DatasetCmd::Info(name) => match name {
+            Some(n) => {
+                ds::valid_name(n)?;
+                let db = ds::db_path(n);
+                if !db.is_file() {
+                    return Err(format!("no such dataset `{n}` ({})", db.display()));
+                }
+                let (_, rows) = ds::query_file(
+                    &db,
+                    "SELECT (SELECT COUNT(*) FROM bodies), \
+                            (SELECT COUNT(*) FROM frames), \
+                            (SELECT COUNT(*) FROM states)",
+                )?;
+                let row = rows.first().ok_or("empty info result")?;
+                Ok(format!(
+                    "dataset {n}: {} bodies, {} frames, {} states",
+                    sql_cell_text(&row[0]),
+                    sql_cell_text(&row[1]),
+                    sql_cell_text(&row[2])
+                ))
+            }
+            None => {
+                let mut h = state.dataset.take().ok_or_else(|| {
+                    "no dataset is open — DATASET INFO <name> names a closed one".to_string()
+                })?;
+                let r = h.counts();
+                let name = h.name.clone();
+                state.dataset = Some(h);
+                let (b, f, s) = r?;
+                Ok(format!("dataset {name}: {b} bodies, {f} frames, {s} states"))
+            }
+        },
+        DatasetCmd::Copy(src, dst) => ds::copy(src, dst),
+        DatasetCmd::SaveAs(new_name) => {
+            let src = match &state.dataset {
+                Some(h) => h.name.clone(),
+                None => {
+                    return Err(
+                        "no dataset is open — DATASET SAVEAS snapshots the OPEN dataset; \
+                         use DATASET COPY <src> <dst> for closed ones"
+                            .to_string(),
+                    )
+                }
+            };
+            ds::copy(&src, new_name)?;
+            Ok(format!("dataset {src} saved as {new_name}"))
+        }
+        DatasetCmd::Delete(name) => {
+            if state.dataset.as_ref().map(|h| h.name == *name) == Some(true) {
+                return Err(format!(
+                    "dataset {name} is open — DATASET CLOSE first, then delete"
+                ));
+            }
+            ds::delete(name)
+        }
+        DatasetCmd::Diff { a, b, out } => {
+            refuse_open_clobber(state, &[a, b, out])?;
+            crate::dataset::dataset_binop(a, b, out, crate::dataset::BinOp::Diff)
+        }
+        DatasetCmd::Sum { a, b, out } => {
+            refuse_open_clobber(state, &[a, b, out])?;
+            crate::dataset::dataset_binop(a, b, out, crate::dataset::BinOp::Sum)
+        }
+        DatasetCmd::Map { src, system, params, out } => {
+            refuse_open_clobber(state, &[src, out])?;
+            crate::dataset::dataset_map(src, system, params, out)
+        }
+        DatasetCmd::Play(name) => {
+            let target = match name {
+                Some(n) => n.clone(),
+                None => match &state.dataset {
+                    Some(h) => h.name.clone(),
+                    None => {
+                        return Err(
+                            "no dataset is open — DATASET PLAY <name> names one, or \
+                             DATASET CREATE/OPEN first"
+                                .to_string(),
+                        )
+                    }
+                },
+            };
+            ds::play(&target)
+        }
+    }
+}
+
+fn exec_movie(cmd: &MovieCmd) -> Result<String, String> {
+    match cmd {
+        MovieCmd::Create { dataset, name } => crate::movie::create(dataset, name.as_deref()),
+        MovieCmd::Delete(name) => crate::movie::delete(name),
+        MovieCmd::List => {
+            let names = crate::movie::list()?;
+            if names.is_empty() {
+                Ok("no movies (MOVIE CREATE <dataset> makes one)".to_string())
+            } else {
+                Ok(names.join("\n"))
+            }
+        }
+        MovieCmd::Play(name) => crate::movie::play(name),
+    }
+}
+
 fn exec_scene(cmd: &SceneCmd, state: &mut SimState, stack: &mut Vec<Value>) -> Result<String, String> {
     use crate::scene::{RunMode, SceneHandle};
 
@@ -3844,5 +4259,79 @@ mod tests {
         assert_eq!(execute_line("get system.box", &mut st).unwrap(), Value::Num(10.0));
         execute_line("box off", &mut st).unwrap();
         assert_eq!(execute_line("get system.count", &mut st).unwrap(), Value::Num(0.0));
+    }
+
+    /// End-to-end through the REAL SQLite sidecar: a free-fall run is
+    /// recorded frame by frame, SQL reads the count and the analytic
+    /// y(1) = 10 − 9.81/2 back out, SAVEAS/DELETE round-trip, and a
+    /// movie is generated from the dataset. Runs whenever `solveit_db`
+    /// is built (the verify scripts build it first); prints a clear
+    /// skip note otherwise instead of passing vacuously.
+    #[test]
+    fn dataset_records_run_frames_and_sql_reads_them_back() {
+        if crate::dataset::find_db_tool().is_err() {
+            eprintln!(
+                "SKIPPED dataset_records_run_frames_and_sql_reads_them_back: \
+                 build the sidecar first (cd dataset_tools && cargo build --release)"
+            );
+            return;
+        }
+        let name = format!("vmtest_{}", std::process::id());
+        let copy = format!("{name}_copy");
+        let mut st = SimState::default();
+        execute_line(
+            "new sphere as ball { mass = 2, radius = 0.5, position = [0, 10, 0] }",
+            &mut st,
+        )
+        .unwrap();
+        execute_line("set system.uniform_gravity = [0, -9.81, 0]", &mut st).unwrap();
+        execute_line(&format!("dataset create {name}"), &mut st).unwrap();
+        execute_line("run 1 steps 10", &mut st).unwrap();
+
+        // Ten RUN outputs became ten frames.
+        match execute_line("sql \"SELECT COUNT(*) FROM frames\"", &mut st).unwrap() {
+            Value::Str(s) => assert!(s.ends_with("\n10"), "frame count: {s}"),
+            other => panic!("SQL returned {other:?}"),
+        }
+        // The last recorded y is the analytic free-fall position.
+        match execute_line(
+            "sql \"SELECT y FROM states ORDER BY frame DESC LIMIT 1\"",
+            &mut st,
+        )
+        .unwrap()
+        {
+            Value::Str(s) => {
+                let y: f64 = s.lines().last().unwrap().parse().unwrap();
+                assert!((y - (10.0 - 9.81 / 2.0)).abs() < 1e-6, "y(1) came back as {s}");
+            }
+            other => panic!("SQL returned {other:?}"),
+        }
+        // A manual snapshot appends frame 10.
+        match execute_line("dataset snapshot", &mut st).unwrap() {
+            Value::Str(s) => assert!(s.starts_with("frame 10 recorded"), "{s}"),
+            other => panic!("snapshot returned {other:?}"),
+        }
+        // SAVEAS snapshots the open dataset; the copy is a valid dataset.
+        execute_line(&format!("dataset saveas {copy}"), &mut st).unwrap();
+        match execute_line(&format!("dataset info {copy}"), &mut st).unwrap() {
+            Value::Str(s) => assert!(s.contains("11 frames"), "{s}"),
+            other => panic!("info returned {other:?}"),
+        }
+        // A movie generates from the recorded dataset.
+        match execute_line(&format!("movie create {name} as {name}"), &mut st).unwrap() {
+            Value::Str(s) => assert!(s.contains("11 frames, 1 bodies"), "{s}"),
+            other => panic!("movie returned {other:?}"),
+        }
+        // DELETE refuses the open dataset, then works after CLOSE.
+        let e = execute_line(&format!("dataset delete {name}"), &mut st).unwrap_err();
+        assert!(e.contains("is open"), "{e}");
+        execute_line("dataset close", &mut st).unwrap();
+        execute_line(&format!("dataset delete {name}"), &mut st).unwrap();
+        execute_line(&format!("dataset delete {copy}"), &mut st).unwrap();
+        crate::movie::delete(&name).unwrap();
+        /* Tests run with cwd = posim/: remove the scratch dirs if this
+         * test created them and they are now empty. */
+        let _ = std::fs::remove_dir("datasets");
+        let _ = std::fs::remove_dir("movies");
     }
 }

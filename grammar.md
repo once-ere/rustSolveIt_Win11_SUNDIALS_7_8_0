@@ -79,11 +79,17 @@ and, for constrained dynamics, equilibrium and sensitivity (§5.13):
 `CONSTRAIN CONSTRAINTS EQUILIBRIUM SENSITIVITY IDA BALL HINGE UNIVERSAL GEAR RACK
 PRISMATIC`
 
-(`BALL`, `HINGE`, `UNIVERSAL`, `GEAR`, `RACK` and `PRISMATIC` are **contextual**: they are commands
+and, for the SQLite dataset layer (§5.14):
+
+`DATASET MOVIE SQL`
+
+(`BALL`, `HINGE`, `UNIVERSAL`, `GEAR`, `RACK`, `PRISMATIC` — and likewise
+`DATASET`, `MOVIE` and `SQL` — are **contextual**: they are commands
 only at the start of a line. Anywhere else they are ordinary
 identifiers, so `new sphere as ball` and `get ball.mass` keep working —
 `ball` is exactly what a physics user calls a sphere, and reserving it
-outright would have broken existing notebooks.)
+outright would have broken existing notebooks. The same protection
+means `new sphere as movie` and `let sql = 3` are legal too.)
 
 (`EQUIL` is an alias for `EQUILIBRIUM`, `SENS` for `SENSITIVITY`.)
 
@@ -169,7 +175,52 @@ command  := "NEW" shape [ "AS" (IDENT | STRING) ]
                                                  expr = inner side
                                                  length; bare = status;
                                                  OFF removes it      *)
+          | "DATASET" datasetcmd              (* SQLite recording    *)
+          | "MOVIE" moviecmd                  (* animations derived
+                                                 from datasets       *)
+          | "SQL" STRING                      (* ANY SQLite statement,
+                                                 or several split on
+                                                 `;`, run verbatim on
+                                                 the open dataset    *)
           | expr ;                            (* bare expression     *)
+datasetcmd := "CREATE" name                   (* fresh dataset at
+                                                 datasets/<name>.db
+                                                 (replaces an existing
+                                                 one), opened with
+                                                 recording armed     *)
+          | "OPEN" name                       (* open an existing    *)
+          | "CLOSE"                           (* checkpoint + close  *)
+          | "RECORD" [ "ON" | "OFF" ]         (* auto-record RUN/STEP
+                                                 frames; bare=status *)
+          | "SNAPSHOT"                        (* record one frame NOW *)
+          | "LIST"                            (* names in datasets/  *)
+          | "INFO" [ name ]                   (* row counts          *)
+          | "COPY" name name                  (* src -> dst snapshot *)
+          | "SAVEAS" name                     (* open dataset -> new *)
+          | "DELETE" name
+          | "PLAY" [ name ]                   (* plots in a browser  *)
+          | "DIFF" name name "AS" name        (* out = a - b, frame-
+                                                 aligned; alignment is
+                                                 CHECKED              *)
+          | "SUM" name name "AS" name         (* out = a + b          *)
+          | "MAP" name "TO" mapsys
+                  [ NUMBER [ NUMBER NUMBER ] ]
+                  "AS" name ;                 (* curvilinear transform
+                                                 of the positions     *)
+moviecmd := "CREATE" name [ "AS" name ]       (* dataset -> movie
+                                                 page movies/<n>.html *)
+          | "DELETE" name | "LIST"
+          | "PLAY" name ;                     (* open in a browser   *)
+name     := IDENT | STRING ;                  (* quote a name that
+                                                 collides with a
+                                                 keyword: "box"      *)
+mapsys   := "SPHERICAL" | "CYLINDRICAL" | "ELLIPSOIDAL" | "OBLATE"
+          | "PROLATE" | "PARABOLOIDAL" | "ELLIPTIC_CYL"
+          | "PARABOLIC_CYL" | "BIPOLAR_CYL" | "TOROIDAL"
+          | "BISPHERICAL"                     (* three-dimensional   *)
+          | "POLAR2" | "ELLIPTIC2" | "BIPOLAR2" ;
+                                              (* two-dimensional, in
+                                                 the plane z = 0     *)
 scenecmd := "CREATE" [ NUMBER ]               (* open window [port]  *)
           | "CLOSE"                           (* aka DESTROY         *)
           | "TRANSLATE" term term [ term ]    (* camera dx dy [dz]   *)
@@ -2380,6 +2431,279 @@ discretisation error at `h = 0.52`.
 
 ---
 
+### 5.14 `DATASET`, `SQL`, `MOVIE` — SQLite recording, queries, and derived movies
+
+Every simulation can record itself into a **dataset**: one ordinary
+SQLite database file under `datasets/<name>.db`. The dataset is the
+canonical artifact of a run — the notebooks build theirs automatically,
+the `SQL` command interrogates it with the complete SQLite language,
+`DATASET PLAY` plots it in your web browser, and a **movie** is a 3-D
+animation *derived from* a dataset, never recorded independently of one.
+
+**The architecture, honestly.** posim itself contains **no SQLite
+code** — the simulator workspace keeps its zero-external-dependency,
+zero-`unsafe` guarantee. All database work happens in a separate
+sidecar binary, `solveit_db` (the `dataset_tools/` package), which
+posim spawns and speaks to in line-delimited JSON. Build it once,
+from the repository root:
+
+```bash
+cd dataset_tools && cargo build --release
+```
+
+The sidecar follows the standard SQLite concurrency recipe, exactly:
+
+1. **A thread-safe connection pool** (`r2d2` + `r2d2_sqlite`, pool
+   size 10). No raw connection ever crosses a thread; the POOL is
+   cloned into the sidecar's four worker threads.
+2. **WAL journal mode**, enabled on every connection the moment the
+   pool creates it (`PRAGMA journal_mode=WAL`). Readers never block
+   the writer and the writer never blocks readers — which is what lets
+   a Jupyter notebook's Python `sqlite3` reader watch a dataset
+   **while posim is still appending to it**.
+3. **A busy timeout** (`PRAGMA busy_timeout = 5000`): a connection
+   that finds the database momentarily locked waits up to five seconds
+   instead of failing with `database is locked`.
+
+The sidecar also registers `sqrt(x)`, `pow(x, y)` and `hypot(x, y)` as
+deterministic SQL functions (the bundled SQLite 3.46.0 is compiled
+without its optional math functions, and physics queries want them).
+
+**Names and places.** Dataset and movie names are file stems — letters,
+digits, `_`, `-` — written as an identifier or, when a name collides
+with a keyword, as a quoted string (`dataset open "box"`). Datasets
+live in `datasets/`, movies in `movies/`, both relative to the working
+directory, exactly like `videos/` and `scripts/`.
+
+**The schema (version 1).** Four tables, no timestamps anywhere
+(byte-stable output is a verified property of this repository, and a
+wall-clock column would silently break it):
+
+| table    | one row per | columns |
+|----------|-------------|---------|
+| `meta`   | key/value pair | `key`, `value` (`schema_version`, `title`, `box`) |
+| `bodies` | body | `body` (the STABLE id — `DEL` renumbers indices but never reuses ids), `name`, `shape`, `mass`, `wall`, `geometry` (JSON text of the shape parameters) |
+| `frames` | recorded instant | `frame`, `t`, `energy`, `px py pz`, `lx ly lz`, `comx comy comz`, `ncollisions` (cumulative) |
+| `states` | body per frame | `frame`, `body`, `x y z`, `qw qx qy qz` (**w-first**, like everywhere in this repository), `vx vy vz`, `wx wy wz` |
+
+**The commands, one by one.**
+
+`DATASET CREATE <name>` makes `datasets/<name>.db` FRESH — an existing
+dataset of the same name is replaced, so re-running a script or
+notebook always reproduces the same database (keep an old run with
+COPY or SAVEAS first). The dataset opens with **recording armed**:
+
+```
+In[5]:= dataset create solveit20_kepler
+Out[5]= dataset solveit20_kepler created (datasets/solveit20_kepler.db, journal_mode=wal, schema v1) — recording armed
+```
+
+While recording is armed, **every output row of a `RUN`** (all `STEPS n`
+of them, captured at the exact output instants the solver visits) and
+**the end of every `STEP`** is appended as one frame, in a single
+sidecar transaction per command. `DATASET RECORD OFF` pauses that,
+`DATASET RECORD ON` resumes it, bare `DATASET RECORD` reports the
+switch. `DATASET SNAPSHOT` appends one frame right now, recording
+switch or no.
+
+`DATASET OPEN <name>` attaches an existing dataset (recording armed);
+`DATASET CLOSE` checkpoints the WAL into the main file — leaving one
+tidy `.db` with no `-wal`/`-shm` sidecar files — and shuts the sidecar
+child down. `RESET` closes the open dataset the same way: a dataset
+describes ONE world, and RESET destroys that world. (The scene window
+survives a RESET; the dataset deliberately does not.)
+
+`DATASET LIST` names everything under `datasets/`; `DATASET INFO
+[<name>]` reports row counts for the named dataset, or for the open one
+with no name:
+
+```
+In[7]:= dataset info
+Out[7]= dataset solveit20_kepler: 2 bodies, 200 frames, 400 states
+```
+
+`DATASET COPY <src> <dst>` snapshot-copies a dataset (SQLite's `VACUUM
+INTO`: compact, checkpointed, safe to take even while the source is
+open). `DATASET SAVEAS <name>` does the same from the OPEN dataset —
+the checkpoint idiom. `DATASET DELETE <name>` removes a dataset and its
+WAL sidecars; deleting the open dataset is refused until you CLOSE it.
+
+`DATASET PLAY [<name>]` renders the recorded time series into a
+self-contained page `datasets/<name>_plots.html` — total energy E(t),
+|P| and |L|, per-body x/y/z components, and a top view of every
+trajectory — and opens it in your web browser. Like every page this
+repository generates, it is vanilla JS + canvas with zero external
+fetches. `POSIM_NO_BROWSER=1` suppresses the browser launch (batch
+runs); the page is written either way.
+
+**`DATASET DIFF <a> <b> AS <out>` and `DATASET SUM <a> <b> AS <out>` —
+trajectory algebra.** The teacher's experiment in one command: run a
+trial, change a mass or a charge, run the second trial over the SAME
+space-time domain, and subtract. `DIFF` (and `SUM`) produce a new
+dataset whose every column is the component-wise difference (sum) of
+the two inputs — the states table (positions, quaternion components,
+velocities, angular velocities), and the frames table (energy,
+momentum, angular momentum, centre of mass, collision counts). The
+time column is carried through unchanged. **Alignment is checked, not
+assumed**: the two datasets must have the same number of frames, a
+bit-equal time grid, and the same body-id set at every frame — any
+mismatch is an error naming the first offending frame and both values.
+A worked consistency check: `(a - b) + b - a` comes back all-zero to
+floating-point roundoff (SolveIt example 36 measures 6.9e-18). Note
+the orientation columns of a DIFF/SUM dataset hold component-wise
+quaternion arithmetic — a difference of quaternions is not a rotation,
+so such a dataset is a difference TABLE for plots and SQL, not a rigid
+state (build movies from the source recordings instead).
+
+**`DATASET MAP <src> TO <system> [params] AS <out>` — curvilinear
+coordinates.** Every recorded position is pushed through one of the
+fourteen classical coordinate maps of §5.15: eleven three-dimensional
+(`spherical`, `cylindrical`, `ellipsoidal a b c`, `oblate a`,
+`prolate a`, `paraboloidal`, `elliptic_cyl a`, `parabolic_cyl`,
+`bipolar_cyl a`, `toroidal a`, `bispherical a`) and three
+two-dimensional (`polar2`, `elliptic2 a`, `bipolar2 a`), where `a` (or
+the ellipsoidal semi-axes `a b c`) is the system's scale parameter,
+written as plain numbers after the system word. In the output dataset
+the states table's `x, y, z` columns hold the curvilinear triple
+(`q1, q2, q3`; a 2-D system stores `(q1, q2, 0)` and REQUIRES a planar
+trajectory — every `|z| <= 1e-9`, checked); orientations are carried
+unchanged (they are still rotation quaternions); the velocity columns
+are stored as **NULL**, because velocity components in curvilinear
+coordinates require the metric, which a point map does not carry; and
+the frames table (E, P, L, com — Cartesian bookkeeping) is copied
+verbatim. Everything is checked: an unknown system or a wrong
+parameter count is a PARSE error, and a trajectory that crosses a
+singular locus (a bipolar focus, the toroidal focal ring) errors
+naming the frame and body. A planar orbit mapped with `spherical`
+gives the cleanest possible sanity check: the polar-angle column is
+`1.5707963267948966` (pi/2) at every frame, `MIN = MAX`, measured in
+SolveIt example 37.
+
+**`SQL "<statements>"` — the whole SQLite language.** The quoted
+string is handed to SQLite **verbatim** (several statements separated
+by `;` are fine), so every SQLite command works: `SELECT` with joins,
+subqueries, CTEs (`WITH`) and window functions (`LAG ... OVER`),
+`INSERT`, `UPDATE`, `DELETE`, `CREATE TABLE / INDEX / VIEW / TRIGGER`,
+`ALTER TABLE`, `DROP`, `ATTACH DATABASE` / `DETACH DATABASE`,
+`PRAGMA`, `VACUUM`, `EXPLAIN`, transactions — anything SQLite 3.46
+accepts. Row-returning statements print a header line and one line per
+row, columns separated by ` | `; integer values print without a
+decimal point, other reals in Rust's shortest round-trip form, NULL as
+`NULL`. Statements that change rows print `ok (N row(s) changed)`.
+
+```
+In[8]:= sql "SELECT COUNT(*) AS frames FROM frames"
+Out[8]= frames
+200
+```
+
+SQL runs on the **open** dataset; with none open it says so and points
+at DATASET CREATE/OPEN. Cross-dataset work is one `ATTACH` away — the
+worked example in §13 and SolveIt example 31 both do it.
+
+**`MOVIE` — animations derived from datasets.** `MOVIE CREATE
+<dataset> [AS <name>]` reads the `bodies`, `frames` and `states` tables
+and writes the self-contained player page `movies/<name>.html` (the
+name defaults to the dataset's). The player animates the recorded
+bodies in 3-D: play/pause/step, a scrub bar, 0.25×–4× speed, an
+orbiting camera (drag to orbit, wheel or `+`/`-` to zoom, arrow keys to
+pan and step), per-body trails and labels, and a live readout of t, E,
+|P|, |L| and the cumulative collision count. It follows the same
+pinned drawing rules as the scene window and the recorded videos: wall
+slabs are excluded from both the draw list and the camera auto-fit
+(a BOX appears as the dashed wireframe instead), and every round shape
+is rendered quaternion-rotated about its local z axis so spin is
+visible. `MOVIE PLAY <name>` opens a movie in the browser, `MOVIE LIST`
+names what exists, `MOVIE DELETE <name>` removes one. Because the
+dataset is the source of truth, movies can be deleted and rebuilt at
+any time without re-running any physics, and one dataset can carry
+several movies (SolveIt example 34 builds two from one recording).
+
+A movie needs at least 2 frames of at least one body; a dataset that
+has neither gets a plain error saying so. A dataset recorded by a
+purely quantum-mechanical session has frames but no rigid-body states —
+the quantum families draw with `QM ANIMATE`/`QM2 ANIMATE`/`QM3 ISO`
+instead, which is their native picture.
+
+**Error style.** Everything here reports `Result`-style errors naming
+the missing thing and the command that fixes it: a missing dataset
+names the path and suggests `DATASET LIST`; a missing sidecar binary
+prints the exact build command; SQL errors carry SQLite's own message
+plus the offending statement.
+
+### 5.15 Coordinate transformations — the fourteen classical curvilinear systems
+
+Pure-Rust, checked, bidirectional maps between Cartesian coordinates
+and every classical curvilinear system (conventions per Morse &
+Feshbach ch. 5 / Arfken ch. 2), reachable two ways: **value-level**,
+as ordinary expression functions on vectors, and **dataset-level**,
+via `DATASET MAP` (§5.14). All of them live in
+`special_functions/src/coords.rs` with round-trip, known-value and
+error-path tests.
+
+**The three-dimensional systems and their builtins.** Each `cart_to_*`
+takes a vector `[x, y, z]` (plus scale parameters where the system has
+them) and returns the curvilinear triple as a vector; each `*_to_cart`
+is its inverse. Angle ranges: `atan2` angles in `(-pi, pi]`, `acos`
+angles in `[0, pi]`.
+
+| system | builtins | coordinates and convention |
+|---|---|---|
+| Spherical-polar | `cart_to_spherical(v)` / `spherical_to_cart(q)` | `(r, theta, phi)`: `x = r sin(theta) cos(phi)`, `y = r sin(theta) sin(phi)`, `z = r cos(theta)`; `theta` from the +z axis |
+| Cylindrical | `cart_to_cylindrical(v)` / `cylindrical_to_cart(q)` | `(rho, phi, z)`: `x = rho cos(phi)`, `y = rho sin(phi)` |
+| Ellipsoidal | `cart_to_ellipsoidal(v, a, b, c)` / `ellipsoidal_to_cart(q, a, b, c)` | `(lambda, mu, nu)`, semi-axes `a > b > c > 0`: the three real roots of `x²/(a²+s) + y²/(b²+s) + z²/(c²+s) = 1`, interlaced `lambda > -c² > mu > -b² > nu > -a²` (found by safeguarded bisection — the cubic is strictly decreasing between its poles) |
+| Oblate spheroidal | `cart_to_oblate(v, a)` / `oblate_to_cart(q, a)` | `(mu, nu, phi)`, focal ring `rho = a`: `rho = a cosh(mu) cos(nu)`, `z = a sinh(mu) sin(nu)`; inverse from `rho + iz = a cosh(mu + i nu)` via the ring distances |
+| Prolate spheroidal | `cart_to_prolate(v, a)` / `prolate_to_cart(q, a)` | `(mu, nu, phi)`, foci `(0, 0, ±a)`: `rho = a sinh(mu) sin(nu)`, `z = a cosh(mu) cos(nu)` |
+| Paraboloidal | `cart_to_paraboloidal(v)` / `paraboloidal_to_cart(q)` | `(u, v, phi)` (rotational parabolic): `rho = u v`, `z = (u² - v²)/2`; inverse `u = sqrt(r + z)`, `v = sqrt(r - z)` |
+| Elliptic cylindrical | `cart_to_elliptic_cyl(v, a)` / `elliptic_cyl_to_cart(q, a)` | `(u, v, z)`, foci `(±a, 0)` in the plane: `x = a cosh(u) cos(v)`, `y = a sinh(u) sin(v)` |
+| Parabolic cylindrical | `cart_to_parabolic_cyl(v)` / `parabolic_cyl_to_cart(q)` | `(sigma, tau, z)`: `x = sigma tau`, `y = (tau² - sigma²)/2`, `tau >= 0` |
+| Bipolar cylindrical | `cart_to_bipolar_cyl(v, a)` / `bipolar_cyl_to_cart(q, a)` | `(sigma, tau, z)`, foci `(±a, 0)`: `x = a sinh(tau)/D`, `y = a sin(sigma)/D`, `D = cosh(tau) - cos(sigma)` |
+| Toroidal | `cart_to_toroidal(v, a)` / `toroidal_to_cart(q, a)` | `(sigma, tau, phi)`, focal ring `rho = a`: `rho = a sinh(tau)/D`, `z = a sin(sigma)/D` |
+| Bispherical | `cart_to_bispherical(v, a)` / `bispherical_to_cart(q, a)` | `(sigma, tau, phi)`, foci `(0, 0, ±a)`: `rho = a sin(sigma)/D`, `z = a sinh(tau)/D` |
+
+**The two-dimensional systems.** Points are 2-element lists `[x, y]`,
+results likewise:
+
+| system | builtins | coordinates and convention |
+|---|---|---|
+| Plane polar | `cart2_to_polar(u)` / `polar_to_cart2(w)` | `(r, phi)`: `x = r cos(phi)`, `y = r sin(phi)` |
+| Elliptic | `cart2_to_elliptic(u, a)` / `elliptic_to_cart2(w, a)` | `(u, v)`, foci `(±a, 0)`: the planar section of elliptic cylindrical |
+| Bipolar (special conformal extension) | `cart2_to_bipolar(u, a)` / `bipolar_to_cart2(w, a)` | `(sigma, tau)`, foci `(±a, 0)`: the planar bipolar system; CONFORMAL — the real form of the analytic map `x + iy = a coth((tau - i sigma)/2)`, so angles are preserved everywhere off the foci (verified numerically in the tests) |
+
+**Error checking, spelled out.** Every map returns an error — never a
+NaN — for: non-finite inputs; invalid scale parameters (`a <= 0`, or
+an ellipsoidal triple that is not `a > b > c > 0`); out-of-range
+curvilinear coordinates where the range is load-bearing (`r < 0`,
+`rho < 0`, `mu < 0`, `tau < 0`, `nu` outside its interval); points ON
+a singular locus (a bipolar focus, the toroidal focal ring, a
+bispherical focus — where `tau` diverges); `sigma = tau = 0` in the
+bipolar family (the point at infinity); and the coordinate planes for
+ellipsoidal coordinates, whose chart covers open octants (the
+coordinates encode squares, so the inverse returns the
+positive-octant point). Merely CONVENTIONAL values — the azimuth on
+the polar axis, the angles at the origin — use `atan2(0, 0) = 0`, so
+every map round-trips exactly on its domain.
+
+Captured from this machine (the round trips and the 3-4-5 triangle):
+
+```
+In[32]:= let v = [1.3, 0.7, 2.1]
+Out[32]= v set
+In[33]:= norm(toroidal_to_cart(cart_to_toroidal(v, 1.25), 1.25) - v)
+Out[33]= 0
+In[34]:= norm(ellipsoidal_to_cart(cart_to_ellipsoidal(v, 3, 2, 1), 3, 2, 1) - v)
+Out[34]= 0.0000000000000011957467920563633
+In[35]:= cart2_to_polar([3, 4])
+Out[35]= [5, 0.9272952180016122]
+```
+
+And an error path, exactly as a user sees it:
+
+```
+In[36]:= cart_to_toroidal([1, 0, 0], 1)
+Err[36]: cart_to_toroidal: (rho, z) = (1, 0) is on the focal ring — a singular locus of toroidal coordinates (tau diverges there)
+```
+
 ## 6. The notebook (cells, editing, magics)
 
 ### 6.1 Cells
@@ -2835,15 +3159,13 @@ becomes cell 4. Only executed commands become numbered cells — so the
 `In[n]` numbering always matches what `%history` will replay.
 
 And the machine mode speaks the same language over JSON — one line per
-request. In Git Bash (the transcript below), `printf` pipes four
-requests into the simulator; in PowerShell the same four lines piped
-via `.\target\release\posim.exe --machine` produce the same replies:
+request:
 
 ```
 $ printf '%s\n' '{"op":"exec","code":"new point { mass = 1, velocity = [0, 1, 0] }"}' \
                 '{"op":"get","path":"obj0.momentum"}' \
                 '{"op":"set","path":"obj0.mass","value":5}' \
-                '{"op":"get","path":"obj0.momentum"}' | ./target/release/posim.exe --machine
+                '{"op":"get","path":"obj0.momentum"}' | posim --machine
 {"display":"obj0","ok":true,"result":"obj0"}
 {"display":"[0, 1, 0]","ok":true,"result":[0.0,1.0,0.0]}
 {"display":"","ok":true,"result":null}
@@ -3505,22 +3827,13 @@ is worth one page knowing what answers you.
 differential-equation solvers, in production use in physics codes since
 the 1990s. `sundials_rs/` in this repository is a **pure-Rust
 translation of SUNDIALS 7.8.0**: no `unsafe`, no FFI, no C compiler, no
-crates.io dependency. It is the **Windows 11 / x86-64 port** of the
-translation (`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11`), which
-differs from the Linux port in exactly one substantive way: Microsoft's
-math runtime (UCRT) rounds `sin`, `cos`, `exp`, `ln` and the
-inverse/hyperbolic functions differently from the Linux glibc that
-generated the reference outputs, so the Windows port carries its own
-pure-Rust translations of the glibc routines
-(`sundials_rs/crates/sundials_core/src/sundials_libm/`), each measured
-at 0 mismatches over millions of inputs against a real glibc oracle.
-Its deterministic routines use the fused multiply-add instruction, so
-the workspace pins `-C target-feature=+fma` in `.cargo/config.toml`
-(any Intel CPU since 2013 or AMD since 2012 has it). The upgrade from
+crates.io dependency. It is vendored byte-for-byte from
+`once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916`; the upgrade from
 the 7.7.0 engine the predecessor repository used is recorded, with its
-evidence, in [`PORT_7.8.0_PROVENANCE.md`](PORT_7.8.0_PROVENANCE.md);
-the Windows port of this whole simulator is recorded in
-[`PORT_WIN11_PROVENANCE.md`](PORT_WIN11_PROVENANCE.md).
+evidence, in [`PORT_7.8.0_PROVENANCE.md`](PORT_7.8.0_PROVENANCE.md).
+This repository is the macOS / Apple Silicon port; the evidence that
+the same engine reproduces the Linux physics byte for byte on this
+platform is in [`VERIFICATION_MACOS.md`](VERIFICATION_MACOS.md).
 
 ### 11.1 Which solver runs which command
 
@@ -3631,18 +3944,14 @@ toolchain, and still scrub frame by frame.
 
 `recorder/src/record_video.py` makes one:
 
-```powershell
+```bash
 cargo build --release -p posim          # once
-python recorder/src/record_video.py videos/scenes/kepler_ellipse.posim `
-     -o videos/kepler_ellipse.html `
-     --frames 360 --dt 0.02 `
-     --title "Kepler orbit, e = 0.6" `
+recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
+     -o videos/kepler_ellipse.html \
+     --frames 360 --dt 0.02 \
+     --title "Kepler orbit, e = 0.6" \
      --caption "CVODE Adams, 360 frames of dt = 0.02."
 ```
-
-(The backtick is PowerShell's line continuation; on one line you need
-neither. Any Python 3.8+ works — the recorder uses only the standard
-library.)
 
 ### 12.1 How it works, and what it does not do
 
@@ -4151,3 +4460,100 @@ because the hinge, the universal joint and the rod all held at once.
 compare with the freedoms actually left. If the total meets or exceeds
 the freedoms, you have either locked the mechanism or made it singular,
 and a fatal return flag is the honest outcome either way.
+\n
+
+## 13. SQLite datasets and movies: a complete worked session
+
+Everything in §5.14, exercised end to end and captured verbatim from
+this machine (Apple Silicon, macOS). This is SolveIt worked example 20
+(`scripts/solveit/20_dataset_kepler_orbit.posim`): a two-body Kepler
+ellipse whose perihelion and aphelion are measured BY THE DATABASE.
+
+The setup: sun mass 3 and planet mass 1 under G = 1, so the relative
+orbit has gravitational parameter mu = G(M+m) = 4. Starting at
+perihelion separation r_p = a(1−e) = 1 with a = 2.5 and e = 0.6, the
+relative vis-viva speed is sqrt(mu(2/r_p − 1/a)) = sqrt(6.4), split
+about the stationary centre of mass (planet gets 3/4 of it, sun 1/4
+backwards). Aphelion must come out at a(1+e) = 4, and one period is
+T = 2π sqrt(a³/mu) = 12.418264743622237.
+
+```
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun    { mass = 3, radius = 0.15, position = [-0.25, 0, 0], velocity = [0, -0.6324555320336759, 0] }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[3]= obj1 as planet
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit20_kepler
+Out[5]= dataset solveit20_kepler created (datasets/solveit20_kepler.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 12.418264743622237 steps 200
+Out[6]= t = 12.418264743622238 (659 solver steps, 200 snapshots, |dE/E| = 2.096e-9)
+In[7]:= dataset info
+Out[7]= dataset solveit20_kepler: 2 bodies, 200 frames, 400 states
+```
+
+Two hundred RUN outputs became two hundred frames — each holding t, E,
+P, L, the centre of mass, the collision count, and both bodies' full
+states — appended through the sidecar's WAL-mode pool as one
+transaction. Now the physics question, asked in SQL: a **self-join**
+pairs the two bodies frame by frame and takes the extremes of their
+separation:
+
+```
+In[8]:= sql "SELECT MIN(sqrt((p.x-s.x)*(p.x-s.x) + (p.y-s.y)*(p.y-s.y))) AS perihelion, MAX(sqrt((p.x-s.x)*(p.x-s.x) + (p.y-s.y)*(p.y-s.y))) AS aphelion FROM states p JOIN states s ON s.frame = p.frame WHERE p.body = (SELECT body FROM bodies WHERE name = 'planet') AND s.body = (SELECT body FROM bodies WHERE name = 'sun')"
+Out[8]= perihelion | aphelion
+1.000000001093295 | 4.000000026379791
+In[9]:= sql "SELECT MAX(ABS(comx)) AS com_x, MAX(ABS(comy)) AS com_y, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+Out[9]= com_x | com_y | energy_spread
+5.235284428195541e-12 | 5.539403137577725e-12 | 4.5303885087832896e-9
+```
+
+Perihelion 1, aphelion 4, to the solver's tolerance — the analytic
+ellipse, read back out of a database. The centre of mass sat still to
+5e-12 and the energy ledger is flat to 4.5e-9 across the period.
+
+The movie and the plots page are derived artifacts:
+
+```
+In[10]:= movie create solveit20_kepler
+Out[10]= movie solveit20_kepler created from dataset solveit20_kepler (movies/solveit20_kepler.html, 200 frames, 2 bodies)
+In[11]:= movie play solveit20_kepler
+Out[11]= movie solveit20_kepler (movies/solveit20_kepler.html) ready (browser suppressed)
+In[12]:= dataset play solveit20_kepler
+Out[12]= dataset plots written to datasets/solveit20_kepler_plots.html (browser suppressed)
+In[13]:= dataset close
+Out[13]= dataset solveit20_kepler closed
+```
+
+(This transcript was captured under `POSIM_NO_BROWSER=1`, the batch
+switch; run it yourself without that variable and both PLAY commands
+open your web browser — the movie is the 3-D player described in
+§5.14, the plots page shows E(t) flat, |P| and |L| constant, the two
+position traces, and the closed ellipse in the top view.)
+
+Re-run the whole thing any time:
+
+```bash
+cargo build --release -p posim
+cd dataset_tools && cargo build --release && cd ..
+./target/release/posim --script scripts/solveit/20_dataset_kepler_orbit.posim
+```
+
+And the cross-dataset idiom, from SolveIt example 31
+(`scripts/solveit/31_dataset_attach_compare.posim`), captured the same
+way: record the same free fall once under Adams and once under BDF,
+then let SQLite compare the two databases directly —
+
+```
+In[16]:= sql "ATTACH DATABASE 'datasets/solveit31_adams.db' AS adams"
+Out[16]= ok (0 row(s) changed)
+In[17]:= sql "SELECT MAX(ABS(s.y - a.y)) AS worst_method_gap FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body"
+Out[17]= worst_method_gap
+5.615900633415549e-9
+In[18]:= sql "DETACH DATABASE adams"
+Out[18]= ok (0 row(s) changed)
+```
+
+Two independent integrators agreed on every recorded coordinate to
+5.6e-9, and the referee was a SQL JOIN.

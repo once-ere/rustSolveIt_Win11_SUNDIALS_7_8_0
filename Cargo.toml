@@ -26,7 +26,16 @@ default-members = [
 # side at this root. Excluding them keeps `cargo test --workspace`
 # reporting only this workspace's tests, and stops their own port
 # versions being overwritten by `version.workspace` from here.
-exclude = ["sundials_rs", "vendor/spec_math", "rebound_rust", "reboundx_rust"]
+#
+# dataset_tools is the SQLite dataset sidecar (rusqlite + r2d2, per the
+# project owner's specification). It is excluded so the simulator
+# workspace keeps its zero-external-dependency, zero-unsafe guarantee:
+# posim only ever SPAWNS the solveit_db binary, it never links it.
+#
+# planet_Mercury holds two more self-contained crates (mercury_rs, which
+# path-depends on the vendored engine, and the GPL mercury_crosscheck,
+# which links the rebound ports); excluded for the same reasons.
+exclude = ["sundials_rs", "vendor/spec_math", "rebound_rust", "reboundx_rust", "planet_Mercury", "dataset_tools"]
 
 [workspace.package]
 version = "0.1.0"

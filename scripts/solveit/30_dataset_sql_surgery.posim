@@ -1,0 +1,25 @@
+# 30. The dataset is a REAL database: schema surgery on a copy.
+# COPY first - the original stays byte-untouched - then the copy gets a
+# derived column (ALTER + UPDATE), a VIEW, and a PRAGMA inspection.
+# Everything here is ordinary SQLite DDL/DML passing through the SQL
+# command verbatim; nothing is special-cased.
+set system.g_constant = 0
+set system.uniform_gravity = [0, -9.81, 0]
+new sphere as ball { mass = 1, radius = 0.3, position = [3, 4, 0] }
+dataset create solveit30_original
+run 0.8 steps 8
+dataset close
+dataset copy solveit30_original solveit30_lab
+dataset open solveit30_lab
+sql "ALTER TABLE states ADD COLUMN r REAL"
+sql "UPDATE states SET r = sqrt(x*x + y*y + z*z)"
+sql "SELECT MIN(r) AS r_min, MAX(r) AS r_max FROM states"
+sql "CREATE VIEW drop_curve AS SELECT f.t, s.y, s.r FROM states s JOIN frames f ON f.frame = s.frame"
+sql "SELECT COUNT(*) AS view_rows FROM drop_curve"
+sql "SELECT name FROM pragma_table_info('states') ORDER BY cid"
+dataset close
+# the original never grew the column
+dataset open solveit30_original
+sql "SELECT COUNT(*) AS original_columns FROM pragma_table_info('states')"
+dataset close
+dataset delete solveit30_lab

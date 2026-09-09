@@ -1,0 +1,18 @@
+# 25. A charged sphere in a uniform B field, with a drift along the axis.
+# Gyroradius r = m|v_perp| / (|q| B) = 2*5/(3*6) = 0.5555...; the z
+# velocity is untouched by the Lorentz force, so the path is a helix of
+# pitch v_z T with T = 2 pi m/(|q| B) = 0.6981317007977318. SQL measures
+# the gyro DIAMETER as MAX(x)-MIN(x) and the pitch as MAX(z), and
+# confirms |v| never changes (a magnetic force does no work).
+set system.g_constant = 0
+set system.b_field = [0, 0, 6]
+new sphere as ion { mass = 2, charge = -3, radius = 0.05, position = [0, 0, 0], velocity = [5, 0, 1] }
+method bdf
+dataset create solveit25_cyclotron
+run 0.6981317007977318 steps 300
+sql "SELECT (MAX(x) - MIN(x)) / 2.0 AS gyroradius, MAX(z) AS pitch FROM states"
+sql "SELECT MAX(sqrt(vx*vx + vy*vy + vz*vz)) - MIN(sqrt(vx*vx + vy*vy + vz*vz)) AS speed_spread FROM states"
+2 * 5 / (3 * 6)
+1 * 0.6981317007977318
+movie create solveit25_cyclotron
+dataset close

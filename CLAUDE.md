@@ -1,52 +1,42 @@
-# CLAUDE.md — rustSolveIt on pure-Rust SUNDIALS 7.8.0 (Windows 11)
+# CLAUDE.md — rustSolveIt on pure-Rust SUNDIALS 7.8.0 (macOS / Apple Silicon)
 
-Pure-Rust physics simulator, the **Windows 11 / x86-64** port of
-`once-ere/rustSolveIt_Using_SUNDIALS_7_8_0` (measured on Windows 11 Pro
-for Workstations 25H2, rustc 1.91.1, `x86_64-pc-windows-msvc`; the
-MSVC linker comes from any installed Visual Studio 2022/2026 — rustc
-finds it itself, no developer prompt needed). The **only**
-numerical-integration backend is the vendored `sundials_rs/` workspace
-(pure-Rust **SUNDIALS 7.8.0**) — no exceptions. Treat `sundials_rs/`
-as a **read-only vendored library**: it is the crate tree of
-`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11` (its `.git`, `target/`
-and bulk `logs/` corpora excluded) and that identity is a verifiable
-property — never edit it in place; upstream it instead. Its
-deterministic `sundials_libm` needs real FMA instructions:
-`.cargo/config.toml` at THIS root pins `-C target-feature=+fma` —
-do not remove it, and remember cargo config does not flow down from the
-vendored workspace's own `.cargo/`.
+Pure-Rust physics simulator, the **macOS on Apple Silicon (arm64)**
+port of `once-ere/rustSolveIt_Using_SUNDIALS_7_8_0` (Linux). Platform
+port provenance: `PORT_MACOS_PROVENANCE.md`; per-suite verification:
+`VERIFICATION_MACOS.md`. The **only** numerical-integration backend
+is the vendored `sundials_rs/` workspace (pure-Rust **SUNDIALS 7.8.0**)
+— no exceptions. Treat `sundials_rs/` as a **read-only vendored
+library**: it is byte-identical to
+`once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916` (2,929 files) and
+that identity is a verifiable property — never edit it in place;
+upstream it instead.
 
 ```bash
-# the vendored-tree identity claim, reproducible in Git Bash
-git clone https://github.com/once-ere/SUNDIALS_7_8_Rust_port_for_Windows11.git
-diff -rq --exclude=.git --exclude=target --exclude=logs \
-     SUNDIALS_7_8_Rust_port_for_Windows11 sundials_rs      # silent
+# the byte-identity claim, reproducible
+git clone https://github.com/once-ere/SUNDIALS_7_8_Rust_port_for_Linux.git
+diff -rq --exclude=.git --exclude=target \
+     SUNDIALS_7_8_Rust_port_for_Linux sundials_rs      # silent
 ```
 
-What the Windows port changed, and the evidence that the physics did
-not move (byte-identity gates against the Linux evidence), is in
-`PORT_WIN11_PROVENANCE.md`. The 7.7.0→7.8.0 engine upgrade is
-`PORT_7.8.0_PROVENANCE.md`; the original export's provenance is
+This repository is `once-ere/rustSolveIt` with its 7.7.0 engine replaced
+by the 7.8.0 one. What changed, and the evidence that nothing else did,
+is in `PORT_7.8.0_PROVENANCE.md`. The original export's provenance —
+including which donor sources were deliberately not carried over — is in
 `EXPORT_PROVENANCE.md` and `PLAN.md`.
 
-## Commands (PowerShell; Git Bash equivalents in parentheses)
+## Commands
 
-- Build: `cargo build --workspace --all-targets 2>&1 | Tee-Object logs\build.log`
-- Tests: `cargo test --workspace 2>&1 | Tee-Object logs\test.log`
-  (**622 expected**: 49 physical_object lib + 19 collision +
-  9 conservation + 42 DAE/equilibrium/sensitivity + 112 posim +
-  92 quantum + 233 special_functions + 11 vendored identities +
-  55 doctests)
+- Build: `cargo build --workspace --all-targets 2>&1 | tee /tmp/build.log`
+- Tests: `cargo test --workspace 2>&1 | tee /tmp/test.log` (638 expected)
 - Notebook: `cargo run` (type `HELP`); batch: `cargo run -p posim -- --script <f>`
 - Dynamic notebook (loads a file, opens its scene window, stays
   interactive): `cargo run -p posim --release -- --notebook
-  dynamic_notebooks/<name>.posim`, or `tools\posim_notebook.cmd <name>`
-  (`tools/posim_notebook` from Git Bash) — see
-  `dynamic_notebooks/README.md`
+  dynamic_notebooks/<name>.posim` — see `dynamic_notebooks/README.md`
 - Scene window: type `SCENE CREATE` in the notebook (opens a browser
-  page via `cmd /C start`; `SCENE START/PAUSE/REVERSE/RESET`,
-  arrows/drag/wheel in the window). Headless runs:
-  `$env:POSIM_NO_BROWSER = "1"` suppresses the browser launch.
+  page; `SCENE START/PAUSE/REVERSE/RESET`, arrows/drag/wheel in the
+  window). Headless runs: `POSIM_NO_BROWSER=1` suppresses the browser
+  opener (`open` on macOS; `cmd /C start` on Windows; `xdg-open`
+  elsewhere).
 - Self-checking physics examples:
   `cargo run -p physical_object --release --example
   {kepler_orbit|outer_solar_system|tumbling_body|charged_in_b_field|newtons_cradle|bouncing_ball_restitution}`
@@ -54,35 +44,35 @@ not move (byte-identity gates against the Linux evidence), is in
 - Collision example scripts: `cargo run -p posim -- --script
   scripts/collisions/NN_name.posim` (01–12; documented with captured
   output in `collision_detection.md` §9)
-- The SolveIt examples: `cargo run -p posim --release --
-  --script scripts/solveit/NN_name.posim` (01–19; documented with
-  captured output in `SolveIt.md` §7)
+- The thirty-eight SolveIt examples: `cargo run -p posim --release --
+  --script scripts/solveit/NN_name.posim` (01–38; documented with
+  captured output in `SolveIt.md` §7; 20–38 are the dataset/SQL/movie
+  examples — 36–38 add DATASET DIFF/SUM/MAP and the fourteen
+  curvilinear coordinate systems — and need the sidecar built first)
+- Dataset sidecar (REQUIRED for DATASET/SQL/MOVIE commands, the
+  solveit 20–38 scripts and all notebooks): `cd dataset_tools && cargo
+  build --release` (first build fetches rusqlite/r2d2 from crates.io;
+  Cargo.lock pins versions). Its own tests: `cd dataset_tools && cargo
+  test` (11: WAL + busy-timeout, 10-thread pool stress, two-pool
+  cross-process interleave, serve-protocol round trip). Demo:
+  `./dataset_tools/target/release/solveit_db stress /tmp/s.db 10 500`
+- Datasets/movies from the language: `DATASET CREATE <name>` (arms
+  recording), `RUN`/`STEP` record frames, `SQL "<any SQLite>"`,
+  `DATASET PLAY` (plots page in the browser), `MOVIE CREATE <dataset>`
+  + `MOVIE PLAY <name>` (3-D player from the recording). Files land in
+  `datasets/` and `movies/`; POSIM_NO_BROWSER=1 suppresses browsers.
+  Full reference: `grammar.md` §5.14; worked session: §13
 - Browser video: `cargo build --release -p posim` then
-  `python recorder/src/record_video.py videos/scenes/<x>.posim -o videos/<x>.html
-  --frames N --dt DT --title "..." --caption "..."`; byte-identity of
-  all 13 committed recordings: `python recorder/src/record_all.py --check`
-- The Windows physics byte-identity gate (Git Bash):
-  `bash tools/win_verify_physics.sh` — re-runs the 6 examples, 12
-  collision scripts and 59 dynamic notebooks and diffs against
-  `evidence/port-7.8.0/`; only the two divergences pinned in
-  `evidence/win11/accepted-divergences-*.diff` are allowed
-- GUI smoke test: `python tools\win_gui_smoke.py` (drives all 13
-  `gui/*/server.py` over their HTTP API)
-- Wire protocol test: `python jupyter\test_protocol.py` (needs
-  `cargo build --release` first — it prefers `target\release\posim.exe`,
+  `recorder/src/record_video.py videos/scenes/<x>.posim -o videos/<x>.html
+  --frames N --dt DT --title "..." --caption "..."`
+- Wire protocol test: `python3 jupyter/test_protocol.py` (needs
+  `cargo build --release` first — it prefers `target/release/posim`,
   so a stale release binary silently shadows your debug build)
-- Kernel test: `$env:POSIM_NO_BROWSER = "1";
-  jupyter\.venv\Scripts\python.exe jupyter\test_kernel.py`
-  (needs `uv venv jupyter\.venv` then `uv pip install -p
-  jupyter\.venv\Scripts\python.exe ipykernel jupyter_client`)
-- Notebooks: regenerate `python notebooks\_build\regen.py`; execute all
-  109 `python notebooks\_build\nbrun.py notebooks\*.ipynb` (glob works
-  from Git Bash; from PowerShell pass the file list); check
-  `python notebooks\_build\nbcheck.py notebooks\*.ipynb`
-  (109/109 must pass all seven requirements)
-- Docs: `pdflatex -interaction=nonstopmode <name>.tex` (MiKTeX; run
-  **twice** — the table of contents needs the second pass) for
-  `SolveIt`, `grammar`, `physical_object_simulator`, `scene_info`,
+- Kernel test: `POSIM_NO_BROWSER=1 jupyter/.venv/bin/python jupyter/test_kernel.py`
+  (needs `uv venv jupyter/.venv && uv pip install -p jupyter/.venv/bin/python ipykernel jupyter_client`)
+- Docs: `pdflatex -interaction=nonstopmode <name>.tex` (run **twice** —
+  the table of contents needs the second pass) for `SolveIt`,
+  `grammar`, `physical_object_simulator`, `scene_info`,
   `collision_detection`. Keep `.md` and `.tex` in sync — **the `.md` is
   the source of truth.**
 
@@ -103,7 +93,18 @@ not move (byte-identity gates against the Linux evidence), is in
   (stack machine) → `notebook` (REPL) / `machine` (JSONL) / `scene`
   (graphical window: `mod.rs` server+playback, `ws.rs` hand-rolled
   SHA-1/base64/RFC 6455, `scene.html` embedded page); `qm`/`qm2`/`qm3`
-  and `special` are the quantum and special-function command families.
+  and `special` are the quantum and special-function command families;
+  `dataset` (DATASET/SQL families + the plots page + the solveit_db
+  handle) and `movie` (dataset-derived 3-D player pages) are the SQLite
+  recording layer (ARCHITECTURE §3.10).
+- `dataset_tools/` — the `solveit_db` SQLite sidecar: the ONE package
+  with external crates (rusqlite bundled + r2d2 + r2d2_sqlite, per the
+  feature's specification), EXCLUDED from the workspace like
+  `sundials_rs`. WAL journal mode + busy_timeout=5000 on every pooled
+  connection; posim spawns it, never links it.
+- `datasets/`, `movies/` — the recorded SQLite datasets (one per
+  notebook and per dataset example, plus `_plots.html` pages) and the
+  movies derived from them.
 - `quantum/`, `special_functions/`, `vendor/spec_math/` — the physics
   and mathematics libraries the language reaches.
 - `jupyter/` — Python wrapper kernel (outside the Rust constraints);
@@ -116,30 +117,17 @@ not move (byte-identity gates against the Linux evidence), is in
 - `gui/` — thirteen live GUI web pages, one per recorded video scene:
   a stdlib-Python server owning a `posim --machine` child plus a
   vanilla-JS canvas page with live physics readouts (`gui/README.md`).
-- `notebooks/` — one executed Jupyter notebook per example, 109 in all
-  (13 video scenes, 6 Rust examples, 12 collision scripts, 19 SolveIt
-  scripts, 59 dynamic notebooks). Python notebooks driving
+- `notebooks/` — one executed Jupyter notebook per example, 128 in all
+  (13 video scenes, 6 Rust examples, 12 collision scripts, 38 SolveIt
+  scripts, 59 dynamic notebooks). **Every notebook owns a SQLite
+  dataset** (section 6 creates it, section 9 reads it back with SQL and
+  plain-Python sqlite3, section 10 derives the movie); nbcheck enforces
+  this as requirement R8. Python notebooks driving
   `posim --machine`; stand-alone by design — every explanation is
   repeated in full in every notebook. Machinery and re-verification
   loop in `notebooks/_build/` (see `notebooks/README.md`).
 - `evidence/port-7.8.0/` — the logs behind every claim in
   `PORT_7.8.0_PROVENANCE.md`.
-- `rebound_rust/`, `reboundx_rust/` — two more pure-Rust ports carried
-  here: `rebound_rs` 5.1.1 (REBOUND) and `reboundx_rs` 5.1.0 (REBOUNDx).
-  **Not dependencies of the simulator** and **excluded from this
-  workspace** (`Cargo.toml` `exclude`), so `cargo test --workspace` is
-  still exactly the 622 tests above. They sit side by side at this root
-  because `reboundx_rs` depends on `rebound_rs` through the relative
-  path `../rebound_rust`, and because that layout is what their own
-  documentation's absolute paths describe — a clone of this repository
-  reproduces it. Build and test them separately:
-  `cd rebound_rust && cargo test --release` (394 tests) and
-  `cd reboundx_rust && cargo test --release` (137 tests); both are also
-  clean under `cargo clippy --release --all-targets`.
-  `rebound_rust/` is a copy of the `once-ere/rebound_rust` repository's
-  tracked tree — treat it as read-only here and push changes there.
-  Full provenance of both ports, every command, and usage instructions:
-  `rebound_rust/rebound_rust.md` (typeset as `rebound_rust.pdf`).
 - `ARCHITECTURE.md` — pinned cross-module contracts (state layout,
   solver driving §3.7, setter invariants, wire protocol, scene
   subsystem, collision subsystem, the video recorder §7). **Read it
@@ -173,6 +161,11 @@ not move (byte-identity gates against the Linux evidence), is in
    to networking too: the scene server's HTTP/WebSocket/SHA-1/base64 are
    hand-rolled on `std::net` in `posim/src/scene/ws.rs`, `scene.html`
    uses vanilla JS + canvas, and the recorded video pages fetch nothing.
+   The ONE deliberate exception lives outside the workspace:
+   `dataset_tools/` (see Layout) — excluded in the root Cargo.toml, so
+   `cargo build --workspace` still never touches crates.io and the
+   workspace `Cargo.lock` still lists only local crates. posim reaches
+   SQLite exclusively by SPAWNING `solveit_db`.
 3. **Fidelity to donor physics.** Formulas ported from the legacy types
    (softened gravity, Laplace vector incl. its `r = 0` guard, inertia
    formulas, kinetic energy, SDF central-difference normal) keep their
@@ -186,7 +179,7 @@ not move (byte-identity gates against the Linux evidence), is in
    you need is absent from `sundials_rs/`, stop and say exactly which
    symbol is missing, naming the C original's file (`src/` or
    `include/` of the upstream **SUNDIALS 7.8.0** release, at
-   `C:\Users\youruser\Developer\sundials-7.8.0\` — that reference tree is not
+   `/Users/youruser/Developer/sundials-7.8.0/` — that reference tree is not
    vendored here). Do not reimplement solver numerics locally. The same
    applies to a `None` from a 7.8.0 constructor or from
    `N_VGetArrayPointer`: turn it into a named `Err`, never an `unwrap`.
@@ -228,6 +221,24 @@ that will bite you:
   its exponent form differs from C's and breaks byte-identity with the
   reference outputs.
 
+## macOS platform notes
+
+- **The physics is byte-identical to the Linux evidence** because the
+  vendored engine's `sundials_libm` is host-independent. Two documented
+  exceptions pass through the **host libm** (Apple libm here, glibc on
+  Linux) and may differ in the last digit: the quantum crate
+  (`double_slit`/`tunneling` notebooks, pinned in
+  `evidence/macos/accepted-divergences-dynamic.diff`) and the GEAR/RACK
+  joint residual `g = sin(qθᵢ + pθⱼ)` in
+  `physical_object/src/constrain.rs` (which is why
+  `videos/rack_and_pinion.html` is a macOS recording; SHAs of both
+  recordings are pinned in `evidence/macos/`).
+- The macOS byte-identity gate is `bash tools/macos_verify_physics.sh`;
+  the GUI smoke test is `python3 tools/gui_smoke.py`. Divergences
+  beyond the pinned diffs fail the gate.
+- The upstream C reference tree lives at
+  `/Users/youruser/Developer/sundials-7.8.0/` on this machine.
+
 ## Workflow
 
 - **Make backups before modifying files** (copy into
@@ -237,10 +248,12 @@ that will bite you:
   output. ≤2 attempts per failing command, then switch strategy.
 - Commit after every coherent file group; keep
   `cargo build --workspace --all-targets` warning-free and
-  `cargo test --workspace` green at every commit (**622 tests**:
+  `cargo test --workspace` green at every commit (**638 tests**:
   49 physical_object lib + 19 collision + 9 conservation +
-  42 constrained/DAE + 112 posim + 92 quantum + 233 special_functions +
-  11 vendored identities + 55 doctests).
+  42 constrained/DAE + 121 posim + 92 quantum + 240 special_functions
+  (incl. the 7 coordinate-map suites) + 11 vendored identities +
+  55 doctests). The sidecar adds its own 11
+  (`cd dataset_tools && cargo test`).
 - New solver features need: a unit or conservation test with an
   **analytic** expectation (not a golden-output snapshot), a grammar
   hook if user-facing (lexer keyword → parser production → VM
@@ -248,7 +261,9 @@ that will bite you:
   ARCHITECTURE.md update if a contract changed.
 - When touching the language, update **all four** in lockstep: the EBNF
   comment in `parser.rs`, `HELP_TEXT` in `vm.rs`, `grammar.md`, and
-  `grammar.tex` (then recompile the PDF). Scene-visible behavior also
+  `grammar.tex` (then recompile the PDF). The DATASET/MOVIE/SQL family has
+  a two-directional test for exactly this:
+  `every_dataset_and_movie_subcommand_is_documented_in_lockstep`. Scene-visible behavior also
   updates `scene_info.md`/`.tex`; user-visible behavior also updates
   `SolveIt.md`/`.tex`.
 - Scene argument parsing is **term-level** (so `scene rotate 15 -5` is
@@ -286,35 +301,6 @@ or `sensitivity.rs`. Four things that already cost a day:
 - **The sensitivity parameter vector is shared (`Rc<RefCell<Vec<f64>>>`),
   and the RHS must read every value out of it.** Capture a copy and the
   difference-quotient sensitivities come back as zeros, silently.
-
-## Windows traps that have already cost time (this port)
-
-- **Python's default text encoding here is cp1252, not UTF-8** (checked:
-  Python 3.14.5, `locale.getpreferredencoding()` = cp1252). Every
-  `open()`, `read_text()`, `write_text()` and every `subprocess` pipe
-  with `text=True` that touches posim I/O or repository files must say
-  `encoding="utf-8"` explicitly — posim prints UTF-8 em-dashes, and one
-  unmarked pipe turns them into `â€”` (or writes a snippet file rustc
-  rejects as invalid UTF-8). All first-party tooling already complies;
-  keep new code compliant.
-- **Text-mode writes translate `\n` to `\r\n`.** Anything byte-compared
-  (recorded videos, notebook JSON, evidence logs) is written with
-  `newline="\n"`; `.gitattributes` sets `* -text` so git never converts
-  eols either. Do not remove either half.
-- **The binary is `posim.exe`.** Every finder probes
-  `target/release/posim.exe` before the extensionless name; keep that
-  order in new tooling.
-- **posim string literals process `\` escapes** (grammar lexer:
-  `\"`, `\\`, `\n`, anything else keeps the following character), so a
-  Windows path pasted into a quoted literal loses its separators —
-  `"C:\Users\x"` becomes `C:Usersx`. Use forward slashes (Windows
-  accepts them) or doubled backslashes; the qm3 tests do exactly this.
-- **A cwd inside a `TemporaryDirectory` blocks its cleanup**
-  (WinError 32). `os.chdir` back before the context manager exits.
-- **`cargo test` shell-reply races**: `jupyter/test_kernel.py` matches
-  shell replies to their execute request by parent `msg_id` — on
-  Windows `wait_for_ready` can leave a stale reply queued and shift
-  every status by one. Keep the matching loop.
 
 ## Traps that have already cost time
 

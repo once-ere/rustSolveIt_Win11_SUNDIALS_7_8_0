@@ -1,0 +1,85 @@
+{
+ "key": "solveit_31_dataset_attach_compare",
+ "title": "Two integrators, two datasets, ONE query: ATTACH",
+ "source": "scripts/solveit/31_dataset_attach_compare.posim",
+ "category": "solveit",
+ "howtorun": "cargo run --release -p posim -- --script scripts/solveit/31_dataset_attach_compare.posim",
+ "abstract": "31. Two integrators, two datasets, ONE query: ATTACH. The same free fall is recorded once under CVODE Adams and once under BDF. SQLite's ATTACH then mounts the first database inside the second session and a single JOIN reports the largest disagreement between the two solvers, frame by frame - a cross-dataset diff with no application code at all.",
+ "situation": "### The objects\n\n| name | shape | given properties |\n|---|---|---|\n| `probe` | `sphere` | `mass = 1`, `radius = 0.2`, `position = [0, 10, 0]` |\n| `probe` | `sphere` | `mass = 1`, `radius = 0.2`, `position = [0, 10, 0]` |\n\nEach row is one rigid body. The simulator computes each body's inertia tensor from its shape; you never type an inertia tensor in.\n\n### The shapes, and the inertia each implies\n\n**`sphere`** \u2014 a uniform solid ball. `I = diag(2mr^2/5, 2mr^2/5, 2mr^2/5)` \u2014 isotropic, so every axis through the centre is a principal axis with the same moment. The only shape whose inertia tensor is unchanged by any rotation, which makes it the simplest collidable body.\n\n### What each property means\n\n- **`mass`** \u2014 the body's mass, in kilograms. Setting it also sets `inverse_mass` to its reciprocal \u2014 the two are kept consistent, and the simulator carries the inverse because that is what the equations of motion actually use.\n- **`radius`** \u2014 the radius, in metres.\n- **`position`** \u2014 the centre of mass, as `[x, y, z]` in metres.\n\n### The interactions\n\n- **Mutual gravity is OFF** (`g_constant = 0`). The simulator's default is 1, so this had to be said explicitly; without it, bodies that are supposed only to bounce or to be held by joints would also attract each other.\n- **Uniform gravity** is `[0, -9.81, 0]` metres per second squared, applied to every body alike.\n- **Contact is OFF**. Nothing here is meant to touch anything else, so the rootfinder is not armed.",
+ "eom": "There are 2 bodies. Each obeys Newton's and Euler's equations, both of which are **second order**:\n\n```\nm_i * d2(x_i)/dt2 = m_i g\n\nI_i * d(omega_i)/dt + omega_i x (I_i omega_i) = T_i\n```\n\nThe `omega x (I omega)` term in Euler's equation is the gyroscopic term. It is what makes a tumbling body's spin axis wander even with no torque at all, and it is why rigid-body motion cannot be reduced to three independent rotations.\n\nThe forces on the right are:\n\n- `m_i g` \u2014 the uniform field, here `g = [0, -9.81, 0]`",
+ "constraints": "**This model has no joints.** Nothing algebraic relates the coordinates, so the system is an ordinary differential equation rather than a differential-algebraic one, and it needs no Lagrange multipliers and no constraint Jacobian.\n\nThat does not mean nothing is conserved. Energy, linear momentum and angular momentum are still exact consequences of the equations of motion, and comparing them before and after a run is the honest way to judge the integration.",
+ "reduction": "**Sizing this particular problem.** There are 2 bodies, so the state vector `y` has\n\n```\n2 bodies x 13 numbers = 26 components\n```\n\nlaid out as consecutive 13-number blocks in creation order, each holding position (3), linear momentum (3), orientation quaternion w-first (4), and angular momentum (3).\n\n**What is handed to the Rust SUNDIALS translation.**\n\nThere are no algebraic constraints, so the whole of the mechanics above is one first-order system\n\n```\ndy/dt = f(t, y),   y in R^26\n```\n\nhanded to the pure-Rust translation of **CVODE** in BDF mode: backward differentiation formulas, implicit, for stiff problems. A stiff problem is one with widely separated timescales \u2014 a fast gyration riding on a slow drift, for instance \u2014 where an explicit method is forced into absurdly small steps by stability rather than by accuracy.\n\nThe right-hand side `f` unpacks `y` into bodies, computes every force and torque, and packs the derivatives back in the same 13-per-body order.",
+ "steps": [
+  {
+   "title": "Set up the world",
+   "explain": "The next cell sends these 2 commands to the simulator. Here is exactly what each one expects:\n\n---\n\n`set system.g_constant = 0` sets a property of the whole simulation rather than of one body. `g_constant` is the gravitational constant `G` used for the mutual attraction between every pair of bodies, `F = G m1 m2 / r^2`. **Its default is 1, not 0**, which catches people out: bodies rattling in a box also attract each other unless you say otherwise. Set it to 0 for a mechanism or a collision experiment; set it to a real value for an orbit.\n\nThe value expected here is `0`. A successful `set` prints nothing.\n\n---\n\n`set system.uniform_gravity = [0, -9.81, 0]` sets a property of the whole simulation rather than of one body. `uniform_gravity` is a uniform gravitational field applied to every body, as `[gx, gy, gz]` in metres per second squared. This is the everyday 'g' of falling, entirely separate from the mutual attraction above.\n\nThe value expected here is `[0, -9.81, 0]`. A successful `set` prints nothing.",
+   "code": "sim.do(\"set system.g_constant = 0\")\nsim.do(\"set system.uniform_gravity = [0, -9.81, 0]\")"
+  },
+  {
+   "title": "Create the bodies",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`new sphere` creates one rigid body whose shape is **a uniform solid ball**, named `probe`. The general form is\n\n```\nnew <shape> [as <name>] { <field> = <value>, ... }\n```\n\nIts inertia tensor is not typed in \u2014 the simulator computes it from the shape: `I = diag(2mr^2/5, 2mr^2/5, 2mr^2/5)` \u2014 isotropic, so every axis through the centre is a principal axis with the same moment. The only shape whose inertia tensor is unchanged by any rotation, which makes it the simplest collidable body.\n\nThe fields given here are:\n\n- `mass = 1` \u2014 the body's mass, in kilograms. Setting it also sets `inverse_mass` to its reciprocal \u2014 the two are kept consistent, and the simulator carries the inverse because that is what the equations of motion actually use.\n- `radius = 0.2` \u2014 the radius, in metres.\n- `position = [0, 10, 0]` \u2014 the centre of mass, as `[x, y, z]` in metres.\n\nThe command prints the name the simulator assigned, which is how you confirm the body exists.",
+   "code": "sim.do(\"new sphere as probe { mass = 1, radius = 0.2, position = [0, 10, 0] }\")"
+  },
+  {
+   "title": "Choose the integrator",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`method adams` chooses the time integrator. The form is `METHOD <adams|bdf|sprk|ida>`.\n\nHere it selects the pure-Rust translation of **CVODE** in Adams-Moulton mode: a variable-order, variable-step explicit-family method for non-stiff problems. This is the default, and it is the right choice for orbits and for anything smooth.\n\nAll stepping in this simulator goes through the vendored pure-Rust SUNDIALS translation. There is no hand-written Euler or Verlet anywhere.",
+   "code": "sim.do(\"method adams\")"
+  },
+  {
+   "title": "Record into the SQLite dataset",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`dataset create solveit31_adams` \u2014 a command of the simulator's language. Sent as typed; the simulator prints whatever it has to say about it.",
+   "code": "sim.do(\"dataset create solveit31_adams\")"
+  },
+  {
+   "title": "Integrate",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`run 1` advances the simulation by **1 seconds of duration** \u2014 not to absolute time 1. This trips people up: `run 1.7` followed by `run 2.89` leaves you at t = 4.59, not at 2.89. The form is `RUN <duration> [STEPS <n>]`.\n\n`steps 10` asks for the result to be reported at 10 equally spaced points across that interval. It does not set the integrator's internal step size \u2014 SUNDIALS chooses that itself from the error tolerances, and takes as many internal steps between reports as accuracy demands.\n\nThis is the cell that actually integrates, so it is the slow one. It prints the time reached and how many internal solver steps were needed.",
+   "code": "sim.do(\"run 1 steps 10\")"
+  },
+  {
+   "title": "Record into the SQLite dataset (2)",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`dataset close` \u2014 a command of the simulator's language. Sent as typed; the simulator prints whatever it has to say about it.",
+   "code": "sim.do(\"dataset close\")"
+  },
+  {
+   "title": "Measure",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`reset` returns the simulation to t = 0 and to the state the bodies were created in. It takes no arguments.",
+   "code": "sim.do(\"reset\")"
+  },
+  {
+   "title": "Set up the world (2)",
+   "explain": "The next cell sends these 2 commands to the simulator. Here is exactly what each one expects:\n\n---\n\n`set system.g_constant = 0` sets a property of the whole simulation rather than of one body. `g_constant` is the gravitational constant `G` used for the mutual attraction between every pair of bodies, `F = G m1 m2 / r^2`. **Its default is 1, not 0**, which catches people out: bodies rattling in a box also attract each other unless you say otherwise. Set it to 0 for a mechanism or a collision experiment; set it to a real value for an orbit.\n\nThe value expected here is `0`. A successful `set` prints nothing.\n\n---\n\n`set system.uniform_gravity = [0, -9.81, 0]` sets a property of the whole simulation rather than of one body. `uniform_gravity` is a uniform gravitational field applied to every body, as `[gx, gy, gz]` in metres per second squared. This is the everyday 'g' of falling, entirely separate from the mutual attraction above.\n\nThe value expected here is `[0, -9.81, 0]`. A successful `set` prints nothing.",
+   "code": "sim.do(\"set system.g_constant = 0\")\nsim.do(\"set system.uniform_gravity = [0, -9.81, 0]\")"
+  },
+  {
+   "title": "Create the bodies (2)",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`new sphere` creates one rigid body whose shape is **a uniform solid ball**, named `probe`. The general form is\n\n```\nnew <shape> [as <name>] { <field> = <value>, ... }\n```\n\nIts inertia tensor is not typed in \u2014 the simulator computes it from the shape: `I = diag(2mr^2/5, 2mr^2/5, 2mr^2/5)` \u2014 isotropic, so every axis through the centre is a principal axis with the same moment. The only shape whose inertia tensor is unchanged by any rotation, which makes it the simplest collidable body.\n\nThe fields given here are:\n\n- `mass = 1` \u2014 the body's mass, in kilograms. Setting it also sets `inverse_mass` to its reciprocal \u2014 the two are kept consistent, and the simulator carries the inverse because that is what the equations of motion actually use.\n- `radius = 0.2` \u2014 the radius, in metres.\n- `position = [0, 10, 0]` \u2014 the centre of mass, as `[x, y, z]` in metres.\n\nThe command prints the name the simulator assigned, which is how you confirm the body exists.",
+   "code": "sim.do(\"new sphere as probe { mass = 1, radius = 0.2, position = [0, 10, 0] }\")"
+  },
+  {
+   "title": "Choose the integrator (2)",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`method bdf` chooses the time integrator. The form is `METHOD <adams|bdf|sprk|ida>`.\n\nHere it selects the pure-Rust translation of **CVODE** in BDF mode: backward differentiation formulas, implicit, for stiff problems. A stiff problem is one with widely separated timescales \u2014 a fast gyration riding on a slow drift, for instance \u2014 where an explicit method is forced into absurdly small steps by stability rather than by accuracy.\n\nAll stepping in this simulator goes through the vendored pure-Rust SUNDIALS translation. There is no hand-written Euler or Verlet anywhere.",
+   "code": "sim.do(\"method bdf\")"
+  },
+  {
+   "title": "Record into the SQLite dataset (3)",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`dataset create solveit31_bdf` \u2014 a command of the simulator's language. Sent as typed; the simulator prints whatever it has to say about it.",
+   "code": "sim.do(\"dataset create solveit31_bdf\")"
+  },
+  {
+   "title": "Integrate (2)",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`run 1` advances the simulation by **1 seconds of duration** \u2014 not to absolute time 1. This trips people up: `run 1.7` followed by `run 2.89` leaves you at t = 4.59, not at 2.89. The form is `RUN <duration> [STEPS <n>]`.\n\n`steps 10` asks for the result to be reported at 10 equally spaced points across that interval. It does not set the integrator's internal step size \u2014 SUNDIALS chooses that itself from the error tolerances, and takes as many internal steps between reports as accuracy demands.\n\nThis is the cell that actually integrates, so it is the slow one. It prints the time reached and how many internal solver steps were needed.",
+   "code": "sim.do(\"run 1 steps 10\")"
+  },
+  {
+   "title": "Interrogate the dataset with SQL",
+   "explain": "The next cell sends these 4 commands to the simulator. Here is exactly what each one expects:\n\n---\n\n`sql \"ATTACH DATABASE 'datasets/solveit31_adams.db' AS adams\"` \u2014 a command of the simulator's language. Sent as typed; the simulator prints whatever it has to say about it.\n\n---\n\n`sql \"SELECT COUNT(*) AS paired_frames FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body\"` \u2014 a command of the simulator's language. Sent as typed; the simulator prints whatever it has to say about it.\n\n---\n\n`sql \"SELECT MAX(ABS(s.y - a.y)) AS worst_method_gap FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body\"` \u2014 a command of the simulator's language. Sent as typed; the simulator prints whatever it has to say about it.\n\n---\n\n`sql \"DETACH DATABASE adams\"` \u2014 a command of the simulator's language. Sent as typed; the simulator prints whatever it has to say about it.",
+   "code": "sim.do(\"sql \\\"ATTACH DATABASE 'datasets/solveit31_adams.db' AS adams\\\"\")\nsim.do(\"sql \\\"SELECT COUNT(*) AS paired_frames FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body\\\"\")\nsim.do(\"sql \\\"SELECT MAX(ABS(s.y - a.y)) AS worst_method_gap FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body\\\"\")\nsim.do(\"sql \\\"DETACH DATABASE adams\\\"\")"
+  },
+  {
+   "title": "Record into the SQLite dataset (4)",
+   "explain": "The next cell sends this command to the simulator. Here is exactly what it expects:\n\n---\n\n`dataset close` \u2014 a command of the simulator's language. Sent as typed; the simulator prints whatever it has to say about it.",
+   "code": "sim.do(\"dataset close\")"
+  }
+ ],
+ "discussion": "**What the cells above actually established.**\n\n- The values printed above are the result. Read them against the physical expectations set out earlier in this notebook.\n\n**How to judge a number here.** A disagreement with theory is only a defect if it fails to shrink when you ask for more accuracy. Tighten `system.rtol` and `system.atol` and re-run: a discretisation error converges, and a bug does not. The one place this does not apply is a model with orientation-gripping joints, where `rtol` is floored at `1e-6` and tightening past it buys nothing.\n\n**The full note from the example this notebook pairs with**, which sets out why it was built this way:\n\n31. Two integrators, two datasets, ONE query: ATTACH.\nThe same free fall is recorded once under CVODE Adams and once under\nBDF. SQLite's ATTACH then mounts the first database inside the second\nsession and a single JOIN reports the largest disagreement between\nthe two solvers, frame by frame - a cross-dataset diff with no\napplication code at all."
+}

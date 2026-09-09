@@ -1,0 +1,17 @@
+# 22. An equal-mass circular binary, audited by SQL.
+# Two unit masses, separation d = 2, each on a circle of radius 1 about
+# the common centre. Circular speed: v^2/r = G m / d^2 gives v = 0.5,
+# period T = 2 pi r / v = 4 pi = 12.566370614359172. The dataset holds
+# every output; SQL confirms the centre of mass never moves and the
+# orbit radius stays 1 for BOTH stars.
+set system.g_constant = 1
+new sphere as star_a { mass = 1, radius = 0.1, position = [-1, 0, 0], velocity = [0, -0.5, 0] }
+new sphere as star_b { mass = 1, radius = 0.1, position = [ 1, 0, 0], velocity = [0,  0.5, 0] }
+method adams
+dataset create solveit22_binary
+run 12.566370614359172 steps 150
+sql "SELECT MAX(ABS(comx)) AS com_x, MAX(ABS(comy)) AS com_y FROM frames"
+sql "SELECT b.name, MIN(sqrt(s.x*s.x + s.y*s.y)) AS r_min, MAX(sqrt(s.x*s.x + s.y*s.y)) AS r_max FROM states s JOIN bodies b ON b.body = s.body GROUP BY b.name ORDER BY b.name"
+sql "SELECT MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+movie create solveit22_binary
+dataset close

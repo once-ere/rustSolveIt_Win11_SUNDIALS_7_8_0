@@ -37,18 +37,21 @@ showing 4 entities; SCENE START begins the evolution — HELP lists all scene co
 ```
 
 The middle line reports what was actually attempted rather than assuming
-it worked. posim tries exactly one command, `xdg-open <url>`, which is a
-Linux/BSD utility. When that launch does not happen — on macOS and
-Windows, where `xdg-open` does not exist, or whenever `$POSIM_NO_BROWSER`
-is set — the line reads instead:
+it worked. posim tries exactly one command — the platform's own opener:
+`cmd /C start "" <url>` on Windows (this port's platform; `start` hands
+the URL to your default browser), `open <url>` on macOS, `xdg-open <url>`
+on Linux/BSD. When that launch does not happen — whenever
+`$env:POSIM_NO_BROWSER` is set (`POSIM_NO_BROWSER=1` in Git Bash), or
+on a headless machine whose opener is missing — the line reads instead:
 
 ```
 (no browser was launched — open that address yourself)
 ```
 
 In both cases the URL is printed and the window works; paste it into any
-browser (`open <url>` on macOS, `start <url>` on Windows). The listener
-is bound to `127.0.0.1`, so it is not reachable from another machine.
+browser (`Start-Process <url>` from PowerShell, `start <url>` from Git
+Bash or cmd, `open <url>` on macOS). The listener is bound to
+`127.0.0.1`, so it is not reachable from another machine.
 
 If **no** bodies exist yet, the reply says so instead — the window
 would be an empty grid — and reminds you that the scene draws rigid
@@ -660,8 +663,10 @@ suite is now **104 tests: 40 lib + 16 collision + 9 conservation +
 
 **No window appeared after `SCENE CREATE`.**
 The command prints the URL (e.g. `http://127.0.0.1:41234/`). Open it in
-any browser yourself — the automatic opening uses `xdg-open`, which
-headless machines lack.
+any browser yourself (`Start-Process http://127.0.0.1:41234/` from
+PowerShell) — the automatic opening goes through the desktop's opener
+(`cmd /C start` on Windows, `xdg-open` on Linux, `open` on macOS), which
+a headless session lacks.
 
 **I want a predictable port.**
 `SCENE CREATE 7878` → the URL is always `http://127.0.0.1:7878/`.
@@ -669,7 +674,9 @@ If the port is busy you get a clear error; pick another or use `0`
 (OS-assigned).
 
 **Stop the browser from opening (tests, servers).**
-Set the environment variable `POSIM_NO_BROWSER=1`.
+Set the environment variable before starting posim:
+`$env:POSIM_NO_BROWSER = "1"` in PowerShell (`POSIM_NO_BROWSER=1
+<command>` in Git Bash).
 
 **REVERSE says there is nothing to reverse.**
 Reverse replays *recorded* history. Run `SCENE START` (or single

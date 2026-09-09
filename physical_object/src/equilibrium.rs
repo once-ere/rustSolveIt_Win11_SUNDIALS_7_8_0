@@ -379,11 +379,13 @@ pub fn solve(system: &mut PhysicalObjectSystem) -> Result<EquilibriumReport, Str
         .constraints
         .add_jacobian_transpose(&pose2, &params2.anchors, &lam, &mut gf, &mut gt2);
     let mut worst = 0.0f64;
-    for i in 0..n {
+    // Iterator form over `gf` (clippy 1.91 `needless_range_loop`); the
+    // same difference, in the same order, for the same bodies.
+    for (i, gf_i) in gf.iter().enumerate().take(n) {
         if params2.anchors.translation_fixed[i] {
             continue;
         }
-        worst = worst.max((params2.force(&q, i) - gf[i]).norm());
+        worst = worst.max((params2.force(&q, i) - *gf_i).norm());
     }
     report.max_net_force = worst;
     report.constraint_error = system.constraints.drift(system).0;

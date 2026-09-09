@@ -25,9 +25,10 @@ cargo run -p posim --release -- --notebook dynamic_notebooks/kepler_orbit.posim
 ```
 
 (To get the bare `posim_notebook` form, add the repository's `tools`
-directory to your user `PATH`; from Git Bash the symlink form
-`ln -s "$PWD/tools/posim_notebook" /usr/local/bin/posim_notebook`
-also works.)
+directory to your user `PATH`: PowerShell then finds
+`posim_notebook.cmd`, Git Bash the bash twin. Headless, from Git Bash:
+`POSIM_NO_BROWSER=1 tools/posim_notebook kepler_orbit`; from
+PowerShell set `$env:POSIM_NO_BROWSER = "1"` first.)
 
 Every notebook was executed and verified: it loads with zero failing
 cells, its baseline outputs match the documented analytic values, and

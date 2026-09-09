@@ -23,8 +23,10 @@ Date: 2026-07-26 · Repository: <https://github.com/once-ere/rustSimulate>
 | `special_functions` — spherical Bessel (native) | new | 7 unit + 3 doctests |
 | `special_functions` — Cephes classical chapters | vendored | 11 identity tests |
 
-**568 passed workspace-wide, zero warnings, zero `unsafe`, zero
-crates.io dependencies.**
+**568 passed at the time of this status (2026-07-26), zero warnings,
+zero `unsafe`, zero crates.io dependencies.** (The live count for the
+tree this page ships in is stated in `README.md` and measured by
+`scripts/certify_clean.sh`.)
 
 ---
 

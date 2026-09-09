@@ -115,10 +115,38 @@ literals, the JSON protocol, the scene frame messages, the docs).
 ### 3.3 Solver driving (integrate.rs ↔ sundials_rs 7.8.0)
 
 The vendored engine is the pure-Rust translation of **SUNDIALS 7.8.0**
-(`once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916`, byte-identical,
-2,929 files; verified on macOS/Apple Silicon in this repository — see
-`VERIFICATION_MACOS.md`). Its API models C's opaque pointers directly,
-which fixes the shape of everything in `integrate.rs`.
+— here the **Windows 11 / x86-64 port**
+(`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11`; its crate tree,
+examples, docs and tools, with `.git`, `target/` and bulk `logs/`
+corpora excluded — `diff -rq --exclude=.git --exclude=target
+--exclude=logs` against a fresh clone is silent). Its public API is
+identical to the Linux port that the Linux and macOS editions of this
+repository vendor (the two trees differ only in backend module sets);
+the Windows port additionally replaces every host-libm transcendental
+inside the engine with pure-Rust translations of the glibc routines
+(`sundials_libm`, 0 mismatches over millions of inputs vs. a glibc
+oracle) — which is what keeps this port's physics byte-identical to
+the Linux evidence (`PORT_WIN11_PROVENANCE.md`, `VERIFICATION_WIN11.md`;
+this edition was ported from the macOS / Apple Silicon repository
+`once-ere/rustSolveIt_macos-silicon_SUNDIALS_7_8_0`, itself ported from
+the Linux `once-ere/rustSolveIt_Using_SUNDIALS_7_8_0`). The
+deterministic routines require real FMA: the root `.cargo/config.toml`
+pins `-C target-feature=+fma` (cargo config does NOT flow up from the
+vendored workspace), so binaries built here need a CPU with FMA. The
+workspace is pure Rust: rustc 1.91.1 on `x86_64-pc-windows-msvc`
+locates the MSVC linker itself, no WSL2 compiler or linker is involved,
+and the only C compiled anywhere in the repository is the bundled
+SQLite amalgamation inside `dataset_tools/` (MSVC `cl.exe`, VS 2026
+Build Tools 14.51.36231, through the `cc` crate — §3.10, §5). Only
+three places are known to differ from the macOS edition, none inside
+the engine: the last digit of the two pinned quantum notebooks
+(`double_slit`, `tunneling`), the GEAR/RACK joint residual (the
+`rack_and_pinion` video is the Windows recording), and the curvilinear
+coordinate datasets of SolveIt 37–38, whose maps go through the HOST
+libm in `special_functions/src/coords.rs` (7 of 252 dataset files
+differ from the macOS files; the movies are 74/74 byte-identical). The
+API models C's opaque pointers directly, which fixes the shape of
+everything in `integrate.rs`.
 
 **Handle model.**
 
@@ -386,10 +414,13 @@ crate root (module/type namespace collision) — do not try.
   handle (SCENE CLOSE, quit) sets `shutdown`, clears outboxes, and all
   threads exit on their next poll tick (reader timeout 500 ms, accept
   poll 50 ms). `RESET` keeps the window open and re-syncs it.
-- **Browser opening** is best-effort and platform-dispatched:
-  `open` on macOS (this port's platform), `cmd /C start` on Windows,
-  `xdg-open` elsewhere — suppressed by `$POSIM_NO_BROWSER` (set in
-  every headless test).
+- **Browser opening** is best-effort via the platform opener —
+  `cmd /C start "" <url>` on Windows (this port's platform; `start` is
+  a cmd builtin whose first quoted argument is the window title, hence
+  the empty title), `open` on macOS, `xdg-open` elsewhere — suppressed
+  by `POSIM_NO_BROWSER` (`$env:POSIM_NO_BROWSER = "1"`, set in every
+  headless test). Whether a launch was actually attempted is reported
+  in `SceneHandle::browser_launched`, never assumed.
 
 ### 3.8 Collision subsystem (physical_object/src/collide.rs ↔ integrate.rs ↔ vm ↔ scene)
 
@@ -806,7 +837,8 @@ Pinned contracts:
   `body_states: Vec<BodySnap>` and `collision_count` — **purely
   observational fields filled in the existing `snapshot()` helper; no
   arithmetic changed anywhere**, which is why the byte-identity gate
-  (`tools/macos_verify_physics.sh`) still passes.
+  (`bash tools/win_verify_physics.sh` from Git Bash;
+  `logs/win_verify_physics.log`, exit 0) still passes.
 - **RESET closes the open dataset** (a dataset describes ONE world);
   the scene window survives a RESET, the dataset deliberately does not.
   `DATASET CREATE` replaces an existing file of the same name —
@@ -861,9 +893,10 @@ Pinned contracts:
   posim's special-function dispatcher so the SPECIAL_NAMES lockstep
   test covers their documentation.
 - **Binary discovery**: `$POSIM_DB_TOOL`, then
-  `dataset_tools/target/release/solveit_db` walking up from the working
-  directory, then `$PATH`; the error message carries the exact build
-  command. The notebooks' §6/§9/§10 dataset cells and the R8 notebook
+  `dataset_tools/target/release/solveit_db.exe` (the finder probes the
+  `.exe` name before the extensionless one on Windows — `DB_TOOL_NAMES`
+  in dataset.rs) walking up from the working directory, then `$PATH`;
+  the error message carries the exact build command. The notebooks' §6/§9/§10 dataset cells and the R8 notebook
   check (notebooks/_build/nbcheck.py) sit on top of this layer.
 
 ## 4. Error-handling policy
@@ -886,8 +919,12 @@ exactly as specified for the dataset feature. It is excluded from the
 workspace in the root Cargo.toml (like `sundials_rs`), owns its own
 Cargo.lock, and posim reaches it only by spawning the binary — the
 simulator workspace's `Cargo.lock` still lists local crates only, and
-`cargo build --workspace` never touches crates.io.
-
+`cargo build --workspace` never touches crates.io. On Windows that
+amalgamation is the ONE piece of C compiled anywhere in this
+repository: `libsqlite3-sys` hands it to MSVC `cl.exe` (VS 2026 Build
+Tools, 14.51.36231, found by the `cc` crate without a developer
+prompt); no WSL2 compiler or linker is used, and the simulator
+workspace itself is pure Rust linked by the MSVC linker rustc locates.
 
 - Allowed: `std`, and path deps `sundials_core`, `cvode_rs`,
   `arkode_rs` (and the four further `../sundials_rs` crates —
@@ -922,11 +959,13 @@ simulator workspace's `Cargo.lock` still lists local crates only, and
 | wire/kernel | `jupyter/test_protocol.py`, `jupyter/test_kernel.py` | machine protocol incl. the scene command family and the `events` op; full Jupyter ZMQ path |
 | real-browser gestures | scratchpad `verify_gestures.py` (headless Chrome CDP; not committed) | genuine key/mouse/wheel input: arrows translate right/left/up/down, left-drag rotates, wheel and +/- zoom, toolbar Start/Pause/Reverse, statusbar reporting |
 
-Regression invariant: `cargo test --workspace` green (**605 tests**:
-52 physical_object lib + 19 collision + 9 conservation +
-25 constrained/DAE + 113 posim + 92 quantum + 233 special_functions +
-11 vendored identities + 55 doctests) and `cargo build --workspace --all-targets` warning-free at
-every commit.
+Regression invariant: `cargo test --workspace` green (**638 tests**:
+49 physical_object lib + 19 collision + 9 conservation +
+42 constrained/DAE + 121 posim + 92 quantum + 240 special_functions +
+11 vendored identities + 5 quantum doctests + 50 special_functions
+doctests — the Windows 11 measurement, `logs/test.log`) and
+`cargo build --workspace --all-targets` warning-free (0 errors,
+0 warnings, `logs/build.log`) at every commit.
 
 ## 7. The video recorder (`recorder/`)
 

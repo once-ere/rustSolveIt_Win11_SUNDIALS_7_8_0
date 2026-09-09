@@ -1,0 +1,390 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(scene_info.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefineke
+ys.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.s
+ty)) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty)
+
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro.s
+ty) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitle
+string.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty))
+) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.s
+ty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilec
+heck.sty
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecou
+nter.sty)))
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdfte
+x.def)
+No file scene_info.aux.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
+Overfull \hbox (68.92291pt too wide) in paragraph at lines 43--46
+\T1/lmr/m/it/10.95 This is the type-set twin of \T1/lmtt/m/it/10.95 scene_info.
+md \T1/lmr/m/it/10.95 --- com-pan-ion to \T1/lmtt/m/it/10.95 grammar.pdf \T1/lm
+r/m/it/10.95 and \T1/lmtt/m/it/10.95 physical_object_simulator.pdf\T1/lmr/m/it/
+10.95 . 
+No file scene_info.toc.
+[1{C:/Users/nsh/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/nsh/
+AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}]
+
+LaTeX Warning: Reference `sec:async' on page 2 undefined on input line 120.
+
+[2]
+Overfull \hbox (55.75073pt too wide) in paragraph at lines 197--210
+\T1/lmr/m/n/10.95 gates you place around \T1/lmtt/m/n/10.95 DoStepDynamics\T1/l
+mr/m/n/10.95 . Scene dec-o-ra-tion: \T1/lmtt/m/n/10.95 AddCamera(pos, target)\T
+1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 AddTypicalLights()\T1/lmr/m/n/10.95 ,
+
+Overfull \hbox (16.49242pt too wide) in paragraph at lines 213--224
+\T1/lmtt/m/n/10.95 setTimeStep(dt)\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 setRea
+lTimeSimulation(0/1)\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 resetDebugVisualizer
+Camera(distance, yaw,
+
+Overfull \hbox (2.28786pt too wide) in paragraph at lines 213--224
+\T1/lmtt/m/n/10.95 pitch, target)\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 configu
+reDebugVisualizer(flag, on)\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 addUserDebugL
+ine/Text/Parameter\T1/lmr/m/n/10.95 ,
+[3]
+Overfull \hbox (52.7711pt too wide) in paragraph at lines 239--251
+\T1/lmr/m/n/10.95 Modern 2-D/3-D physics en-gines in Rust. The core is \T1/lmr/
+bx/n/10.95 fully rendering-agnostic\T1/lmr/m/n/10.95 : \T1/lmtt/m/n/10.95 Physi
+csPipeline::step()
+
+Overfull \hbox (14.81989pt too wide) in paragraph at lines 239--251
+\T1/lmr/m/n/10.95 flags (\T1/lmtt/m/n/10.95 TestbedStateFlags\T1/lmr/m/n/10.95 
+: \T1/lmtt/m/n/10.95 WIREFRAME\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 AABBS\T1/l
+mr/m/n/10.95 , \T1/lmtt/m/n/10.95 CONTACT_POINTS\T1/lmr/m/n/10.95 , ...), one-s
+hot \T1/lmtt/m/n/10.95 TestbedActionFlags
+
+Overfull \hbox (10.69269pt too wide) in paragraph at lines 254--265
+\T1/lmr/m/n/10.95 zoom; \T1/lmtt/m/n/10.95 PlottingPanel\T1/lmr/m/n/10.95 /\T1/
+lmtt/m/n/10.95 Dataset \T1/lmr/m/n/10.95 add live graphs; \T1/lmtt/m/n/10.95 Da
+taTable \T1/lmr/m/n/10.95 nu-meric read-outs. \T1/lmtt/m/n/10.95 AbstractSimula
+tion
+
+Overfull \hbox (10.65749pt too wide) in paragraph at lines 254--265
+\T1/lmr/m/n/10.95 runs an an-i-ma-tion thread call-ing \T1/lmtt/m/n/10.95 doSte
+p() $\OMS/lmsy/m/n/10.95 ^^X$\T1/lmr/m/n/10.95 10$\OMS/lmsy/m/n/10.95 ^^B$\T1/l
+mr/m/n/10.95 /s, with a \T1/lmtt/m/n/10.95 SimulationControl \T1/lmr/m/n/10.95 
+GUI of \T1/lmr/bx/n/10.95 Start/Stop,
+
+Overfull \hbox (7.72629pt too wide) in paragraph at lines 254--265
+\T1/lmr/bx/n/10.95 Step, Re-set, Ini-tial-ize \T1/lmr/m/n/10.95 but-tons, an ed
+-itable pa-ram-e-ter ta-ble and a mes-sage area; \T1/lmtt/m/n/10.95 stepsPerDis
+play
+
+Overfull \hbox (15.97664pt too wide) in paragraph at lines 278--286
+\T1/lmr/m/n/10.95 Two re-lated projects: a Re-ac-t/Next.js can-vas app (\T1/lmt
+t/m/n/10.95 physicshub.github.io\T1/lmr/m/n/10.95 ) and the ear-lier Node/p5.js
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 294--294
+[]|\T1/lmr/m/n/10 C++ (+SWIG
+
+Underfull \hbox (badness 3907) in paragraph at lines 295--295
+[]|\T1/lmr/m/n/10 Irrlicht / VSG /
+
+Underfull \hbox (badness 10000) in paragraph at lines 295--295
+[]|\T1/lmr/m/n/10 Qt +
+
+Underfull \hbox (badness 3536) in paragraph at lines 296--296
+[]|\T1/lmr/bx/n/10 client--server \T1/lmr/m/n/10 (shm
+
+Underfull \hbox (badness 10000) in paragraph at lines 297--297
+[]|\T1/lmtt/m/n/10 ChVisualSystem*\T1/lmr/m/n/10 ,
+
+Overfull \hbox (45.38318pt too wide) in paragraph at lines 297--297
+[]|\T1/lmtt/m/n/10 resetDebugVisualizerCamera\T1/lmr/m/n/10 ,
+
+Overfull \hbox (32.10545pt too wide) in paragraph at lines 297--297
+\T1/lmtt/m/n/10 configureDebugVisualizer| 
+
+Underfull \hbox (badness 10000) in paragraph at lines 297--298
+[]|\T1/lmtt/m/n/10 GraphicsManager
+
+Overfull \hbox (6.29602pt too wide) in paragraph at lines 298--298
+[]|\T1/lmtt/m/n/10 DoStepDynamics(dt)
+
+Underfull \hbox (badness 10000) in paragraph at lines 298--298
+[]|\T1/lmtt/m/n/10 stepSimulation()\T1/lmr/m/n/10 ,
+
+Underfull \hbox (badness 4899) in paragraph at lines 298--299
+[]|\T1/lmtt/m/n/10 RunMode \T1/lmr/m/n/10 {Run-ning,
+
+Underfull \hbox (badness 2698) in paragraph at lines 299--300
+[]|\T1/lmr/m/n/10 RunMode / \T1/lmr/bx/n/10 snap-
+
+Underfull \hbox (badness 10000) in paragraph at lines 300--300
+[]|\T1/lmr/m/n/10 L-rotate, R-pan,
+
+Underfull \hbox (badness 10000) in paragraph at lines 300--300
+[]|\T1/lmr/m/n/10 L-rotate, R-pan,
+
+Underfull \hbox (badness 10000) in paragraph at lines 301--301
+[]|\T1/lmr/m/n/10 Animate bar,
+
+Underfull \hbox (badness 10000) in paragraph at lines 302--302
+[]|\T1/lmr/bx/n/10 command$\OMS/lmsy/m/n/10 !$\T1/lmr/bx/n/10 status
+
+Overfull \hbox (46.06964pt too wide) in paragraph at lines 292--304
+ [] 
+[4{C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}
+]
+Underfull \hbox (badness 10000) in paragraph at lines 309--310
+[]|\T1/lmr/m/n/10 JS (Re-ac-t/Next or
+
+Underfull \hbox (badness 10000) in paragraph at lines 312--312
+[]|\T1/lmtt/m/n/10 DrawingPanel
+
+Underfull \hbox (badness 10000) in paragraph at lines 312--312
+\T1/lmr/m/n/10 pan/-zoom,
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--313
+[]|\T1/lmtt/m/n/10 doStep() \T1/lmr/m/n/10 thread,
+
+Overfull \hbox (7.8196pt too wide) in paragraph at lines 313--314
+[]|\T1/lmtt/m/n/10 requestAnimationFrame| 
+
+Underfull \hbox (badness 10000) in paragraph at lines 314--314
+[]|\T1/lmr/m/n/10 Start-Stop-Step-Reset
+
+Underfull \hbox (badness 2726) in paragraph at lines 315--315
+[]|\T1/lmr/m/n/10 L-drag move, R-click
+
+Underfull \hbox (badness 3471) in paragraph at lines 316--317
+[]|\T1/lmr/m/n/10 sliders, plots, the-ory
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 365--365
+[]|\T1/lmr/m/n/10 Command$\OMS/lmsy/m/n/10 !$\T1/lmr/m/n/10 status
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--366
+[]|\T1/lmr/m/n/10 Engine/renderer de-
+
+Underfull \hbox (badness 10000) in paragraph at lines 367--367
+[]|\T1/lmr/m/n/10 Rapier
+
+Overfull \hbox (4.77245pt too wide) in paragraph at lines 367--367
+\T1/lmtt/m/n/10 GraphicsManager| 
+
+Underfull \hbox (badness 6995) in paragraph at lines 368--369
+[]|\T1/lmtt/m/n/10 Stopped / Running / Paused / Reversing \T1/lmr/m/n/10 enum
+
+Underfull \hbox (badness 10000) in paragraph at lines 370--370
+[]|\T1/lmr/m/n/10 OSP
+
+Overfull \hbox (15.27242pt too wide) in paragraph at lines 370--370
+\T1/lmtt/m/n/10 SimulationControl| 
+
+Underfull \hbox (badness 10000) in paragraph at lines 372--372
+[]|\T1/lmr/m/n/10 Irrlicht /
+
+Underfull \hbox (badness 10000) in paragraph at lines 372--372
+\T1/lmr/m/n/10 QGLViewer
+
+Underfull \hbox (badness 10000) in paragraph at lines 373--373
+[]|\T1/lmr/m/n/10 Rapier
+
+Underfull \hbox (badness 10000) in paragraph at lines 375--375
+[]|\T1/lmr/m/n/10 PyBullet
+
+LaTeX Warning: Reference `sec:async' on page 6 undefined on input line 376.
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 385--385
+[]|\T1/lmr/m/n/10 Shared-memory trans-port
+
+Underfull \hbox (badness 1117) in paragraph at lines 386--387
+[]|\T1/lmr/m/n/10 All are ex-ter-nal de-pen-den-cies. The browser is the one
+
+Underfull \hbox (badness 10000) in paragraph at lines 389--389
+[]|\T1/lmr/m/n/10 Fragmented/binary Web-
+[7{C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/
+Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}]
+Underfull \hbox (badness 10000) in paragraph at lines 404--404
+[]|\T1/lmtt/m/n/10.95 SCENE CLOSE \T1/lmr/m/n/10.95 (alias \T1/lmtt/m/n/10.95 S
+CENE
+
+Underfull \hbox (badness 1331) in paragraph at lines 407--407
+[]|\T1/lmtt/m/n/10.95 SCENE ZOOM IN \T1/lmr/m/n/10.95 / \T1/lmtt/m/n/10.95 SCEN
+E ZOOM
+[8] (C:\Users\nsh\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd)
+Overfull \hbox (68.70695pt too wide) in paragraph at lines 432--436
+[]\T1/lmr/m/n/10.95 Every for-ward step goes through \T1/lmtt/m/n/10.95 physica
+l_object::integrate \T1/lmr/m/n/10.95 --- the same sun-di-als (CVODE/ARKODE)
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 452.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\to' on input line 452.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 452.
+
+[9{C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 534.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\to' on input line 534.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 534.
+
+[10]
+Overfull \hbox (53.23604pt too wide) in paragraph at lines 566--573
+\T1/lmr/m/n/10.95 the RFC's own hand-shake ex-am-ple (\T1/lmtt/m/n/10.95 dGhlIH
+NhbXBsZSBub25jZQ== $\OMS/lmsy/m/n/10.95 !$ \T1/lmtt/m/n/10.95 s3pPLMBiTxaQ9kYGz
+zhZRbK+xOo=\T1/lmr/m/n/10.95 ). 
+
+Overfull \hbox (2.14816pt too wide) in paragraph at lines 577--583
+[]\T1/lmr/bx/n/10.95 The page \T1/lmr/m/n/10.95 (\T1/lmtt/m/n/10.95 posim/src/s
+cene/scene.html\T1/lmr/m/n/10.95 ): one self-contained HTM-L/C-SS/JS file. Canv
+as-
+[11]
+Overfull \hbox (36.05295pt too wide) in paragraph at lines 649--658
+[]\T1/lmtt/b/n/10.95 --machine \T1/lmr/bx/n/10.95 / Jupyter mode \T1/lmr/m/n/10
+.95 --- posim emits \T1/lmr/m/it/10.95 un-so-licited \T1/lmr/m/n/10.95 lines \T
+1/lmtt/m/n/10.95 {"event":"scene","message":"..."}
+
+Overfull \hbox (25.70064pt too wide) in paragraph at lines 662--672
+\T1/lmr/bx/n/10.95 Rust tests (52 to-tal, \T1/lmtt/b/n/10.95 cargo test --works
+pace\T1/lmr/bx/n/10.95 ). \T1/lmr/m/n/10.95 New for the scene sub-sys-tem: SHA-
+1/base64/accept-
+[12]
+Overfull \hbox (52.7957pt too wide) in paragraph at lines 716--720
+[]\T1/lmr/bx/n/10.95 Shapes-and-box re-lease (2026-07-24). \T1/lmr/m/n/10.95 Tw
+o fur-ther lay-ers of checks ac-com-pany the \T1/lmtt/m/n/10.95 TORUS\T1/lmr/m/
+n/10.95 /\T1/lmtt/m/n/10.95 DISK\T1/lmr/m/n/10.95 /\T1/lmtt/m/n/10.95 CYLINDER
+
+Overfull \hbox (166.18958pt too wide) in paragraph at lines 722--729
+[]\T1/lmr/bx/n/10.95 The init mes-sage car-ries the new ge-om-e-try. \T1/lmr/m/
+n/10.95 The new posim test \T1/lmtt/m/n/10.95 box_shapes_and_wall_flags_reach_t
+he_init_message
+
+Overfull \hbox (15.32645pt too wide) in paragraph at lines 729--739
+[]\T1/lmr/bx/n/10.95 Live browser ses-sion. \T1/lmr/m/n/10.95 The 12-entity dem
+o (\T1/lmtt/m/n/10.95 scripts/collisions/11_box_of_shapes.posim\T1/lmr/m/n/10.9
+5 :
+
+Overfull \hbox (86.43518pt too wide) in paragraph at lines 747--758
+[]\T1/lmr/bx/n/10.95 Reset is a true re-initialization. \T1/lmr/m/n/10.95 The p
+osim test \T1/lmtt/m/n/10.95 reset_restores_the_initial_state_and_start_reruns
+
+Overfull \hbox (54.52377pt too wide) in paragraph at lines 763--769
+[]\T1/lmr/bx/n/10.95 The pro-to-col car-ries the new fields. \T1/lmr/m/n/10.95 
+The Web-Socket ses-sion test (\T1/lmtt/m/n/10.95 websocket_session_end_to_end\T
+1/lmr/m/n/10.95 )
+
+Overfull \hbox (104.86382pt too wide) in paragraph at lines 763--769
+\T1/lmr/m/n/10.95 as-serts ev-ery broad-cast frame con-tains \T1/lmtt/m/n/10.95
+ "p":[ \T1/lmr/m/n/10.95 and \T1/lmtt/m/n/10.95 "l":[\T1/lmr/m/n/10.95 ; \T1/lm
+tt/m/n/10.95 box_shapes_and_wall_flags_reach_the_init_message
+
+Overfull \hbox (100.13446pt too wide) in paragraph at lines 769--775
+[]\T1/lmr/bx/n/10.95 The dumb-bell demo, live. \T1/lmr/m/n/10.95 The two-dumbbe
+ll col-li-sion demo (\T1/lmtt/m/n/10.95 scripts/collisions/12_two_dumbbells.pos
+im
+[13]
+Overfull \hbox (6.47571pt too wide) in paragraph at lines 821--825
+\T1/lmr/m/n/10.95 Into the event queue: \T1/lmtt/m/n/10.95 SCENE EVENTS \T1/lmr
+/m/n/10.95 in the note-book, \T1/lmtt/m/n/10.95 [scene] ... \T1/lmr/m/n/10.95 l
+ines in Jupyter, \T1/lmtt/m/n/10.95 {"event":...}
+[14] (scene_info.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `scene_info.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)<C:/Users/nsh/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/nsh/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/nsh/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/nsh/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/nsh/AppData/Local/Programs
+/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/nsh/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/lm/lmr17.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/lm/lmri10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/
+fonts/type1/public/lm/lmsy10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fo
+nts/type1/public/lm/lmsy8.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/lm/lmtk10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/lm/lmtt10.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/typ
+e1/public/lm/lmtt12.pfb><C:/Users/nsh/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/lm/lmtti10.pfb>
+Output written on scene_info.pdf (14 pages, 369747 bytes).
+Transcript written on scene_info.log.

@@ -104,3 +104,25 @@ sundials_rs/target/
 
 # The encyclopedia's per-topic JupyterLab checkpoints and Python caches
 SolveIt_Notebooks_for_rust/**/.ipynb_checkpoints/
+
+# The C-reference comparison harnesses are BUILD PRODUCTS: on Windows they
+# are porttest/*.exe (already ignored above via the rebound folders' own
+# rules); the macOS edition had committed its arm64 Mach-O binaries under
+# these extensionless names, which are useless on any other platform. Each
+# harness is rebuilt from its .c source by the documented commands.
+rebound_rust/porttest/addfmt_test
+rebound_rust/porttest/archive_test
+rebound_rust/porttest/bs_pow_diff
+rebound_rust/porttest/derivatives_test
+rebound_rust/porttest/frequency_test
+rebound_rust/porttest/integrators_test
+rebound_rust/porttest/kepler_rectilinear_c
+rebound_rust/porttest/libm_diff
+rebound_rust/porttest/movetocom_var_c
+rebound_rust/porttest/movetocom_var_test
+rebound_rust/porttest/problem_test
+reboundx_rust/porttest/rebx_binary_read_c
+reboundx_rust/porttest/rebx_binary_roundtrip_c
+reboundx_rust/porttest/tides_spin_kozai_c
+reboundx_rust/porttest/tides_spin_migration_c
+reboundx_rust/porttest/tides_spin_pseudo_c

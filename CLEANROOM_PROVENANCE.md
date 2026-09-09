@@ -220,7 +220,7 @@ been the thing that was wrong.
 
 | | |
 |---|---|
-| workspace tests | **568 passed workspace-wide**, 0 failed (212 before Stage 1) |
+| workspace tests | **568 passed at the time of this record** (2026-07), 0 failed (212 before Stage 1) |
 | build warnings | **0** |
 | `unsafe` in `special_functions` | none — `#![forbid(unsafe_code)]` at the crate root |
 | external dependencies | none |

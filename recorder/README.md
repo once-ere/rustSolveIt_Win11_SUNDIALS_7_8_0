@@ -5,19 +5,27 @@ month, on a machine with no Rust toolchain and no network, and still
 watch the same motion, scrub it, and read the conserved quantities off
 the frame you stopped on.
 
-Commands below are run from the parent directory, the cargo workspace:
+Commands below are run from the parent directory, the cargo workspace
+(PowerShell; the scripts are started through `python`, since a `#!`
+line means nothing on Windows):
 
-```bash
+```powershell
 cargo build --release -p posim
-recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
-    -o /tmp/mine.html --frames 360 --dt 0.02 --title "Kepler orbit"
+python recorder\src\record_video.py videos\scenes\kepler_ellipse.posim `
+    -o $env:TEMP\mine.html --frames 360 --dt 0.02 --title "Kepler orbit"
+Start-Process $env:TEMP\mine.html
 ```
+
+(Git Bash: `python recorder/src/record_video.py
+videos/scenes/kepler_ellipse.posim -o /tmp/mine.html --frames 360
+--dt 0.02 --title "Kepler orbit"`, then `start /tmp/mine.html`.)
 
 They work from anywhere, though. The recorder does not assume where it
 has been put — see [Which workspace gets recorded](#which-workspace-gets-recorded).
 
-That is the whole dependency list: Python 3.8+, and a built posim. No
-pip install, no CDN, nothing fetched at record time or at view time.
+That is the whole dependency list: Python 3.8+, and a built
+`target\release\posim.exe` (the finder probes the `.exe` name first).
+No pip install, no CDN, nothing fetched at record time or at view time.
 
 ## What it does, and what it does not
 
@@ -55,15 +63,18 @@ picking the HTML apart, and guessing them wrong silently produces a
 *different* video under the same name. So they live in
 `recordings.json`, and re-recording is one command:
 
-```bash
-recorder/src/record_all.py            # re-record all five
-recorder/src/record_all.py --check    # verify, writing nothing
+```powershell
+python recorder\src\record_all.py              # re-record all thirteen
+python recorder\src\record_all.py --check      # verify, writing nothing
+python recorder\src\record_all.py --only kepler_ellipse   # just the one
 ```
 
-`--check` is the interesting mode. A recording is a pure function of its
-scene, its parameters and the posim binary, so if a check fails, one of
-those three moved — and the mismatch is written alongside the original
-as `*.html.new` so you can diff it.
+(Git Bash: the same three lines with forward slashes.) `--check` is the
+interesting mode. A recording is a pure function of its scene, its
+parameters and the posim binary, so if a check fails, one of those three
+moved — and the mismatch is written alongside the original as
+`*.html.new` so you can diff it. On Windows 11 (`logs/videos_check.log`)
+it prints:
 
 ```
 ok       kepler_ellipse: byte-identical (142106 bytes)
@@ -71,23 +82,45 @@ ok       tumbling_racket: byte-identical (118201 bytes)
 ok       box_of_shapes: byte-identical (287976 bytes)
 ok       double_pendulum_hinges: byte-identical (284436 bytes)
 ok       universal_joint: byte-identical (205556 bytes)
+ok       ball_joint_chain: byte-identical (373656 bytes)
+ok       rod_pendulum_chain: byte-identical (310608 bytes)
+ok       spinning_top: byte-identical (190450 bytes)
+ok       gyroscope_gimbal: byte-identical (333644 bytes)
+ok       cardan_compass: byte-identical (324423 bytes)
+ok       cardan_gear: byte-identical (279671 bytes)
+ok       rack_and_pinion: byte-identical (170255 bytes)
+ok       piston_crankshaft: byte-identical (316882 bytes)
 
-all 5 recordings reproduce byte for byte
+all 13 recordings reproduce byte for byte
 ```
+
+(`rack_and_pinion` is the one recording that was re-made on Windows —
+its GEAR/RACK joint residual passes through the host libm — and it,
+too, reproduces byte for byte here.)
 
 ## Building, testing, installing
 
-There is no compile step. CMake is here for what it is still good at:
-finding the dependency, installing the entry points, and giving the
-checks one command.
+There is no compile step. The two test files run directly — this is
+the form the Windows 11 verification ran (`logs/videos_check.log`:
+`Ran 17 tests ... OK`, `Ran 9 tests ... OK`):
 
-```bash
-cmake -S recorder -B build/recorder
-ctest --test-dir build/recorder --output-on-failure
-cmake --build build/recorder --target record-all       # re-record
-cmake --build build/recorder --target check-recordings # verify only
-cmake --install build/recorder --prefix ~/.local
+```powershell
+python recorder\tests\test_units.py          # 17 checks, no posim needed
+python recorder\tests\test_end_to_end.py     # 9 checks driving the real posim
 ```
+
+CMake is here for what it is still good at: finding the dependency,
+installing the entry points, and giving the checks one command.
+
+```powershell
+cmake -S recorder -B build\recorder
+ctest --test-dir build\recorder --output-on-failure
+cmake --build build\recorder --target record-all       # re-record
+cmake --build build\recorder --target check-recordings # verify only
+cmake --install build\recorder --prefix "$HOME\.local"
+```
+
+(Git Bash: forward slashes and `--prefix ~/.local`.)
 
 `find_package(Posim)` is deliberately **not** `REQUIRED`: the package
 configures, installs and runs its offline checks on a machine with no
@@ -99,14 +132,15 @@ and CTest reports them as skipped rather than passing them vacuously.
 This matters more than it sounds. A checkout can hold more than one
 posim workspace — a port beside the upstream it was ported from — and
 the two agree bit for bit on everything the older grammar can express.
-Record against the wrong one and three of the five shipped scenes come
-out byte-identical anyway; only a scene using newer grammar fails, and
-it fails as a parse error that looks like a typo in the scene.
+Record against the wrong one and the older shipped scenes come out
+byte-identical anyway; only a scene using newer grammar fails, and it
+fails as a parse error that looks like a typo in the scene.
 
 So the workspace is never guessed from what sits next to what. It is
 taken, first hit wins:
 
-1. `--workspace`, or `$POSIM_WORKSPACE`
+1. `--workspace`, or `$env:POSIM_WORKSPACE` (`$POSIM_WORKSPACE` in
+   Git Bash)
 2. the `workspace` key in the manifest (how `record_all.py` gets it)
 3. the **scene script's** own directory and its ancestors
 4. the current directory and its ancestors

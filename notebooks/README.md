@@ -33,15 +33,24 @@ frame, section 9 reads it back three ways — `dataset snapshot` + the
 file the simulator still holds (WAL journal mode is what makes that
 safe) — and section 10 derives a browser **movie** from it when there
 are rigid bodies to animate. The dataset layer needs the sidecar built
-once: `cd dataset_tools && cargo build --release`.
+once, from the repository root: `cd dataset_tools; cargo build
+--release; cd ..` (PowerShell; in Git Bash `cd dataset_tools && cargo
+build --release && cd ..`). posim finds the resulting
+`dataset_tools\target\release\solveit_db.exe` by itself.
 
 ## Running one
 
-```bash
-cargo build --release -p posim        # once
-python3 -m pip install --user jupyterlab
-jupyter lab notebooks/
+PowerShell, from the repository root:
+
+```powershell
+cargo build --release -p posim        # once -> target\release\posim.exe
+python -m pip install --user jupyterlab
+python -m jupyterlab notebooks\
 ```
+
+(`jupyter lab notebooks/` does the same when the `jupyter` launcher is
+on your PATH; Git Bash accepts the same three lines with forward
+slashes.)
 
 Open any notebook and run the cells top to bottom. The final two cells
 ask you to name the notebook and pick a folder in a save dialog; they
@@ -215,14 +224,37 @@ Paired with the scripts in `dynamic_notebooks/`, including the 34 Routh problems
 
 ## Regenerating and re-verifying all 128
 
+PowerShell, from the repository root:
+
+```powershell
+cargo build --release -p posim
+cd dataset_tools; cargo build --release; cd ..   # the SQLite sidecar (solveit_db.exe)
+python notebooks/_build/regen.py           # specs -> .ipynb, all 128
+$env:POSIM_NO_BROWSER = "1"                # no browser windows during the batch
+Get-ChildItem notebooks\*.ipynb | ForEach-Object -Parallel {
+    python notebooks/_build/nbrun.py $_.FullName   # execute, embed real outputs
+} -ThrottleLimit 6
+python notebooks/_build/nbcheck.py         # audit the 8 requirements
+```
+
+The same batch in Git Bash (the form the Windows 11 verification ran,
+`logs/notebooks_run.log`: 128 ok, 0 failed, `128/128 notebooks pass
+all eight requirements`):
+
 ```bash
 cargo build --release -p posim
-cd dataset_tools && cargo build --release && cd ..   # the SQLite sidecar
-python3 notebooks/_build/regen.py          # specs -> .ipynb, all 128
+cd dataset_tools && cargo build --release && cd ..
+python notebooks/_build/regen.py
 ls notebooks/*.ipynb | POSIM_NO_BROWSER=1 xargs -P 6 -I{} \
-    python3 notebooks/_build/nbrun.py {}   # execute, embed real outputs
-python3 notebooks/_build/nbcheck.py        # audit the 8 requirements
+    python notebooks/_build/nbrun.py {}
+python notebooks/_build/nbcheck.py
 ```
+
+Every script locates `target\release\posim.exe` itself (the `.exe` name
+is probed before the extensionless one), reads and writes the `.ipynb`
+files as UTF-8 explicitly (Python's default encoding on Windows is
+cp1252), and leaves any transient `datasets\*.db-wal` / `*.db-shm`
+side files to SQLite — they are not part of the result.
 
 `_build/` holds the machinery: `nbtext.py` (the invariant prose),
 `nbdataset.py` (the invariant dataset/SQL/movie prose and templates),

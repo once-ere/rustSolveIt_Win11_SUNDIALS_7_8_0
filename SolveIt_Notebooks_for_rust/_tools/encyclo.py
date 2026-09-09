@@ -146,7 +146,8 @@ def verdicts():
     v = {}
     for log in sorted((ROOT / "_tools").glob("exec_*.log")):
         for line in log.read_text(encoding="utf-8").splitlines():
-            m = re.match(r"(ok|FAIL)\s+.*/([A-Za-z0-9_.]+)\.ipynb\s+\((\d+) cells\)",
+            # Either path separator: logs written on Windows carry backslashes.
+            m = re.match(r"(ok|FAIL)\s+.*[/\\]([A-Za-z0-9_.]+)\.ipynb\s+\((\d+) cells\)",
                          line.strip())
             if m:
                 v[m.group(2)] = (m.group(1), int(m.group(3)))

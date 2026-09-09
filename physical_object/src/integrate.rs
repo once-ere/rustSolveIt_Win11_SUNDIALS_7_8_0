@@ -1338,11 +1338,14 @@ impl DaeParams {
         for i in 0..self.n {
             let pos_i = pose[i].position;
             let mut f = Vec3::zeros();
-            for j in 0..self.n {
+            // Iterator form of `for j in 0..self.n` (clippy 1.91
+            // `needless_range_loop`); same bodies, same order, same
+            // arithmetic.
+            for (j, pose_j) in pose.iter().enumerate().take(self.n) {
                 if i == j {
                     continue;
                 }
-                let r_vec = pose[j].position - pos_i;
+                let r_vec = pose_j.position - pos_i;
                 let dist_sq = r_vec.norm_squared() + self.softening * self.softening;
                 let dist = dist_sq.sqrt();
                 f += (self.g * self.masses[i] * self.masses[j] / (dist_sq * dist)) * r_vec;
@@ -1709,9 +1712,7 @@ fn run_ida(
      * already in. */
     with_data_mut(&yy, |d| {
         d[0..base].copy_from_slice(&system.pack_state());
-        for k in base..neq {
-            d[k] = 0.0;
-        }
+        d[base..neq].fill(0.0);
     })
     .ok_or_else(|| no_array("yy"))?;
 
@@ -1750,9 +1751,7 @@ fn run_ida(
             d[b + 9] = qdot.z;
             write_vec3(d, b + 10, if rot_free { tq0[i] - tc0[i] } else { Vec3::zeros() });
         }
-        for k in base..neq {
-            d[k] = 0.0;
-        }
+        d[base..neq].fill(0.0);
     })
     .ok_or_else(|| no_array("yp"))?;
 
@@ -1760,12 +1759,8 @@ fn run_ida(
      * IDA needs this to know which components IDACalcIC may move and
      * which the error test should ignore. */
     with_data_mut(&id, |d| {
-        for k in 0..base {
-            d[k] = 1.0;
-        }
-        for k in base..neq {
-            d[k] = 0.0;
-        }
+        d[..base].fill(1.0);
+        d[base..neq].fill(0.0);
     })
     .ok_or_else(|| no_array("id"))?;
 

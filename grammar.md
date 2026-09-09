@@ -2443,13 +2443,26 @@ animation *derived from* a dataset, never recorded independently of one.
 **The architecture, honestly.** posim itself contains **no SQLite
 code** — the simulator workspace keeps its zero-external-dependency,
 zero-`unsafe` guarantee. All database work happens in a separate
-sidecar binary, `solveit_db` (the `dataset_tools/` package), which
+sidecar binary, `solveit_db.exe` (the `dataset_tools/` package), which
 posim spawns and speaks to in line-delimited JSON. Build it once,
-from the repository root:
+from the repository root (PowerShell; in Git Bash write
+`cd dataset_tools && cargo build --release && cd ..`):
 
-```bash
-cd dataset_tools && cargo build --release
+```powershell
+cd dataset_tools; cargo build --release; cd ..
 ```
+
+The first build fetches `rusqlite`, `r2d2` and `r2d2_sqlite` from
+crates.io (`dataset_tools/Cargo.lock` pins the versions) and compiles
+the bundled SQLite amalgamation with MSVC `cl.exe` through the `cc`
+crate — located by the build automatically, no developer prompt
+needed, and the one place a C compiler enters the build of this
+simulator (no WSL2 compiler or linker is involved anywhere); the
+workspace itself stays pure Rust, with the MSVC linker located by
+`rustc` the same way. posim looks for the
+result at `dataset_tools\target\release\solveit_db.exe` (probing the
+`.exe` name first, then the extensionless one) and, when it is
+missing, prints that build command instead of guessing.
 
 The sidecar follows the standard SQLite concurrency recipe, exactly:
 
@@ -2533,8 +2546,9 @@ self-contained page `datasets/<name>_plots.html` — total energy E(t),
 |P| and |L|, per-body x/y/z components, and a top view of every
 trajectory — and opens it in your web browser. Like every page this
 repository generates, it is vanilla JS + canvas with zero external
-fetches. `POSIM_NO_BROWSER=1` suppresses the browser launch (batch
-runs); the page is written either way.
+fetches. Setting `$env:POSIM_NO_BROWSER = "1"` in PowerShell (Git
+Bash: `POSIM_NO_BROWSER=1` in front of the command) suppresses the
+browser launch (batch runs); the page is written either way.
 
 **`DATASET DIFF <a> <b> AS <out>` and `DATASET SUM <a> <b> AS <out>` —
 trajectory algebra.** The teacher's experiment in one command: run a
@@ -3159,13 +3173,15 @@ becomes cell 4. Only executed commands become numbered cells — so the
 `In[n]` numbering always matches what `%history` will replay.
 
 And the machine mode speaks the same language over JSON — one line per
-request:
+request. In Git Bash (the transcript below), `printf` pipes four
+requests into the simulator; in PowerShell the same four lines piped
+via `.\target\release\posim.exe --machine` produce the same replies:
 
 ```
 $ printf '%s\n' '{"op":"exec","code":"new point { mass = 1, velocity = [0, 1, 0] }"}' \
                 '{"op":"get","path":"obj0.momentum"}' \
                 '{"op":"set","path":"obj0.mass","value":5}' \
-                '{"op":"get","path":"obj0.momentum"}' | posim --machine
+                '{"op":"get","path":"obj0.momentum"}' | ./target/release/posim.exe --machine
 {"display":"obj0","ok":true,"result":"obj0"}
 {"display":"[0, 1, 0]","ok":true,"result":[0.0,1.0,0.0]}
 {"display":"","ok":true,"result":null}
@@ -3827,13 +3843,36 @@ is worth one page knowing what answers you.
 differential-equation solvers, in production use in physics codes since
 the 1990s. `sundials_rs/` in this repository is a **pure-Rust
 translation of SUNDIALS 7.8.0**: no `unsafe`, no FFI, no C compiler, no
-crates.io dependency. It is vendored byte-for-byte from
-`once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916`; the upgrade from
-the 7.7.0 engine the predecessor repository used is recorded, with its
-evidence, in [`PORT_7.8.0_PROVENANCE.md`](PORT_7.8.0_PROVENANCE.md).
-This repository is the macOS / Apple Silicon port; the evidence that
-the same engine reproduces the Linux physics byte for byte on this
-platform is in [`VERIFICATION_MACOS.md`](VERIFICATION_MACOS.md).
+crates.io dependency. It is the **Windows 11 / x86-64 port** of the
+translation (`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11`), vendored
+byte for byte — `diff -rq --exclude=.git --exclude=target
+--exclude=logs` against a fresh clone is silent — and it differs from
+the Linux engine the macOS project vendors
+(`once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916`) only in its
+backend module sets; the public API is identical. The reason there is
+a Windows engine at all: Microsoft's math runtime (UCRT) rounds `sin`,
+`cos`, `exp`, `ln` and the inverse/hyperbolic functions differently
+from the Linux glibc that generated the reference outputs, so the
+Windows port carries its own pure-Rust translations of the glibc
+routines (`sundials_rs/crates/sundials_core/src/sundials_libm/`), each
+measured at 0 mismatches over millions of inputs against a real glibc
+oracle. Its deterministic routines use the fused multiply-add
+instruction, so the workspace pins `-C target-feature=+fma` in
+`.cargo/config.toml` (any Intel CPU since 2013 or AMD since 2012 has
+it). The upgrade from the 7.7.0 engine the predecessor repository used
+is recorded, with its evidence, in
+[`PORT_7.8.0_PROVENANCE.md`](PORT_7.8.0_PROVENANCE.md). This
+repository is the Windows 11 port of the macOS / Apple Silicon project
+(`once-ere/rustSolveIt_macos-silicon_SUNDIALS_7_8_0`, itself ported
+from the Linux `once-ere/rustSolveIt_Using_SUNDIALS_7_8_0`); the port
+is recorded in [`PORT_WIN11_PROVENANCE.md`](PORT_WIN11_PROVENANCE.md),
+and the evidence that the engine reproduces the Linux and macOS
+physics on this platform — byte for byte, except for the pinned,
+documented host-libm divergences — is in
+[`VERIFICATION_WIN11.md`](VERIFICATION_WIN11.md); the gate that checks
+it is `bash tools/win_verify_physics.sh` (exit 0 here,
+`logs/win_verify_physics.log`). The macOS lineage's own evidence is
+[`VERIFICATION_MACOS.md`](VERIFICATION_MACOS.md).
 
 ### 11.1 Which solver runs which command
 
@@ -3944,14 +3983,19 @@ toolchain, and still scrub frame by frame.
 
 `recorder/src/record_video.py` makes one:
 
-```bash
+```powershell
 cargo build --release -p posim          # once
-recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
-     -o videos/kepler_ellipse.html \
-     --frames 360 --dt 0.02 \
-     --title "Kepler orbit, e = 0.6" \
+python recorder/src/record_video.py videos/scenes/kepler_ellipse.posim `
+     -o videos/kepler_ellipse.html `
+     --frames 360 --dt 0.02 `
+     --title "Kepler orbit, e = 0.6" `
      --caption "CVODE Adams, 360 frames of dt = 0.02."
 ```
+
+(The backtick is PowerShell's line continuation; in Git Bash use `\`,
+and on one line you need neither. Any Python 3.8+ works — the
+recorder uses only the standard library — and it finds
+`target\release\posim.exe` by itself.)
 
 ### 12.1 How it works, and what it does not do
 
@@ -3999,7 +4043,9 @@ never drawn as bodies.
 
 ### 12.3 The thirteen shipped recordings
 
-Open any of these directly; they are ordinary files.
+Open any of these directly; they are ordinary files — from PowerShell
+`Start-Process videos\kepler_ellipse.html` (Git Bash: `start
+videos/kepler_ellipse.html`), or double-click one in Explorer.
 
 | file | what to watch for | measured over the recording |
 |---|---|---|
@@ -4465,7 +4511,9 @@ and a fatal return flag is the honest outcome either way.
 ## 13. SQLite datasets and movies: a complete worked session
 
 Everything in §5.14, exercised end to end and captured verbatim from
-this machine (Apple Silicon, macOS). This is SolveIt worked example 20
+this machine (Windows 11, x86-64; the log is
+`logs/solveit_scripts/solveit_20_dataset_kepler_orbit.log`). This is
+SolveIt worked example 20
 (`scripts/solveit/20_dataset_kepler_orbit.posim`): a two-body Kepler
 ellipse whose perihelion and aphelion are measured BY THE DATABASE.
 
@@ -4517,27 +4565,37 @@ The movie and the plots page are derived artifacts:
 
 ```
 In[10]:= movie create solveit20_kepler
-Out[10]= movie solveit20_kepler created from dataset solveit20_kepler (movies/solveit20_kepler.html, 200 frames, 2 bodies)
+Out[10]= movie solveit20_kepler created from dataset solveit20_kepler (movies\solveit20_kepler.html, 200 frames, 2 bodies)
 In[11]:= movie play solveit20_kepler
-Out[11]= movie solveit20_kepler (movies/solveit20_kepler.html) ready (browser suppressed)
+Out[11]= movie solveit20_kepler (movies\solveit20_kepler.html) ready (browser suppressed)
 In[12]:= dataset play solveit20_kepler
-Out[12]= dataset plots written to datasets/solveit20_kepler_plots.html (browser suppressed)
+Out[12]= dataset plots written to datasets\solveit20_kepler_plots.html (browser suppressed)
 In[13]:= dataset close
 Out[13]= dataset solveit20_kepler closed
 ```
 
-(This transcript was captured under `POSIM_NO_BROWSER=1`, the batch
-switch; run it yourself without that variable and both PLAY commands
-open your web browser — the movie is the 3-D player described in
-§5.14, the plots page shows E(t) flat, |P| and |L| constant, the two
-position traces, and the closed ellipse in the top view.)
+(This transcript was captured with `$env:POSIM_NO_BROWSER = "1"` set —
+the batch switch; Git Bash: `POSIM_NO_BROWSER=1` — run it yourself
+without that variable and both PLAY commands open your web browser, or
+open the files by hand with `Start-Process movies\solveit20_kepler.html`
+and `Start-Process datasets\solveit20_kepler_plots.html` (Git Bash:
+`start movies/solveit20_kepler.html`). The movie is the 3-D player
+described in §5.14; the plots page shows E(t) flat, |P| and |L|
+constant, the two position traces, and the closed ellipse in the top
+view. `Out[10]`–`Out[12]` report the derived files with Windows path
+separators — `movies\solveit20_kepler.html` — because posim prints the
+path exactly as it joined it; those three lines are the only ones in
+which this transcript differs from the macOS one, every number being
+identical.)
 
-Re-run the whole thing any time:
+Re-run the whole thing any time (PowerShell; Git Bash:
+`cd dataset_tools && cargo build --release && cd ..` and
+`./target/release/posim.exe --script ...`):
 
-```bash
+```powershell
 cargo build --release -p posim
-cd dataset_tools && cargo build --release && cd ..
-./target/release/posim --script scripts/solveit/20_dataset_kepler_orbit.posim
+cd dataset_tools; cargo build --release; cd ..
+.\target\release\posim.exe --script scripts/solveit/20_dataset_kepler_orbit.posim
 ```
 
 And the cross-dataset idiom, from SolveIt example 31

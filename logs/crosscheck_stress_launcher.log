@@ -1,0 +1,25 @@
+=== mercury_crosscheck build+run ===
+   Compiling mercury_crosscheck v0.1.0 (C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\planet_Mercury\mercury_crosscheck)
+    Finished `release` profile [optimized] target(s) in 2.41s
+BUILD_EXIT=0
+0
+target/release/mercury_crosscheck.exe
+mercury_crosscheck: REBOUNDx tides_spin vs the Hut (1981) secular despin rate
+
+Warning! tides_spin was updated in version 4.5.0 to halve the acceleration from the conservative piece of the tidal potential, reflecting a typo discovered in Eggleton et. al (1998). This warning will be removed in a future version.
+
+  spin ratio 100 x n, e = 0.20563, 200 orbits with IAS15 + tides_spin
+  measured  dOmega/dt = -3.652928e-18 rad/s^2  (REBOUNDx tides_spin)
+  predicted dOmega/dt = -3.643780e-18 rad/s^2  (Hut 1981 secular formula)
+  relative difference = 2.511e-3
+PASS - crosscheck.despin_rate: two independent formulations agree within 2%
+SUCCESS
+RUN_EXIT=0
+=== solveit_db stress demo ===
+stress: 10 threads x 500 rows = 5000 expected, 5000 written, journal_mode=wal
+STRESS_EXIT=0
+=== posim_notebook.cmd --list ===
+Microsoft Windows [Version 10.0.26200.9445]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0>... (0 entries)

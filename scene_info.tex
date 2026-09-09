@@ -81,18 +81,23 @@ showing 4 entities; SCENE START begins the evolution - HELP lists all scene comm
 \end{lstlisting}
 
 The middle line reports what was actually attempted rather than assuming
-it worked. posim tries exactly one command, \kw{xdg-open} \textit{url},
-which is a Linux/BSD utility. When that launch does not happen --- on
-macOS and Windows, where \kw{xdg-open} does not exist, or whenever
-\verb|$POSIM_NO_BROWSER| is set --- the line reads instead:
+it worked. posim tries exactly one command --- the platform's own
+opener: \code{cmd /C start ""} \textit{url} on Windows (this port's
+platform; \code{start} hands the URL to your default browser),
+\code{open} \textit{url} on macOS, \code{xdg-open} \textit{url} on
+Linux/BSD. When that launch does not happen --- whenever
+\verb|$env:POSIM_NO_BROWSER| is set (\verb|POSIM_NO_BROWSER=1| in Git
+Bash), or on a headless machine whose opener is missing --- the line
+reads instead:
 
 \begin{lstlisting}
 (no browser was launched - open that address yourself)
 \end{lstlisting}
 
 In both cases the URL is printed and the window works; paste it into any
-browser (\kw{open} \textit{url} on macOS, \kw{start} \textit{url} on
-Windows). The listener is bound to \texttt{127.0.0.1}, so it is not
+browser (\code{Start-Process} \textit{url} from PowerShell,
+\code{start} \textit{url} from Git Bash or cmd, \code{open} \textit{url}
+on macOS). The listener is bound to \texttt{127.0.0.1}, so it is not
 reachable from another machine.
 
 If \textbf{no} bodies exist yet, the reply says so instead --- the
@@ -785,8 +790,11 @@ t = 3 (3861 solver steps, 60 snapshots, |dE/E| = 9.463e-11, 2 collision(s) — C
 
 \textbf{No window appeared after \kw{scene create}.}\\
 The command prints the URL (e.g.\ \code{http://127.0.0.1:41234/}).
-Open it in any browser yourself --- the automatic opening uses
-\code{xdg-open}, which headless machines lack.
+Open it in any browser yourself (\code{Start-Process
+http://127.0.0.1:41234/} from PowerShell) --- the automatic opening
+goes through the desktop's opener (\code{cmd /C start} on Windows,
+\code{xdg-open} on Linux, \code{open} on macOS), which a headless
+session lacks.
 
 \textbf{I want a predictable port.}\\
 \kw{scene create} \code{7878} $\to$ the URL is always
@@ -794,7 +802,9 @@ Open it in any browser yourself --- the automatic opening uses
 error; pick another or use \code{0} (OS-assigned).
 
 \textbf{Stop the browser from opening (tests, servers).}\\
-Set the environment variable \code{POSIM\_NO\_BROWSER=1}.
+Set the environment variable before starting posim:
+\verb|$env:POSIM_NO_BROWSER = "1"| in PowerShell
+(\verb|POSIM_NO_BROWSER=1 <command>| in Git Bash).
 
 \textbf{\kw{reverse} says there is nothing to reverse.}\\
 Reverse replays \emph{recorded} history. Run \kw{scene start} (or

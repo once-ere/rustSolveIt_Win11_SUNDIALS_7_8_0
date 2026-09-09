@@ -1,8 +1,13 @@
 # Third-Party Code
 
-Everything rustSimulate builds against lives in this repository — there
-are no crates.io dependencies. This file records where the vendored code
-came from and under what terms.
+Everything the simulator workspace builds against lives in this
+repository — there are no crates.io dependencies inside it (the one
+deliberate exception, the `dataset_tools/` SQLite sidecar OUTSIDE the
+workspace, is listed last). This file records where the vendored code
+came from and under what terms. This is the **Windows 11 edition**
+(`once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0`), ported from the macOS /
+Apple Silicon repository `once-ere/rustSolveIt_macos-silicon_SUNDIALS_7_8_0`,
+itself ported from the Linux `once-ere/rustSolveIt_Using_SUNDIALS_7_8_0`.
 
 ---
 
@@ -10,10 +15,10 @@ came from and under what terms.
 
 | | |
 |---|---|
-| Upstream | `once-ere/SUNDIALS_7_8_Rust_port_for_Linux` @ `780b916` (2026-08-14) |
-| What it is | A pure-Rust, zero-`unsafe`, dependency-free translation of SUNDIALS 7.8.0 (LLNL) |
+| Upstream | `once-ere/SUNDIALS_7_8_Rust_port_for_Windows11` — the Windows 11 / x86-64 port of the pure-Rust SUNDIALS 7.8.0 translation (its crate tree, examples, docs and tools; `.git/`, `target/` and the bulk oracle corpora under `logs/` excluded) |
+| What it is | A pure-Rust, zero-`unsafe`, dependency-free translation of SUNDIALS 7.8.0 (LLNL). Its public solver API is identical to `once-ere/SUNDIALS_7_8_Rust_port_for_Linux@780b916`, the engine the Linux and macOS editions of this repository vendor; the two trees differ only in backend module sets (the Windows port adds `sundials_libm/`, pure-Rust translations of the glibc transcendentals measured 0 mismatches against a glibc oracle, and drops the Linux tree's KLU/sparse-LU stubs). It requires FMA: the root `.cargo/config.toml` pins `-C target-feature=+fma` |
 | Licence | BSD-3-Clause (`sundials_rs/LICENSE`, `sundials_rs/NOTICE`) |
-| Modified here? | **No.** 2,929 files, byte-identical; content hash `e0347199…` |
+| Modified here? | **No.** `diff -rq --exclude=.git --exclude=target --exclude=logs` against a fresh clone is silent |
 
 The predecessor of this repository, `once-ere/rustSolveIt`, vendored
 `once-ere/sundials_rs@faabb7f` — the same translation at **7.7.0**, in
@@ -21,15 +26,24 @@ The predecessor of this repository, `once-ere/rustSolveIt`, vendored
 physics are recorded in
 [`PORT_7.8.0_PROVENANCE.md`](PORT_7.8.0_PROVENANCE.md); the original
 export's provenance is in
-[`EXPORT_PROVENANCE.md`](EXPORT_PROVENANCE.md).
+[`EXPORT_PROVENANCE.md`](EXPORT_PROVENANCE.md); the Windows engine's
+provenance and the Windows verification are in
+[`PORT_WIN11_PROVENANCE.md`](PORT_WIN11_PROVENANCE.md) and
+[`VERIFICATION_WIN11.md`](VERIFICATION_WIN11.md). The macOS edition's
+record of the Linux engine (2,929 files, byte-identical, content hash
+`e0347199…`) is kept in `VERIFICATION_MACOS.md`.
 
-Reproduce the byte-identity claim:
+Reproduce the identity claim (PowerShell, from the repository root;
+`diff` is the Git for Windows one, also on PATH in Git Bash):
 
-```bash
-git clone https://github.com/once-ere/SUNDIALS_7_8_Rust_port_for_Linux.git
-diff -rq --exclude=.git --exclude=target \
-     SUNDIALS_7_8_Rust_port_for_Linux sundials_rs
+```powershell
+git clone https://github.com/once-ere/SUNDIALS_7_8_Rust_port_for_Windows11.git
+diff -rq --exclude=.git --exclude=target --exclude=logs SUNDIALS_7_8_Rust_port_for_Windows11 sundials_rs
 ```
+
+Silence is the pass. The engine is pure Rust: `cargo build --workspace`
+on `x86_64-pc-windows-msvc` uses the MSVC linker rustc locates and no
+C compiler at all; no WSL2 toolchain is involved anywhere.
 
 ---
 
@@ -145,11 +159,13 @@ is a bibliography of third-party packages.
 | Upstream (reboundx_rust) | `dtamayo/reboundx` **5.1.0** — translated, not vendored |
 | What they are | Pure-Rust, zero-`unsafe`, dependency-free translations of the REBOUND N-body code and its REBOUNDx extra-physics library |
 | Licence | **GPL-3.0-or-later** (each folder's own `LICENSE`) — note: unlike the BSD-3-Clause code elsewhere in this repository, these two folders are GPL; they are self-contained works that share the repository without sharing code with it |
-| Modified here? | Translation by this project's authors; verified bit-for-bit against the upstream C compiled locally (see `REBOUND_REBOUNDX_MACOS_PROVENANCE.md`) |
+| Modified here? | Translation by this project's authors; verified bit-for-bit against the upstream C compiled locally on macOS (`REBOUND_REBOUNDX_MACOS_PROVENANCE.md`, the macOS edition's record). On Windows 11 the Rust suites pass unchanged: `rebound_rs` 394 tests (`cargo test --release`), `reboundx_rs` 137 tests (2 doctests ignored), both 0 build warnings and 0 clippy warnings, and all 17 notebooks execute with no errors (`rebound_rust/logs/win11_{build,test,clippy,notebooks}_20260909.log`, `logs/reboundx_*.log`) |
 
 The upstream C trees themselves are **not** committed: `.gitignore`
 reserves `/rebound/` and `/reboundx/` for local reference clones used by
-the verification harnesses.
+the verification harnesses. On Windows those C reference harnesses are
+the only other place a C compiler runs, and it is MSVC `cl.exe` (VS 2026
+Build Tools, 14.51.36231) — never a WSL2 gcc/clang.
 
 ---
 
@@ -173,5 +189,17 @@ fetched from crates.io on the sidecar's first build.
 `scheduled-thread-pool`, `cc`, etc. — carry MIT / Apache-2.0-style
 licences; the pinned set is enumerated in `dataset_tools/Cargo.lock`.)
 No sidecar code is linked into `posim` or any workspace crate: the
-simulator spawns the `solveit_db` binary and talks to it over pipes.
+simulator spawns the `solveit_db.exe` binary and talks to it over pipes.
+
+**The one C compilation in this repository happens here.** On Windows
+11 `libsqlite3-sys` compiles the bundled SQLite 3.46.0 amalgamation
+with MSVC `cl.exe` (Visual Studio 2026 Build Tools, MSVC 14.51.36231,
+found by the `cc` crate automatically — no developer prompt, no WSL2
+compiler or linker). Measured on this machine:
+`cd dataset_tools; cargo build --release; cd ..` compiles `rusqlite
+0.32.1` and `r2d2_sqlite 0.25.0` and finishes in 18.22 s with
+0 warnings, producing `dataset_tools\target\release\solveit_db.exe`
+(2,326,016 bytes); `cargo test` in `dataset_tools` passes 8 unit +
+3 integration = 11 tests (`logs/dataset_tools_test.log`). The
+simulator workspace never compiles any C.
 

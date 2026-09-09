@@ -2202,13 +2202,28 @@ dataset, never recorded independently of one.
 \textbf{The architecture, honestly.} posim itself contains \textbf{no
 SQLite code} --- the simulator workspace keeps its
 zero-external-dependency, zero-\code{unsafe} guarantee. All database
-work happens in a separate sidecar binary, \code{solveit\_db} (the
+work happens in a separate sidecar binary, \code{solveit\_db.exe} (the
 \code{dataset\_tools/} package), which posim spawns and speaks to in
-line-delimited JSON. Build it once, from the repository root:
+line-delimited JSON. Build it once, from the repository root
+(PowerShell; in Git Bash write
+\code{cd dataset\_tools \&\& cargo build -{}-release \&\& cd ..}):
 
 \begin{lstlisting}
-cd dataset_tools && cargo build --release
+cd dataset_tools; cargo build --release; cd ..
 \end{lstlisting}
+
+The first build fetches \code{rusqlite}, \code{r2d2} and
+\code{r2d2\_sqlite} from crates.io (\code{dataset\_tools/Cargo.lock}
+pins the versions) and compiles the bundled SQLite amalgamation with
+MSVC \code{cl.exe} through the \code{cc} crate --- located by the build
+automatically, no developer prompt needed, and the one place a C
+compiler enters the build of this simulator (no WSL2 compiler or
+linker is involved anywhere); the workspace itself stays pure Rust,
+with the MSVC linker located by \code{rustc} the same way. posim looks
+for the result at
+\code{dataset\_tools\textbackslash{}target\textbackslash{}release\textbackslash{}solveit\_db.exe}
+(probing the \code{.exe} name first, then the extensionless one) and,
+when it is missing, prints that build command instead of guessing.
 
 The sidecar follows the standard SQLite concurrency recipe, exactly:
 
@@ -2314,7 +2329,9 @@ into a self-contained page \code{datasets/<name>\_plots.html} ---
 total energy $E(t)$, $|P|$ and $|L|$, per-body $x/y/z$ components, and
 a top view of every trajectory --- and opens it in your web browser.
 Like every page this repository generates, it is vanilla JS + canvas
-with zero external fetches. \code{POSIM\_NO\_BROWSER=1} suppresses the
+with zero external fetches. Setting
+\code{\$env:POSIM\_NO\_BROWSER = "1"} in PowerShell (Git Bash:
+\code{POSIM\_NO\_BROWSER=1} in front of the command) suppresses the
 browser launch (batch runs); the page is written either way.
 
 \textbf{\kw{dataset diff} \code{<a> <b>} \kw{as} \code{<out>} and
@@ -2967,13 +2984,16 @@ in a row before \kw{list} finally becomes cell 4. Only executed
 commands become numbered cells --- so the \code{In[n]} numbering always
 matches what \code{\%history} will replay.
 
-The machine mode speaks the same language over JSON:
+The machine mode speaks the same language over JSON (the transcript is
+Git Bash; PowerShell piping into
+\code{.\textbackslash{}target\textbackslash{}release\textbackslash{}posim.exe -{}-machine}
+produces the same replies):
 
 \begin{lstlisting}
 $ printf '%s\n' '{"op":"exec","code":"new point { mass = 1, velocity = [0, 1, 0] }"}' \
                 '{"op":"get","path":"obj0.momentum"}' \
                 '{"op":"set","path":"obj0.mass","value":5}' \
-                '{"op":"get","path":"obj0.momentum"}' | posim --machine
+                '{"op":"get","path":"obj0.momentum"}' | ./target/release/posim.exe --machine
 {"display":"obj0","ok":true,"result":"obj0"}
 {"display":"[0, 1, 0]","ok":true,"result":[0.0,1.0,0.0]}
 {"display":"","ok":true,"result":null}
@@ -3605,13 +3625,37 @@ but it is worth one page knowing what answers you.
 differential-equation solvers, in production use in physics codes since
 the 1990s. \code{sundials\_rs/} in this repository is a \emph{pure-Rust
 translation of SUNDIALS 7.8.0}: no \code{unsafe}, no FFI, no C compiler,
-no crates.io dependency. It is vendored byte-for-byte from
-\code{once-ere/SUNDIALS\_7\_8\_Rust\_port\_for\_Linux@780b916}; the
-upgrade from the 7.7.0 engine the predecessor repository used is
-recorded, with its evidence, in \code{PORT\_7.8.0\_PROVENANCE.md}.
-This repository is the macOS / Apple Silicon port; the evidence that
-the same engine reproduces the Linux physics byte for byte on this
-platform is in \code{VERIFICATION\_MACOS.md}.
+no crates.io dependency. It is the \textbf{Windows 11 / x86-64 port} of
+the translation
+(\code{once-ere/SUNDIALS\_7\_8\_Rust\_port\_for\_Windows11}), vendored
+byte for byte --- \code{diff -rq -{}-exclude=.git -{}-exclude=target
+-{}-exclude=logs} against a fresh clone is silent --- and it differs
+from the Linux engine the macOS project vendors
+(\code{once-ere/SUNDIALS\_7\_8\_Rust\_port\_for\_Linux@780b916}) only
+in its backend module sets; the public API is identical. The reason
+there is a Windows engine at all: Microsoft's math runtime (UCRT)
+rounds \code{sin}, \code{cos}, \code{exp}, \code{ln} and the
+inverse/hyperbolic functions differently from the Linux glibc that
+generated the reference outputs, so the Windows port carries its own
+pure-Rust translations of the glibc routines
+(\code{sundials\_rs/crates/sundials\_core/src/sundials\_libm/}), each
+measured at 0 mismatches over millions of inputs against a real glibc
+oracle. Its deterministic routines use the fused multiply-add
+instruction, so the workspace pins \code{-C target-feature=+fma} in
+\code{.cargo/config.toml} (any Intel CPU since 2013 or AMD since 2012
+has it). The upgrade from the 7.7.0 engine the predecessor repository
+used is recorded, with its evidence, in
+\code{PORT\_7.8.0\_PROVENANCE.md}. This repository is the Windows 11
+port of the macOS / Apple Silicon project
+(\code{once-ere/rustSolveIt\_macos-silicon\_SUNDIALS\_7\_8\_0}, itself
+ported from the Linux \code{once-ere/rustSolveIt\_Using\_SUNDIALS\_7\_8\_0});
+the port is recorded in \code{PORT\_WIN11\_PROVENANCE.md}, and the
+evidence that the engine reproduces the Linux and macOS physics on
+this platform --- byte for byte, except for the pinned, documented
+host-libm divergences --- is in \code{VERIFICATION\_WIN11.md}; the gate
+that checks it is \code{bash tools/win\_verify\_physics.sh} (exit 0
+here, \code{logs/win\_verify\_physics.log}). The macOS lineage's own
+evidence is \code{VERIFICATION\_MACOS.md}.
 
 \subsection{Which solver runs which command}
 
@@ -3908,16 +3952,22 @@ needs a running posim behind it. The other thing you often want is a
 file --- something you can mail to a colleague, open next year on a
 laptop with no Rust toolchain, and still scrub frame by frame.
 
-\code{tools/record\_video.py} makes one:
+\code{recorder/src/record\_video.py} makes one:
 
 \begin{lstlisting}
 cargo build --release -p posim          # once
-recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
-     -o videos/kepler_ellipse.html \
-     --frames 360 --dt 0.02 \
-     --title "Kepler orbit, e = 0.6" \
+python recorder/src/record_video.py videos/scenes/kepler_ellipse.posim `
+     -o videos/kepler_ellipse.html `
+     --frames 360 --dt 0.02 `
+     --title "Kepler orbit, e = 0.6" `
      --caption "CVODE Adams, 360 frames of dt = 0.02."
 \end{lstlisting}
+
+(The backtick is PowerShell's line continuation; in Git Bash use
+\code{\textbackslash{}}, and on one line you need neither. Any
+Python~3.8+ works --- the recorder uses only the standard library ---
+and it finds \code{target\textbackslash{}release\textbackslash{}posim.exe}
+by itself.)
 
 \subsection{How it works, and what it does not do}
 
@@ -3960,6 +4010,11 @@ format}: you can stop on the frame where something looks wrong and read
 the conserved quantities off it.
 
 \subsection{The thirteen shipped recordings}
+
+Open any of these directly; they are ordinary files --- from PowerShell
+\code{Start-Process videos\textbackslash{}kepler\_ellipse.html} (Git Bash:
+\code{start videos/kepler\_ellipse.html}), or double-click one in
+Explorer.
 
 \begin{center}
 \begin{tabular}{p{3.6cm}p{6.4cm}p{4.2cm}}
@@ -4374,8 +4429,9 @@ singular, and a fatal return flag is the honest outcome either way.
 \label{sec:worked-sqlite}
 
 Everything in \S\ref{sec:dataset}, exercised end to end and captured
-verbatim from this machine (Apple Silicon, macOS). This is SolveIt
-worked example 20
+verbatim from this machine (Windows 11, x86-64; the log is
+\code{logs/solveit\_scripts/solveit\_20\_dataset\_kepler\_orbit.log}).
+This is SolveIt worked example 20
 (\code{scripts/solveit/20\_dataset\_kepler\_orbit.posim}): a two-body
 Kepler ellipse whose perihelion and aphelion are measured BY THE
 DATABASE.
@@ -4428,28 +4484,39 @@ The movie and the plots page are derived artifacts:
 
 \begin{lstlisting}
 In[10]:= movie create solveit20_kepler
-Out[10]= movie solveit20_kepler created from dataset solveit20_kepler (movies/solveit20_kepler.html, 200 frames, 2 bodies)
+Out[10]= movie solveit20_kepler created from dataset solveit20_kepler (movies\solveit20_kepler.html, 200 frames, 2 bodies)
 In[11]:= movie play solveit20_kepler
-Out[11]= movie solveit20_kepler (movies/solveit20_kepler.html) ready (browser suppressed)
+Out[11]= movie solveit20_kepler (movies\solveit20_kepler.html) ready (browser suppressed)
 In[12]:= dataset play solveit20_kepler
-Out[12]= dataset plots written to datasets/solveit20_kepler_plots.html (browser suppressed)
+Out[12]= dataset plots written to datasets\solveit20_kepler_plots.html (browser suppressed)
 In[13]:= dataset close
 Out[13]= dataset solveit20_kepler closed
 \end{lstlisting}
 
-(This transcript was captured under \code{POSIM\_NO\_BROWSER=1}, the
-batch switch; run it yourself without that variable and both \kw{play}
-commands open your web browser --- the movie is the 3-D player
-described in \S\ref{sec:dataset}, the plots page shows $E(t)$ flat,
-$|P|$ and $|L|$ constant, the two position traces, and the closed
-ellipse in the top view.)
+(This transcript was captured with \code{\$env:POSIM\_NO\_BROWSER = "1"}
+set --- the batch switch; Git Bash: \code{POSIM\_NO\_BROWSER=1} --- run
+it yourself without that variable and both \kw{play} commands open
+your web browser, or open the files by hand with
+\code{Start-Process movies\textbackslash{}solveit20\_kepler.html} and
+\code{Start-Process datasets\textbackslash{}solveit20\_kepler\_plots.html}
+(Git Bash: \code{start movies/solveit20\_kepler.html}). The movie is the
+3-D player described in \S\ref{sec:dataset}; the plots page shows $E(t)$
+flat, $|P|$ and $|L|$ constant, the two position traces, and the closed
+ellipse in the top view. \code{Out[10]}--\code{Out[12]} report the
+derived files with Windows path separators ---
+\code{movies\textbackslash{}solveit20\_kepler.html} --- because posim
+prints the path exactly as it joined it; those three lines are the only
+ones in which this transcript differs from the macOS one, every number
+being identical.)
 
-Re-run the whole thing any time:
+Re-run the whole thing any time (PowerShell; Git Bash:
+\code{cd dataset\_tools \&\& cargo build -{}-release \&\& cd ..} and
+\code{./target/release/posim.exe -{}-script ...}):
 
 \begin{lstlisting}
 cargo build --release -p posim
-cd dataset_tools && cargo build --release && cd ..
-./target/release/posim --script scripts/solveit/20_dataset_kepler_orbit.posim
+cd dataset_tools; cargo build --release; cd ..
+.\target\release\posim.exe --script scripts/solveit/20_dataset_kepler_orbit.posim
 \end{lstlisting}
 
 And the cross-dataset idiom, from SolveIt example 31

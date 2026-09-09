@@ -16,10 +16,28 @@ scenes in `videos/scenes/`. Every GUI is the same two files:
 
 ## Running one
 
-```bash
-cargo build --release -p posim        # once
-python3 gui/<name>/server.py          # prints its URL, serve_forever
+PowerShell, from the repository root:
+
+```powershell
+cargo build --release -p posim        # once -> target\release\posim.exe
+python gui\<name>\server.py           # prints its URL, serve_forever
 ```
+
+(Git Bash: `python gui/<name>/server.py`.) The server never opens a
+browser itself: paste the printed `http://127.0.0.1:<port>/` into any
+browser, or `Start-Process http://127.0.0.1:<port>/` from PowerShell
+(`start <url>` in Git Bash). Stop it with Ctrl+C; its `posim` child
+dies with it.
+
+All thirteen at once, over their HTTP API — launch, page served, Start,
+`t` advances, Stop, Reset back to `t = 0`, terminate — is one command:
+
+```powershell
+python tools\win_gui_smoke.py
+```
+
+On Windows 11 it reports `13 of 13 GUIs pass` (`logs/gui_smoke.log`);
+`python tools\gui_smoke.py`, the POSIX twin, passes 13 of 13 here too.
 
 Each GUI has a fixed port, so any subset can run side by side:
 

@@ -1,0 +1,32 @@
+Certifying /c/Users/nsh/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0
+HEAD: 6d99370 Encyclopedia: 145 of the 147 copies regenerated with Windows headers and executed here; lineage banners on the four macOS provenance pages
+
+  [32mPASS[0m  no reference-tree files tracked
+  [32mPASS[0m  no reference-tree objects reachable in history
+  [32mPASS[0m  no encumbered-code signatures in tracked source
+  [32mPASS[0m  gitignore matches obsolete_or_historic/
+  [32mPASS[0m  gitignore matches SolveIt/
+  [32mPASS[0m  gitignore matches SolveIt_2026_MFC/
+  [32mPASS[0m  gitignore matches Stages_output/
+  [32mPASS[0m  no Stages_output files tracked
+  [32mPASS[0m  release build, 0 warnings
+  [31mFAIL[0m  clippy reported problems:
+        error: this boolean expression can be simplified
+        error: this function has too many arguments (8/7)
+        error: could not compile `special_functions` (lib) due to 2 previous errors
+        warning: build failed, waiting for other jobs to finish...
+        error: could not compile `special_functions` (lib test) due to 2 previous errors
+  [32mPASS[0m  all tests pass (638 assertions across the workspace)
+  [31mFAIL[0m  documentation states a test count this tree does not have:
+
+        CLEANROOM_PROVENANCE.md claims 568 tests; the tree has 638
+        EXPORT_PROVENANCE.md claims 568 tests; the tree has 638
+        PROJECT_STATUS.md claims 568 tests; the tree has 638
+        README.md claims 622 tests; the tree has 638
+        SPECIAL_FUNCTIONS_PROVENANCE.md claims 568 tests; the tree has 638
+  [32mPASS[0m  every StageNbks notebook executes without error
+  [32mPASS[0m  no stage notebook refers to another stage notebook
+  [32mPASS[0m  no retired claim has reappeared
+
+[31mDEFECTS REMAIN[0m — see the FAIL lines above.
+CERTIFY_EXIT=1

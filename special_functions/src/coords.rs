@@ -119,7 +119,9 @@ pub fn cylindrical_to_cart(q: [f64; 3]) -> Result<[f64; 3], String> {
 // ======================================================================
 
 fn ellipsoidal_params(what: &str, a: f64, b: f64, c: f64) -> Result<(), String> {
-    if !(a.is_finite() && b.is_finite() && c.is_finite()) || !(a > b && b > c && c > 0.0) {
+    // One conjunction (De Morgan of the original two-clause form, which
+    // clippy 1.91 flags as `nonminimal_bool` under deny(warnings)).
+    if !(a.is_finite() && b.is_finite() && c.is_finite() && a > b && b > c && c > 0.0) {
         return Err(format!(
             "{what}: ellipsoidal coordinates need semi-axes a > b > c > 0, got a = {a}, b = {b}, c = {c}"
         ));
@@ -135,6 +137,10 @@ fn confocal_f(s: f64, x2: f64, y2: f64, z2: f64, a2: f64, b2: f64, c2: f64) -> f
 
 /// One bisection root of the confocal cubic on the open interval
 /// `(lo, hi)` where `f(lo+) = +inf` and `f(hi-) < 0` (or `-inf`).
+/// (Eight scalar arguments mirror the cubic's six coefficients plus the
+/// bracket; bundling them would only add a struct — clippy's
+/// `too_many_arguments` is waived here, nothing else changes.)
+#[allow(clippy::too_many_arguments)]
 fn confocal_root(
     mut lo: f64,
     mut hi: f64,

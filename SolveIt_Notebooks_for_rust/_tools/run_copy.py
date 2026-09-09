@@ -160,7 +160,8 @@ def main() -> int:
         else:
             ok, n = run_rebound(path)
         (good if ok else bad).append(str(path))
-        print(f"{'ok  ' if ok else 'FAIL'} {path.relative_to(WS)}  ({n} cells)")
+        # POSIX form so the encyclopedia's verdict parser reads it on every OS
+        print(f"{'ok  ' if ok else 'FAIL'} {path.relative_to(WS).as_posix()}  ({n} cells)")
     print(f"{len(good)} ok, {len(bad)} failed")
     return 0 if not bad else 1
 

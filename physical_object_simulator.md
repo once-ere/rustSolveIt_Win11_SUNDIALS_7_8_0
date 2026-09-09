@@ -54,7 +54,7 @@ system's energy to a part in 10⁶ over 1,369 years (§7).
 ## 2. The layout (what lives where)
 
 ```
-rustSimulate/
+rustSolveIt_Win11_SUNDIALS_7_8_0/
 ├── Cargo.toml            workspace: two member crates, no external deps
 ├── PLAN.md               design record (union mapping, decisions)
 ├── grammar.md / .tex / .pdf              the command-language spec
@@ -71,7 +71,7 @@ rustSimulate/
 │   ├── examples/         kepler_orbit, outer_solar_system,
 │   │                     tumbling_body, charged_in_b_field
 │   └── tests/            union_api.rs-style unit tests + conservation.rs
-├── posim/                THE FRONT END (binary `posim`)
+├── posim/                THE FRONT END (binary `posim.exe`)
 │   └── src/              lexer, parser, vm (stack machine),
 │       │                 notebook (REPL), machine (JSON mode), main
 │       └── scene/        THE GRAPHICAL SCENE WINDOW
@@ -620,9 +620,9 @@ make a full client:
 
 ```python
 import json, subprocess
-p = subprocess.Popen(["target/release/posim", "--machine"],
+p = subprocess.Popen(["target/release/posim.exe", "--machine"],
                      stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                     text=True, bufsize=1)
+                     text=True, encoding="utf-8", bufsize=1)   # posim speaks UTF-8; Windows' default is cp1252
 def rpc(**req):
     p.stdin.write(json.dumps(req) + "\n"); p.stdin.flush()
     return json.loads(p.stdout.readline())
@@ -899,12 +899,15 @@ identically before and after the impact (after it, L's y component read
 
 ## 9. Building, running, testing (copy-paste)
 
-```bash
-cd rustSimulate
+PowerShell (Git Bash takes the same lines with forward slashes and
+`POSIM_NO_BROWSER=1 <command>` for the environment variable):
+
+```powershell
+cd rustSolveIt_Win11_SUNDIALS_7_8_0
 
 cargo run                              # the notebook (type HELP)
-cargo test --workspace                 # all 104 tests (incl. scene server)
-cargo build --release                  # optimized binary → target/release/posim
+cargo test --workspace                 # all 638 tests (incl. scene server)
+cargo build --release                  # optimized binary -> target\release\posim.exe
 
 cargo run -p physical_object --release --example kepler_orbit
 cargo run -p physical_object --release --example outer_solar_system
@@ -912,17 +915,25 @@ cargo run -p physical_object --release --example tumbling_body
 cargo run -p physical_object --release --example charged_in_b_field
 
 cargo run -p posim -- --script my_session.posim
-cargo run -p posim --release -- --notebook dynamic_notebooks/kepler_orbit.posim
+cargo run -p posim --release -- --notebook dynamic_notebooks\kepler_orbit.posim
 cargo run -p posim -- --machine        # JSON server on stdin/stdout
 
 # the graphical scene window: inside the notebook type
-#   scene create        (opens http://127.0.0.1:<port>/ in your browser)
-# POSIM_NO_BROWSER=1 suppresses the browser launch (headless runs / CI);
+#   scene create        (opens http://127.0.0.1:<port>/ in your browser via cmd /C start)
+# $env:POSIM_NO_BROWSER = "1" suppresses the browser launch (headless runs / CI);
 # the URL is always printed, so you can open it by hand.
 
-python3 jupyter/test_protocol.py       # machine-protocol checks (stdlib only,
+python jupyter\test_protocol.py        # machine-protocol checks (stdlib only,
                                        # includes the SCENE family + events op)
-# JupyterLab setup: see jupyter/README.md
+
+# the JupyterLab kernel (the "posim (physical_object)" tile in the launcher)
+cd jupyter
+uv venv .venv
+uv pip install -p .venv\Scripts\python.exe ipykernel jupyterlab
+.venv\Scripts\jupyter.exe kernelspec install --user kernelspec --name posim
+$env:PYTHONPATH = "$PWD"
+.venv\Scripts\jupyter.exe lab
+cd ..
 ```
 
 ## 10. Collisions (new)

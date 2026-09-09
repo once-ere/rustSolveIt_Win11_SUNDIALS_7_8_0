@@ -943,6 +943,10 @@ fn perpendicular_basis(h: Vec3) -> (Vec3, Vec3) {
 /// the travel `Δs`, and the pinion's turn relative to the rack about the
 /// axis — **unwrapped using the travel**, which is what makes the row
 /// single-valued over unlimited motion.
+///
+/// (Nine arguments name the two bodies and the row's geometric data;
+/// clippy's `too_many_arguments` is waived — nothing else changes.)
+#[allow(clippy::too_many_arguments)]
 fn rack_state(
     pose: &[Pose],
     i: usize,

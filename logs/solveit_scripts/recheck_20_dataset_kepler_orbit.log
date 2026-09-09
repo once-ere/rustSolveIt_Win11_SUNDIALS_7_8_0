@@ -1,0 +1,27 @@
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun    { mass = 3, radius = 0.15, position = [-0.25, 0, 0], velocity = [0, -0.6324555320336759, 0] }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[3]= obj1 as planet
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit20_kepler
+Out[5]= dataset solveit20_kepler created (datasets/solveit20_kepler.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 12.418264743622237 steps 200
+Out[6]= t = 12.418264743622238 (659 solver steps, 200 snapshots, |dE/E| = 2.096e-9)
+In[7]:= dataset info
+Out[7]= dataset solveit20_kepler: 2 bodies, 200 frames, 400 states
+In[8]:= sql "SELECT MIN(sqrt((p.x-s.x)*(p.x-s.x) + (p.y-s.y)*(p.y-s.y))) AS perihelion, MAX(sqrt((p.x-s.x)*(p.x-s.x) + (p.y-s.y)*(p.y-s.y))) AS aphelion FROM states p JOIN states s ON s.frame = p.frame WHERE p.body = (SELECT body FROM bodies WHERE name = 'planet') AND s.body = (SELECT body FROM bodies WHERE name = 'sun')"
+Out[8]= perihelion | aphelion
+1.000000001093295 | 4.000000026379791
+In[9]:= sql "SELECT MAX(ABS(comx)) AS com_x, MAX(ABS(comy)) AS com_y, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+Out[9]= com_x | com_y | energy_spread
+5.235284428195541e-12 | 5.539403137577725e-12 | 4.5303885087832896e-9
+In[10]:= movie create solveit20_kepler
+Out[10]= movie solveit20_kepler created from dataset solveit20_kepler (movies\solveit20_kepler.html, 200 frames, 2 bodies)
+In[11]:= movie play solveit20_kepler
+Out[11]= movie solveit20_kepler (movies\solveit20_kepler.html) ready (browser suppressed)
+In[12]:= dataset play solveit20_kepler
+Out[12]= dataset plots written to datasets\solveit20_kepler_plots.html (browser suppressed)
+In[13]:= dataset close
+Out[13]= dataset solveit20_kepler closed

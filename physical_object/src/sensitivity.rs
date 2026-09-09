@@ -296,9 +296,7 @@ fn sens_rhs(
     let n = c.n;
     let (yv, out) = (&yv[..], &mut og[..]);
     let (q, v) = (&yv[0..3 * n], &yv[3 * n..6 * n]);
-    for k in 0..3 * n {
-        out[k] = v[k];
-    }
+    out[..3 * n].copy_from_slice(v); // q̇ = v, element for element
     for i in 0..n {
         let a = if c.anchors.translation_fixed[i] {
             Vec3::zeros()
@@ -365,7 +363,9 @@ fn sens_residual(
         r[3 * i + 1] = ypv[3 * i + 1] - (v[3 * i + 1] - d.y);
         r[3 * i + 2] = ypv[3 * i + 2] - (v[3 * i + 2] - d.z);
     }
-    for i in 0..n {
+    // Iterator form of `for i in 0..n` over `flam` (clippy 1.91
+    // `needless_range_loop`); identical arithmetic and order.
+    for (i, flam_i) in flam.iter().enumerate().take(n) {
         let b = 3 * n + 3 * i;
         if c.anchors.translation_fixed[i] {
             r[b] = ypv[b];
@@ -375,9 +375,9 @@ fn sens_residual(
         }
         let f = c.force(q, v, i);
         let mi = c.mass(i);
-        r[b] = mi * ypv[b] - f.x + flam[i].x;
-        r[b + 1] = mi * ypv[b + 1] - f.y + flam[i].y;
-        r[b + 2] = mi * ypv[b + 2] - f.z + flam[i].z;
+        r[b] = mi * ypv[b] - f.x + flam_i.x;
+        r[b + 1] = mi * ypv[b + 1] - f.y + flam_i.y;
+        r[b + 2] = mi * ypv[b + 2] - f.z + flam_i.z;
     }
     if m > 0 {
         let (_, tail) = r.split_at_mut(6 * n);
@@ -656,9 +656,7 @@ fn run_idas(
             write3(d, 3 * i, o.get_position());
             write3(d, 3 * (n + i), o.get_velocity());
         }
-        for k in 6 * n..neq {
-            d[k] = 0.0;
-        }
+        d[6 * n..neq].fill(0.0);
     })
     .ok_or_else(|| no_array("yy"))?;
     let q0: Vec<f64> = with_data(&yy, |d| d[0..3 * n].to_vec()).ok_or_else(|| no_array("yy"))?;
@@ -673,18 +671,12 @@ fn run_idas(
             };
             write3(d, 3 * (n + i), a);
         }
-        for k in 6 * n..neq {
-            d[k] = 0.0;
-        }
+        d[6 * n..neq].fill(0.0);
     })
     .ok_or_else(|| no_array("yp"))?;
     with_data_mut(&id, |d| {
-        for k in 0..6 * n {
-            d[k] = 1.0;
-        }
-        for k in 6 * n..neq {
-            d[k] = 0.0;
-        }
+        d[..6 * n].fill(1.0);
+        d[6 * n..neq].fill(0.0);
     })
     .ok_or_else(|| no_array("id"))?;
 

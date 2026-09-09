@@ -89,17 +89,29 @@ that can be pulled out from under you.
 
 ## 2. Installing and running it
 
-You need Rust. If you do not have it:
+This is the **Windows 11** edition of the simulator (x86-64; the
+processor must have FMA — every Intel chip since 2013 and AMD since
+2012 does — because the root `.cargo/config.toml` pins
+`-C target-feature=+fma`, which the vendored engine's deterministic
+math library requires). It was ported from the macOS / Apple Silicon
+edition, `once-ere/rustSolveIt_macos-silicon_SUNDIALS_7_8_0`, itself
+ported from the Linux original, `once-ere/rustSolveIt_Using_SUNDIALS_7_8_0`.
+You need Rust with the MSVC toolchain. If you do not have it, download
+and run `rustup-init.exe` from <https://rustup.rs> — it installs
+`x86_64-pc-windows-msvc` by default and will offer to fetch the Visual
+Studio C++ Build Tools if none are present (any Visual Studio 2022 or
+2026 install already satisfies it; Rust only needs its linker). Check
+with:
 
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```powershell
+rustc --version
 ```
 
-Then:
+Then, in PowerShell (or any terminal):
 
-```bash
-git clone https://github.com/once-ere/rustSolveIt_macos-silicon_SUNDIALS_7_8_0.git
-cd rustSolveIt_macos-silicon_SUNDIALS_7_8_0
+```powershell
+git clone https://github.com/once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0.git
+cd rustSolveIt_Win11_SUNDIALS_7_8_0
 cargo run
 ```
 
@@ -121,12 +133,21 @@ Comments start with `#`. Every example in section 7 is a script in
 
 ### Checking your build
 
-```bash
+```powershell
 cargo test --workspace
 ```
 
-605 tests should pass. If they do, your build is the same build this
-documentation was written against.
+638 tests should pass (583 unit and integration tests plus 55
+documentation tests). If they do, your build is the same build this
+documentation was written against — measured on Windows 11 Pro for
+Workstations (build 26200), rustc 1.91.1 / cargo 1.91.1, target
+`x86_64-pc-windows-msvc`, linked by the MSVC linker of the Visual
+Studio 2026 Build Tools (MSVC 14.51.36231), which rustc locates on its
+own: no developer prompt, and no WSL2 compiler or linker anywhere. The
+simulator workspace is pure Rust. The only C compiler used in the
+whole project is that same MSVC `cl.exe`, compiling the bundled SQLite
+amalgamation inside the `dataset_tools` sidecar (§7, §8.3) through the
+`cc` crate.
 
 ---
 
@@ -435,7 +456,7 @@ output, which is exactly the property section 5.2 promises you have.
 Every transcript below is genuine program output. The scripts are in
 [`scripts/solveit/`](scripts/solveit) and you can run any of them:
 
-```bash
+```powershell
 cargo run -p posim --release -- --script scripts/solveit/01_elastic_head_on.posim
 ```
 
@@ -453,9 +474,24 @@ the **fourteen classical curvilinear coordinate systems**
 see §8.3–§8.4 and the grammar guide §5.14–§5.15). They need the
 sidecar built once:
 
-```bash
-cd dataset_tools && cargo build --release
+```powershell
+cd dataset_tools; cargo build --release; cd ..
 ```
+
+(Git Bash: `cd dataset_tools && cargo build --release && cd ..`.) The
+first build fetches `rusqlite` and `r2d2` from crates.io — the one
+place this project does — and compiles the bundled SQLite amalgamation
+with MSVC `cl.exe`. The result is
+`dataset_tools\target\release\solveit_db.exe`, and `posim.exe` finds
+it there by itself.
+
+One cosmetic point about the transcripts: they keep the forward-slash
+spelling of the files a run writes (`datasets/solveit20_kepler_plots.html`,
+`movies/solveit20_kepler.html`), which is how those files are named in
+the repository; on Windows the program prints the same paths with
+backslashes (`datasets\solveit20_kepler_plots.html`,
+`movies\solveit20_kepler.html`). The verbatim Windows output of all
+thirty-eight scripts is in `logs/solveit_scripts/`.
 
 ---
 
@@ -2446,7 +2482,7 @@ Out[19]= [1.2999999999999996, 0.6999999999999997, 2.1]
 In[20]:= cart2_to_polar([3, 4])
 Out[20]= [5, 0.9272952180016122]
 In[21]:= polar_to_cart2(cart2_to_polar([3, 4]))
-Out[21]= [3, 3.9999999999999996]
+Out[21]= [3.0000000000000004, 3.9999999999999996]
 ```
 
 **What to notice.** `theta_min = theta_max = 1.5707963267948966` — pi/2 to the last bit,
@@ -2521,7 +2557,7 @@ Out[20]= w set
 In[21]:= norm(oblate_to_cart(cart_to_oblate(w, 1.25), 1.25) - w)
 Out[21]= 0.0000000000000004440892098500626
 In[22]:= norm(prolate_to_cart(cart_to_prolate(w, 1.25), 1.25) - w)
-Out[22]= 0.0000000000000008671119018262734
+Out[22]= 0.0000000000000007447602459741819
 In[23]:= norm(paraboloidal_to_cart(cart_to_paraboloidal(w)) - w)
 Out[23]= 0.0000000000000004965068306494546
 In[24]:= norm(elliptic_cyl_to_cart(cart_to_elliptic_cyl(w, 1.25), 1.25) - w)
@@ -2540,8 +2576,8 @@ In[30]:= bipolar_to_cart2(cart2_to_bipolar([1.2, -0.8], 1.5), 1.5)
 Out[30]= [1.2, -0.8]
 ```
 
-**What to notice.** Every round trip lands between `0` exactly and `2.2e-16` — one
-`f64` unit in the last place — and the 2-D charts return
+**What to notice.** Every round trip lands between `0` exactly and `7.4e-16` — a few
+`f64` units in the last place — and the 2-D charts return
 `[1.2, -0.8]` verbatim. Singular loci stay refused: type
 `cart_to_toroidal([1, 0, 0], 1)` interactively and the reply names
 the focal ring instead of returning a NaN.
@@ -2575,20 +2611,28 @@ Two things about it are worth knowing:
   keeps a ring of snapshots; running backward walks it. It returns to
   *t* = 0 bit-identically.
 
-For a headless machine, `POSIM_NO_BROWSER=1` suppresses the attempt to
-open a browser.
+For a headless machine, setting the environment variable
+`POSIM_NO_BROWSER=1` suppresses the attempt to open a browser (in
+PowerShell: `$env:POSIM_NO_BROWSER = "1"` before you run the program;
+in Git Bash: `POSIM_NO_BROWSER=1 cargo run ...`).
 
 ### 8.2 Recorded videos
 
 A live window needs a live program. For something you can send to
 someone else, record it:
 
-```bash
+```powershell
 cargo build --release -p posim
-recorder/src/record_video.py videos/scenes/kepler_ellipse.posim \
-     -o videos/kepler_ellipse.html --frames 360 --dt 0.02 \
+python recorder/src/record_video.py videos/scenes/kepler_ellipse.posim `
+     -o videos/kepler_ellipse.html --frames 360 --dt 0.02 `
      --title "Kepler orbit, e = 0.6"
 ```
+
+(The backtick `` ` `` is PowerShell's line continuation — in Git Bash
+use `\` instead; on one line you need neither. Any Python 3.8+ works —
+the recorder uses only the standard library. `python
+recorder/src/record_all.py --check` re-records all thirteen and
+confirms each reproduces byte for byte.)
 
 The result is a single HTML file: the frames embedded as data plus a
 canvas player. It fetches nothing, so it works from `file://` on a
@@ -2659,7 +2703,7 @@ per-body positions, a top view) into a self-contained page
 The simulator itself contains **no SQLite code** — its
 zero-external-dependency guarantee is untouched. All database work
 happens in the `solveit_db` sidecar (the `dataset_tools/` package,
-built once with `cd dataset_tools && cargo build --release`), which
+built once with `cd dataset_tools; cargo build --release; cd ..`), which
 uses an `r2d2` connection pool shared across worker threads, switches
 every connection into **WAL journal mode** at startup, and sets a
 five-second **busy timeout** — the standard recipe that lets several
@@ -2707,16 +2751,43 @@ reasons for each divergence, are in `sundials_rs/VERIFICATION.md`,
 
 Two consequences of taking this seriously: printed floating-point values
 go through helpers that reproduce C's `printf` conversions exactly
-(Rust's own `{:e}` formats exponents differently), and `pow` was made
-host-independent so that at least that function cannot vary between
-machines.
+(Rust's own `{:e}` formats exponents differently), and the transcendental
+functions were taken off the host entirely. The vendored engine is the
+**Windows port** of the translation
+(`once-ere/SUNDIALS_7_8_Rust_port_for_Windows11`, which differs from the
+Linux and macOS engines only in its backend module sets; the public API
+is identical): because Microsoft's math runtime (UCRT) rounds `sin`,
+`cos`, `exp`, `ln` and friends differently from the Linux library the
+reference outputs came from, the engine carries its own pure-Rust
+translations of the glibc routines (`sundials_libm`), each measured at
+**0 mismatches over millions of inputs** against a real glibc oracle.
+That — plus a deterministic `pow` and a pinned FMA instruction
+(`.cargo/config.toml`) — is why this Windows build reproduces the Linux
+and macOS physics **byte for byte**. The gate is
+`bash tools/win_verify_physics.sh` (Git Bash): it reruns the six
+self-checking examples, the 12 collision scripts and the 59 dynamic
+notebooks against the Linux evidence in `evidence/port-7.8.0/` and
+exits 0 here — the collision scripts identical, the other two identical
+modulo the diffs pinned in `evidence/win11/` (one blank line the donor
+added to `outer_solar_system` after its log was recorded, and nine
+last-digit lines in the two quantum notebooks, `double_slit` and
+`tunneling`, whose first-party code still calls the host libm). All 13
+recorded videos reproduce byte for byte (`python
+recorder/src/record_all.py --check`) — including
+`videos/rack_and_pinion.html`, which is a Windows recording because the
+`GEAR`/`RACK` joint residual `sin(qθᵢ + pθⱼ)` also passes through the
+host libm. Of the 252 datasets regenerated here, 245 are byte-identical
+to the macOS files; the seven that differ are the curvilinear-coordinate
+maps of examples 37 and 38 (`special_functions/src/coords.rs` calls the
+host libm), which is why two numbers in those two transcripts differ
+from the macOS edition in their last digits.
 
 ### 9.2 The simulator against closed-form physics
 
 Six example programs, each of which prints `SUCCESS` or `FAILURE` and
 exits nonzero if it fails:
 
-```bash
+```powershell
 cargo run -p physical_object --release --example kepler_orbit
 cargo run -p physical_object --release --example outer_solar_system
 cargo run -p physical_object --release --example tumbling_body
@@ -2727,9 +2798,13 @@ cargo run -p physical_object --release --example bouncing_ball_restitution
 
 ### 9.3 The test suite
 
-605 tests: 40 library, 19 collision, 9 conservation, 109 language,
-92 quantum, 233 special-function, 11 vendored identities and 55
-documentation examples that are compiled and run as written.
+638 tests: 49 library, 19 collision, 9 conservation, 42 constrained/
+equilibrium/sensitivity, 121 language, 92 quantum, 240 special-function
+(including the seven coordinate-map suites), 11 vendored identities,
+and 5 + 50 documentation examples that are compiled and run as
+written — measured on Windows 11 (`cargo test --workspace`, 638 passed,
+0 failed). The sidecar adds its own 11 (`cd dataset_tools; cargo test;
+cd ..`).
 
 The collision tests in particular are analytic rather than
 regression-style: they assert the time of impact against a closed form,
@@ -2768,7 +2843,7 @@ abort your session. The common ones:
 | a magnetised body will not spin | Multiply your moment tensor by your field by hand — you probably have a zero column (example 8). |
 | a quantum result is off by a fraction of a percent | Refine the grid and see whether it converges (example 15). Discretisation error converges; a bug does not. |
 | `probability accumulating near the wall` warning | Your wavepacket has reached the domain edge and is reflecting. Widen the grid or add `QM ABSORB`. |
-| the scene window does not open | Set `POSIM_NO_BROWSER=1` if you are headless, or open the printed `http://127.0.0.1:<port>/` yourself. |
+| the scene window does not open | Set `POSIM_NO_BROWSER=1` (PowerShell: `$env:POSIM_NO_BROWSER = "1"`) if you are headless, or open the printed `http://127.0.0.1:<port>/` yourself. |
 
 Anything the language accepts is documented in
 [`grammar.md`](grammar.md) — every command, every field, every builtin,
@@ -2786,7 +2861,7 @@ with the complete EBNF grammar and a further eighteen worked examples.
 | `special_functions/` | Bessel, Legendre, Hankel, Airy, gamma, Wigner, quadrature, eigenproblems |
 | `sundials_rs/` | the pure-Rust SUNDIALS 7.8.0 engine (vendored, read-only) |
 | `jupyter/` | the JupyterLab kernel |
-| `notebooks/` | one executed Jupyter notebook per example (125), each owning a dataset |
+| `notebooks/` | one executed Jupyter notebook per example (128), each owning a dataset |
 | `dynamic_notebooks/` | 59 runnable sessions, incl. 34 Routh problems |
 | `scripts/solveit/` | the thirty-eight examples in section 7 |
 | `scripts/collisions/` | twelve documented collision scripts |
@@ -2794,8 +2869,9 @@ with the complete EBNF grammar and a further eighteen worked examples.
 | `datasets/` | the SQLite datasets — one per notebook and per dataset example (plus their `_plots.html` pages) |
 | `movies/` | movies derived from datasets (self-contained 3-D player pages) |
 | `dataset_tools/` | the `solveit_db` SQLite sidecar (rusqlite + r2d2, WAL; the one package outside the pure-Rust workspace) |
-| `tools/` | the index builder and the verifiers (the video recorder is its own package, `recorder/`) |
+| `tools/` | the index builder, the verifiers and the Windows gates (`win_verify_physics.sh`, `win_gui_smoke.py`); the video recorder is its own package, `recorder/` |
 | `evidence/port-7.8.0/` | the logs behind every claim in section 9.5 |
+| `evidence/win11/`, `logs/` | this port's gate outputs with the two pinned accepted-divergence diffs, and the captured Windows runs (build, tests, the 38 + 12 scripts, notebooks, videos) behind section 9 |
 
 ### The documents
 
@@ -2805,6 +2881,7 @@ with the complete EBNF grammar and a further eighteen worked examples.
 | `grammar.md` / `.pdf` | every command, the full EBNF (datasets, SQL and movies in §5.14 and §13), 18 more worked examples |
 | `ARCHITECTURE.md` | the pinned cross-module contracts, for anyone changing the code |
 | `PORT_7.8.0_PROVENANCE.md` | what the 7.8.0 upgrade changed, and the evidence it changed nothing else |
+| `PORT_WIN11_PROVENANCE.md`, `VERIFICATION_WIN11.md`, `WINDOWS_PORT_COMPLETE.md` | what the Windows port changed, the per-suite verification on this machine, and its closing statement |
 | `collision_detection.md` / `.pdf` | the collision science, with 12 example scripts |
 | `scene_info.md` / `.pdf` | the graphics window, and a survey of seven other simulators |
 | `physical_object_simulator.md` / `.pdf` | the predecessor user guide, with 14 further examples |

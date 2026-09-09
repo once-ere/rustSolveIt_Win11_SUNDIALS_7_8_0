@@ -86,7 +86,7 @@ fn ida_holds_the_constraint_at_roundoff_over_many_swings() {
 #[test]
 fn ida_pendulum_conserves_energy() {
     let mut s = pendulum(1.0, 1.0);
-    let e0 = s.objects[1].get_position().y * -G * s.objects[1].get_mass() * -1.0;
+    let e0 = -(s.objects[1].get_position().y * -G * s.objects[1].get_mass());
     let _ = e0;
     let start_h = s.objects[1].get_position().y;
     let report = integrate::run(&mut s, 12.0, 240).expect("IDA run");

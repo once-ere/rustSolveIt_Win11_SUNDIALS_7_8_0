@@ -2,11 +2,11 @@
 
 Every example and every Jupyter notebook in this repository records its
 simulation into a **dataset**: one SQLite database file under
-`datasets/`. This package builds the `solveit_db` binary that owns all
-SQLite access. It is a **sidecar**: the simulator (`posim`) spawns it as
-a child process and speaks line-delimited JSON over stdin/stdout — the
-simulator itself never links SQLite, so the pure-Rust workspace keeps
-its zero-external-dependency, zero-`unsafe` guarantee.
+`datasets/`. This package builds the `solveit_db.exe` binary that owns
+all SQLite access. It is a **sidecar**: the simulator (`posim.exe`)
+spawns it as a child process and speaks line-delimited JSON over
+stdin/stdout — the simulator itself never links SQLite, so the pure-Rust
+workspace keeps its zero-external-dependency, zero-`unsafe` guarantee.
 
 ## The concurrency architecture (why WAL + a pool + a busy timeout)
 
@@ -28,62 +28,110 @@ sidecar therefore follows three rules, in `src/db.rs`:
    `PRAGMA busy_timeout = 5000;` makes a connection that finds the
    database locked wait up to five seconds instead of failing.
 
-The proof is executable:
+The proof is executable. PowerShell, from the repository root:
 
-```bash
+```powershell
 cd dataset_tools
 cargo test
+cd ..
 ```
 
 runs, among others, `ten_threads_through_one_pool_lose_nothing`
 (10 threads × 200 rows through one shared pool, every row must land)
 and `two_pools_on_one_file_interleave_writes_and_reads` (two pools on
-one file — the cross-process picture — with a concurrent reader). And:
+one file — the cross-process picture — with a concurrent reader). On
+Windows 11 that is 8 unit + 3 integration = 11 passed, 0 failed
+(`logs/dataset_tools_test.log`). And:
 
-```bash
+```powershell
 cd dataset_tools
 cargo build --release
-./target/release/solveit_db stress /tmp/stress_demo.db 10 500
+.\target\release\solveit_db.exe stress $env:TEMP\stress_demo.db 10 500
+cd ..
 ```
 
-prints `stress: 10 threads x 500 rows = 5000 expected, 5000 written,
-journal_mode=wal`.
+(Git Bash: `./target/release/solveit_db.exe stress /tmp/stress_demo.db
+10 500`) prints `stress: 10 threads x 500 rows = 5000 expected, 5000
+written, journal_mode=wal`.
 
 ## Building
 
-```bash
-cd dataset_tools
-cargo build --release
+PowerShell, from the repository root:
+
+```powershell
+cd dataset_tools; cargo build --release; cd ..
 ```
 
-The binary lands at `dataset_tools/target/release/solveit_db`. This
-package intentionally lives OUTSIDE the simulator workspace (the root
-`Cargo.toml` excludes it) because it depends on three crates.io
-packages, exactly as specified for this feature: `rusqlite` (with the
-`bundled` SQLite amalgamation — no system libsqlite3 is used), `r2d2`,
-and `r2d2_sqlite`. `Cargo.lock` is committed, so the first build
-resolves the same versions everywhere; that first build needs network
-access to crates.io. The simulator workspace's own `Cargo.lock` still
-lists only local crates.
+(Git Bash: `cd dataset_tools && cargo build --release && cd ..`.)
+
+The binary lands at `dataset_tools\target\release\solveit_db.exe`
+(2,326,016 bytes; the release build finished in 18.22 s with
+0 warnings on the reference machine). This package intentionally lives
+OUTSIDE the simulator workspace (the root `Cargo.toml` excludes it)
+because it depends on three crates.io packages, exactly as specified
+for this feature: `rusqlite` 0.32.1 (with the `bundled` SQLite
+amalgamation — no system libsqlite3 is used), `r2d2`, and `r2d2_sqlite`
+0.25.0. `Cargo.lock` is committed, so the first build resolves the same
+versions everywhere; that first build needs network access to
+crates.io. The simulator workspace's own `Cargo.lock` still lists only
+local crates.
+
+**This is the only C compiled anywhere in the repository.** The
+bundled SQLite 3.46.0 amalgamation is compiled by MSVC `cl.exe`
+(Visual Studio 2026 Build Tools, MSVC 14.51.36231, at
+`C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.51.36231\bin\Hostx64\x64\cl.exe`),
+which the `cc` crate locates by itself — no developer command prompt,
+no `vcvars`, and no WSL2 compiler or linker. The simulator workspace is
+pure Rust and never invokes a C compiler; rustc finds the MSVC linker
+on its own. The root `.cargo/config.toml` pins `-C target-feature=+fma`
+for the simulator; the sidecar does not need it, but building it from
+inside `dataset_tools\` (as above) keeps the two configurations apart.
+
+**How posim finds the binary.** `posim.exe` looks at `$env:POSIM_DB_TOOL`
+first, then walks up from the current directory probing
+`dataset_tools\target\release\solveit_db.exe` (the `.exe` name before
+the extensionless one — `DB_TOOL_NAMES` in `posim/src/dataset.rs`),
+then searches `PATH`. So the build above is all a checkout needs; a
+dataset command issued before it reports the exact build command. If
+the binary lives elsewhere:
+
+```powershell
+$env:POSIM_DB_TOOL = "C:\path\to\solveit_db.exe"
+```
+
+(Git Bash: `export POSIM_DB_TOOL=/c/path/to/solveit_db.exe`.)
+
+**Side files.** While a dataset is open, SQLite keeps `<name>.db-wal`
+and `<name>.db-shm` next to it. They are transient: `close`,
+`checkpoint` and posim's `DATASET CLOSE` fold the WAL back into the
+`.db` and remove them. Ignore them; they are never part of a result and
+never compared.
 
 ## Command reference
 
-```bash
-./target/release/solveit_db create <db> [--force]        # new dataset, schema v1
-./target/release/solveit_db exec <db> "<sql...>"          # any SQLite statement(s), table output
-./target/release/solveit_db query <db> "<sql...>"         # any SQLite statement(s), JSON output
-./target/release/solveit_db info <db>                     # counts + journal mode (no timestamps)
-./target/release/solveit_db list <dir>                    # dataset names in a folder
-./target/release/solveit_db copy <src> <dst>              # VACUUM INTO snapshot copy
-./target/release/solveit_db delete <db>                   # remove db + -wal + -shm
-./target/release/solveit_db checkpoint <db>               # flush the WAL into the .db
-./target/release/solveit_db serve <db>                    # JSON-over-stdio server (what posim spawns)
-./target/release/solveit_db stress <db> <threads> <rows>  # multithreaded pool/WAL demonstration
+PowerShell, from inside `dataset_tools\` (from the repository root,
+prefix `dataset_tools\` to the path; Git Bash uses
+`./target/release/solveit_db.exe` with the same arguments):
+
+```powershell
+.\target\release\solveit_db.exe create <db> [--force]        # new dataset, schema v1
+.\target\release\solveit_db.exe exec <db> "<sql...>"          # any SQLite statement(s), table output
+.\target\release\solveit_db.exe query <db> "<sql...>"         # any SQLite statement(s), JSON output
+.\target\release\solveit_db.exe info <db>                     # counts + journal mode (no timestamps)
+.\target\release\solveit_db.exe list <dir>                    # dataset names in a folder
+.\target\release\solveit_db.exe copy <src> <dst>              # VACUUM INTO snapshot copy
+.\target\release\solveit_db.exe delete <db>                   # remove db + -wal + -shm
+.\target\release\solveit_db.exe checkpoint <db>               # flush the WAL into the .db
+.\target\release\solveit_db.exe serve <db>                    # JSON-over-stdio server (what posim spawns)
+.\target\release\solveit_db.exe stress <db> <threads> <rows>  # multithreaded pool/WAL demonstration
 ```
 
 `exec`/`query` accept the COMPLETE SQLite command language — DDL, DML,
 SELECT with window functions and CTEs, PRAGMA, ATTACH, VACUUM — because
-the SQL string is handed to SQLite verbatim.
+the SQL string is handed to SQLite verbatim. In PowerShell put the SQL
+in double quotes as shown; a literal `$` inside it must be written
+`` `$ ``. Python's own shell is another way in:
+`python -m sqlite3 datasets\<name>.db "SELECT COUNT(*) FROM frames"`.
 
 ## Dataset schema (version 1)
 

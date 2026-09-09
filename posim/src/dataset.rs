@@ -263,6 +263,9 @@ impl DatasetHandle {
     }
 
     /// Runs arbitrary SQL. Returns (columns, rows, changed-row count).
+    /// (The triple is the sidecar's reply shape; clippy 1.91's
+    /// `type_complexity` is waived rather than hiding it behind an alias.)
+    #[allow(clippy::type_complexity)]
     pub fn sql(&mut self, sql: &str) -> Result<(Vec<String>, Vec<Vec<Json>>, i64), String> {
         let mut req = std::collections::BTreeMap::new();
         req.insert("op".to_string(), Json::Str("sql".to_string()));
@@ -1141,9 +1144,9 @@ pub fn dataset_map(src: &str, system: &str, params: &[f64], out: &str) -> Result
             row[1] = q[0];
             row[2] = q[1];
             row[3] = q[2];
-            for i in 3..13 {
-                row[i + 1] = cols[i];
-            }
+            // cols[3..13] -> row[4..14], element for element (the same copy
+            // the index loop made; clippy 1.91 `manual_memcpy`).
+            row[4..14].copy_from_slice(&cols[3..13]);
             rows.push(state_row_raw(row));
         }
         out_frames.push(frame_obj_raw(

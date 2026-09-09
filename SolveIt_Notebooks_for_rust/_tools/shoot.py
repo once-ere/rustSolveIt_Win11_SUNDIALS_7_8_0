@@ -6,7 +6,7 @@ for the posim families, served page for mercury/video — mercury pages are
 captured jumped to the capture moment). Families with no browser GUI
 (rust_*, rebound) are recorded honestly as image=None.
 
-Usage: python3 shoot.py [--workers N] [--only PAT]
+Usage: python shoot.py [--workers N] [--only PAT]
 Updates manifest.json's "image" fields. Exit 0 if every capturable
 notebook produced a non-empty PNG.
 """

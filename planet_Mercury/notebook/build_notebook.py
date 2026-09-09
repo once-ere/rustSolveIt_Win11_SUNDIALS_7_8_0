@@ -72,15 +72,16 @@ CELLS.append(md("""
 One-time setup, in a terminal (5-10 minutes the first time):
 
 1. Build the compute program — from the folder that contains `planet_Mercury/`:
-   `cd planet_Mercury/mercury_rs` then `cargo build --release 2>&1 | tee /tmp/mercury_build.log`
+   `cd planet_Mercury/mercury_rs` then `cargo build --release 2>&1 | Tee-Object mercury_build.log`
+   (PowerShell accepts forward slashes in every path below).
    (zero errors, zero warnings expected; install Rust from https://rustup.rs if
    `cargo` is missing).
-2. Install JupyterLab into a small private environment (modern macOS Python
-   refuses system-wide installs): from the folder that contains `planet_Mercury/`:
-   `python3 -m venv planet_Mercury/notebook/.venv` then
-   `planet_Mercury/notebook/.venv/bin/pip install jupyterlab`.
+2. Install JupyterLab into a small private environment (so nothing is
+   installed system-wide): from the folder that contains `planet_Mercury/`,
+   in PowerShell: `python -m venv planet_Mercury/notebook/.venv` then
+   `planet_Mercury/notebook/.venv/Scripts/pip install jupyterlab`.
 3. Open this notebook: `cd planet_Mercury/notebook` then
-   `.venv/bin/jupyter lab mercury_tidal_locking.ipynb`.
+   `.venv/Scripts/jupyter lab mercury_tidal_locking.ipynb`.
    If asked to pick a kernel, choose **Python 3 (ipykernel)**.
 
 Then run the cells top to bottom: click the first cell and press
@@ -88,7 +89,8 @@ Then run the cells top to bottom: click the first cell and press
 Run → Run All Cells. The big simulation cells print progress as they go and
 take minutes each — they are integrating millions of years of physics at
 12-digit accuracy. Batch re-verification without a browser:
-`MERCURY_NO_BROWSER=1 python3 run_notebook.py mercury_tidal_locking.ipynb`.
+`$env:MERCURY_NO_BROWSER = "1"; python run_notebook.py mercury_tidal_locking.ipynb`
+(PowerShell; in Git Bash: `MERCURY_NO_BROWSER=1 python run_notebook.py mercury_tidal_locking.ipynb`).
 """))
 
 CELLS.append(md("""
@@ -229,9 +231,11 @@ def find_binary():
     env = os.environ.get("MERCURY_BIN", "")
     if env and Path(env).exists():
         return Path(env)
-    p = MR / "target" / "release" / "mercury_rs"
-    if p.exists():
-        return p
+    # Windows builds mercury_rs.exe; probe it before the extensionless name.
+    for name in (("mercury_rs.exe", "mercury_rs") if os.name == "nt" else ("mercury_rs",)):
+        p = MR / "target" / "release" / name
+        if p.exists():
+            return p
     raise RuntimeError(
         "mercury_rs binary not found - build it first: "
         "cd planet_Mercury/mercury_rs && cargo build --release")
@@ -794,7 +798,7 @@ def main():
         "nbformat_minor": 5,
     }
     out = Path(__file__).resolve().parent / "mercury_tidal_locking.ipynb"
-    out.write_text(json.dumps(nb, indent=1) + "\n", encoding="utf-8")
+    out.write_text(json.dumps(nb, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(f"built {out} ({len(CELLS)} cells)")
 
 

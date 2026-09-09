@@ -9,13 +9,15 @@ For every canonical project-authored Jupyter notebook (128 of them):
   3. write the companion  player_<tag>.py  next to it.
 
 Canonical sources (duplicates elsewhere are deliberately excluded):
-  - rustSolveIt_macos-silicon_SUNDIALS_7_8_0/notebooks/*.ipynb        (109)
-  - rustSolveIt_macos-silicon_SUNDIALS_7_8_0/rebound_rust/notebooks/  (17)
-  - planet_Mercury/notebook/*.ipynb                                   (2)
+  - <engine>/notebooks/*.ipynb                 (128; the engine is the
+    repository root in a clone, or rustSolveIt_Win11_SUNDIALS_7_8_0/ in
+    the two-folder workspace layout)
+  - <engine>/rebound_rust/notebooks/*.ipynb    (17)
+  - planet_Mercury/notebook/*.ipynb            (2)
 
 Standard library only. Deterministic. Usage:
-    python3 gen.py            # generate everything
-    python3 gen.py --only PAT # only tags containing PAT (pilot runs)
+    python gen.py            # generate everything
+    python gen.py --only PAT # only tags containing PAT (pilot runs)
 """
 
 import json
@@ -24,9 +26,15 @@ from pathlib import Path
 from pathlib import Path as pathlib_Path
 
 WS = Path(__file__).resolve().parents[2]          # workspace root
-ENGINE = WS / "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"
-if not ENGINE.exists():
-    ENGINE = WS                # fresh clone: the repository root IS the engine
+# Two layouts resolve automatically: a workspace folder holding the engine
+# repository beside this tree (either platform edition's folder name), or a
+# fresh clone of the repository, where the clone root IS the engine.
+ENGINE = WS
+for _name in ("rustSolveIt_Win11_SUNDIALS_7_8_0",
+              "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"):
+    if (WS / _name / "posim").is_dir():
+        ENGINE = WS / _name
+        break
 ROOT = WS / "SolveIt_Notebooks_for_rust"
 MANIFEST = ROOT / "_tools" / "manifest.json"
 
@@ -110,13 +118,13 @@ PLAYER_TEMPLATE = r'''#!/usr/bin/env python3
 """player_@TAG@.py — full player for @TAG@.ipynb (standard library only).
 
 Modes
-  python3 player_@TAG@.py run              re-execute this notebook copy
-  python3 player_@TAG@.py gui              open the browser GUI
-  python3 player_@TAG@.py jump             open the GUI jumped to the key
-                                           event (@KEY_EVENT@)
-  python3 player_@TAG@.py capture out.png  save a PNG of the GUI
-                                           (headless Chrome)
-  python3 player_@TAG@.py data outdir      export this notebook's data
+  python player_@TAG@.py run              re-execute this notebook copy
+  python player_@TAG@.py gui              open the browser GUI
+  python player_@TAG@.py jump             open the GUI jumped to the key
+                                          event (@KEY_EVENT@)
+  python player_@TAG@.py capture out.png  save a PNG of the GUI
+                                          (headless Chrome or Edge)
+  python player_@TAG@.py data outdir      export this notebook's data
 
 Family: @FAMILY@.  Everything runs against recorded, verified artifacts of
 the pure-Rust SUNDIALS engine; the player never computes physics itself.
@@ -137,9 +145,15 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 WS = HERE.parents[2]                       # workspace root
-ENGINE = WS / "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"
-if not ENGINE.exists():
-    ENGINE = WS                # fresh clone: the repository root IS the engine
+# Two layouts resolve automatically: a workspace folder holding the engine
+# repository beside SolveIt_Notebooks_for_rust/ (either platform edition's
+# folder name), or a fresh clone, where the clone root IS the engine.
+ENGINE = WS
+for _name in ("rustSolveIt_Win11_SUNDIALS_7_8_0",
+              "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"):
+    if (WS / _name / "posim").is_dir():
+        ENGINE = WS / _name
+        break
 TAG = "@TAG@"
 FAMILY = "@FAMILY@"
 GUI_PAGE = @GUI_PAGE@                      # main browser-GUI artifact (or None)
@@ -151,12 +165,24 @@ CAPTURE_BUTTON = @CAPTURE_BUTTON@          # id of the page's jump button
 
 
 def chrome():
-    for c in ("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    """A headless-capable Chromium browser: Google Chrome first (its
+    Windows, macOS and Linux install locations), then Microsoft Edge."""
+    pf = os.environ.get("ProgramFiles", r"C:\Program Files")
+    pf86 = os.environ.get("ProgramFiles(x86)", r"C:\Program Files (x86)")
+    local = os.environ.get("LOCALAPPDATA", "")
+    for c in (os.path.join(pf, "Google", "Chrome", "Application", "chrome.exe"),
+              os.path.join(pf86, "Google", "Chrome", "Application", "chrome.exe"),
+              os.path.join(local, "Google", "Chrome", "Application", "chrome.exe")
+              if local else "",
+              "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+              shutil.which("chrome") or "",
               shutil.which("google-chrome") or "",
-              shutil.which("chromium") or ""):
+              shutil.which("chromium") or "",
+              os.path.join(pf86, "Microsoft", "Edge", "Application", "msedge.exe"),
+              os.path.join(pf, "Microsoft", "Edge", "Application", "msedge.exe")):
         if c and Path(c).exists():
             return c
-    raise SystemExit("headless capture needs Google Chrome installed")
+    raise SystemExit("headless capture needs Google Chrome (or Microsoft Edge) installed")
 
 
 def free_port():
@@ -193,10 +219,17 @@ def serve(directory, page_name, jump=False):
 def scene_replay_url():
     """Replay the paired .posim scene into a fresh posim child and open its
     live scene window server; returns (url, process)."""
-    binary = os.environ.get("POSIM_BIN", str(ENGINE / "target" / "release" / "posim"))
-    if not Path(binary).is_file():
-        raise SystemExit("build the engine first: cd rustSolveIt_macos-silicon_"
-                         "SUNDIALS_7_8_0 && cargo build --release -p posim")
+    binary = os.environ.get("POSIM_BIN", "")
+    if not binary:
+        # Windows builds posim.exe; probe it before the extensionless name.
+        for name in (("posim.exe", "posim") if os.name == "nt" else ("posim",)):
+            cand = ENGINE / "target" / "release" / name
+            if cand.is_file():
+                binary = str(cand)
+                break
+    if not binary or not Path(binary).is_file():
+        raise SystemExit("build the engine first, from the repository root: "
+                         "cargo build --release -p posim")
     port = free_port()
     proc = subprocess.Popen([binary, "--machine"],
                             stdin=subprocess.PIPE, stdout=subprocess.PIPE,
@@ -367,13 +400,13 @@ def build_player(fam, tag, assets):
     def lit(p):
         if p is None:
             return "None"
-        r = str(Path(p).relative_to(WS)).replace("\\", "/")
-        # Engine-relative paths go through ENGINE so a fresh clone (where
-        # the repo root IS the engine) resolves them too.
-        prefix = "rustSolveIt_macos-silicon_SUNDIALS_7_8_0/"
-        if r.startswith(prefix):
-            return 'ENGINE / "' + r[len(prefix):] + '"'
-        return 'WS / "' + r + '"'
+        p = Path(p)
+        # Engine assets go through ENGINE so both layouts resolve them (in
+        # a fresh clone ENGINE == WS); planet_Mercury is addressed from WS
+        # in both layouts.
+        if p.is_relative_to(ENGINE) and not p.is_relative_to(WS / "planet_Mercury"):
+            return 'ENGINE / "' + p.relative_to(ENGINE).as_posix() + '"'
+        return 'WS / "' + p.relative_to(WS).as_posix() + '"'
     key_event = {
         "mercury": "the 3:2 resonance capture moment",
         "video": "the recorded scene's final state",
@@ -400,46 +433,68 @@ def rel(p):
 
 
 def header_cell(fam, tag, topic, assets, player_text):
-    e = "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"
+    # Layout-aware command text. In a fresh clone the repository root IS
+    # the engine (ENGINE == WS) and every command runs from that root; in
+    # the two-folder workspace layout the engine sits in its own folder
+    # beside SolveIt_Notebooks_for_rust/ and engine paths carry that prefix.
+    # Commands are PowerShell (Windows 11 is this edition's platform); every
+    # one also runs unchanged in Git Bash except `Start-Process` (use
+    # `start` there) and `$env:NAME = ...` (use `export NAME=...`).
+    clone = ENGINE == WS
+    e = ENGINE.name
+    eng = "" if clone else e + "/"
+    cd_eng = "" if clone else f"cd {e}; "
+    back = "" if clone else "; cd .."
+    posim_exe = eng + "target/release/posim.exe"
     L = []
     L.append(f"# Encyclopedia header — `{tag}` ({topic})")
     L.append("")
-    L.append("This is the **SolveIt_Notebooks_for_rust encyclopedia copy** of this "
-             "notebook. Everything below is exact and copy-paste runnable from the "
-             "**workspace root** (the folder that contains both "
-             f"`{e}/` and `SolveIt_Notebooks_for_rust/`).")
+    if clone:
+        L.append("This is the **SolveIt_Notebooks_for_rust encyclopedia copy** of this "
+                 "notebook. Everything below is exact and copy-paste runnable in "
+                 "PowerShell from the **repository root** (the cloned "
+                 f"`{e}` folder — it contains both `posim/` and "
+                 "`SolveIt_Notebooks_for_rust/`).")
+    else:
+        L.append("This is the **SolveIt_Notebooks_for_rust encyclopedia copy** of this "
+                 "notebook. Everything below is exact and copy-paste runnable in "
+                 "PowerShell from the **workspace root** (the folder that contains "
+                 f"both `{e}/` and `SolveIt_Notebooks_for_rust/`).")
     L.append("")
     L.append("## 1. Execute this notebook")
     L.append("")
     L.append("One-time build of the pure-Rust engine behind it:")
-    L.append("```bash")
+    L.append("```powershell")
     if fam in ("solveit", "dynamic", "collision", "video", "rust"):
-        L.append(f"cd {e} && cargo build --release -p posim")
+        L.append(f"{cd_eng}cargo build --release -p posim{back}")
+        L.append(f"{cd_eng}cd dataset_tools; cargo build --release; cd ..{back}   "
+                 "# the SQLite dataset sidecar (solveit_db.exe)")
     elif fam == "rebound":
-        L.append(f"cd {e}/reboundx_rust && cargo build --release")
+        L.append(f"{cd_eng}cd reboundx_rust; cargo build --release; cd ..{back}")
     else:
-        L.append("cd planet_Mercury/mercury_rs && cargo build --release 2>&1 | tee /tmp/mercury_build.log")
+        L.append("cd planet_Mercury/mercury_rs; cargo build --release; cd ../..")
     L.append("```")
     L.append("Batch execution of this copy (writes real outputs back into it):")
-    L.append("```bash")
-    L.append(f"python3 SolveIt_Notebooks_for_rust/_tools/run_copy.py "
+    L.append("```powershell")
+    L.append(f"python SolveIt_Notebooks_for_rust/_tools/run_copy.py "
              f"SolveIt_Notebooks_for_rust/{topic}/{tag}/{tag}.ipynb")
     L.append("```")
     L.append("Interactive execution (Shift+Enter through every cell, "
              "Python 3 (ipykernel) kernel):")
-    L.append("```bash")
+    L.append("```powershell")
     if fam == "mercury":
-        L.append("python3 -m venv planet_Mercury/notebook/.venv  "
-                 "# once; then: planet_Mercury/notebook/.venv/bin/pip install jupyterlab")
-        L.append(f"cd SolveIt_Notebooks_for_rust/{topic}/{tag} && "
-                 f"../../../planet_Mercury/notebook/.venv/bin/jupyter lab {tag}.ipynb")
+        L.append("python -m venv planet_Mercury/notebook/.venv   # once; then:")
+        L.append("planet_Mercury/notebook/.venv/Scripts/pip install jupyterlab")
+        L.append(f"cd SolveIt_Notebooks_for_rust/{topic}/{tag}; "
+                 f"../../../planet_Mercury/notebook/.venv/Scripts/jupyter lab {tag}.ipynb")
     else:
-        L.append("python3 -m pip install --user jupyterlab   # once")
-        L.append(f"cd SolveIt_Notebooks_for_rust/{topic}/{tag} && jupyter lab {tag}.ipynb")
+        L.append("python -m pip install --user jupyterlab   # once")
+        L.append(f"cd SolveIt_Notebooks_for_rust/{topic}/{tag}; jupyter lab {tag}.ipynb")
     L.append("```")
     if fam in ("solveit", "dynamic", "collision", "video"):
-        L.append(f"(The notebook finds the simulator itself; if needed set "
-                 f"`POSIM_BIN=$PWD/{e}/target/release/posim`.)")
+        L.append(f"(The notebook finds the simulator itself — `posim.exe` under "
+                 f"`{eng}target/release/`; if needed set "
+                 f"`$env:POSIM_BIN = \"$PWD/{posim_exe}\"`.)")
     L.append("")
     L.append("## 2. Display the browser GUI")
     L.append("")
@@ -447,97 +502,103 @@ def header_cell(fam, tag, topic, assets, player_text):
         page = rel(assets["gui_pages"][0])
         L.append("This notebook bakes a self-contained animated player page and its "
                  "own database; after one execution:")
-        L.append("```bash")
-        L.append(f"open {page}")
+        L.append("```powershell")
+        L.append(f"Start-Process {page}")
         L.append("```")
         L.append("or, with the companion player (serves it and can auto-jump):")
-        L.append("```bash")
-        L.append(f"python3 SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py gui")
-        L.append(f"python3 SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py jump   # straight to the capture moment")
+        L.append("```powershell")
+        L.append(f"python SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py gui")
+        L.append(f"python SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py jump   # straight to the capture moment")
         L.append("```")
     elif fam == "video":
         if assets["movie"]:
             L.append("The recorded **movie page** (self-contained; double-click also works):")
-            L.append("```bash")
-            L.append(f"open {rel(assets['movie'])}")
+            L.append("```powershell")
+            L.append(f"Start-Process {rel(assets['movie'])}")
             L.append("```")
         if assets["gui_server"]:
             L.append("The **live GUI** (a posim child integrating in real time behind a "
                      "canvas page with Start/Pause/Reset and live physics readouts):")
-            L.append("```bash")
-            L.append(f"python3 {rel(assets['gui_server'])}   # prints its URL, Ctrl-C to quit")
+            L.append("```powershell")
+            L.append(f"python {rel(assets['gui_server'])}   # prints its URL, Ctrl-C to quit")
             L.append("```")
     elif fam in ("solveit", "dynamic", "collision"):
         L.append("This notebook's GUI is posim's own live **scene window**. Replay the "
                  "paired scene and open it:")
-        L.append("```bash")
-        L.append(f"python3 SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py gui")
+        L.append("```powershell")
+        L.append(f"python SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py gui")
         L.append("```")
         if assets["script"]:
             L.append("Manually, in the interactive REPL "
-                     f"(`{e}/target/release/posim`): type the commands of "
+                     f"(`{posim_exe}`): type the commands of "
                      f"`{rel(assets['script'])}`, then `SCENE CREATE 8900` and open "
                      "http://127.0.0.1:8900/ in a browser.")
     elif fam == "rust":
         L.append("This family pairs with a **compiled, self-checking Rust example** — "
                  "its verdict is textual (SUCCESS), and the notebook itself is the "
                  "display artifact. Run the example directly:")
-        L.append("```bash")
-        L.append(f"cd {e} && cargo run --release -p physical_object --example {tag[len('rust_'):]}")
+        L.append("```powershell")
+        L.append(f"{cd_eng}cargo run --release -p physical_object --example {tag[len('rust_'):]}{back}")
         L.append("```")
     else:
         L.append("This family's artifacts are the executed notebook and the files it "
                  "writes (see section 4); where a browser GUI exists the companion "
                  "player opens it:")
-        L.append("```bash")
-        L.append(f"python3 SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py gui")
+        L.append("```powershell")
+        L.append(f"python SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py gui")
         L.append("```")
     L.append("")
     L.append("## 3. Movies")
     L.append("")
+    record_hint = ("Windows: Win+Alt+R starts the Xbox Game Bar recorder, or use the "
+                   "Snipping Tool's Record mode")
     if fam == "video":
         L.append(f"The movie already exists: `{rel(assets['movie'])}` is the recorded "
                  "browser video page for this exact scene (open it with the command "
                  "above). To re-record it: run the live GUI server (section 2) and "
-                 "use any screen recorder (macOS: Cmd+Shift+5), or re-bake the scene "
+                 f"use any screen recorder ({record_hint}), or re-bake the scene "
                  "page with the engine's own tooling in `videos/`.")
     elif fam == "mercury":
         L.append("The player page IS the movie: press Play (Space) and it replays "
                  "the recorded CVODE samples — braking, capture, and lock — with a "
                  "scrub bar and speed control. To export a conventional video file, "
-                 "screen-record the playing page (macOS: Cmd+Shift+5). The "
+                 f"screen-record the playing page ({record_hint}). The "
                  "`Jump to capture` button (or `player jump`) goes straight to the "
                  "capture moment.")
     else:
         L.append("No pre-recorded movie pairs with this notebook. To watch it as a "
                  "movie: open the live scene window (section 2) — the scene plays in "
-                 "real time — and screen-record it (macOS: Cmd+Shift+5). The 13 "
+                 f"real time — and screen-record it ({record_hint}). The 13 "
                  "`video_*` notebooks in `05_mechanism_videos/` are the family with "
                  "recorded movie pages.")
     L.append("")
     L.append("## 4. Database / data access")
     L.append("")
+    sql_note = ("(`python -m sqlite3` is the SQLite shell that ships inside Python "
+                "3.12+; the stand-alone `sqlite3` command-line shell, if you have "
+                "it installed, takes the same statements.)")
     if fam == "mercury":
         db = rel(assets["db"][0])
         L.append(f"Executing the notebook builds `{db}` (SQLite, schema documented "
                  "inside the notebook's own section 7: run, sample, event, branch, "
                  "target" + (", run_extra" if "test2" in tag else "") +
                  " tables). Open it:")
-        L.append("```bash")
-        L.append(f"sqlite3 {db} \".tables\"")
-        L.append(f"sqlite3 {db} \"SELECT * FROM run;\"")
+        L.append("```powershell")
+        L.append(f"python -m sqlite3 {db} \"SELECT name FROM sqlite_master WHERE type='table'\"")
+        L.append(f"python -m sqlite3 {db} \"SELECT * FROM run\"")
         L.append("```")
+        L.append(sql_note)
         L.append("Or export every table to CSV plus the executed transcript:")
-        L.append("```bash")
-        L.append(f"python3 SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py data exported_data")
+        L.append("```powershell")
+        L.append(f"python SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py data exported_data")
         L.append("```")
     elif fam == "rebound":
         L.append("This notebook's data is its **executed transcript** (every command "
                  "sent to the pure-Rust engine and every reply, embedded as real "
                  "cell outputs) — there is no SQLite database in this family. "
                  "Export the transcript (and any paired artifacts) with:")
-        L.append("```bash")
-        L.append(f"python3 SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py data exported_data")
+        L.append("```powershell")
+        L.append(f"python SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py data exported_data")
         L.append("```")
         if assets["script"]:
             L.append(f"The paired source scene/script is `{rel(assets['script'])}`.")
@@ -545,7 +606,7 @@ def header_cell(fam, tag, topic, assets, player_text):
         # Every posim-family notebook owns a SQLite DATASET: executing it
         # records the run into datasets/<name>.db through the solveit_db
         # sidecar (r2d2 pool, WAL journal mode, busy_timeout = 5000). The
-        # 16 dataset worked examples name their own dataset in the paired
+        # 19 dataset worked examples name their own dataset in the paired
         # script; every other notebook uses nb_<tag>.
         ds = "nb_" + tag
         script = assets.get("script")
@@ -558,25 +619,26 @@ def header_cell(fam, tag, topic, assets, player_text):
             except OSError:
                 pass
         L.append(f"Executing this notebook records the run into a **SQLite dataset**, "
-                 f"`{e}/datasets/{ds}.db` (schema v1: `meta`, `bodies`, `frames`, "
+                 f"`{eng}datasets/{ds}.db` (schema v1: `meta`, `bodies`, `frames`, "
                  "`states`; w-first quaternions; no timestamps). The simulator "
                  "records it through the `solveit_db` sidecar — an r2d2 connection "
                  "pool with WAL journal mode and a 5-second busy timeout, which is "
                  "why the notebook's own plain-Python `sqlite3` cell can read the "
                  "file while the simulator still holds it open. Build the sidecar "
                  "once and open the dataset yourself:")
-        L.append("```bash")
-        L.append(f"cd {e}/dataset_tools && cargo build --release && cd ..")
-        L.append(f"sqlite3 {e}/datasets/{ds}.db \".tables\"")
-        L.append(f"sqlite3 {e}/datasets/{ds}.db \"SELECT COUNT(*) FROM frames;\"")
+        L.append("```powershell")
+        L.append(f"{cd_eng}cd dataset_tools; cargo build --release; cd ..{back}")
+        L.append(f"python -m sqlite3 {eng}datasets/{ds}.db \"SELECT name FROM sqlite_master WHERE type='table'\"")
+        L.append(f"python -m sqlite3 {eng}datasets/{ds}.db \"SELECT COUNT(*) FROM frames\"")
         L.append("```")
+        L.append(sql_note)
         L.append("Inside the notebook the same database answers physics questions "
                  "through the `sql` command (the COMPLETE SQLite grammar, verbatim), "
                  "`dataset play` renders its time series to a browser page, and "
                  "section 10 derives a **movie** from it when there are rigid bodies "
                  "to animate. Export the transcript (and any paired artifacts) with:")
-        L.append("```bash")
-        L.append(f"python3 SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py data exported_data")
+        L.append("```powershell")
+        L.append(f"python SolveIt_Notebooks_for_rust/{topic}/{tag}/player_{tag}.py data exported_data")
         L.append("```")
         if assets["script"]:
             L.append(f"The paired source scene/script is `{rel(assets['script'])}`.")
@@ -586,10 +648,10 @@ def header_cell(fam, tag, topic, assets, player_text):
     L.append(f"`player_{tag}.py` sits next to this notebook. It re-executes the "
              "notebook (`run`), opens the browser GUI (`gui`), **jumps to the key "
              "event** (`jump`), captures a PNG of the GUI headlessly (`capture "
-             "out.png`, needs Google Chrome), and exports the data (`data outdir`). "
-             "It is standard-library Python and never computes physics — it drives "
-             "and displays the recorded, verified artifacts. The complete script, "
-             "verbatim:")
+             "out.png`, needs Google Chrome or Microsoft Edge), and exports the "
+             "data (`data outdir`). It is standard-library Python and never "
+             "computes physics — it drives and displays the recorded, verified "
+             "artifacts. The complete script, verbatim:")
     L.append("")
     L.append("```python")
     L.append(player_text.rstrip("\n"))
@@ -598,7 +660,6 @@ def header_cell(fam, tag, topic, assets, player_text):
     return {"cell_type": "markdown",
             "metadata": {"tags": ["encyclopedia-header"]},
             "source": src.splitlines(keepends=True)}
-
 
 def main():
     only = None
@@ -617,7 +678,8 @@ def main():
         dest_dir.mkdir(parents=True, exist_ok=True)
         assets = paired_assets(fam, tag)
         player_text = build_player(fam, tag, assets)
-        (dest_dir / f"player_{tag}.py").write_text(player_text, encoding="utf-8")
+        (dest_dir / f"player_{tag}.py").write_text(player_text, encoding="utf-8",
+                                                   newline="\n")
         # --refresh: rebuild player + header IN the existing executed copy,
         # preserving every executed output cell.
         read_from = dest_dir / f"{tag}.ipynb" if (
@@ -631,7 +693,7 @@ def main():
         if ids:
             nb["cells"][0]["id"] = "cell-enc-header"
         (dest_dir / f"{tag}.ipynb").write_text(
-            json.dumps(nb, indent=1) + "\n", encoding="utf-8")
+            json.dumps(nb, indent=1) + "\n", encoding="utf-8", newline="\n")
         entries.append({
             "tag": tag, "family": fam, "topic": topic,
             "source": rel(src),
@@ -646,7 +708,8 @@ def main():
         })
         made += 1
     if only is None:
-        MANIFEST.write_text(json.dumps(entries, indent=1) + "\n", encoding="utf-8")
+        MANIFEST.write_text(json.dumps(entries, indent=1) + "\n", encoding="utf-8",
+                            newline="\n")
         print(f"manifest: {MANIFEST} ({len(entries)} entries)")
     print(f"generated {made} notebook folders under {ROOT}")
 

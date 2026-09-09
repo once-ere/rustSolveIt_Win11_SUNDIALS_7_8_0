@@ -20,13 +20,39 @@ import sys
 from pathlib import Path
 
 WS = Path(__file__).resolve().parents[2]
-ENGINE = WS / "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"
-if not ENGINE.exists():
-    ENGINE = WS                      # fresh-clone layout: the repo root IS the engine
+# Two layouts resolve automatically: a workspace folder holding the engine
+# repository beside this tree (either platform edition's folder name), or a
+# fresh clone of the repository, where the clone root IS the engine.
+ENGINE = WS
+for _name in ("rustSolveIt_Win11_SUNDIALS_7_8_0",
+              "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"):
+    if (WS / _name / "posim").is_dir():
+        ENGINE = WS / _name
+        break
 ROOT = WS / "SolveIt_Notebooks_for_rust"
 MANIFEST = ROOT / "_tools" / "manifest.json"
 
-CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+
+
+def chrome():
+    """A headless-capable Chromium browser: Google Chrome first (its
+    Windows, macOS and Linux install locations), then Microsoft Edge."""
+    pf = os.environ.get("ProgramFiles", r"C:\Program Files")
+    pf86 = os.environ.get("ProgramFiles(x86)", r"C:\Program Files (x86)")
+    local = os.environ.get("LOCALAPPDATA", "")
+    for c in (os.path.join(pf, "Google", "Chrome", "Application", "chrome.exe"),
+              os.path.join(pf86, "Google", "Chrome", "Application", "chrome.exe"),
+              os.path.join(local, "Google", "Chrome", "Application", "chrome.exe")
+              if local else "",
+              "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+              shutil.which("chrome") or "",
+              shutil.which("google-chrome") or "",
+              shutil.which("chromium") or "",
+              os.path.join(pf86, "Microsoft", "Edge", "Application", "msedge.exe"),
+              os.path.join(pf, "Microsoft", "Edge", "Application", "msedge.exe")):
+        if c and Path(c).exists():
+            return c
+    raise SystemExit("the PDF export needs Google Chrome (or Microsoft Edge) installed")
 
 TOPIC_INTROS = {
     "01_planet_mercury_tidal_locking": (
@@ -92,24 +118,26 @@ def first_summary(copy_path: Path) -> str:
     return "(no descriptive markdown found)"
 
 
-# Editorial corrections where a notebook's own intro prose carries claims
-# from an earlier (Windows/MSVC) lineage that THIS machine's embedded run
-# contradicts — the quoted summary stays faithful, the note sets the record.
+# Editorial notes for the three notebooks whose intro prose describes a
+# platform-specific libm measurement: the executed run embedded in THIS
+# copy is this repository's own Windows 11 / MSVC (UCRT) run, so the
+# verdict cell at the end of the copy is the measurement of record here.
 EDITORIAL_NOTES = {
     "libm_diff": (
-        "Encyclopedia note: the intro above is the notebook's own "
-        "Windows-lineage description; the executed run embedded in THIS "
-        "copy reports 'functions that differ: NONE - all bit-identical' "
-        "on macOS/Apple Silicon."),
+        "Encyclopedia note: the executed run embedded in THIS copy is this "
+        "repository's own Windows 11 / MSVC (UCRT libm) run; its final "
+        "cell lists exactly which functions differ from the C reference "
+        "on this platform (the macOS edition of this encyclopedia recorded "
+        "'functions that differ: NONE' with Apple libm)."),
     "bs_pow_diff": (
-        "Encyclopedia note: the intro above describes the Windows/MSVC "
-        "measurement; the executed run embedded in THIS copy reports zero "
-        "pow divergences ('ULP distribution: none') on macOS/Apple "
-        "Silicon."),
+        "Encyclopedia note: the executed run embedded in THIS copy is this "
+        "repository's own Windows 11 / MSVC (UCRT) measurement of the pow "
+        "difference; its final cell is the ULP distribution of record here "
+        "(the macOS edition recorded 'ULP distribution: none')."),
     "integrators_test": (
-        "Encyclopedia note: the bit-identical-vs-MSVC claim is history "
-        "from the port's Windows lineage; the verdict embedded in THIS "
-        "copy is the macOS/Apple Silicon run's own."),
+        "Encyclopedia note: the bit-identical-vs-MSVC claim in the intro is "
+        "exactly what THIS copy's embedded Windows 11 run verifies; the "
+        "verdict cell at the end of the copy is this machine's own."),
 }
 
 
@@ -144,10 +172,10 @@ def entry_md(e, v):
     if e.get("movie"):
         L.append(f"- **Movie page**: `{e['movie']}`")
     if e.get("gui_server"):
-        L.append(f"- **Live GUI**: `python3 {e['gui_server']}`")
+        L.append(f"- **Live GUI**: `python {e['gui_server']}`")
     for db in e.get("db", []):
         L.append(f"- **Database**: `{db}` (SQLite)")
-    L.append(f"- **Player**: `python3 {e['player']} "
+    L.append(f"- **Player**: `python {e['player']} "
              f"run|gui|jump|capture out.png|data outdir`")
     L.append("")
     if e.get("image"):
@@ -209,16 +237,14 @@ def build_md(entries, v):
             L.append(entry_md(e, v))
     L.append("## Appendix A — excluded duplicates")
     L.append("")
-    L.append("The workspace holds several parallel copies of the same notebooks; "
-             "the encyclopedia uses one canonical edition of each and excludes, "
-             "deliberately: the 109 earlier editions under "
-             "`rustSolveIt_Using_SUNDIALS_7_8_0/version-7.8.0/notebooks/` (the "
-             "pre-macOS lineage of the same notebooks), the two engine-mirror "
-             "copies of the planet-Mercury notebooks under "
-             "`rustSolveIt_macos-silicon_SUNDIALS_7_8_0/planet_Mercury/notebook/`, "
-             "two strays at the workspace root (one byte-identical to its "
-             "canonical copy; the other an earlier edition of the test-2 "
-             "notebook superseded by the canonical one), and the "
+    L.append("The encyclopedia uses one canonical edition of each notebook: "
+             "the 128 under the engine's `notebooks/`, the 17 under "
+             "`rebound_rust/notebooks/`, and the two under "
+             "`planet_Mercury/notebook/`. Deliberately excluded: every other "
+             "copy of the same notebooks that a working folder may hold beside "
+             "this repository (the Linux donor's 109 earlier editions under "
+             "`rustSolveIt_Using_SUNDIALS_7_8_0/version-7.8.0/notebooks/`, the "
+             "macOS edition's mirror copies, stray root-level copies), and the "
              "duplicated `docs/ipython_examples` copy inside the vendored "
              "rebound sources. `StageNbks/*.posim` are posim REPL sessions, "
              "not Jupyter notebooks, and are documented in the engine's own "
@@ -236,14 +262,20 @@ def build_md(entries, v):
     L.append("")
     L.append("## Appendix C — reproduction commands")
     L.append("")
-    L.append("```bash")
-    L.append("# from the workspace root:")
-    L.append("cd rustSolveIt_macos-silicon_SUNDIALS_7_8_0 && cargo build --release -p posim && cd ..")
-    L.append("cd planet_Mercury/mercury_rs && cargo build --release && cd ../..")
-    L.append("python3 SolveIt_Notebooks_for_rust/_tools/gen.py       # regenerate copies+players")
-    L.append("python3 SolveIt_Notebooks_for_rust/_tools/run_copy.py SolveIt_Notebooks_for_rust/<topic>/<tag>/<tag>.ipynb")
-    L.append("python3 SolveIt_Notebooks_for_rust/_tools/shoot.py     # re-capture every GUI image")
-    L.append("python3 SolveIt_Notebooks_for_rust/_tools/encyclo.py   # rebuild this encyclopedia")
+    clone = ENGINE == WS
+    cd_eng = "" if clone else f"cd {ENGINE.name}; "
+    back = "" if clone else "; cd .."
+    L.append("```powershell")
+    L.append("# from the repository root (Windows 11, PowerShell):" if clone
+             else "# from the workspace root (Windows 11, PowerShell):")
+    L.append(f"{cd_eng}cargo build --release -p posim{back}")
+    L.append(f"{cd_eng}cd dataset_tools; cargo build --release; cd ..{back}")
+    L.append("cd planet_Mercury/mercury_rs; cargo build --release; cd ../..")
+    L.append("python SolveIt_Notebooks_for_rust/_tools/gen.py       # regenerate copies+players")
+    L.append("python SolveIt_Notebooks_for_rust/_tools/run_copy.py SolveIt_Notebooks_for_rust/<topic>/<tag>/<tag>.ipynb")
+    L.append("python SolveIt_Notebooks_for_rust/_tools/shoot.py     # re-capture every GUI image")
+    L.append("python SolveIt_Notebooks_for_rust/_tools/encyclo.py   # rebuild this encyclopedia")
+    L.append("python SolveIt_Notebooks_for_rust/_tools/verify.py    # the six mechanical gates")
     L.append("```")
     L.append("")
     return "\n".join(L)
@@ -323,7 +355,7 @@ def main():
         "</style>" + body)
     (ROOT / "ENCYCLOPEDIA.html").write_text(html_doc, encoding="utf-8")
     r = subprocess.run(
-        [CHROME, "--headless=new", "--disable-gpu",
+        [chrome(), "--headless=new", "--disable-gpu",
          "--print-to-pdf=" + str(ROOT / "ENCYCLOPEDIA.pdf"),
          "--no-pdf-header-footer",
          (ROOT / "ENCYCLOPEDIA.html").as_uri()],

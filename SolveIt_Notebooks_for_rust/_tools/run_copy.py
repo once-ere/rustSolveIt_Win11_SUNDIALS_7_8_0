@@ -8,7 +8,7 @@ The rebound family is executed through nbclient (its notebooks were written
 for a real Jupyter kernel), with the kernel's working directory set to the
 canonical rebound_rust/notebooks folder so their relative paths resolve.
 
-Usage:  python3 run_copy.py <copy.ipynb> [...]
+Usage:  python run_copy.py <copy.ipynb> [...]
 Exit 0 only if every notebook passed.
 """
 
@@ -22,9 +22,15 @@ import traceback
 from pathlib import Path
 
 WS = Path(__file__).resolve().parents[2]
-ENGINE = WS / "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"
-if not ENGINE.exists():
-    ENGINE = WS                # fresh clone: the repository root IS the engine
+# Two layouts resolve automatically: a workspace folder holding the engine
+# repository beside this tree (either platform edition's folder name), or a
+# fresh clone of the repository, where the clone root IS the engine.
+ENGINE = WS
+for _name in ("rustSolveIt_Win11_SUNDIALS_7_8_0",
+              "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"):
+    if (WS / _name / "posim").is_dir():
+        ENGINE = WS / _name
+        break
 
 
 def family_of(path: Path) -> str:
@@ -92,13 +98,26 @@ def run_exec(path: Path, cwd: Path, env: dict):
             else:
                 os.environ[k] = v
     if ok:
-        path.write_text(json.dumps(nb, indent=1) + "\n", encoding="utf-8")
+        path.write_text(json.dumps(nb, indent=1) + "\n", encoding="utf-8",
+                        newline="\n")
     return ok, count
+
+
+def posim_bin() -> str:
+    """The engine binary for POSIM_BIN: posim.exe on Windows, else posim."""
+    for name in (("posim.exe", "posim") if os.name == "nt" else ("posim",)):
+        cand = ENGINE / "target" / "release" / name
+        if cand.is_file():
+            return str(cand)
+    return str(ENGINE / "target" / "release" /
+               ("posim.exe" if os.name == "nt" else "posim"))
 
 
 def run_rebound(path: Path):
     """nbclient execution with the canonical folder as kernel cwd."""
-    venv_py = WS / "planet_Mercury" / "notebook" / ".venv" / "bin" / "python"
+    venv_dir = WS / "planet_Mercury" / "notebook" / ".venv"
+    venv_py = (venv_dir / "Scripts" / "python.exe") if os.name == "nt" \
+        else (venv_dir / "bin" / "python")
     py = str(venv_py) if venv_py.exists() else sys.executable
     canon = ENGINE / "rebound_rust" / "notebooks"
     code = (
@@ -133,7 +152,7 @@ def main() -> int:
             cwd = (ENGINE if path.parents[1].name == "06_rust_compiled_examples"
                    else path.parent)
             ok, n = run_exec(path, cwd=cwd,
-                             env={"POSIM_BIN": str(ENGINE / "target" / "release" / "posim"),
+                             env={"POSIM_BIN": posim_bin(),
                                   "POSIM_NO_BROWSER": "1"})
         elif fam == "mercury":
             ok, n = run_exec(path, cwd=WS / "planet_Mercury" / "notebook",

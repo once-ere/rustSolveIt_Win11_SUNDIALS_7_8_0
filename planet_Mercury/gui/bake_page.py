@@ -12,7 +12,7 @@ orbit panel's moving dot is display math on the recorded orbit shape and the
 recorded spin/orbit ratio). Deterministic: same database -> byte-identical
 page. Standard library only.
 
-Usage: python3 gui/bake_page.py   (from planet_Mercury/, or pass paths)
+Usage: python gui/bake_page.py   (from planet_Mercury/, or pass paths)
 """
 
 import sqlite3
@@ -179,7 +179,7 @@ def bake(db_path: Path, out_path: Path) -> None:
     )
 
     html = PAGE.replace("__DATA__", "\n".join(data_js)).replace("__CAPTION__", caption)
-    out_path.write_text(html, encoding="utf-8")
+    out_path.write_text(html, encoding="utf-8", newline="\n")
     print(
         "baked %s: %d history + %d dense + %d encore points, %.2f MB"
         % (out_path, len(hist), len(dense), len(encore), len(html) / 1e6)

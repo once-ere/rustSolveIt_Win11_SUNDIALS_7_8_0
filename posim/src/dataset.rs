@@ -80,11 +80,22 @@ pub fn db_path(name: &str) -> PathBuf {
     Path::new(DATASET_DIR).join(format!("{name}.db"))
 }
 
+/// The file names the sidecar can have on this platform. Windows builds
+/// it as `solveit_db.exe`; every finder in this repository probes the
+/// `.exe` name before the extensionless one (the same rule the Python
+/// tooling follows for `posim.exe`), so a Windows checkout finds the
+/// binary cargo actually produced instead of reporting it "not built".
+const DB_TOOL_NAMES: &[&str] = if cfg!(windows) {
+    &["solveit_db.exe", "solveit_db"]
+} else {
+    &["solveit_db"]
+};
+
 /// Locates the `solveit_db` sidecar binary: `$POSIM_DB_TOOL`, then
-/// `dataset_tools/target/release/solveit_db` from the working directory
-/// upward, then `$PATH`. The error tells the user exactly how to build
-/// it — the sidecar is a separate package precisely so the simulator
-/// workspace stays dependency-free.
+/// `dataset_tools/target/release/solveit_db[.exe]` from the working
+/// directory upward, then `$PATH`. The error tells the user exactly how
+/// to build it — the sidecar is a separate package precisely so the
+/// simulator workspace stays dependency-free.
 pub fn find_db_tool() -> Result<PathBuf, String> {
     if let Some(p) = std::env::var_os("POSIM_DB_TOOL") {
         let p = PathBuf::from(p);
@@ -95,9 +106,11 @@ pub fn find_db_tool() -> Result<PathBuf, String> {
     }
     if let Ok(mut dir) = std::env::current_dir() {
         loop {
-            let cand = dir.join("dataset_tools/target/release/solveit_db");
-            if cand.is_file() {
-                return Ok(cand);
+            for name in DB_TOOL_NAMES {
+                let cand = dir.join("dataset_tools/target/release").join(name);
+                if cand.is_file() {
+                    return Ok(cand);
+                }
             }
             if !dir.pop() {
                 break;
@@ -106,9 +119,11 @@ pub fn find_db_tool() -> Result<PathBuf, String> {
     }
     if let Some(paths) = std::env::var_os("PATH") {
         for dir in std::env::split_paths(&paths) {
-            let cand = dir.join("solveit_db");
-            if cand.is_file() {
-                return Ok(cand);
+            for name in DB_TOOL_NAMES {
+                let cand = dir.join(name);
+                if cand.is_file() {
+                    return Ok(cand);
+                }
             }
         }
     }

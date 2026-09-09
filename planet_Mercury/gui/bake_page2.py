@@ -16,7 +16,7 @@ pomega turns it), the eccentricity breathes on Jupiter's cycle, and the HUD
 tracks the perihelion odometer. Deterministic: same database ->
 byte-identical page. Standard library only.
 
-Usage: python3 gui/bake_page2.py   (from planet_Mercury/, or pass paths)
+Usage: python gui/bake_page2.py   (from planet_Mercury/, or pass paths)
 """
 
 import math
@@ -184,7 +184,7 @@ def bake(db_path: Path, out_path: Path) -> None:
     )
 
     html = PAGE.replace("__DATA__", "\n".join(data_js)).replace("__CAPTION__", caption)
-    out_path.write_text(html, encoding="utf-8")
+    out_path.write_text(html, encoding="utf-8", newline="\n")
     print(
         "baked %s: %d history + %d dense points, %.2f MB"
         % (out_path, len(hist), len(dense), len(html) / 1e6)

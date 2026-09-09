@@ -24,7 +24,7 @@ instant) and `states` (one row per body per frame).
 
 The simulator itself contains no SQLite code at all. It drives a small
 sidecar program, `solveit_db` (built once with
-`cd dataset_tools && cargo build --release` from the repository root),
+`cd dataset_tools; cargo build --release; cd ..` from the repository root),
 which owns a thread-safe connection pool (`r2d2`), switches the
 database into **WAL journal mode** at startup, and sets a five-second
 **busy timeout** — the standard recipe that lets several readers and a
@@ -60,7 +60,7 @@ angular-velocity state of every body. The schema has four tables:
 
 The simulator itself contains no SQLite code. It drives the
 `solveit_db` sidecar (built once with
-`cd dataset_tools && cargo build --release` from the repository root),
+`cd dataset_tools; cargo build --release; cd ..` from the repository root),
 which owns a thread-safe `r2d2` connection pool, switches the file into
 **WAL journal mode** at startup and sets a five-second **busy
 timeout** — the standard recipe that lets several readers and a writer

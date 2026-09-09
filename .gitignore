@@ -88,3 +88,19 @@ sundials_rs/target/
 #   git clone https://github.com/dtamayo/reboundx.git reboundx
 /rebound/
 /reboundx/
+
+# planet_Mercury regenerable data (~270 MB of CSV/SQLite the two notebooks
+# rebuild deterministically) and its optional JupyterLab venv. Root-level
+# rules on purpose: the sub-project itself carries no .gitignore files.
+/planet_Mercury/data/
+/planet_Mercury/notebook/.venv/
+
+# SQLite write-ahead-log side files. The sidecar checkpoints on close; a
+# -wal/-shm pair on disk is transient state, never a dataset.
+*.db-wal
+*.db-shm
+*.sqlite3-wal
+*.sqlite3-shm
+
+# The encyclopedia's per-topic JupyterLab checkpoints and Python caches
+SolveIt_Notebooks_for_rust/**/.ipynb_checkpoints/

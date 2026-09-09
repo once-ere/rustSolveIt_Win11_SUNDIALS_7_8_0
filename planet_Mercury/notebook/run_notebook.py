@@ -5,7 +5,7 @@ cells are exec()'d in one shared namespace with stdout/stderr captured; cells
 tagged "interactive" are skipped (their outputs blanked); the file is written
 back ONLY if every executed cell succeeded. Standard library only.
 
-Usage:  MERCURY_NO_BROWSER=1 python3 run_notebook.py mercury_tidal_locking.ipynb
+Usage:  $env:MERCURY_NO_BROWSER = "1"; python run_notebook.py mercury_tidal_locking.ipynb
 """
 
 import io
@@ -53,7 +53,7 @@ def run(path: Path) -> bool:
             sim.close()
         except Exception:
             pass
-    path.write_text(json.dumps(nb, indent=1) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(nb, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(f"ok {path} ({count} cells)")
     return True
 

@@ -1,0 +1,44 @@
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[3]= obj1 as planet
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit37_orbit
+Out[5]= dataset solveit37_orbit created (datasets/solveit37_orbit.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 12.418264743622237 steps 100
+Out[6]= t = 12.418264743622238 (664 solver steps, 100 snapshots, |dE/E| = 4.162e-9)
+In[7]:= dataset close
+Out[7]= dataset solveit37_orbit closed
+In[8]:= dataset map solveit37_orbit to spherical as solveit37_sph
+Out[8]= dataset solveit37_sph = spherical(solveit37_orbit) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[9]:= dataset open solveit37_sph
+Out[9]= dataset solveit37_sph opened (2 bodies, 100 frames, 200 states) — recording armed
+In[10]:= sql "SELECT MIN(y) AS theta_min, MAX(y) AS theta_max FROM states"
+Out[10]= theta_min | theta_max
+1.5707963267948966 | 1.5707963267948966
+In[11]:= sql "SELECT COUNT(*) AS null_velocity_rows FROM states WHERE vx IS NULL"
+Out[11]= null_velocity_rows
+200
+In[12]:= dataset close
+Out[12]= dataset solveit37_sph closed
+In[13]:= dataset map solveit37_orbit to polar2 as solveit37_pol
+Out[13]= dataset solveit37_pol = polar2(solveit37_orbit) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[14]:= dataset open solveit37_pol
+Out[14]= dataset solveit37_pol opened (2 bodies, 100 frames, 200 states) — recording armed
+In[15]:= sql "SELECT MIN(x) AS r_min, MAX(x) AS r_max FROM states WHERE body = (SELECT body FROM bodies WHERE name = 'planet')"
+Out[15]= r_min | r_max
+0.7500000019886397 | 3.0000000158618207
+In[16]:= dataset close
+Out[16]= dataset solveit37_pol closed
+In[17]:= dataset play solveit37_sph
+Out[17]= dataset plots written to datasets\solveit37_sph_plots.html (browser suppressed)
+In[18]:= cart_to_spherical([0, 0, 2])
+Out[18]= [2, 0, 0]
+In[19]:= spherical_to_cart(cart_to_spherical([1.3, 0.7, 2.1]))
+Out[19]= [1.2999999999999996, 0.6999999999999997, 2.1]
+In[20]:= cart2_to_polar([3, 4])
+Out[20]= [5, 0.9272952180016122]
+In[21]:= polar_to_cart2(cart2_to_polar([3, 4]))
+Out[21]= [3.0000000000000004, 3.9999999999999996]

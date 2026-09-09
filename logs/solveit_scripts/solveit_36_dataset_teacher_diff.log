@@ -1,0 +1,58 @@
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 1, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[3]= obj1 as planet
+In[4]:= dataset create solveit36_trial_a
+Out[4]= dataset solveit36_trial_a created (datasets/solveit36_trial_a.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 2 steps 40
+Out[5]= t = 2 (183 solver steps, 40 snapshots, |dE/E| = 3.639e-9)
+In[6]:= dataset close
+Out[6]= dataset solveit36_trial_a closed
+In[7]:= reset
+Out[7]= system reset
+In[8]:= set system.g_constant = 1
+In[9]:= new sphere as sun { mass = 3, radius = 0.1, position = [-0.25, 0, 0], velocity = [0, -0.63245553203367588, 0] }
+Out[9]= obj0 as sun
+In[10]:= new sphere as planet { mass = 1.5, radius = 0.05, position = [0.75, 0, 0], velocity = [0, 1.8973665961010276, 0] }
+Out[10]= obj1 as planet
+In[11]:= dataset create solveit36_trial_b
+Out[11]= dataset solveit36_trial_b created (datasets/solveit36_trial_b.db, journal_mode=wal, schema v1) — recording armed
+In[12]:= run 2 steps 40
+Out[12]= t = 2 (199 solver steps, 40 snapshots, |dE/E| = 3.197e-9)
+In[13]:= dataset close
+Out[13]= dataset solveit36_trial_b closed
+In[14]:= dataset diff solveit36_trial_a solveit36_trial_b as solveit36_delta
+Out[14]= dataset solveit36_delta = solveit36_trial_a - solveit36_trial_b (40 frames, 2 bodies)
+In[15]:= dataset open solveit36_delta
+Out[15]= dataset solveit36_delta opened (2 bodies, 40 frames, 80 states) — recording armed
+In[16]:= sql "SELECT MAX(ABS(x)) AS max_dx, MAX(ABS(y)) AS max_dy FROM states"
+Out[16]= max_dx | max_dy
+0.26778294538839353 | 0.4995465204100412
+In[17]:= sql "SELECT t, MAX(ABS(x)) AS dx_at_t FROM states JOIN frames USING(frame) GROUP BY frame ORDER BY frame DESC LIMIT 3"
+Out[17]= t | dx_at_t
+2 | 0.26778294538839353
+1.95 | 0.26566104547420744
+1.9 | 0.26312812645046635
+In[18]:= dataset close
+Out[18]= dataset solveit36_delta closed
+In[19]:= dataset play solveit36_delta
+Out[19]= dataset plots written to datasets\solveit36_delta_plots.html (browser suppressed)
+In[20]:= dataset sum solveit36_delta solveit36_trial_b as solveit36_rebuilt
+Out[20]= dataset solveit36_rebuilt = solveit36_delta + solveit36_trial_b (40 frames, 2 bodies)
+In[21]:= dataset diff solveit36_rebuilt solveit36_trial_a as solveit36_zero
+Out[21]= dataset solveit36_zero = solveit36_rebuilt - solveit36_trial_a (40 frames, 2 bodies)
+In[22]:= dataset open solveit36_zero
+Out[22]= dataset solveit36_zero opened (2 bodies, 40 frames, 80 states) — recording armed
+In[23]:= sql "SELECT MAX(ABS(x)) AS x_residual, MAX(ABS(vy)) AS vy_residual FROM states"
+Out[23]= x_residual | vy_residual
+6.938893903907228e-18 | 2.7755575615628914e-17
+In[24]:= sql "SELECT MAX(ABS(energy)) AS e_residual FROM frames"
+Out[24]= e_residual
+0
+In[25]:= dataset close
+Out[25]= dataset solveit36_zero closed
+In[26]:= dataset delete solveit36_rebuilt
+Out[26]= dataset solveit36_rebuilt deleted
+In[27]:= dataset delete solveit36_zero
+Out[27]= dataset solveit36_zero deleted

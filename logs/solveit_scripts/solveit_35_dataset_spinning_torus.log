@@ -1,0 +1,22 @@
+In[1]:= new torus as wheel { mass = 2, ring_radius = 1.5, tube_radius = 0.4, angular_velocity = [1.5, 0, 2.5] }
+Out[1]= obj0 as wheel
+In[2]:= new sphere as marker { mass = 1, radius = 0.1, position = [3, 0, 0], velocity = [0, 0.6, 0], inverse_mass = 0 }
+Out[2]= obj1 as marker
+In[3]:= set system.g_constant = 0
+In[4]:= dataset create solveit35_torus
+Out[4]= dataset solveit35_torus created (datasets/solveit35_torus.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 6 steps 240
+Out[5]= t = 6 (2012 solver steps, 240 snapshots, |dE/E| = 1.394e-11)
+In[6]:= sql "SELECT MAX(ABS(qw*qw + qx*qx + qy*qy + qz*qz - 1.0)) AS worst_unit_error FROM states"
+Out[6]= worst_unit_error
+4.440892098500626e-16
+In[7]:= sql "SELECT b.name, MAX(ABS(s.qx)) AS qx_swing, MAX(ABS(s.qy)) AS qy_swing FROM states s JOIN bodies b ON b.body = s.body GROUP BY b.name ORDER BY b.name"
+Out[7]= name | qx_swing | qy_swing
+marker | 0 | 0
+wheel | 0.2891928067948092 | 0.2803142649501159
+In[8]:= angmom
+Out[8]= [3.675, 0, 11.850000000000001]
+In[9]:= movie create solveit35_torus
+Out[9]= movie solveit35_torus created from dataset solveit35_torus (movies\solveit35_torus.html, 240 frames, 2 bodies)
+In[10]:= dataset close
+Out[10]= dataset solveit35_torus closed

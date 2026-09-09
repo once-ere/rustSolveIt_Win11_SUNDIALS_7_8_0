@@ -1,0 +1,24 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new cuboid { mass = 2, position = [0, 0, 0], half_extents = [0.6, 0.6, 0.6], angular_velocity = [0, 0, 2] }
+Out[2]= obj0
+In[3]:= new sphere { mass = 1, radius = 0.3, position = [-3, 0.4, 0], velocity = [2, 0, 0] }
+Out[3]= obj1
+In[4]:= angmom
+Out[4]= [0, 0, 0.15999999999999992]
+In[5]:= energy
+Out[5]= 2.96
+In[6]:= step 2
+Out[6]= t = 2 (advanced by 2, 86 solver steps, 1 collision(s) — CONTACTS lists them)
+In[7]:= contacts
+Out[7]= contact0: obj0 <-> obj1 at t = 0.9655899592834437
+  point  = [-0.7730369010125487, 0.34987704936579467, 0]
+  normal = [-0.9859439347353071, 0.16707650211403258, -0]  (from obj0 toward obj1)
+  depth = 0.000000000000026867397195928788, approach speed = 2.4034935760686995, impulse = 3.0099680523146617
+In[8]:= get obj0.angular_momentum
+Out[8]= [0, 0, 0.31044030597153427]
+In[9]:= get obj1.velocity
+Out[9]= [-0.9676597449266859, 0.5028949336557211, 0]
+In[10]:= angmom
+Out[10]= [0, 0, 0.15999999999999984]
+In[11]:= energy
+Out[11]= 2.9600000000000013

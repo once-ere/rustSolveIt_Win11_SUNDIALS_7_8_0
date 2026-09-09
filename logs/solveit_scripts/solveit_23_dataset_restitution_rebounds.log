@@ -1,0 +1,28 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -10, 0]
+In[3]:= collide on
+Out[3]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[4]:= new cuboid as floor { mass = 1, half_extents = [50, 0.05, 50], position = [0, -0.05, 0], inverse_mass = 0 }
+Out[4]= obj0 as floor
+In[5]:= new sphere as elastic { mass = 1, radius = 0.5, position = [-2, 5.5, 0], restitution = 1.0 }
+Out[5]= obj1 as elastic
+In[6]:= new sphere as lively  { mass = 1, radius = 0.5, position = [ 0, 5.5, 0], restitution = 0.7 }
+Out[6]= obj2 as lively
+In[7]:= new sphere as dull    { mass = 1, radius = 0.5, position = [ 2, 5.5, 0], restitution = 0.5 }
+Out[7]= obj3 as dull
+In[8]:= dataset create solveit23_rebounds
+Out[8]= dataset solveit23_rebounds created (datasets/solveit23_rebounds.db, journal_mode=wal, schema v1) — recording armed
+In[9]:= run 3 steps 300
+Out[9]= t = 3 (885 solver steps, 300 snapshots, |dE/E| = 5.333e-1, 20 collision(s) — CONTACTS lists them)
+In[10]:= sql "SELECT b.name, MAX(s.vy) AS rebound_speed FROM states s JOIN bodies b ON b.body = s.body WHERE b.wall = 0 AND b.name <> 'floor' GROUP BY b.name ORDER BY rebound_speed DESC"
+Out[10]= name | rebound_speed
+elastic | 10.000000000000028
+lively | 7.000000000000018
+dull | 5.000000000000014
+In[11]:= sql "SELECT MAX(ncollisions) AS collisions FROM frames"
+Out[11]= collisions
+20
+In[12]:= movie create solveit23_rebounds
+Out[12]= movie solveit23_rebounds created from dataset solveit23_rebounds (movies\solveit23_rebounds.html, 300 frames, 4 bodies)
+In[13]:= dataset close
+Out[13]= dataset solveit23_rebounds closed

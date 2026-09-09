@@ -1,0 +1,24 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.b_field = [0, 0, 6]
+In[3]:= new sphere as ion { mass = 2, charge = -3, radius = 0.05, position = [0, 0, 0], velocity = [5, 0, 1] }
+Out[3]= obj0 as ion
+In[4]:= method bdf
+Out[4]= method = CVODE BDF
+In[5]:= dataset create solveit25_cyclotron
+Out[5]= dataset solveit25_cyclotron created (datasets/solveit25_cyclotron.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 0.6981317007977318 steps 300
+Out[6]= t = 0.6981317007977318 (300 solver steps, 300 snapshots, |dE/E| = 2.096e-8)
+In[7]:= sql "SELECT (MAX(x) - MIN(x)) / 2.0 AS gyroradius, MAX(z) AS pitch FROM states"
+Out[7]= gyroradius | pitch
+0.5555555528977862 | 0.6981317007977318
+In[8]:= sql "SELECT MAX(sqrt(vx*vx + vy*vy + vz*vz)) - MIN(sqrt(vx*vx + vy*vy + vz*vz)) AS speed_spread FROM states"
+Out[8]= speed_spread
+5.356468157913241e-8
+In[9]:= 2 * 5 / (3 * 6)
+Out[9]= 0.5555555555555556
+In[10]:= 1 * 0.6981317007977318
+Out[10]= 0.6981317007977318
+In[11]:= movie create solveit25_cyclotron
+Out[11]= movie solveit25_cyclotron created from dataset solveit25_cyclotron (movies\solveit25_cyclotron.html, 300 frames, 1 bodies)
+In[12]:= dataset close
+Out[12]= dataset solveit25_cyclotron closed

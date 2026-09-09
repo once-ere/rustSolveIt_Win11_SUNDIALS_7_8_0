@@ -1,0 +1,33 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= collide off
+Out[3]= collisions OFF (0 collidable pair(s); 0 impulse(s) so far)
+In[4]:= new sphere as pivot { mass = 1, radius = 0.02, position = [0, 0, 0], inverse_mass = 0 }
+Out[4]= obj0 as pivot
+In[5]:= new sphere as bob { mass = 1, radius = 0.05, position = [0.8414709848078965, -0.5403023058681398, 0] }
+Out[5]= obj1 as bob
+In[6]:= constrain pivot bob
+Out[6]= constraint0: rod obj0 <-> obj1, 1 row(s) (METHOD IDA is required to integrate it)
+In[7]:= equilibrium
+Out[7]= equilibrium found in 17 Newton iteration(s), 67 residual evaluation(s); largest net force on any free body = 7.459152323898993e-13, worst |g| = 1.9317880628477724e-14
+In[8]:= get bob.position
+Out[8]= [0.0000000000000735262479725006, -0.9999999999999807, 0]
+In[9]:= constrain off
+Out[9]= removed 1 constraint(s)
+In[10]:= reset
+Out[10]= system reset
+In[11]:= set system.uniform_gravity = [0, -9.81, 0]
+In[12]:= collide off
+Out[12]= collisions OFF (0 collidable pair(s); 0 impulse(s) so far)
+In[13]:= new sphere as stone { mass = 2, radius = 0.05, position = [0, 0, 0], velocity = [1, 0, 0] }
+Out[13]= obj0 as stone
+In[14]:= method adams
+Out[14]= method = CVODE Adams
+In[15]:= sensitivity 3 "gravity.y" "mass 0"
+Out[15]= t = 3 (CVODES, 129 solver steps)
+d/d(gravity.y):
+  obj0 position [0, 4.500000056696235, 0]
+d/d(mass 0):
+  obj0 position [0, 0, 0]
+In[16]:= get stone.position
+Out[16]= [3.000000000000001, -44.14500000000045, 0]

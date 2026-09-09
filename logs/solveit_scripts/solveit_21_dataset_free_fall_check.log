@@ -1,0 +1,20 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= new sphere as ball { mass = 2, radius = 0.5, position = [0, 10, 0] }
+Out[3]= obj0 as ball
+In[4]:= dataset create solveit21_free_fall
+Out[4]= dataset solveit21_free_fall created (datasets/solveit21_free_fall.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 1 steps 20
+Out[5]= t = 1 (12 solver steps, 20 snapshots, |dE/E| = 1.449e-16)
+In[6]:= dataset snapshot
+Out[6]= frame 20 recorded at t = 1
+In[7]:= sql "WITH err AS (SELECT f.t AS t, s.y - (10.0 - 4.905 * f.t * f.t) AS e FROM states s JOIN frames f ON f.frame = s.frame) SELECT MAX(ABS(e)) AS worst_abs_error FROM err"
+Out[7]= worst_abs_error
+3.552713678800501e-15
+In[8]:= sql "SELECT COUNT(*) AS frames, MIN(t) AS t_first, MAX(t) AS t_last FROM frames"
+Out[8]= frames | t_first | t_last
+21 | 0.05 | 1
+In[9]:= dataset play
+Out[9]= dataset plots written to datasets\solveit21_free_fall_plots.html (browser suppressed)
+In[10]:= dataset close
+Out[10]= dataset solveit21_free_fall closed

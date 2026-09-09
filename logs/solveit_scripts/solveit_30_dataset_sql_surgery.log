@@ -1,0 +1,55 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= new sphere as ball { mass = 1, radius = 0.3, position = [3, 4, 0] }
+Out[3]= obj0 as ball
+In[4]:= dataset create solveit30_original
+Out[4]= dataset solveit30_original created (datasets/solveit30_original.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 0.8 steps 8
+Out[5]= t = 0.8 (12 solver steps, 8 snapshots, |dE/E| = 1.811e-16)
+In[6]:= dataset close
+Out[6]= dataset solveit30_original closed
+In[7]:= dataset copy solveit30_original solveit30_lab
+Out[7]= dataset solveit30_original copied to solveit30_lab
+In[8]:= dataset open solveit30_lab
+Out[8]= dataset solveit30_lab opened (1 bodies, 8 frames, 8 states) — recording armed
+In[9]:= sql "ALTER TABLE states ADD COLUMN r REAL"
+Out[9]= ok (0 row(s) changed)
+In[10]:= sql "UPDATE states SET r = sqrt(x*x + y*y + z*z)"
+Out[10]= ok (8 row(s) changed)
+In[11]:= sql "SELECT MIN(r) AS r_min, MAX(r) AS r_max FROM states"
+Out[11]= r_min | r_max
+3.121053770763972 | 4.960847296833475
+In[12]:= sql "CREATE VIEW drop_curve AS SELECT f.t, s.y, s.r FROM states s JOIN frames f ON f.frame = s.frame"
+Out[12]= ok (0 row(s) changed)
+In[13]:= sql "SELECT COUNT(*) AS view_rows FROM drop_curve"
+Out[13]= view_rows
+8
+In[14]:= sql "SELECT name FROM pragma_table_info('states') ORDER BY cid"
+Out[14]= name
+frame
+body
+x
+y
+z
+qw
+qx
+qy
+qz
+vx
+vy
+vz
+wx
+wy
+wz
+r
+In[15]:= dataset close
+Out[15]= dataset solveit30_lab closed
+In[16]:= dataset open solveit30_original
+Out[16]= dataset solveit30_original opened (1 bodies, 8 frames, 8 states) — recording armed
+In[17]:= sql "SELECT COUNT(*) AS original_columns FROM pragma_table_info('states')"
+Out[17]= original_columns
+15
+In[18]:= dataset close
+Out[18]= dataset solveit30_original closed
+In[19]:= dataset delete solveit30_lab
+Out[19]= dataset solveit30_lab deleted

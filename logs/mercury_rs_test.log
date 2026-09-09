@@ -1,0 +1,45 @@
+   Compiling mercury_rs v0.1.0 (C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\planet_Mercury\mercury_rs)
+    Finished `release` profile [optimized] target(s) in 0.37s
+     Running unittests src\lib.rs (target\release\deps\mercury_rs-aa583ff47e0a444c.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src\main.rs (target\release\deps\mercury_rs-9e1f732979b7a040.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\physics.rs (target\release\deps\physics-61d28c7033da311a.exe)
+
+running 19 tests
+test angular_momentum_ledger_closes_in_secular_stage ... ok
+test pseudo_synchronous_ratio_at_mercury_e ... ok
+test hut_polynomials_at_zero_eccentricity_are_one ... ok
+test kepler_solver_circular_orbit_is_identity ... ok
+test jupiter_secular_rates_have_the_right_size_and_sign ... ok
+test pseudo_synchronous_equals_three_halves_at_e285 ... ok
+test csv_row_roundtrips_through_fmt_e ... ok
+test laplace_coefficients_match_the_power_series ... ok
+test gr_precession_is_einsteins_43_arcsec_per_century ... ok
+test reanchoring_preserves_gamma_exactly ... ok
+test triaxial_torque_zero_when_aligned ... ok
+test tidal_torque_sign_brakes_fast_spin_and_spins_up_slow ... ok
+test kepler_solver_inverts_keplers_equation ... ok
+test mean_motion_matches_keplers_third_law ... ok
+test reanchoring_leaves_gamma2_invariant ... ok
+test restart_reproduces_bit_identical_state ... ok
+test libration_frequency_matches_goldreich_peale ... ok
+test despin_rate_matches_linearized_prediction ... ok
+test root_function_stops_at_the_crossing ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+   Doc-tests mercury_rs
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

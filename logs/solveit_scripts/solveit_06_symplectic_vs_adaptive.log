@@ -1,0 +1,24 @@
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as sun    { mass = 1000, radius = 0.2 }
+Out[2]= obj0 as sun
+In[3]:= new sphere as planet { mass = 0.001, radius = 0.05, position = [4, 0, 0], velocity = [0, 0, 10] }
+Out[3]= obj1 as planet
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= run 60 steps 60
+Out[5]= t = 60 (507075 solver steps, 60 snapshots, |dE/E| = 1.459e-8)
+In[6]:= energy
+Out[6]= -0.20000000291885495
+In[7]:= reset
+Out[7]= system reset
+In[8]:= set system.g_constant = 1
+In[9]:= new sphere as sun    { mass = 1000, radius = 0.2 }
+Out[9]= obj0 as sun
+In[10]:= new sphere as planet { mass = 0.001, radius = 0.05, position = [4, 0, 0], velocity = [0, 0, 10] }
+Out[10]= obj1 as planet
+In[11]:= method sprk mclachlan_4_4 0.001
+Out[11]= method = ARKODE SPRK ARKODE_SPRK_MCLACHLAN_4_4, fixed dt = 0.001
+In[12]:= run 60 steps 60
+Out[12]= t = 60 (60000 solver steps, 60 snapshots, |dE/E| = 8.957e-11)
+In[13]:= energy
+Out[13]= -0.20000000001790574

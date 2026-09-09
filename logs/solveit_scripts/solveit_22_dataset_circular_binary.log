@@ -1,0 +1,25 @@
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere as star_a { mass = 1, radius = 0.1, position = [-1, 0, 0], velocity = [0, -0.5, 0] }
+Out[2]= obj0 as star_a
+In[3]:= new sphere as star_b { mass = 1, radius = 0.1, position = [ 1, 0, 0], velocity = [0,  0.5, 0] }
+Out[3]= obj1 as star_b
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit22_binary
+Out[5]= dataset solveit22_binary created (datasets/solveit22_binary.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 12.566370614359172 steps 150
+Out[6]= t = 12.566370614359172 (278 solver steps, 150 snapshots, |dE/E| = 4.496e-11)
+In[7]:= sql "SELECT MAX(ABS(comx)) AS com_x, MAX(ABS(comy)) AS com_y FROM frames"
+Out[7]= com_x | com_y
+7.436273818939299e-13 | 5.651035195342047e-14
+In[8]:= sql "SELECT b.name, MIN(sqrt(s.x*s.x + s.y*s.y)) AS r_min, MAX(sqrt(s.x*s.x + s.y*s.y)) AS r_max FROM states s JOIN bodies b ON b.body = s.body GROUP BY b.name ORDER BY b.name"
+Out[8]= name | r_min | r_max
+star_a | 0.9999999996159721 | 1.0000000006498577
+star_b | 0.9999999996174593 | 1.0000000006488365
+In[9]:= sql "SELECT MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+Out[9]= energy_spread
+9.972572767580345e-11
+In[10]:= movie create solveit22_binary
+Out[10]= movie solveit22_binary created from dataset solveit22_binary (movies\solveit22_binary.html, 150 frames, 2 bodies)
+In[11]:= dataset close
+Out[11]= dataset solveit22_binary closed

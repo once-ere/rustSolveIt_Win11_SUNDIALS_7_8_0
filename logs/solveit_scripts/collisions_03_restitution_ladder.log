@@ -1,0 +1,50 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new sphere { mass = 1, radius = 0.5, position = [-2, 0, 0], velocity = [1, 0, 0] }
+Out[2]= obj0
+In[3]:= new sphere { mass = 1, radius = 0.5, position = [2, 0, 0], velocity = [-1, 0, 0] }
+Out[3]= obj1
+In[4]:= step 3
+Out[4]= t = 3 (advanced by 3, 26 solver steps, 1 collision(s) — CONTACTS lists them)
+In[5]:= obj1.velocity.x - obj0.velocity.x
+Out[5]= 2
+In[6]:= energy
+Out[6]= 1
+In[7]:= reset
+Out[7]= system reset
+In[8]:= set system.g_constant = 0
+In[9]:= new sphere { mass = 1, radius = 0.5, position = [-2, 0, 0], velocity = [1, 0, 0], restitution = 0.8 }
+Out[9]= obj0
+In[10]:= new sphere { mass = 1, radius = 0.5, position = [2, 0, 0], velocity = [-1, 0, 0] }
+Out[10]= obj1
+In[11]:= step 3
+Out[11]= t = 3 (advanced by 3, 24 solver steps, 1 collision(s) — CONTACTS lists them)
+In[12]:= obj1.velocity.x - obj0.velocity.x
+Out[12]= 1.6
+In[13]:= energy
+Out[13]= 0.6400000000000001
+In[14]:= reset
+Out[14]= system reset
+In[15]:= set system.g_constant = 0
+In[16]:= new sphere { mass = 1, radius = 0.5, position = [-2, 0, 0], velocity = [1, 0, 0], restitution = 0.5 }
+Out[16]= obj0
+In[17]:= new sphere { mass = 1, radius = 0.5, position = [2, 0, 0], velocity = [-1, 0, 0] }
+Out[17]= obj1
+In[18]:= step 3
+Out[18]= t = 3 (advanced by 3, 20 solver steps, 1 collision(s) — CONTACTS lists them)
+In[19]:= obj1.velocity.x - obj0.velocity.x
+Out[19]= 1
+In[20]:= energy
+Out[20]= 0.25
+In[21]:= reset
+Out[21]= system reset
+In[22]:= set system.g_constant = 0
+In[23]:= new sphere { mass = 1, radius = 0.5, position = [-2, 0, 0], velocity = [1, 0, 0], restitution = 0.2 }
+Out[23]= obj0
+In[24]:= new sphere { mass = 1, radius = 0.5, position = [2, 0, 0], velocity = [-1, 0, 0] }
+Out[24]= obj1
+In[25]:= step 3
+Out[25]= t = 3 (advanced by 3, 17 solver steps, 1 collision(s) — CONTACTS lists them)
+In[26]:= obj1.velocity.x - obj0.velocity.x
+Out[26]= 0.3999999999999999
+In[27]:= energy
+Out[27]= 0.03999999999999998

@@ -1,0 +1,40 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new sphere { mass = 1, radius = 0.5, position = [-4, 0, 0], velocity = [2, 0, 0], restitution = 0.95 }
+Out[2]= obj0
+In[3]:= new sphere { mass = 1, radius = 0.5, position = [0, 0, 0], restitution = 0.95 }
+Out[3]= obj1
+In[4]:= new sphere { mass = 1, radius = 0.5, position = [0.9, 0.55, 0], restitution = 0.95 }
+Out[4]= obj2
+In[5]:= new sphere { mass = 1, radius = 0.5, position = [0.9, -0.55, 0], restitution = 0.95 }
+Out[5]= obj3
+In[6]:= momentum
+Out[6]= [2, 0, 0]
+In[7]:= step 3
+Out[7]= t = 3 (advanced by 3, 51 solver steps, 4 collision(s) — CONTACTS lists them)
+In[8]:= contacts
+Out[8]= contact0: obj0 <-> obj1 at t = 1.5
+  point  = [-0.5, 0, 0]
+  normal = [1, 0, 0]  (from obj0 toward obj1)
+  depth = 0, approach speed = 2, impulse = 1.95
+contact1: obj1 <-> obj2 at t = 1.5332488951669214
+  point  = [0.4824176727877484, 0.275, 0]
+  normal = [0.8351646544245033, 0.55, 0]  (from obj1 toward obj2)
+  depth = 0, approach speed = 1.6285710761277814, impulse = 1.5878567992245871
+contact2: obj1 <-> obj3 at t = 1.5332488951669214
+  point  = [0.4824176727877484, -0.275, 0]
+  normal = [0.8351646544245033, -0.55, 0]  (from obj1 toward obj3)
+  depth = 0, approach speed = 1.0013676404340697, impulse = 0.976333449423218
+contact3: obj0 <-> obj1 at t = 1.8132074392302107
+  point  = [-0.4865611201936529, -0.04708032633455161, 0]
+  normal = [0.9955570156896734, -0.09416065266910323, 0]  (from obj0 toward obj1)
+  depth = 0.00000000000000011102230246251565, approach speed = 0.2087781978407575, impulse = 0.20355874289473855
+In[9]:= get obj0.velocity
+Out[9]= [-0.15265433459382738, 0.01916722408747076, 0]
+In[10]:= get obj1.velocity
+Out[10]= [0.011133271703202219, -0.3555050664782239, 0]
+In[11]:= get obj2.velocity
+Out[11]= [1.3261218750000001, 0.873321239573523, 0]
+In[12]:= get obj3.velocity
+Out[12]= [0.815399187890625, -0.5369833971827699, 0]
+In[13]:= momentum
+Out[13]= [2, 0, 0]

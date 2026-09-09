@@ -1,0 +1,60 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.b_field = [0, 0, 6]
+In[3]:= new sphere as ion { mass = 2, charge = -3, radius = 0.05, position = [0, 0, 0], velocity = [5, 0, 1] }
+Out[3]= obj0 as ion
+In[4]:= method bdf
+Out[4]= method = CVODE BDF
+In[5]:= dataset create solveit38_helix
+Out[5]= dataset solveit38_helix created (datasets/solveit38_helix.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 0.6981317007977318 steps 100
+Out[6]= t = 0.6981317007977317 (303 solver steps, 100 snapshots, |dE/E| = 2.048e-8)
+In[7]:= dataset close
+Out[7]= dataset solveit38_helix closed
+In[8]:= dataset map solveit38_helix to cylindrical as solveit38_cyl
+Out[8]= dataset solveit38_cyl = cylindrical(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[9]:= dataset open solveit38_cyl
+Out[9]= dataset solveit38_cyl opened (1 bodies, 100 frames, 100 states) — recording armed
+In[10]:= sql "SELECT MAX(z) AS pitch FROM states"
+Out[10]= pitch
+0.6981317007977317
+In[11]:= dataset close
+Out[11]= dataset solveit38_cyl closed
+In[12]:= dataset map solveit38_helix to toroidal 2.0 as solveit38_tor
+Out[12]= dataset solveit38_tor = toroidal(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[13]:= dataset open solveit38_tor
+Out[13]= dataset solveit38_tor opened (1 bodies, 100 frames, 100 states) — recording armed
+In[14]:= sql "SELECT MIN(y) AS tau_min, MAX(y) AS tau_max FROM states"
+Out[14]= tau_min | tau_max
+5.28650864731464e-9 | 1.1892318293548387
+In[15]:= dataset close
+Out[15]= dataset solveit38_tor closed
+In[16]:= dataset map solveit38_helix to bispherical 2.0 as solveit38_bis
+Out[16]= dataset solveit38_bis = bispherical(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[17]:= dataset map solveit38_helix to oblate 1.0 as solveit38_obl
+Out[17]= dataset solveit38_obl = oblate(solveit38_helix) (100 frames mapped; velocities stored as NULL — curvilinear velocity components need the metric)
+In[18]:= dataset info solveit38_bis
+Out[18]= dataset solveit38_bis: 1 bodies, 100 frames, 100 states
+In[19]:= dataset info solveit38_obl
+Out[19]= dataset solveit38_obl: 1 bodies, 100 frames, 100 states
+In[20]:= let w = [1.3, 0.7, 2.1]
+Out[20]= w set
+In[21]:= norm(oblate_to_cart(cart_to_oblate(w, 1.25), 1.25) - w)
+Out[21]= 0.0000000000000004440892098500626
+In[22]:= norm(prolate_to_cart(cart_to_prolate(w, 1.25), 1.25) - w)
+Out[22]= 0.0000000000000007447602459741819
+In[23]:= norm(paraboloidal_to_cart(cart_to_paraboloidal(w)) - w)
+Out[23]= 0.0000000000000004965068306494546
+In[24]:= norm(elliptic_cyl_to_cart(cart_to_elliptic_cyl(w, 1.25), 1.25) - w)
+Out[24]= 0
+In[25]:= norm(parabolic_cyl_to_cart(cart_to_parabolic_cyl(w)) - w)
+Out[25]= 0
+In[26]:= norm(bipolar_cyl_to_cart(cart_to_bipolar_cyl(w, 1.25), 1.25) - w)
+Out[26]= 0.0000000000000002220446049250313
+In[27]:= norm(bispherical_to_cart(cart_to_bispherical(w, 1.25), 1.25) - w)
+Out[27]= 0.0000000000000004440892098500626
+In[28]:= norm(cylindrical_to_cart(cart_to_cylindrical(w)) - w)
+Out[28]= 0
+In[29]:= elliptic_to_cart2(cart2_to_elliptic([1.2, -0.8], 1.5), 1.5)
+Out[29]= [1.2000000000000004, -0.8000000000000002]
+In[30]:= bipolar_to_cart2(cart2_to_bipolar([1.2, -0.8], 1.5), 1.5)
+Out[30]= [1.2, -0.8]

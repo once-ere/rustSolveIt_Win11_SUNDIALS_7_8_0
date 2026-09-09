@@ -1,0 +1,16 @@
+  950/1365  failures so far: 0  (3s)
+  1000/1365  failures so far: 0  (3s)
+  1050/1365  failures so far: 0  (4s)
+  1100/1365  failures so far: 0  (6s)
+  1150/1365  failures so far: 0  (7s)
+  1200/1365  failures so far: 0  (7s)
+  1250/1365  failures so far: 0  (7s)
+  1300/1365  failures so far: 0  (7s)
+  1350/1365  failures so far: 0  (7s)
+  1365/1365  failures so far: 0  (35s)
+
+PASS 1365/1365  (100.0%)   35s wall clock
+
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\index_data\catalog.json
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\index_data\verification_report.json
+INDEX_VERIFY_EXIT=0

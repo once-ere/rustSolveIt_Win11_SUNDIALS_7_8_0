@@ -1,0 +1,42 @@
+In[1]:= new cuboid as racket { mass = 1, half_extents = [1.6, 0.9, 0.25], angular_momentum = [0.02, 3, 0.02] }
+Out[1]= obj0 as racket
+In[2]:= angmom
+Out[2]= [0.02, 3, 0.02]
+In[3]:= energy
+Out[3]= 5.148625491836798
+In[4]:= run 0.5 steps 5
+Out[4]= t = 0.5 (59 solver steps, 5 snapshots, |dE/E| = 1.310e-12)
+In[5]:= get racket.orientation.x
+Out[5]= 0.013359726984815766
+In[6]:= run 0.5 steps 5
+Out[6]= t = 1 (59 solver steps, 5 snapshots, |dE/E| = 9.019e-12)
+In[7]:= get racket.orientation.x
+Out[7]= 0.009214316848229325
+In[8]:= run 0.5 steps 5
+Out[8]= t = 1.5 (50 solver steps, 5 snapshots, |dE/E| = 7.744e-11)
+In[9]:= get racket.orientation.x
+Out[9]= -0.06928171314906612
+In[10]:= run 0.5 steps 5
+Out[10]= t = 2 (70 solver steps, 5 snapshots, |dE/E| = 3.793e-10)
+In[11]:= get racket.orientation.x
+Out[11]= -0.32837233114496406
+In[12]:= run 0.5 steps 5
+Out[12]= t = 2.5 (76 solver steps, 5 snapshots, |dE/E| = 1.187e-9)
+In[13]:= get racket.orientation.x
+Out[13]= -0.4991829732950659
+In[14]:= run 0.5 steps 5
+Out[14]= t = 3 (58 solver steps, 5 snapshots, |dE/E| = 1.927e-10)
+In[15]:= get racket.orientation.x
+Out[15]= 0.1093367245470612
+In[16]:= run 0.5 steps 5
+Out[16]= t = 3.5 (46 solver steps, 5 snapshots, |dE/E| = 7.359e-11)
+In[17]:= get racket.orientation.x
+Out[17]= 0.8230403847701171
+In[18]:= run 0.5 steps 5
+Out[18]= t = 4 (45 solver steps, 5 snapshots, |dE/E| = 8.451e-12)
+In[19]:= get racket.orientation.x
+Out[19]= 0.9661018228588313
+In[20]:= angmom
+Out[20]= [0.02, 3, 0.02]
+In[21]:= energy
+Out[21]= 5.148625488700016

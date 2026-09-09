@@ -1,0 +1,16 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.b_field = [0, 0, 2]
+In[3]:= new cuboid as rotor { mass = 1, half_extents = [1, 0.4, 0.4], magnetic_moment_tensor = [[0, 0, 0.5], [0, 0, 0], [-0.5, 0, 0]] }
+Out[3]= obj0 as rotor
+In[4]:= energy
+Out[4]= 0
+In[5]:= angmom
+Out[5]= [0, 0, 0]
+In[6]:= run 3 steps 30
+Out[6]= t = 3 (550 solver steps, 30 snapshots, |dE/E| = 9.928e-1)
+In[7]:= energy
+Out[7]= 0.9928369509454675
+In[8]:= angmom
+Out[8]= [0.46022300703213415, 0, 0]
+In[9]:= get rotor.angular_momentum
+Out[9]= [0.46022300703213415, 0, 0]

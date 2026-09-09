@@ -1,0 +1,182 @@
+    Finished `release` profile [optimized] target(s) in 0.01s
+     Running unittests src\lib.rs (target\release\deps\reboundx_rs-cbbbf69cbbbec330.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\core_params.rs (target\release\deps\core_params-4112a0e9df5ebf12.exe)
+
+running 34 tests
+test add_force_sets_the_velocity_dependent_flag_only_for_vel_forces ... ok
+test a_selector_naming_no_object_is_refused ... ok
+test add_force_refuses_an_incomplete_or_nonexistent_force ... ok
+test a_param_list_reads_back_head_first ... ok
+test attach_installs_no_hooks_until_effects_are_added ... ok
+test additional_forces_list_is_traversed_newest_first ... ok
+test double_param_round_trips_bit_for_bit ... ok
+test an_effectless_force_reproduces_plain_gravity_bit_for_bit ... ok
+test extras_survives_integration_with_pre_and_post_operators ... ok
+test attach_registers_the_107_default_params_in_C_order ... ok
+test get_force_and_get_operator_find_things_by_name ... ok
+test getter_returns_none_when_the_stored_type_differs ... ok
+test orbit_param_round_trips_field_for_field ... ok
+test get_force_returns_the_most_recently_created_namesake ... ok
+test getter_returns_none_for_a_registered_but_unvalued_param ... ok
+test loading_an_unknown_operator_fails_without_leaking_an_entry ... ok
+test params_on_particles_forces_and_operators_are_independent ... ok
+test int_and_uint32_params_round_trip ... ok
+test getters_return_none_for_a_name_that_was_never_set ... ok
+test add_operator_picks_the_timing_that_suits_the_integrator ... ok
+test central_force_can_stand_in_for_a_missing_central_mass ... ok
+test detach_leaves_a_foreign_callback_alone ... ok
+test loading_an_unknown_force_fails_without_leaking_an_entry ... ok
+test extras_survives_integration_with_a_force ... ok
+test pre_hook_uses_dt_and_post_hook_uses_dt_last_done ... ok
+test rebx_with_fails_cleanly_when_nothing_is_attached_and_restores_otherwise ... ok
+test register_param_rejects_a_duplicate_name ... ok
+test registered_param_types_match_the_C_table ... ok
+test remove_operator_unhooks_every_step_that_uses_it ... ok
+test remove_force_unhooks_it_from_the_simulation ... ok
+test string_force_ode_and_pointer_params_round_trip ... ok
+test setting_an_unregistered_name_is_refused ... ok
+test vec3d_param_round_trips_component_wise ... ok
+test the_same_setup_integrates_bit_identically_twice ... ok
+
+test result: ok. 34 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\forces_conservative.rs (target\release\deps\forces_conservative-3b6f5ec423e72e44.exe)
+
+running 32 tests
+test gr_potential_potential_matches_closed_form ... ok
+test central_force_potential_matches_closed_form_in_both_branches ... ok
+test gravitational_harmonics_potential_matches_closed_form ... ok
+test gr_potential_with_huge_c_is_bitwise_plain_gravity ... ok
+test central_force_without_parameters_is_bitwise_plain_gravity ... ok
+test gr_with_huge_c_is_bitwise_plain_gravity ... ok
+test gravitational_harmonics_with_zero_J2_is_bitwise_plain_gravity ... ok
+test force_ordering_is_the_reverse_of_addition_order ... ok
+test gravitational_harmonics_without_R_eq_is_bitwise_plain_gravity ... ok
+test gr_full_with_huge_c_is_bitwise_plain_gravity ... ok
+test gr_potential_conserves_energy_including_its_own_potential ... ok
+test gravitational_harmonics_conserves_energy_including_its_own_potential ... ok
+test central_force_conserves_energy_including_its_own_potential ... ok
+test central_force_gamma_minus_three_reproduces_gr_potential ... ok
+test j2_regresses_the_node_at_the_analytic_rate ... ok
+test repeated_runs_are_bit_identical ... ok
+test gr_conserves_its_hamiltonian ... ok
+test j2_node_regression_scales_as_semimajor_axis_to_the_minus_seven_halves ... ok
+test j2_node_regression_scales_as_cos_inclination ... ok
+test j2_node_regression_scales_linearly_with_J2 ... ok
+test j2_advances_the_pericentre_of_a_coplanar_orbit ... ok
+test gr_potential_precession_grows_linearly_in_time ... ok
+test central_force_Acentral_is_refused_for_gamma_minus_two ... ok
+test gr_potential_precession_scales_as_inverse_c_squared ... ok
+test gr_full_hamiltonian_residual_scales_as_inverse_c_fourth ... ok
+test gr_potential_tighter_orbit_precesses_faster ... ok
+test gr_potential_precession_is_prograde_and_matches_analytic ... ok
+test three_gr_flavours_agree_on_the_precession_of_a_test_particle ... ok
+test central_force_Acentral_reproduces_the_requested_precession_rate ... ok
+test gr_tighter_orbit_precesses_faster ... ok
+test gr_precession_is_prograde_and_matches_analytic ... ok
+test gr_full_precession_is_prograde_and_matches_analytic ... ok
+
+test result: ok. 32 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.02s
+
+     Running tests\forces_dissipative.rs (target\release\deps\forces_dissipative-2dd6bd7ab1cdb4dc.exe)
+
+running 28 tests
+test radiation_beta_and_radius_helpers_round_trip ... ok
+test radiation_beta_one_cancels_gravity_for_a_test_particle ... ok
+test radiation_beta_above_one_unbinds_the_grain ... ok
+test tides_ctl_decay_rate_is_linear_in_tau ... ok
+test mod_direct_negative_tau_e_damps_e_and_leaves_a_alone ... ok
+test radiation_beta_reduces_the_effective_central_mass ... ok
+test tides_ctl_time_lag_drag_shrinks_a_monotonically ... ok
+test mod_direct_tau_a_follows_the_exact_geometric_progression ... ok
+test mod_direct_tau_omega_is_pure_apsidal_precession ... ok
+test mof_infinite_tau_a_is_a_bit_exact_no_op ... ok
+test tides_ctl_time_lag_damps_eccentricity ... ok
+test yarkovsky_without_flag_is_a_bit_exact_no_op ... ok
+test mof_tau_a_sign_flip_is_reciprocal ... ok
+test tides_ctl_conservative_piece_conserves_total_energy ... ok
+test type_I_migration_damps_a_e_and_inc ... ok
+test mof_negative_tau_a_shrinks_a_as_a_pure_exponential ... ok
+test yarkovsky_drift_scales_linearly_with_luminosity ... ok
+test yarkovsky_drift_matches_the_energy_balance_prediction ... ok
+test mof_planet_trap_reverses_and_amplifies_migration ... ok
+test stacked_dissipative_effects_are_bit_reproducible ... ok
+test type_I_migration_rate_scales_linearly_with_planet_mass ... ok
+test type_I_migration_rate_scales_linearly_with_surface_density ... ok
+test mof_negative_tau_e_damps_e_at_constant_angular_momentum ... ok
+test yarkovsky_flag_sign_sets_the_migration_direction ... ok
+test mof_negative_tau_inc_damps_inclination ... ok
+test exponential_migration_direction_follows_afin_minus_aini ... ok
+test exponential_migration_matches_the_closed_form_track ... ok
+test tides_ctl_without_k2_is_a_bit_exact_no_op ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+
+     Running tests\interpolation_and_spin.rs (target\release\deps\interpolation_and_spin-481da202fffc1908.exe)
+
+running 17 tests
+test interpolator_is_bit_exact_at_its_knots_sweeping_forwards ... ok
+test irotate_round_trip_restores_positions_velocities_and_spins ... ok
+test interpolator_is_bit_exact_at_its_knots_sweeping_backwards ... ok
+test interpolator_error_scales_as_the_fourth_power_of_knot_spacing ... ok
+test irotate_leaves_the_total_angular_momentum_magnitude_invariant ... ok
+test interpolator_reproduces_a_straight_line ... ok
+test interpolator_reproduces_a_smooth_function_between_knots ... ok
+test interpolator_none_returns_exact_zero_and_builds_no_second_derivatives ... ok
+test spin_angular_momentum_skips_bodies_missing_I_or_Omega ... ok
+test spin_angular_momentum_is_the_sum_of_I_times_Omega ... ok
+test interpolator_is_bit_deterministic_and_sweep_direction_independent ... ok
+test spin_initialize_ode_has_three_state_variables_per_tracked_body ... ok
+test irotate_transforms_the_total_angular_momentum_as_a_vector ... ok
+test tides_spin_integration_is_bit_reproducible ... ok
+test tides_spin_without_k2_reproduces_plain_gravity_bit_for_bit ... ok
+test dissipative_tides_spin_down_a_super_synchronous_planet ... ok
+test tides_spin_conserves_total_angular_momentum_in_the_small_timestep_limit ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests\operators_and_integrators.rs (target\release\deps\operators_and_integrators-66fad7fa72f04ff5.exe)
+
+running 26 tests
+test modify_mass_reproduces_the_first_order_recurrence_exactly ... ok
+test modify_mass_positive_tau_grows_mass_by_the_mirror_factor ... ok
+test integrate_force_runs_as_a_post_timestep_operator_in_a_real_simulation ... ok
+test integrate_force_without_a_force_parameter_only_resets_accelerations ... ok
+test integrate_force_defaults_to_euler_when_the_integrator_param_is_unset ... ok
+test a_position_only_force_gives_every_integrator_the_same_kick ... ok
+test the_scratch_buffers_land_on_the_force_parameter_list ... ok
+test modify_mass_ratio_matches_exp_minus_t_over_tau ... ok
+test integrate_force_with_integrator_none_leaves_velocities_alone ... ok
+test a_force_that_adds_nothing_leaves_the_state_bit_identical ... ok
+test modify_mass_deviation_from_exponential_is_first_order_in_dt ... ok
+test implicit_midpoint_conserves_speed_while_the_explicit_methods_do_not ... ok
+test integrate_force_resets_accelerations_before_integrating ... ok
+test integrator_scratch_buffers_are_pure_scratch ... ok
+test one_step_amplification_factors_match_the_butcher_tableaux ... ok
+test integrate_force_is_bit_deterministic ... ok
+test higher_order_integrators_are_more_accurate_on_exponential_decay ... ok
+test integrators_show_their_expected_order_of_convergence ... ok
+test rotation_step_matches_each_methods_complex_amplification_factor ... ok
+test track_min_distance_brackets_the_pericentre_distance ... ok
+test track_min_distance_orbit_records_the_state_at_the_minimum ... ok
+test track_min_distance_unknown_source_leaves_the_value_untouched_and_warns ... ok
+test track_min_distance_from_named_particle_matches_the_default_source ... ok
+test track_min_distance_equals_the_minimum_over_post_step_samples ... ok
+test track_min_distance_is_bit_deterministic ... ok
+test track_min_distance_recorder_does_not_perturb_the_trajectory ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests reboundx_rs
+
+running 2 tests
+test src\core.rs - core::rebx_with (line 130) ... ignored
+test src\tides_spin.rs - tides_spin::rebx_spin_initialize_ode (line 433) ... ignored
+
+test result: ok. 0 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

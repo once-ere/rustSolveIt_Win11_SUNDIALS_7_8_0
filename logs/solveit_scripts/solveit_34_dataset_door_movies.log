@@ -1,0 +1,182 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= collide off
+Out[3]= collisions OFF (0 collidable pair(s); 0 impulse(s) so far)
+In[4]:= new sphere as jamb { mass = 1, radius = 0.02, position = [0, 0, 0], inverse_mass = 0 }
+Out[4]= obj0 as jamb
+In[5]:= new cuboid as door { mass = 1, half_extents = [0.2, 0.4, 0.2], position = [0.0199986666933331, -0.9998000066665778, 0] }
+Out[5]= obj1 as door
+In[6]:= hinge jamb door [0, 0, 1]
+Out[6]= constraint0: hinge obj0 <-> obj1 about [0, 0, 1], 5 row(s) — one freedom left (METHOD IDA is required to integrate it)
+In[7]:= method ida
+Out[7]= method = IDA (constrained DAE, GGL index-2)
+In[8]:= dataset create solveit34_door
+Out[8]= dataset solveit34_door created (datasets/solveit34_door.db, journal_mode=wal, schema v1) — recording armed
+In[9]:= run 1 steps 50
+Out[9]= t = 1 (70 solver steps, 50 snapshots, |dE/E| = 1.613e-9)
+In[10]:= movie create solveit34_door as door_half
+Out[10]= movie door_half created from dataset solveit34_door (movies\door_half.html, 50 frames, 2 bodies)
+In[11]:= run 1 steps 50
+Out[11]= t = 2 (69 solver steps, 50 snapshots, |dE/E| = 3.782e-11)
+In[12]:= movie create solveit34_door as door_full
+Out[12]= movie door_full created from dataset solveit34_door (movies\door_full.html, 100 frames, 2 bodies)
+In[13]:= movie list
+Out[13]= door_full
+door_half
+nb_collision_01_head_on_exchange
+nb_collision_02_unequal_masses
+nb_collision_04_newtons_cradle
+nb_collision_05_billiard_break
+nb_collision_06_spin_up
+nb_collision_07_thin_wall_toi
+nb_collision_08_colliding_binary
+nb_collision_09_spinning_target
+nb_collision_10_billiard_box
+nb_collision_11_box_of_shapes
+nb_collision_12_two_dumbbells
+nb_dynamic_routh_p1_centre_of_gravity
+nb_dynamic_routh_p1_collinear_three_body
+nb_dynamic_routh_p1_equal_periods
+nb_dynamic_routh_p1_equilateral_three_body
+nb_dynamic_routh_p1_escape_velocity
+nb_dynamic_routh_p1_expanding_sphere
+nb_dynamic_routh_p1_geometric_progression
+nb_dynamic_routh_p1_hodograph_circle
+nb_dynamic_routh_p1_kepler_equation
+nb_dynamic_routh_p1_lambert_theorem
+nb_dynamic_routh_p1_oblique_impact
+nb_dynamic_routh_p1_parabola_of_safety
+nb_dynamic_routh_p1_sphere_exchange
+nb_dynamic_routh_p1_three_projectiles
+nb_dynamic_routh_p1_two_trajectories
+nb_dynamic_routh_p2_correlated_bodies
+nb_dynamic_routh_p2_fixed_couple
+nb_dynamic_routh_p2_impulsive_couple
+nb_dynamic_routh_p2_invariable_line
+nb_dynamic_routh_p2_mean_axis_instability
+nb_dynamic_routh_p2_period_ratio
+nb_dynamic_routh_p2_poinsot_rolling
+nb_dynamic_routh_p2_polhode_quarter_period
+nb_dynamic_routh_p2_principal_axes_in_space
+nb_dynamic_routh_p2_rolling_cones
+nb_dynamic_routh_p2_separatrix
+nb_dynamic_routh_p2_spin_stabilisation
+nb_dynamic_routh_p2_sylvester_time
+nb_dynamic_routh_p2_thin_rod
+nb_dynamic_routh_p2_two_quadrics
+nb_dynamic_routh_p2_uniaxal_precession
+nb_dynamic_routh_rectangle_diagonal
+nb_dynamic_tumbling_body
+nb_rust_bouncing_ball_restitution
+nb_rust_charged_in_b_field
+nb_rust_kepler_orbit
+nb_rust_newtons_cradle
+nb_rust_outer_solar_system
+nb_rust_tumbling_body
+nb_solveit_01_elastic_head_on
+nb_solveit_02_keplers_third_law
+nb_solveit_04_restitution_ladder
+nb_solveit_05_cyclotron_bdf
+nb_solveit_06_symplectic_vs_adaptive
+nb_solveit_07_dzhanibekov
+nb_solveit_08_magnetic_torque
+nb_solveit_09_newtons_cradle
+nb_solveit_10_no_tunnelling
+nb_solveit_11_lagrange_l4
+nb_solveit_13_tilted_torus
+nb_solveit_17_pendulum_dae
+nb_solveit_19_hinged_door
+nb_video_piston_crankshaft
+solveit20_kepler
+solveit22_binary
+solveit23_rebounds
+solveit24_exchange
+solveit25_cyclotron
+solveit26_dzhanibekov
+solveit28_pendulum
+solveit29_box_rattle
+solveit35_torus
+In[14]:= sql "SELECT COUNT(*) AS frames FROM frames"
+Out[14]= frames
+100
+In[15]:= movie delete door_half
+Out[15]= movie door_half deleted
+In[16]:= movie list
+Out[16]= door_full
+nb_collision_01_head_on_exchange
+nb_collision_02_unequal_masses
+nb_collision_04_newtons_cradle
+nb_collision_05_billiard_break
+nb_collision_06_spin_up
+nb_collision_07_thin_wall_toi
+nb_collision_08_colliding_binary
+nb_collision_09_spinning_target
+nb_collision_10_billiard_box
+nb_collision_11_box_of_shapes
+nb_collision_12_two_dumbbells
+nb_dynamic_routh_p1_centre_of_gravity
+nb_dynamic_routh_p1_collinear_three_body
+nb_dynamic_routh_p1_equal_periods
+nb_dynamic_routh_p1_equilateral_three_body
+nb_dynamic_routh_p1_escape_velocity
+nb_dynamic_routh_p1_expanding_sphere
+nb_dynamic_routh_p1_geometric_progression
+nb_dynamic_routh_p1_hodograph_circle
+nb_dynamic_routh_p1_kepler_equation
+nb_dynamic_routh_p1_lambert_theorem
+nb_dynamic_routh_p1_oblique_impact
+nb_dynamic_routh_p1_parabola_of_safety
+nb_dynamic_routh_p1_sphere_exchange
+nb_dynamic_routh_p1_three_projectiles
+nb_dynamic_routh_p1_two_trajectories
+nb_dynamic_routh_p2_correlated_bodies
+nb_dynamic_routh_p2_fixed_couple
+nb_dynamic_routh_p2_impulsive_couple
+nb_dynamic_routh_p2_invariable_line
+nb_dynamic_routh_p2_mean_axis_instability
+nb_dynamic_routh_p2_period_ratio
+nb_dynamic_routh_p2_poinsot_rolling
+nb_dynamic_routh_p2_polhode_quarter_period
+nb_dynamic_routh_p2_principal_axes_in_space
+nb_dynamic_routh_p2_rolling_cones
+nb_dynamic_routh_p2_separatrix
+nb_dynamic_routh_p2_spin_stabilisation
+nb_dynamic_routh_p2_sylvester_time
+nb_dynamic_routh_p2_thin_rod
+nb_dynamic_routh_p2_two_quadrics
+nb_dynamic_routh_p2_uniaxal_precession
+nb_dynamic_routh_rectangle_diagonal
+nb_dynamic_tumbling_body
+nb_rust_bouncing_ball_restitution
+nb_rust_charged_in_b_field
+nb_rust_kepler_orbit
+nb_rust_newtons_cradle
+nb_rust_outer_solar_system
+nb_rust_tumbling_body
+nb_solveit_01_elastic_head_on
+nb_solveit_02_keplers_third_law
+nb_solveit_04_restitution_ladder
+nb_solveit_05_cyclotron_bdf
+nb_solveit_06_symplectic_vs_adaptive
+nb_solveit_07_dzhanibekov
+nb_solveit_08_magnetic_torque
+nb_solveit_09_newtons_cradle
+nb_solveit_10_no_tunnelling
+nb_solveit_11_lagrange_l4
+nb_solveit_13_tilted_torus
+nb_solveit_17_pendulum_dae
+nb_solveit_19_hinged_door
+nb_video_piston_crankshaft
+solveit20_kepler
+solveit22_binary
+solveit23_rebounds
+solveit24_exchange
+solveit25_cyclotron
+solveit26_dzhanibekov
+solveit28_pendulum
+solveit29_box_rattle
+solveit35_torus
+In[17]:= movie play door_full
+Out[17]= movie door_full (movies\door_full.html) ready (browser suppressed)
+In[18]:= dataset close
+Out[18]= dataset solveit34_door closed

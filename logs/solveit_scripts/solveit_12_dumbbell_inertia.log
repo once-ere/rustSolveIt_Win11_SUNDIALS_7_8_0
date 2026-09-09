@@ -1,0 +1,24 @@
+In[1]:= def barbell(m1 = 1, m2 = 1, m_rod = 0.5, r1 = 0.3, r2 = 0.3, rod_r = 0.05, len = 2) {
+  new dumbbell as bar { m1 = m1, m2 = m2, m_rod = m_rod, r1 = r1, r2 = r2, rod_radius = rod_r, length = len }
+}
+Out[1]= function barbell(7 parameter(s)) defined — 1 body line(s)
+In[2]:= funcs
+Out[2]= barbell(m1 = 1, m2 = 1, m_rod = 0.5, r1 = 0.3, r2 = 0.3, rod_r = 0.05, len = 2) — 1 body line(s); SHOW barbell prints it
+In[3]:= barbell(2, 2, 0, 0.3, 0.3, 0.05, 2)
+Out[3]= obj0 as bar
+In[4]:= list
+Out[4]= obj0: dumbbell r1=0.3 r2=0.3 rod_r=0.05 len=2, mass=4, charge=0, pos=[0, 0, 0]
+In[5]:= get bar.mass
+Out[5]= 4
+In[6]:= get bar.m1
+Out[6]= 2
+In[7]:= get bar.m2
+Out[7]= 2
+In[8]:= get bar.length
+Out[8]= 2
+In[9]:= get bar.inertia_tensor
+Out[9]= [[4.144, 0, 0], [0, 4.144, 0], [0, 0, 0.144]]
+In[10]:= 2 * (0.4 * 2 * 0.3 * 0.3 + 2 * 1 * 1)
+Out[10]= 4.144
+In[11]:= 2 * (0.4 * 2 * 0.3 * 0.3)
+Out[11]= 0.144

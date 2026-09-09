@@ -1,0 +1,40 @@
+In[1]:= qm mass 1
+Out[1]= mass = 1
+In[2]:= qm hbar 1
+Out[2]= hbar = 1
+In[3]:= let v0 = 4
+Out[3]= v0 set
+In[4]:= let e = 2
+Out[4]= e set
+In[5]:= let kappa = sqrt(2 * (v0 - e))
+Out[5]= kappa set
+In[6]:= let s = (exp(kappa) - exp(-kappa)) / 2
+Out[6]= s set
+In[7]:= 1 / (1 + v0 * v0 * s * s / (4 * e * (v0 - e)))
+Out[7]= 0.07065082485316446
+In[8]:= qm grid -30 30 4000
+Out[8]= grid [-30, 30] with 4000 interior points, h = 0.014996 (potential and psi cleared)
+In[9]:= qm potential barrier 4, 0, 1
+Out[9]= potential `barrier 4 on [0, 1]` sampled at 4000 points, V in [0, 4] (psi cleared)
+In[10]:= qm transmission 2
+Out[10]= E = 2: T = 0.069368404960, R = 0.930631595040, T + R = 1.000000000000
+In[11]:= qm grid -30 30 16000
+Out[11]= grid [-30, 30] with 16000 interior points, h = 0.003750 (potential and psi cleared)
+In[12]:= qm potential barrier 4, 0, 1
+Out[12]= potential `barrier 4 on [0, 1]` sampled at 16000 points, V in [0, 4] (psi cleared)
+In[13]:= qm transmission 2
+Out[13]= E = 2: T = 0.070328037206, R = 0.929671962794, T + R = 1.000000000000
+In[14]:= qm grid -30 30 64000
+Out[14]= grid [-30, 30] with 64000 interior points, h = 0.000937 (potential and psi cleared)
+In[15]:= qm potential barrier 4, 0, 1
+Out[15]= potential `barrier 4 on [0, 1]` sampled at 64000 points, V in [0, 4] (psi cleared)
+In[16]:= qm transmission 2
+Out[16]= E = 2: T = 0.070569990790, R = 0.929430009210, T + R = 1.000000000000
+In[17]:= qm grid -30 30 16000
+Out[17]= grid [-30, 30] with 16000 interior points, h = 0.003750 (potential and psi cleared)
+In[18]:= qm potential barrier 4, 0, 1
+Out[18]= potential `barrier 4 on [0, 1]` sampled at 16000 points, V in [0, 4] (psi cleared)
+In[19]:= qm scan 4.1 20 200
+Out[19]= 200 energies in [4.1, 20] (0 refused), T from 3.535e-1 to 1.000e0
+  1 resonance(s), strongest first:
+    E = 8.893969849   T = 0.999992036

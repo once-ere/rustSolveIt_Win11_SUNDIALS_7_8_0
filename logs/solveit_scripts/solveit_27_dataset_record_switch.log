@@ -1,0 +1,28 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= new sphere as probe { mass = 1, radius = 0.2, position = [0, 20, 0] }
+Out[3]= obj0 as probe
+In[4]:= dataset create solveit27_switch
+Out[4]= dataset solveit27_switch created (datasets/solveit27_switch.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 0.5 steps 5
+Out[5]= t = 0.5 (12 solver steps, 5 snapshots, |dE/E| = 0.000e0)
+In[6]:= dataset record off
+Out[6]= dataset recording off
+In[7]:= run 0.5 steps 5
+Out[7]= t = 1 (8 solver steps, 5 snapshots, |dE/E| = 1.693e-10)
+In[8]:= dataset record
+Out[8]= dataset recording is off (open: solveit27_switch)
+In[9]:= dataset record on
+Out[9]= dataset recording on
+In[10]:= run 0.5 steps 5
+Out[10]= t = 1.5 (8 solver steps, 5 snapshots, |dE/E| = 1.362e-10)
+In[11]:= sql "SELECT COUNT(*) AS frames, MIN(t) AS t_first, MAX(t) AS t_last FROM frames"
+Out[11]= frames | t_first | t_last
+10 | 0.1 | 1.5
+In[12]:= sql "SELECT COUNT(*) AS frames_in_gap FROM frames WHERE t > 0.501 AND t < 0.999"
+Out[12]= frames_in_gap
+0
+In[13]:= dataset info
+Out[13]= dataset solveit27_switch: 1 bodies, 10 frames, 10 states
+In[14]:= dataset close
+Out[14]= dataset solveit27_switch closed

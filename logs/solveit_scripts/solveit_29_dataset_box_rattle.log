@@ -1,0 +1,31 @@
+In[1]:= set system.g_constant = 0
+In[2]:= box 4
+Out[2]= box: inner size 4 x 4 x 4 — six static walls obj0, obj1, obj2, obj3, obj4, obj5 with inverse_mass = 0 (infinitely massive); objects collide elastically off the inside faces
+In[3]:= collide on
+Out[3]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[4]:= new cylinder { mass = 2, radius = 0.25, height = 1.5, position = [-1, 0.3, 0], velocity = [2, 0.5, -1] }
+Out[4]= obj6
+In[5]:= new disk     { mass = 0.66666666666666663, radius = 1, position = [1, -0.8, 0.5], velocity = [-1, 1, 0.6] }
+Out[5]= obj7
+In[6]:= new cuboid   { mass = 1.6666666666666667, half_extents = [0.5, 0.5, 0.5], position = [0.2, 1.1, -0.9], velocity = [0.5, -2, 1] }
+Out[6]= obj8
+In[7]:= method adams
+Out[7]= method = CVODE Adams
+In[8]:= dataset create solveit29_box_rattle
+Out[8]= dataset solveit29_box_rattle created (datasets/solveit29_box_rattle.db, journal_mode=wal, schema v1) — recording armed
+In[9]:= run 6 steps 300
+Out[9]= t = 6 (3235 solver steps, 300 snapshots, |dE/E| = 4.495e-10, 41 collision(s) — CONTACTS lists them)
+In[10]:= sql "SELECT MAX(ncollisions) AS collisions, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+Out[10]= collisions | energy_spread
+41 | 4.6800590070006365e-9
+In[11]:= sql "SELECT b.shape, COUNT(*) AS recorded_states FROM states s JOIN bodies b ON b.body = s.body WHERE b.wall = 0 GROUP BY b.shape ORDER BY b.shape"
+Out[11]= shape | recorded_states
+cuboid | 300
+cylinder | 300
+disk | 300
+In[12]:= movie create solveit29_box_rattle
+Out[12]= movie solveit29_box_rattle created from dataset solveit29_box_rattle (movies\solveit29_box_rattle.html, 300 frames, 9 bodies)
+In[13]:= movie play solveit29_box_rattle
+Out[13]= movie solveit29_box_rattle (movies\solveit29_box_rattle.html) ready (browser suppressed)
+In[14]:= dataset close
+Out[14]= dataset solveit29_box_rattle closed

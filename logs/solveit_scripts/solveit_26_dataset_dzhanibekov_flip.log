@@ -1,0 +1,21 @@
+In[1]:= new cuboid as racket { mass = 1, half_extents = [1.6, 0.9, 0.25], angular_momentum = [0.02, 3, 0.02] }
+Out[1]= obj0 as racket
+In[2]:= dataset create solveit26_dzhanibekov
+Out[2]= dataset solveit26_dzhanibekov created (datasets/solveit26_dzhanibekov.db, journal_mode=wal, schema v1) — recording armed
+In[3]:= run 8 steps 400
+Out[3]= t = 8 (694 solver steps, 400 snapshots, |dE/E| = 3.849e-10)
+In[4]:= sql "SELECT MIN(sqrt(lx*lx + ly*ly + lz*lz)) AS L_min, MAX(sqrt(lx*lx + ly*ly + lz*lz)) AS L_max FROM frames"
+Out[4]= L_min | L_max
+3.0001333303705024 | 3.0001333303705024
+In[5]:= sql "SELECT MIN(qx) AS qx_min, MAX(qx) AS qx_max FROM states"
+Out[5]= qx_min | qx_max
+-0.9991758434501936 | 0.9991519536832777
+In[6]:= sql "WITH sgn AS (SELECT frame, SIGN(qx) AS s, LAG(SIGN(qx)) OVER (ORDER BY frame) AS prev FROM states WHERE ABS(qx) > 0.05) SELECT COUNT(*) AS zero_crossings FROM sgn WHERE prev IS NOT NULL AND s <> prev"
+Out[6]= zero_crossings
+3
+In[7]:= dataset play
+Out[7]= dataset plots written to datasets\solveit26_dzhanibekov_plots.html (browser suppressed)
+In[8]:= movie create solveit26_dzhanibekov
+Out[8]= movie solveit26_dzhanibekov created from dataset solveit26_dzhanibekov (movies\solveit26_dzhanibekov.html, 400 frames, 1 bodies)
+In[9]:= dataset close
+Out[9]= dataset solveit26_dzhanibekov closed

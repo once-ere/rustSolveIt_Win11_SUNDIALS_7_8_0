@@ -1,0 +1,24 @@
+In[1]:= set system.g_constant = 0
+In[2]:= collide on
+Out[2]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[3]:= new sphere as heavy { mass = 3, radius = 0.5, position = [-3, 0, 0], velocity = [2, 0, 0] }
+Out[3]= obj0 as heavy
+In[4]:= new sphere as light { mass = 1, radius = 0.5, position = [ 3, 0, 0], velocity = [-4, 0, 0] }
+Out[4]= obj1 as light
+In[5]:= dataset create solveit24_exchange
+Out[5]= dataset solveit24_exchange created (datasets/solveit24_exchange.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 2 steps 200
+Out[6]= t = 2 (53 solver steps, 200 snapshots, |dE/E| = 0.000e0, 1 collision(s) — CONTACTS lists them)
+In[7]:= sql "SELECT (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='heavy') ORDER BY frame ASC  LIMIT 1) AS heavy_before, (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='heavy') ORDER BY frame DESC LIMIT 1) AS heavy_after"
+Out[7]= heavy_before | heavy_after
+2 | -1
+In[8]:= sql "SELECT (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='light') ORDER BY frame ASC  LIMIT 1) AS light_before, (SELECT vx FROM states WHERE body = (SELECT body FROM bodies WHERE name='light') ORDER BY frame DESC LIMIT 1) AS light_after"
+Out[8]= light_before | light_after
+-4 | 5
+In[9]:= sql "SELECT MAX(px) - MIN(px) AS momentum_spread, MAX(energy) - MIN(energy) AS energy_spread FROM frames"
+Out[9]= momentum_spread | energy_spread
+0 | 0
+In[10]:= movie create solveit24_exchange
+Out[10]= movie solveit24_exchange created from dataset solveit24_exchange (movies\solveit24_exchange.html, 200 frames, 2 bodies)
+In[11]:= dataset close
+Out[11]= dataset solveit24_exchange closed

@@ -1,0 +1,17 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= new sphere as ball { mass = 1, radius = 0.2, position = [0, 30, 0] }
+Out[3]= obj0 as ball
+In[4]:= dataset create solveit32_window
+Out[4]= dataset solveit32_window created (datasets/solveit32_window.db, journal_mode=wal, schema v1) — recording armed
+In[5]:= run 2 steps 40
+Out[5]= t = 2 (12 solver steps, 40 snapshots, |dE/E| = 1.931e-16)
+In[6]:= sql "WITH fd AS (SELECT f.t AS t, s.vy AS vy, (s.y - LAG(s.y) OVER (ORDER BY s.frame)) / (f.t - LAG(f.t) OVER (ORDER BY s.frame)) AS v_backward FROM states s JOIN frames f ON f.frame = s.frame) SELECT COUNT(*) AS differences, MAX(ABS(v_backward - vy)) AS worst_error FROM fd WHERE v_backward IS NOT NULL"
+Out[6]= differences | worst_error
+39 | 0.24525000000025088
+In[7]:= 9.81 * 0.05 / 2
+Out[7]= 0.24525000000000002
+In[8]:= dataset play
+Out[8]= dataset plots written to datasets\solveit32_window_plots.html (browser suppressed)
+In[9]:= dataset close
+Out[9]= dataset solveit32_window closed

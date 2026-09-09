@@ -1,0 +1,28 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -10, 0]
+In[3]:= collide on
+Out[3]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[4]:= new cuboid as floor { mass = 1, half_extents = [50, 0.05, 50], position = [0, -0.05, 0], inverse_mass = 0 }
+Out[4]= obj0 as floor
+In[5]:= new sphere as ball  { mass = 1, radius = 0.5, position = [0, 5.5, 0], restitution = 0.7 }
+Out[5]= obj1 as ball
+In[6]:= run 1.7 steps 170
+Out[6]= t = 1.7 (321 solver steps, 170 snapshots, |dE/E| = 4.636e-1, 1 collision(s) — CONTACTS lists them)
+In[7]:= get ball.position.y
+Out[7]= 2.949999999869974
+In[8]:= 5 * 0.7 * 0.7 + 0.5
+Out[8]= 2.9499999999999997
+In[9]:= run 1.19 steps 120
+Out[9]= t = 2.8899999999999997 (164 solver steps, 120 snapshots, |dE/E| = 4.236e-1, 1 collision(s) — CONTACTS lists them)
+In[10]:= get ball.position.y
+Out[10]= 1.7004999998062575
+In[11]:= 5 * 0.7 * 0.7 * 0.7 * 0.7 + 0.5
+Out[11]= 1.7004999999999997
+In[12]:= run 0.833 steps 84
+Out[12]= t = 3.723 (87 solver steps, 84 snapshots, |dE/E| = 3.600e-1, 1 collision(s) — CONTACTS lists them)
+In[13]:= get ball.position.y
+Out[13]= 1.0882449997748824
+In[14]:= 5 * 0.7 * 0.7 * 0.7 * 0.7 * 0.7 * 0.7 + 0.5
+Out[14]= 1.0882449999999997
+In[15]:= get system.collisions
+Out[15]= 3

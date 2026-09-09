@@ -1,0 +1,36 @@
+In[1]:= set system.g_constant = 0
+In[2]:= set system.uniform_gravity = [0, -9.81, 0]
+In[3]:= new sphere as probe { mass = 1, radius = 0.2, position = [0, 10, 0] }
+Out[3]= obj0 as probe
+In[4]:= method adams
+Out[4]= method = CVODE Adams
+In[5]:= dataset create solveit31_adams
+Out[5]= dataset solveit31_adams created (datasets/solveit31_adams.db, journal_mode=wal, schema v1) — recording armed
+In[6]:= run 1 steps 10
+Out[6]= t = 1 (12 solver steps, 10 snapshots, |dE/E| = 7.243e-16)
+In[7]:= dataset close
+Out[7]= dataset solveit31_adams closed
+In[8]:= reset
+Out[8]= system reset
+In[9]:= set system.g_constant = 0
+In[10]:= set system.uniform_gravity = [0, -9.81, 0]
+In[11]:= new sphere as probe { mass = 1, radius = 0.2, position = [0, 10, 0] }
+Out[11]= obj0 as probe
+In[12]:= method bdf
+Out[12]= method = CVODE BDF
+In[13]:= dataset create solveit31_bdf
+Out[13]= dataset solveit31_bdf created (datasets/solveit31_bdf.db, journal_mode=wal, schema v1) — recording armed
+In[14]:= run 1 steps 10
+Out[14]= t = 1 (28 solver steps, 10 snapshots, |dE/E| = 5.616e-10)
+In[15]:= sql "ATTACH DATABASE 'datasets/solveit31_adams.db' AS adams"
+Out[15]= ok (0 row(s) changed)
+In[16]:= sql "SELECT COUNT(*) AS paired_frames FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body"
+Out[16]= paired_frames
+10
+In[17]:= sql "SELECT MAX(ABS(s.y - a.y)) AS worst_method_gap FROM states s JOIN adams.states a ON a.frame = s.frame AND a.body = s.body"
+Out[17]= worst_method_gap
+5.615900633415549e-9
+In[18]:= sql "DETACH DATABASE adams"
+Out[18]= ok (0 row(s) changed)
+In[19]:= dataset close
+Out[19]= dataset solveit31_bdf closed

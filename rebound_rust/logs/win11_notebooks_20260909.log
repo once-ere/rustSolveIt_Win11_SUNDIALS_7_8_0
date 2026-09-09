@@ -1,0 +1,44 @@
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\shearing_sheet.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\shearing_sheet_test.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\integrators_test.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\libm_diff.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\bs_pow_diff.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\kepler_rectilinear.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\movetocom_var.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\movetocom_var_test.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\derivatives_test.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\frequency_test.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\archive_test.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\server_test.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\addfmt_test.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\tides_spin_pseudo.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\tides_spin_kozai.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\tides_spin_migration.ipynb
+wrote C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks\rebx_binary_roundtrip.ipynb
+
+17 notebooks written to C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound_rust\notebooks
+MAKE_EXIT=0
+Executing 17 notebook(s), per-cell timeout 1800s
+
+  addfmt_test.ipynb                  C:\Users\nsh\AppData\Roaming\Python\Python314\site-packages\zmq\_future.py:718: RuntimeWarning: Proactor event loop does not implement add_reader family of methods required for zmq. Registering an additional selector thread for add_reader support via tornado. Use `asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())` to avoid this warning.
+  self._get_loop()
+ok      (  5.8s)
+  archive_test.ipynb                 ok      (  1.7s)
+  bs_pow_diff.ipynb                  ok      (  1.6s)
+  derivatives_test.ipynb             ok      (  1.6s)
+  frequency_test.ipynb               ok      (  1.6s)
+  integrators_test.ipynb             ok      (  2.9s)
+  kepler_rectilinear.ipynb           ok      (  1.7s)
+  libm_diff.ipynb                    ok      (  1.6s)
+  movetocom_var.ipynb                ok      (  1.6s)
+  movetocom_var_test.ipynb           ok      (  4.1s)
+  rebx_binary_roundtrip.ipynb        ok      (  5.1s)
+  server_test.ipynb                  ok      ( 11.1s)
+  shearing_sheet.ipynb               ok      (  4.9s)
+  shearing_sheet_test.ipynb          ok      (  3.5s)
+  tides_spin_kozai.ipynb             ok      (  1.7s)
+  tides_spin_migration.ipynb         ok      (  1.9s)
+  tides_spin_pseudo.ipynb            ok      (  5.1s)
+
+All 17 notebooks executed with no errors.
+RUN_EXIT=0

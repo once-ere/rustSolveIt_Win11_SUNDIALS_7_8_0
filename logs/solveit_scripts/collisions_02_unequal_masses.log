@@ -1,0 +1,13 @@
+In[1]:= set system.g_constant = 0
+In[2]:= new sphere { mass = 1, radius = 0.5, position = [-3, 0, 0], velocity = [1, 0, 0] }
+Out[2]= obj0
+In[3]:= new sphere { mass = 3, radius = 0.5, position = [0, 0, 0] }
+Out[3]= obj1
+In[4]:= step 4
+Out[4]= t = 4 (advanced by 4, 26 solver steps, 1 collision(s) — CONTACTS lists them)
+In[5]:= get obj0.velocity.x
+Out[5]= -0.5
+In[6]:= get obj1.velocity.x
+Out[6]= 0.5
+In[7]:= momentum
+Out[7]= [1, 0, 0]

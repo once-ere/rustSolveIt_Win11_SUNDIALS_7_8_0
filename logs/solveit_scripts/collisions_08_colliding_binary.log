@@ -1,0 +1,24 @@
+In[1]:= set system.g_constant = 1
+In[2]:= new sphere { mass = 1, radius = 0.3, position = [-1, 0, 0], velocity = [0, -0.316227766, 0], restitution = 0.6 }
+Out[2]= obj0
+In[3]:= new sphere { mass = 1, radius = 0.3, position = [1, 0, 0], velocity = [0, 0.316227766, 0], restitution = 0.6 }
+Out[3]= obj1
+In[4]:= energy
+Out[4]= -0.4000000000105867
+In[5]:= momentum
+Out[5]= [0, 0, 0]
+In[6]:= run 6 steps 12
+Out[6]= t = 6 (309 solver steps, 12 snapshots, |dE/E| = 2.489e-1, 1 collision(s) — CONTACTS lists them)
+In[7]:= contacts
+Out[7]= contact0: obj0 <-> obj1 at t = 2.884205150724602
+  point  = [0, 0, 0]
+  normal = [-0.555555522431048, 0.8314794414153397, 0]  (from obj0 toward obj1)
+  depth = 0.000000000000010769163338864018, approach speed = 0.7888106724036998, impulse = 0.6310485379229599
+In[8]:= energy
+Out[8]= -0.49955556202585566
+In[9]:= momentum
+Out[9]= [0.00000000000000027755575615628914, -0.0000000000000002220446049250313, 0]
+In[10]:= get obj0.position
+Out[10]= [-0.3356338249720023, 0.4951822016076849, 0]
+In[11]:= get obj1.position
+Out[11]= [0.3356338249720033, -0.4951822016076866, 0]

@@ -1,0 +1,35 @@
+In[1]:= set system.g_constant = 0
+In[2]:= collide on
+Out[2]= collisions ON (0 collidable pair(s); 0 impulse(s) so far)
+In[3]:= new sphere as b0 { mass = 1, radius = 0.5, position = [-3, 0, 0], velocity = [1, 0, 0] }
+Out[3]= obj0 as b0
+In[4]:= new sphere as b1 { mass = 1, radius = 0.5, position = [ 0, 0, 0] }
+Out[4]= obj1 as b1
+In[5]:= new sphere as b2 { mass = 1, radius = 0.5, position = [ 1, 0, 0] }
+Out[5]= obj2 as b2
+In[6]:= new sphere as b3 { mass = 1, radius = 0.5, position = [ 2, 0, 0] }
+Out[6]= obj3 as b3
+In[7]:= new sphere as b4 { mass = 1, radius = 0.5, position = [ 3, 0, 0] }
+Out[7]= obj4 as b4
+In[8]:= energy
+Out[8]= 0.5
+In[9]:= momentum
+Out[9]= [1, 0, 0]
+In[10]:= run 6 steps 600
+Out[10]= t = 6 (30 solver steps, 600 snapshots, |dE/E| = 0.000e0, 4 collision(s) — CONTACTS lists them)
+In[11]:= get b0.velocity
+Out[11]= [0, 0, 0]
+In[12]:= get b1.velocity
+Out[12]= [0, 0, 0]
+In[13]:= get b2.velocity
+Out[13]= [0, 0, 0]
+In[14]:= get b3.velocity
+Out[14]= [0, 0, 0]
+In[15]:= get b4.velocity
+Out[15]= [1, 0, 0]
+In[16]:= energy
+Out[16]= 0.5
+In[17]:= momentum
+Out[17]= [1, 0, 0]
+In[18]:= get system.collisions
+Out[18]= 4

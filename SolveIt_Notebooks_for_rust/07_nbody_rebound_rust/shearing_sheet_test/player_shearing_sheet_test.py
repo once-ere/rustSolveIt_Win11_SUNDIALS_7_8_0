@@ -2,13 +2,13 @@
 """player_shearing_sheet_test.py — full player for shearing_sheet_test.ipynb (standard library only).
 
 Modes
-  python3 player_shearing_sheet_test.py run              re-execute this notebook copy
-  python3 player_shearing_sheet_test.py gui              open the browser GUI
-  python3 player_shearing_sheet_test.py jump             open the GUI jumped to the key
-                                           event (the N-body run's final state)
-  python3 player_shearing_sheet_test.py capture out.png  save a PNG of the GUI
-                                           (headless Chrome)
-  python3 player_shearing_sheet_test.py data outdir      export this notebook's data
+  python player_shearing_sheet_test.py run              re-execute this notebook copy
+  python player_shearing_sheet_test.py gui              open the browser GUI
+  python player_shearing_sheet_test.py jump             open the GUI jumped to the key
+                                          event (the N-body run's final state)
+  python player_shearing_sheet_test.py capture out.png  save a PNG of the GUI
+                                          (headless Chrome or Edge)
+  python player_shearing_sheet_test.py data outdir      export this notebook's data
 
 Family: rebound.  Everything runs against recorded, verified artifacts of
 the pure-Rust SUNDIALS engine; the player never computes physics itself.
@@ -29,9 +29,15 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 WS = HERE.parents[2]                       # workspace root
-ENGINE = WS / "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"
-if not ENGINE.exists():
-    ENGINE = WS                # fresh clone: the repository root IS the engine
+# Two layouts resolve automatically: a workspace folder holding the engine
+# repository beside SolveIt_Notebooks_for_rust/ (either platform edition's
+# folder name), or a fresh clone, where the clone root IS the engine.
+ENGINE = WS
+for _name in ("rustSolveIt_Win11_SUNDIALS_7_8_0",
+              "rustSolveIt_macos-silicon_SUNDIALS_7_8_0"):
+    if (WS / _name / "posim").is_dir():
+        ENGINE = WS / _name
+        break
 TAG = "shearing_sheet_test"
 FAMILY = "rebound"
 GUI_PAGE = None                      # main browser-GUI artifact (or None)
@@ -43,12 +49,24 @@ CAPTURE_BUTTON = None          # id of the page's jump button
 
 
 def chrome():
-    for c in ("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    """A headless-capable Chromium browser: Google Chrome first (its
+    Windows, macOS and Linux install locations), then Microsoft Edge."""
+    pf = os.environ.get("ProgramFiles", r"C:\Program Files")
+    pf86 = os.environ.get("ProgramFiles(x86)", r"C:\Program Files (x86)")
+    local = os.environ.get("LOCALAPPDATA", "")
+    for c in (os.path.join(pf, "Google", "Chrome", "Application", "chrome.exe"),
+              os.path.join(pf86, "Google", "Chrome", "Application", "chrome.exe"),
+              os.path.join(local, "Google", "Chrome", "Application", "chrome.exe")
+              if local else "",
+              "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+              shutil.which("chrome") or "",
               shutil.which("google-chrome") or "",
-              shutil.which("chromium") or ""):
+              shutil.which("chromium") or "",
+              os.path.join(pf86, "Microsoft", "Edge", "Application", "msedge.exe"),
+              os.path.join(pf, "Microsoft", "Edge", "Application", "msedge.exe")):
         if c and Path(c).exists():
             return c
-    raise SystemExit("headless capture needs Google Chrome installed")
+    raise SystemExit("headless capture needs Google Chrome (or Microsoft Edge) installed")
 
 
 def free_port():
@@ -85,10 +103,17 @@ def serve(directory, page_name, jump=False):
 def scene_replay_url():
     """Replay the paired .posim scene into a fresh posim child and open its
     live scene window server; returns (url, process)."""
-    binary = os.environ.get("POSIM_BIN", str(ENGINE / "target" / "release" / "posim"))
-    if not Path(binary).is_file():
-        raise SystemExit("build the engine first: cd rustSolveIt_macos-silicon_"
-                         "SUNDIALS_7_8_0 && cargo build --release -p posim")
+    binary = os.environ.get("POSIM_BIN", "")
+    if not binary:
+        # Windows builds posim.exe; probe it before the extensionless name.
+        for name in (("posim.exe", "posim") if os.name == "nt" else ("posim",)):
+            cand = ENGINE / "target" / "release" / name
+            if cand.is_file():
+                binary = str(cand)
+                break
+    if not binary or not Path(binary).is_file():
+        raise SystemExit("build the engine first, from the repository root: "
+                         "cargo build --release -p posim")
     port = free_port()
     proc = subprocess.Popen([binary, "--machine"],
                             stdin=subprocess.PIPE, stdout=subprocess.PIPE,

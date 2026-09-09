@@ -1,5 +1,7 @@
 # MACOS_PORT_COMPLETE — summary of the finished port
 
+> *Lineage document.* This page is the **macOS / Apple Silicon edition's** record, kept verbatim in the Windows 11 repository that was ported from it. Every command and every number below was measured on the Apple Silicon machine it names, not on Windows. The Windows 11 equivalents are `PORT_WIN11_PROVENANCE.md`, `VERIFICATION_WIN11.md`, `WINDOWS_PORT_COMPLETE.md` and `REBOUND_REBOUNDX_WIN11_PROVENANCE.md`.
+
 **rustSolveIt_macos-silicon_SUNDIALS_7_8_0 is complete and verified on
 macOS running on Apple Silicon.** This page summarizes what was
 delivered and carries the complete set of commands to reproduce every

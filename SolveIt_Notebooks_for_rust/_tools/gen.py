@@ -429,7 +429,9 @@ def build_player(fam, tag, assets):
 
 
 def rel(p):
-    return str(Path(p).relative_to(WS)) if p else None
+    # POSIX form on every platform: these strings land in header prose, the
+    # manifest and the encyclopedia, and forward slashes work in PowerShell.
+    return Path(p).relative_to(WS).as_posix() if p else None
 
 
 def header_cell(fam, tag, topic, assets, player_text):
@@ -697,8 +699,8 @@ def main():
         entries.append({
             "tag": tag, "family": fam, "topic": topic,
             "source": rel(src),
-            "copy": str((dest_dir / (tag + ".ipynb")).relative_to(WS)),
-            "player": str((dest_dir / f"player_{tag}.py").relative_to(WS)),
+            "copy": (dest_dir / (tag + ".ipynb")).relative_to(WS).as_posix(),
+            "player": (dest_dir / f"player_{tag}.py").relative_to(WS).as_posix(),
             "script": rel(assets["script"]), "movie": rel(assets["movie"]),
             "gui_server": rel(assets["gui_server"]),
             "gui_pages": [rel(p) for p in assets["gui_pages"]],

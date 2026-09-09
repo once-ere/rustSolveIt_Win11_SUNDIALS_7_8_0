@@ -1,5 +1,7 @@
 # PORT_MACOS_PROVENANCE — the macOS / Apple Silicon port, in full
 
+> *Lineage document.* This page is the **macOS / Apple Silicon edition's** record, kept verbatim in the Windows 11 repository that was ported from it. Every command and every number below was measured on the Apple Silicon machine it names, not on Windows. The Windows 11 equivalents are `PORT_WIN11_PROVENANCE.md`, `VERIFICATION_WIN11.md`, `WINDOWS_PORT_COMPLETE.md` and `REBOUND_REBOUNDX_WIN11_PROVENANCE.md`.
+
 This document records how **rustSolveIt_macos-silicon_SUNDIALS_7_8_0**
 was produced, on what machine, what changed relative to the donor, and
 every verification command with its measured result. It is

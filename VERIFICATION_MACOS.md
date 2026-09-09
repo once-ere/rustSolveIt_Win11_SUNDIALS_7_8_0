@@ -1,5 +1,7 @@
 # VERIFICATION_MACOS — every suite, every verdict, on this machine
 
+> *Lineage document.* This page is the **macOS / Apple Silicon edition's** record, kept verbatim in the Windows 11 repository that was ported from it. Every command and every number below was measured on the Apple Silicon machine it names, not on Windows. The Windows 11 equivalents are `PORT_WIN11_PROVENANCE.md`, `VERIFICATION_WIN11.md`, `WINDOWS_PORT_COMPLETE.md` and `REBOUND_REBOUNDX_WIN11_PROVENANCE.md`.
+
 Platform: **macOS Tahoe 26 (26.6.1, build 25G76) on Apple Silicon
 (Apple M5 Max, arm64, 128 GB RAM)**; rustc/cargo 1.94.0
 (`aarch64-apple-darwin`); Python 3.14.7; TeX Live 2026. Date:

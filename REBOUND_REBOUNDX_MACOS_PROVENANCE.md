@@ -1,5 +1,7 @@
 # REBOUND_REBOUNDX_MACOS_PROVENANCE — the N-body ports, verified on this Mac
 
+> *Lineage document.* This page is the **macOS / Apple Silicon edition's** record, kept verbatim in the Windows 11 repository that was ported from it. Every command and every number below was measured on the Apple Silicon machine it names, not on Windows. The Windows 11 equivalents are `PORT_WIN11_PROVENANCE.md`, `VERIFICATION_WIN11.md`, `WINDOWS_PORT_COMPLETE.md` and `REBOUND_REBOUNDX_WIN11_PROVENANCE.md`.
+
 This page records how the two pure-Rust astronomy libraries in this
 repository — `rebound_rust/` and `reboundx_rust/` — got here, and every
 command used to build, test, verify and run them on **macOS / Apple

@@ -1,0 +1,22 @@
+libm: 200000 C lines, 200000 Rust lines
+libm: lines with any difference = 60
+  sin              differ=     0  bit-identical on all 200000 samples
+  cos              differ=     0  bit-identical on all 200000 samples
+  tan              differ=     0  bit-identical on all 200000 samples
+  atan2            differ=     0  bit-identical on all 200000 samples
+  pow(xp,-0.234)   differ=    60 (0.0300%)  ULP distribution={1: 60}
+  sqrt             differ=     0  bit-identical on all 200000 samples
+  fmod             differ=     0  bit-identical on all 200000 samples
+  exp              differ=     0  bit-identical on all 200000 samples
+  log              differ=     0  bit-identical on all 200000 samples
+
+bs_pow: 200008 C lines, 200008 Rust lines
+bs_pow: E samples=200000  P constants=8
+bs_pow: mismatches=56 of 200000 E samples (0.0280%); P-constant mismatches=0
+bs_pow: ULP distribution={1: 56}
+bs_pow: mismatches per k (exponent 1/(2k+1))={1: 5, 2: 8, 3: 8, 4: 3, 5: 7, 6: 8, 7: 7, 8: 10}
+   C: E 1 9857 3f9cab338c1d039b   Rust: E 1 9857 3f9cab338c1d039a   (1 ULP)
+   C: E 1 16869 3fc40e962b2a42bf   Rust: E 1 16869 3fc40e962b2a42c0   (1 ULP)
+   C: E 1 18238 3fcc12be5af5abce   Rust: E 1 18238 3fcc12be5af5abcd   (1 ULP)
+   C: E 1 18251 3fcc29ba1822caff   Rust: E 1 18251 3fcc29ba1822cb00   (1 ULP)
+   C: E 1 20069 3fd601e55bb1c9f7   Rust: E 1 20069 3fd601e55bb1c9f6   (1 ULP)

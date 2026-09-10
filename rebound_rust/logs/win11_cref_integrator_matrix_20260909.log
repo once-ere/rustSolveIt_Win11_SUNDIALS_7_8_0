@@ -1,0 +1,95 @@
+Set-ExecutionPolicy : Windows PowerShell updated your execution policy successfully, but the setting is overridden by 
+a policy defined at a more specific scope.  Due to the override, your shell will retain its current effective 
+execution policy of Bypass. Type "Get-ExecutionPolicy -List" to view your execution policy settings. For more 
+information please see "Get-Help Set-ExecutionPolicy".
+At C:\Users\nsh\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1:97 char:1
++ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy  Unrestricted
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : PermissionDenied: (:) [Set-ExecutionPolicy], SecurityException
+    + FullyQualifiedErrorId : ExecutionPolicyOverride,Microsoft.PowerShell.Commands.SetExecutionPolicyCommand
+Set-ExecutionPolicy : Access to the registry key 
+'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell' is denied. To change the execution 
+policy for the default (LocalMachine) scope, start Windows PowerShell with the "Run as administrator" option. To 
+change the execution policy for the current user, run "Set-ExecutionPolicy -Scope CurrentUser".
+At C:\Users\nsh\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1:98 char:1
++ Set-ExecutionPolicy Unrestricted
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : PermissionDenied: (:) [Set-ExecutionPolicy], UnauthorizedAccessException
+    + FullyQualifiedErrorId : System.UnauthorizedAccessException,Microsoft.PowerShell.Commands.SetExecutionPolicyComma 
+   nd
+Setting up EMSDK environment (suppress these messages with EMSDK_QUIET=1)
+Adding directories to PATH:
+PATH += C:\emsdk\upstream\emscripten
+
+Setting environment variables:
+PATH = C:\emsdk\upstream\emscripten;C:\emsdk;C:\Program Files\PowerShell\7;C:\Users\nsh\Developer\7-Zip;C:\Program Files\coreutils\bin;C:\Python314\Scripts\;C:\Python314\;C:\Program Files (x86)\Common Files\Oracle\Java\java8path;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\MATLAB\R2025a\bin;C:\Program Files\MATLAB\R2025a\bin\win64;C:\Program Files\Eclipse Adoptium\jdk-25.0.1.8-hotspot\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin\x64;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.0\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\MATLAB\R2025a\runtime\win64;C:\ProgramData\chocolatey\bin;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\Git\cmd;C:\Program Files\Gtk-Runtime\bin;C:\Program Files\Microsoft SQL Server\170\DTS\Binn\;C:\Program Files\cursor\resources\app\bin;C:\Program Files\CMake\bin;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Sniffnet\;C:\Program Files\nodejs\;C:\Program Files\starship\bin\;C:\Users\nsh\.cargo\bin;C:\Program Files\nushell;C:\Users\nsh\AppData\Local\pnpm;C:\Users\nsh\AppData\Local\Microsoft\WindowsApps;C:\Users\nsh\.dotnet\tools;C:\Users\nsh\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\nsh\AppData\Local\Programs\Microsoft VS Code Insiders\bin;C:\Users\nsh\.lmstudio\bin;C:\Users\nsh\AppData\Local\Programs\Ollama;C:\ProgramData\miniforge3\condabin;C:\ProgramData\miniconda3\condabin;C:\Users\nsh\AppData\Local\Microsoft\WinGet\Links;C:\Users\nsh\AppData\Local\Programs\Antigravity\bin;C:\Users\nsh\AppData\Local\Programs\MiKTeX\miktex\bin\x64\;C:\Users\nsh\AppData\Roaming\npm;C:\Users\nsh\AppData\Local\PowerToys\DSCModules\;C:\Program Files\WezTerm;C:\Program Files\NVIDIA Corporation\Nsight Compute 2026.1.1\;C:\Program Files\LLVM\bin;C:\Program Files (x86)\LLVM\bin;C:\Program Files (x86)\IncrediBuild;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Wolfram Research\WolframScript\;C:\Program Files\PowerShell\7\;C:\Program Files\GitHub CLI\;C:\Program Files\NVIDIA\CUDNN\v9.21\bin\13.2\x64;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.2\bin;C:\Users\nsh\.local\bin;C:\Users\nsh\.bun\bin;C:\Users\nsh\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\nsh\Documents\win11\exe\UnxUpdates;C:\Users\nsh\AppData\Local\hermes\hermes-agent\venv\Scripts;C:\Users\nsh\AppData\Local\Programs\Microsoft VS Code\;C:\Program Files\nodejs;C:\Python314;C:\Program Files\Git\mingw64\bin
+EMSDK_NODE = C:\emsdk\node\22.16.0_64bit\bin\node.exe
+EMSDK_PYTHON = C:\emsdk\python\3.13.3_64bit\python.exe
+h: SQLite history active (session fb27b41d)
+Running 63 configurations at 500 steps each.
+  none                     identical
+  ias15                    identical
+  leapfrog(order 2)        identical
+  leapfrog(order 4)        identical
+  leapfrog(order 6)        identical
+  leapfrog(order 8)        identical
+  whfast                   identical
+  whfast-c11               identical
+  whfast-c17               identical
+  whfast-dh                identical
+  whfast-whds              identical
+  whfast-bary              identical
+  whfast-mk                identical
+  whfast-comp              identical
+  whfast-lazy              identical
+  whfast-usafe             identical
+  saba                     identical
+  saba-1                   identical
+  saba-2                   identical
+  saba-3                   identical
+  saba-4                   identical
+  saba-cm2                 identical
+  saba-cl2                 identical
+  saba-104                 identical
+  saba-864                 identical
+  saba-h844                identical
+  saba-h864                identical
+  saba-h1064               identical
+  saba-usafe               identical
+  janus                    identical
+  janus-2                  identical
+  janus-4                  identical
+  janus-8                  identical
+  janus-10                 identical
+  eos                      identical
+  eos-0-0                  identical
+  eos-1-1                  identical
+  eos-2-2                  identical
+  eos-3-3                  identical
+  eos-4-4                  identical
+  eos-5-5                  identical
+  eos-6-6                  identical
+  eos-7-7                  identical
+  eos-8-8                  identical
+  eos-2-7                  identical
+  eos-5-8                  identical
+  eos-usafe                identical
+  mercurius                identical
+  mercurius-usafe          identical
+  mercurius-c4             identical
+  mercurius-c5             identical
+  mercurius-inf            identical
+  mercurius-hill01         identical
+  bs                       identical
+  bs-tight                 identical
+  bs-loose                 identical
+  bs-maxdt                 identical
+  trace                    identical
+  trace-pbs                identical
+  trace-ias15              identical
+  trace-hill1              identical
+  trace-perinone           identical
+  trace-eta001             identical
+
+63 of 63 configurations bit-identical.
+ALL CONFIGURATIONS BIT-IDENTICAL

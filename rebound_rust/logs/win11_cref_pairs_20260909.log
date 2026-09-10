@@ -1,0 +1,64 @@
+pairs 2026-09-09T08:04:32
+--- libm_diff
+done
+C:    0.4852967 s
+done
+Rust: 0.0765127 s
+--- bs_pow_diff
+bs_pow_c: 200000 samples
+bs_pow_rust: 200000 samples
+--- derivatives_test
+derivatives_c.txt written (65 functions x 2 configs)
+derivatives_rust.txt written (65 functions x 2 configs)
+derivatives: 130 lines C / 130 lines Rust; Compare-Object differing lines = 0; bytes C=17028 Rust=16898; SHA256 equal=False
+--- frequency_test
+frequency_test done
+frequency_test done
+frequency: 30 lines C / 30 lines Rust; Compare-Object differing lines = 0; bytes C=546 Rust=546; SHA256 equal=True
+--- addfmt_test
+addfmt done N=12
+addfmt done N=12
+addfmt: 12 lines C / 12 lines Rust; Compare-Object differing lines = 0; bytes C=1454 Rust=1454; SHA256 equal=True
+--- movetocom_var
+com.m 3ff003e8f2d96218 com.x 3f7351b0cb646c7f
+movetocom_var_c done
+com.m 3ff003e8f2d96218 com.x 3f7351b0cb646c7f
+movetocom_var_rust done
+movetocom_var: 5 lines C / 5 lines Rust; Compare-Object differing lines = 0; bytes C=436 Rust=436; SHA256 equal=True
+--- movetocom_var_test (stdout)
+C stdout:
+  com.m = 1.00095458799999992e+00 (bits 3ff003e8f543dbc4)
+  com.x = 4.95912368004451480e-03
+  N=2 N_var=2 N_var_config=1 index=0
+  BEFORE var[0] m=0.00000000000000000e+00 x=-6.36862217082024840e-02 vx=-2.08064338215076056e-01
+  BEFORE var[1] m=0.00000000000000000e+00 x=-2.96168705357400364e-01 vx=-3.86372482413211094e-01
+  dm(particles)=1.00095458799999992e+00  dm(particles_var)=0.00000000000000000e+00
+  AFTER  var[0] x=5.18083702424841641e-03 (bits 3f753880595c6070) vx=1.70048488507268392e-04 (bits 3f2649e164cc8800)
+  AFTER  var[1] x=-2.27301646624949449e-01 (bits bfcd1838694a61b4) vx=-1.78138095709627770e-01 (bits bfc6cd3aa79f4e0b)
+Rust stdout:
+  com.m = 1.00095458799999992e0 (bits 3ff003e8f543dbc4)
+  com.x = 4.95912368004451480e-3
+  N=2 N_var=2 N_var_config=1 index=0
+  BEFORE var[0] m=0.00000000000000000e0 x=-6.36862217082024840e-2 vx=-2.08064338215076056e-1
+  BEFORE var[1] m=0.00000000000000000e0 x=-2.96168705357400364e-1 vx=-3.86372482413211094e-1
+  dm(particles)=1.00095458799999992e0  dm(particles_var)=0.00000000000000000e0
+  AFTER  var[0] x=5.18083702424841641e-3 (bits 3f753880595c6070) vx=1.70048488507268392e-4 (bits 3f2649e164cc8800)
+  AFTER  var[1] x=-2.27301646624949449e-1 (bits bfcd1838694a61b4) vx=-1.78138095709627770e-1 (bits bfc6cd3aa79f4e0b)
+movetocom_var_test stdout differing lines = 14
+--- kepler_rectilinear (AFTER lines)
+vy=1e-12 n=1 dt=2.0: IDENTICAL  AFTER: x=401c000000000000 y=3d819799812dea11 vx=4008000000000000 vy=3d719799812dea11
+vy=0 n=20 dt=0.1: IDENTICAL  AFTER: x=401a25b7357aa447 y=0000000000000000 vx=40059fa62e631832 vy=0000000000000000
+vy=0 n=20 dt=0.5: IDENTICAL  AFTER: x=403be81c2429448b y=0000000000000000 vx=4005462a784bf839 vy=0000000000000000
+vy=0 n=20 dt=2.0: IDENTICAL  AFTER: x=405de2243c66f45a y=0000000000000000 vx=4007a61d075c3ff2 vy=0000000000000000
+vy=0 n=20 dt=5.0: IDENTICAL  AFTER: x=4070a5878f25b778 y=0000000000000000 vx=40052d6777d805d6 vy=0000000000000000
+vy=0 n=20 dt=-2.0: IDENTICAL  AFTER: x=c05d333adc74ea26 y=0000000000000000 vx=40077be41df9a0c2 vy=0000000000000000
+vy=1e-12 n=20 dt=0.1: IDENTICAL  AFTER: x=401a25b7357aa447 y=3d811469ec588e58 vx=40059fa62e631832 vy=3d70d0e89e16a0f2
+vy=1e-12 n=20 dt=0.5: IDENTICAL  AFTER: x=403be81c2429448b y=3da4e90949f58e33 vx=4005462a784bf839 vy=3d70922885df1fe9
+vy=1e-12 n=20 dt=2.0: IDENTICAL  AFTER: x=405de2243c66f45a y=3dc5be612de023a0 vx=4007a61d075c3ff2 vy=3d715ac1eb46a876
+vy=1e-12 n=20 dt=5.0: IDENTICAL  AFTER: x=4070a5878f25b778 y=3dd9d4e1f6892fd5 vx=40052d6777d805d6 vy=3d707f467ab6b0ed
+vy=1e-12 n=20 dt=-2.0: IDENTICAL  AFTER: x=c05d333adc74ea26 y=bdc58ae9f5fd14a3 vx=40077be41df9a0c2 vy=3d712cc3e93159e9
+--- sizes
+libm_c.txt 30600000 bytes
+libm_rust.txt 30600000 bytes
+bs_pow_c.txt 5311288 bytes
+bs_pow_rust.txt 5311288 bytes

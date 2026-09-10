@@ -1,0 +1,277 @@
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+**********************************************************************
+** Visual Studio 2026 Developer Command Prompt v18.0
+** Copyright (c) 2026 Microsoft Corporation
+**********************************************************************
+[vcvarsall.bat] Environment initialized for: 'x64'
+../../src/Makefile.defs:21: OpenGL not supported on Windows. Setting OPENGL=0
+"Cleaning up shared library librebound.dll ..."
+make -C ../../src/ clean
+make[1]: Entering directory `C:/Users/nsh/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
+"Removing object files *.obj ..."
+"Removing shared library librebound.dll ..."
+Could Not Find C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\src\*.so
+"Removing coverage files ..."
+Could Not Find C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\src\*.gcda
+Could Not Find C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\src\*.gcno
+make[1]: Leaving directory `C:/Users/nsh/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
+"Cleaning up local directory ..."
+../../src/Makefile.defs:21: OpenGL not supported on Windows. Setting OPENGL=0
+"Compiling shared library librebound.dll ..."
+make -C ../../src/
+make[1]: Entering directory `C:/Users/nsh/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
+"Compiling source file rebound.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:rebound.obj rebound.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+rebound.c
+"Compiling source file tree.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:tree.obj tree.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+tree.c
+"Compiling source file particle.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:particle.obj particle.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+particle.c
+"Compiling source file gravity.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:gravity.obj gravity.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+gravity.c
+"Compiling source file integrator_whfast.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_whfast.obj integrator_whfast.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_whfast.c
+"Compiling source file integrator_whfast512.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_whfast512.obj integrator_whfast512.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_whfast512.c
+"Compiling source file integrator_saba.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_saba.obj integrator_saba.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_saba.c
+"Compiling source file integrator_ias15.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_ias15.obj integrator_ias15.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_ias15.c
+"Compiling source file integrator_sei.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_sei.obj integrator_sei.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_sei.c
+"Compiling source file integrator_bs.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_bs.obj integrator_bs.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_bs.c
+"Compiling source file integrator_leapfrog.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_leapfrog.obj integrator_leapfrog.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_leapfrog.c
+"Compiling source file integrator_mercurius.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_mercurius.obj integrator_mercurius.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_mercurius.c
+"Compiling source file integrator_trace.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_trace.obj integrator_trace.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_trace.c
+"Compiling source file integrator_eos.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_eos.obj integrator_eos.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_eos.c
+"Compiling source file boundary.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:boundary.obj boundary.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+boundary.c
+"Compiling source file binarydata.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:binarydata.obj binarydata.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+binarydata.c
+"Compiling source file output.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:output.obj output.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+output.c
+"Compiling source file collision.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:collision.obj collision.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+collision.c
+"Compiling source file communication_mpi.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:communication_mpi.obj communication_mpi.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+communication_mpi.c
+"Compiling source file display.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:display.obj display.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+display.c
+"Compiling source file tools.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:tools.obj tools.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+tools.c
+"Compiling source file rotations.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:rotations.obj rotations.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+rotations.c
+"Compiling source file simulation.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:simulation.obj simulation.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+simulation.c
+"Compiling source file derivatives.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:derivatives.obj derivatives.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+derivatives.c
+"Compiling source file simulationarchive.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:simulationarchive.obj simulationarchive.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+simulationarchive.c
+"Compiling source file glad.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:glad.obj glad.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+glad.c
+"Compiling source file integrator_janus.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:integrator_janus.obj integrator_janus.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+integrator_janus.c
+"Compiling source file transformations.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:transformations.obj transformations.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+transformations.c
+"Compiling source file fmemopen.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:fmemopen.obj fmemopen.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+fmemopen.c
+"Compiling source file server.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:server.obj server.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+server.c
+"Compiling source file frequency_analysis.c ..."
+cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:frequency_analysis.obj frequency_analysis.c
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+frequency_analysis.c
+""        
+"Linking shared library librebound.dll ..."
+cl /D_USRDLL /D_WINDLL rebound.obj tree.obj particle.obj gravity.obj integrator_whfast.obj integrator_whfast512.obj integrator_saba.obj integrator_ias15.obj integrator_sei.obj integrator_bs.obj integrator_leapfrog.obj integrator_mercurius.obj integrator_trace.obj integrator_eos.obj boundary.obj binarydata.obj output.obj collision.obj communication_mpi.obj display.obj tools.obj rotations.obj simulation.obj derivatives.obj simulationarchive.obj glad.obj integrator_janus.obj transformations.obj fmemopen.obj server.obj frequency_analysis.obj  /link /DLL /OUT:librebound.dll 
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+Microsoft (R) Incremental Linker Version 14.51.36256.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:rebound.exe 
+/DLL 
+/OUT:librebound.dll 
+rebound.obj 
+tree.obj 
+particle.obj 
+gravity.obj 
+integrator_whfast.obj 
+integrator_whfast512.obj 
+integrator_saba.obj 
+integrator_ias15.obj 
+integrator_sei.obj 
+integrator_bs.obj 
+integrator_leapfrog.obj 
+integrator_mercurius.obj 
+integrator_trace.obj 
+integrator_eos.obj 
+boundary.obj 
+binarydata.obj 
+output.obj 
+collision.obj 
+communication_mpi.obj 
+display.obj 
+tools.obj 
+rotations.obj 
+simulation.obj 
+derivatives.obj 
+simulationarchive.obj 
+glad.obj 
+integrator_janus.obj 
+transformations.obj 
+fmemopen.obj 
+server.obj 
+frequency_analysis.obj 
+   Creating library librebound.lib and object librebound.exp
+""        
+"The shared library rebound.obj has been created successfully."
+make[1]: Leaving directory `C:/Users/nsh/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
+Could Not Find C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\examples\shearing_sheet\librebound.dll
+..\..\src\librebound.dll
+..\..\src\librebound.exp
+..\..\src\librebound.lib
+        3 file(s) copied.
+""
+"Compiling problem.c ..."
+cl /I"../../src" /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise  -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb problem.c librebound.lib /Fe: rebound.exe
+Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+problem.c
+Microsoft (R) Incremental Linker Version 14.51.36256.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:rebound.exe 
+problem.obj 
+librebound.lib 
+""
+"Compilation successful. To run REBOUND, execute the file 'rebound.exe'."
+""

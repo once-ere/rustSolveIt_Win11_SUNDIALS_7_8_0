@@ -1,0 +1,106 @@
+rebx binary 2026-09-09T08:06:59
+--- Rust writes and self-reads
+  wrote rebx_binary_roundtrip.bin (6392 bytes)
+  PASS  registered_params (107 entries, names+types+order)
+  PASS  allocated_forces ["gr_potential", "central_force"]
+  PASS  allocated_operators ["modify_mass", "drift"]
+  PASS  additional_forces ["central_force", "gr_potential"] (order is load-bearing)
+  PASS  pre_timestep_modifications [("modify_mass", 4602678819172646912)]
+  PASS  post_timestep_modifications [("drift", 4607182418800017408), ("modify_mass", 4602678819172646912)]
+  PASS  force 'gr_potential' present
+  PASS  force 'central_force' present
+  PASS  operator 'modify_mass' present
+  PASS  force 'gr_potential' update_accelerations restored
+  PASS  operator 'modify_mass' step_function restored
+  PASS  force gr_potential 'c' double bits 40c3a8a8f5f13410
+  PASS  force gr_potential 'gr_source' int 7
+  PASS  force central_force 'Acentral' double bits 3e4a831bd731a289
+  PASS  operator modify_mass 'c' double bits c286dbac1cf8ae52
+  PASS  force gr_potential param order ["gr_source", "c"]
+  PASS  particle 1 'tau_mass' double bits 4636b0a8e891ffff
+  PASS  particle 1 'primary' int -12345
+  PASS  particle 1 'Omega' vec3d bits 3e8421f5f40d8376 c2b6bcc41e900000 3fd3333333333334
+  PASS  particle 1 'force' REBX_TYPE_FORCE relinked to gr_potential
+  PASS  particle 2 'beta' double bits 3fd3333333333334
+  PASS  particle 2 'coordinates' int 2
+  PASS  particle 0 has no parameters (as written)
+  PASS  particle 1 param order ["force", "Omega", "primary", "tau_mass"]
+  PASS  re-serializing the reloaded state is byte-identical (6392 bytes)
+  
+  25 / 25 checks passed
+  ROUND TRIP PASSED
+--- C writes
+C wrote rebx_c_reference.bin
+rust=0  c=0
+differing bytes: 0
+--- Rust reads the C file
+  wrote rebx_binary_roundtrip.bin (6392 bytes)
+  reading back rebx_c_reference.bin instead (foreign binary)
+  PASS  registered_params (107 entries, names+types+order)
+  PASS  allocated_forces ["gr_potential", "central_force"]
+  PASS  allocated_operators ["modify_mass", "drift"]
+  PASS  additional_forces ["central_force", "gr_potential"] (order is load-bearing)
+  PASS  pre_timestep_modifications [("modify_mass", 4602678819172646912)]
+  PASS  post_timestep_modifications [("drift", 4607182418800017408), ("modify_mass", 4602678819172646912)]
+  PASS  force 'gr_potential' present
+  PASS  force 'central_force' present
+  PASS  operator 'modify_mass' present
+  PASS  force 'gr_potential' update_accelerations restored
+  PASS  operator 'modify_mass' step_function restored
+  PASS  force gr_potential 'c' double bits 40c3a8a8f5f13410
+  PASS  force gr_potential 'gr_source' int 7
+  PASS  force central_force 'Acentral' double bits 3e4a831bd731a289
+  PASS  operator modify_mass 'c' double bits c286dbac1cf8ae52
+  PASS  force gr_potential param order ["gr_source", "c"]
+  PASS  particle 1 'tau_mass' double bits 4636b0a8e891ffff
+  PASS  particle 1 'primary' int -12345
+  PASS  particle 1 'Omega' vec3d bits 3e8421f5f40d8376 c2b6bcc41e900000 3fd3333333333334
+  PASS  particle 1 'force' REBX_TYPE_FORCE relinked to gr_potential
+  PASS  particle 2 'beta' double bits 3fd3333333333334
+  PASS  particle 2 'coordinates' int 2
+  PASS  particle 0 has no parameters (as written)
+  PASS  particle 1 param order ["force", "Omega", "primary", "tau_mass"]
+  PASS  re-serializing the reloaded state is byte-identical (6392 bytes)
+  
+  25 / 25 checks passed
+  ROUND TRIP PASSED
+--- C reads Rust file vs C reads own file
+readback lines: 28 / 28; differing = 0
+  registered_params 107
+  allocated_forces 2
+  allocated_operators 2
+  additional_forces 2
+  pre 1 post 2
+  additional_force central_force
+  additional_force gr_potential
+  post_step drift 3ff0000000000000
+  post_step modify_mass 3fe0000000000000
+  pre_step modify_mass 3fe0000000000000
+  gr yes cf yes mm yes
+  gr.c 40c3a8a8f5f13410
+  gr.gr_source 7
+  cf.Acentral 3e4a831bd731a289
+  mm.c c286dbac1cf8ae52
+  gr.param gr_source
+  gr.param c
+  p1.tau_mass 4636b0a8e891ffff
+  p1.primary -12345
+  p1.Omega 3e8421f5f40d8376 c2b6bcc41e900000 3fd3333333333334
+  p1.force gr_potential
+  p2.beta 3fd3333333333334
+  p2.coordinates 2
+  p1.param force
+  p1.param Omega
+  p1.param primary
+  p1.param tau_mass
+  p0.params 0
+--- byte comparison (absolute paths)
+rust=6392  c=6392  rust-reserialized=6392
+differing bytes (Rust vs C): 26   identical bytes: 6366
+offsets: 37..62
+C bytes there (ascii): 'notavailable00000000000000'
+Rust bytes there: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+differing bytes (Rust written vs Rust re-serialized after reading the C file): 0
+--- served.bin
+served.bin 3448 bytes; header 'REBOUND Binary File. Version: 5.'
+served.bin SHA256 66C9F191DC9A47A2B710F1F4DAB13CE30AC361F4904078017106DFDEF6700236

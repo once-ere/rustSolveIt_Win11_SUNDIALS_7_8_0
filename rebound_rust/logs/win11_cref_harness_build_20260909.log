@@ -1,0 +1,48 @@
+harness build 2026-09-09T08:02:39
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /I"..\..\rebound\rebound\src" /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise addfmt_test.c librebound.lib /Fe:addfmt_test.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+addfmt_test.c
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /I"..\..\rebound\rebound\src" /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise archive_test.c librebound.lib /Fe:archive_test.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+archive_test.c
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /Ox /fp:precise bs_pow_diff.c /Fe:bs_pow_diff.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+bs_pow_diff.c
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /I"..\..\rebound\rebound\src" /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise derivatives_test.c librebound.lib /Fe:derivatives_test.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+derivatives_test.c
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /I"..\..\rebound\rebound\src" /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise frequency_test.c librebound.lib /Fe:frequency_test.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+frequency_test.c
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /I"..\..\rebound\rebound\src" /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise integrators_test.c librebound.lib /Fe:integrators_test.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+integrators_test.c
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /I"..\..\rebound\rebound\src" /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise kepler_rectilinear_c.c librebound.lib /Fe:kepler_rectilinear_c.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+kepler_rectilinear_c.c
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /Ox /fp:precise libm_diff.c /Fe:libm_diff.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+libm_diff.c
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /I"..\..\rebound\rebound\src" /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise movetocom_var_c.c librebound.lib /Fe:movetocom_var_c.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+movetocom_var_c.c
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /I"..\..\rebound\rebound\src" /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise movetocom_var_test.c librebound.lib /Fe:movetocom_var_test.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+movetocom_var_test.c
+movetocom_var_test.c(28): warning C4477: 'printf' : format string '%zu' requires an argument of type 'unsigned __int64', but variadic argument 4 has type 'int'
+movetocom_var_test.c(28): note: consider using '%u' in the format string
+movetocom_var_test.c(28): note: consider using '%I32u' in the format string
+=== "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat" >nul && cl /nologo /I"..\..\rebound\rebound\src" /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise problem_test.c librebound.lib /Fe:rebound_test.exe
+'vswhere.exe' is not recognized as an internal or external command,
+operable program or batch file.
+problem_test.c

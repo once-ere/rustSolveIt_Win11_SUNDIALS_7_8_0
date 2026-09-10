@@ -1,0 +1,18 @@
+tides_spin runs 2026-09-09T08:06:44
+pseudo    tmax=628.3185307179586  [long ] C     2.6s (pseudo done t=6.28318530717958652e+02) | Rust    0.9s (pseudo done t=6.28318530717958652e2) | BIT-IDENTICAL
+kozai     tmax=100000.0           [long ] C     1.4s (kozai done t=1.00000000000000000e+05) | Rust    1.6s (kozai done t=1.00000000000000000e5) | BIT-IDENTICAL
+migration tmax=628.3185307179586  [long ] C     5.6s (migration done t=6.28318530717958652e+02) | Rust    1.8s (migration done t=6.28318530717958652e2) | BIT-IDENTICAL
+pseudo    tmax=62.83185307179586  [short] C     0.3s (pseudo done t=6.28318530717958623e+01) | Rust    0.1s (pseudo done t=6.28318530717958623e1) | BIT-IDENTICAL
+kozai     tmax=1000.0             [short] C     0.0s (kozai done t=1.00000000000000000e+03) | Rust    0.0s (kozai done t=1.00000000000000000e3) | BIT-IDENTICAL
+migration tmax=62.83185307179586  [short] C     0.5s (migration done t=6.28318530717958623e+01) | Rust    0.2s (migration done t=6.28318530717958623e1) | BIT-IDENTICAL
+--- state_kozai_c.txt (short run)
+  example tides_spin_kozai tmax 408f400000000000
+  t 408f400000000000
+  dt 3fdfb0353c9af096
+  N 3
+  p 0 4030d168588d7d87 4032c4b0f270001d 3f4aa9435c08259e bfb30eb4eb3d86b0 3fb0c5d3841351ea bed2f14dd73ad188 3ff0000000000000
+  Omega 0 3e998f76a30319ba 40538913bf87a2ad 402b902ad31ab5ba
+  p 1 40306d618f880608 40331d542ceaa826 bffee0985f754479 bfe8935dd2f4d053 3fa60b26b4ced946 3fc16277432751ca 3f0b099bb527bf8d
+  Omega 1 3f55ea2802e8a6fe 4076773dd448392d 404fb27709cf85c7
+  p 2 c030d19fdd718af2 c032c4f18c611f7f bf47666a9cc39061 3fb3114d6243b0be bfb0c5f8c4216e69 bec4de97f7caf91e 3ff0000000000000
+  Omega 2 none

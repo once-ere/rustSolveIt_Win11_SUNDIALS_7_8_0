@@ -242,9 +242,11 @@ def find_binary():
 
 def run(*args):
     binary = find_binary()
+    # encoding="utf-8": mercury_rs prints UTF-8 (em-dashes); on Windows the
+    # default text-mode decoding is cp1252, which would garble them.
     proc = subprocess.Popen([str(binary), *args], cwd=str(MR),
                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                            text=True, bufsize=1)
+                            text=True, encoding="utf-8", bufsize=1)
     lines = []
     for line in proc.stdout:
         print(line, end="")

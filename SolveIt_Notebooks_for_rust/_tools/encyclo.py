@@ -15,6 +15,8 @@ Standard library only (Chrome only for the PDF). Deterministic ordering.
 import html
 import json
 import re
+import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path

@@ -13,7 +13,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_01_head_on_exchange.png"
  },
  {
   "tag": "collision_02_unequal_masses",
@@ -29,7 +29,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_02_unequal_masses.png"
  },
  {
   "tag": "collision_03_restitution_ladder",
@@ -45,7 +45,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_03_restitution_ladder.png"
  },
  {
   "tag": "collision_04_newtons_cradle",
@@ -61,7 +61,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_04_newtons_cradle.png"
  },
  {
   "tag": "collision_05_billiard_break",
@@ -77,7 +77,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_05_billiard_break.png"
  },
  {
   "tag": "collision_06_spin_up",
@@ -93,7 +93,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_06_spin_up.png"
  },
  {
   "tag": "collision_07_thin_wall_toi",
@@ -109,7 +109,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_07_thin_wall_toi.png"
  },
  {
   "tag": "collision_08_colliding_binary",
@@ -125,7 +125,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_08_colliding_binary.png"
  },
  {
   "tag": "collision_09_spinning_target",
@@ -141,7 +141,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_09_spinning_target.png"
  },
  {
   "tag": "collision_10_billiard_box",
@@ -157,7 +157,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_10_billiard_box.png"
  },
  {
   "tag": "collision_11_box_of_shapes",
@@ -173,7 +173,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_11_box_of_shapes.png"
  },
  {
   "tag": "collision_12_two_dumbbells",
@@ -189,7 +189,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\collision_12_two_dumbbells.png"
  },
  {
   "tag": "dynamic_billiard_box",
@@ -205,7 +205,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_billiard_box.png"
  },
  {
   "tag": "dynamic_billiard_break",
@@ -221,7 +221,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_billiard_break.png"
  },
  {
   "tag": "dynamic_bouncing_ball_restitution",
@@ -237,7 +237,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_bouncing_ball_restitution.png"
  },
  {
   "tag": "dynamic_box_of_shapes",
@@ -253,7 +253,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_box_of_shapes.png"
  },
  {
   "tag": "dynamic_box_of_shapes_m32",
@@ -269,7 +269,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_box_of_shapes_m32.png"
  },
  {
   "tag": "dynamic_charged_in_b_field",
@@ -285,7 +285,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_charged_in_b_field.png"
  },
  {
   "tag": "dynamic_charged_in_e_field",
@@ -301,7 +301,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_charged_in_e_field.png"
  },
  {
   "tag": "dynamic_colliding_binary",
@@ -317,7 +317,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_colliding_binary.png"
  },
  {
   "tag": "dynamic_double_slit",
@@ -333,7 +333,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_double_slit.png"
  },
  {
   "tag": "dynamic_head_on_exchange",
@@ -349,7 +349,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_head_on_exchange.png"
  },
  {
   "tag": "dynamic_kepler_orbit",
@@ -365,7 +365,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_kepler_orbit.png"
  },
  {
   "tag": "dynamic_magnetic_spin_up",
@@ -381,7 +381,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_magnetic_spin_up.png"
  },
  {
   "tag": "dynamic_newtons_cradle",
@@ -397,7 +397,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_newtons_cradle.png"
  },
  {
   "tag": "dynamic_outer_solar_system",
@@ -413,7 +413,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_outer_solar_system.png"
  },
  {
   "tag": "dynamic_restitution_ladder",
@@ -429,7 +429,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_restitution_ladder.png"
  },
  {
   "tag": "dynamic_routh_double_star_period",
@@ -445,7 +445,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_double_star_period.png"
  },
  {
   "tag": "dynamic_routh_p1_apsidal_symmetry",
@@ -461,7 +461,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_apsidal_symmetry.png"
  },
  {
   "tag": "dynamic_routh_p1_centre_of_gravity",
@@ -477,7 +477,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_centre_of_gravity.png"
  },
  {
   "tag": "dynamic_routh_p1_collinear_three_body",
@@ -493,7 +493,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_collinear_three_body.png"
  },
  {
   "tag": "dynamic_routh_p1_equal_periods",
@@ -509,7 +509,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_equal_periods.png"
  },
  {
   "tag": "dynamic_routh_p1_equilateral_three_body",
@@ -525,7 +525,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_equilateral_three_body.png"
  },
  {
   "tag": "dynamic_routh_p1_escape_velocity",
@@ -541,7 +541,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_escape_velocity.png"
  },
  {
   "tag": "dynamic_routh_p1_expanding_sphere",
@@ -557,7 +557,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_expanding_sphere.png"
  },
  {
   "tag": "dynamic_routh_p1_geometric_progression",
@@ -573,7 +573,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_geometric_progression.png"
  },
  {
   "tag": "dynamic_routh_p1_hodograph_circle",
@@ -589,7 +589,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_hodograph_circle.png"
  },
  {
   "tag": "dynamic_routh_p1_kepler_equation",
@@ -605,7 +605,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_kepler_equation.png"
  },
  {
   "tag": "dynamic_routh_p1_lambert_theorem",
@@ -621,7 +621,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_lambert_theorem.png"
  },
  {
   "tag": "dynamic_routh_p1_oblique_impact",
@@ -637,7 +637,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_oblique_impact.png"
  },
  {
   "tag": "dynamic_routh_p1_parabola_of_safety",
@@ -653,7 +653,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_parabola_of_safety.png"
  },
  {
   "tag": "dynamic_routh_p1_sphere_exchange",
@@ -669,7 +669,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_sphere_exchange.png"
  },
  {
   "tag": "dynamic_routh_p1_three_projectiles",
@@ -685,7 +685,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_three_projectiles.png"
  },
  {
   "tag": "dynamic_routh_p1_two_trajectories",
@@ -701,7 +701,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p1_two_trajectories.png"
  },
  {
   "tag": "dynamic_routh_p2_correlated_bodies",
@@ -717,7 +717,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_correlated_bodies.png"
  },
  {
   "tag": "dynamic_routh_p2_fixed_couple",
@@ -733,7 +733,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_fixed_couple.png"
  },
  {
   "tag": "dynamic_routh_p2_impulsive_couple",
@@ -749,7 +749,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_impulsive_couple.png"
  },
  {
   "tag": "dynamic_routh_p2_invariable_line",
@@ -765,7 +765,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_invariable_line.png"
  },
  {
   "tag": "dynamic_routh_p2_mean_axis_instability",
@@ -781,7 +781,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_mean_axis_instability.png"
  },
  {
   "tag": "dynamic_routh_p2_period_ratio",
@@ -797,7 +797,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_period_ratio.png"
  },
  {
   "tag": "dynamic_routh_p2_poinsot_rolling",
@@ -813,7 +813,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_poinsot_rolling.png"
  },
  {
   "tag": "dynamic_routh_p2_polhode_quarter_period",
@@ -829,7 +829,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_polhode_quarter_period.png"
  },
  {
   "tag": "dynamic_routh_p2_principal_axes_in_space",
@@ -845,7 +845,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_principal_axes_in_space.png"
  },
  {
   "tag": "dynamic_routh_p2_rolling_cones",
@@ -861,7 +861,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_rolling_cones.png"
  },
  {
   "tag": "dynamic_routh_p2_separatrix",
@@ -877,7 +877,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_separatrix.png"
  },
  {
   "tag": "dynamic_routh_p2_spin_stabilisation",
@@ -893,7 +893,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_spin_stabilisation.png"
  },
  {
   "tag": "dynamic_routh_p2_sylvester_time",
@@ -909,7 +909,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_sylvester_time.png"
  },
  {
   "tag": "dynamic_routh_p2_thin_rod",
@@ -925,7 +925,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_thin_rod.png"
  },
  {
   "tag": "dynamic_routh_p2_two_quadrics",
@@ -941,7 +941,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_two_quadrics.png"
  },
  {
   "tag": "dynamic_routh_p2_uniaxal_precession",
@@ -957,7 +957,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_p2_uniaxal_precession.png"
  },
  {
   "tag": "dynamic_routh_rectangle_diagonal",
@@ -973,7 +973,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_routh_rectangle_diagonal.png"
  },
  {
   "tag": "dynamic_spin_up",
@@ -989,7 +989,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_spin_up.png"
  },
  {
   "tag": "dynamic_spinning_target",
@@ -1005,7 +1005,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_spinning_target.png"
  },
  {
   "tag": "dynamic_static_anchor",
@@ -1021,7 +1021,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_static_anchor.png"
  },
  {
   "tag": "dynamic_thin_wall_toi",
@@ -1037,7 +1037,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_thin_wall_toi.png"
  },
  {
   "tag": "dynamic_three_bodies",
@@ -1053,7 +1053,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_three_bodies.png"
  },
  {
   "tag": "dynamic_thrown_ball",
@@ -1069,7 +1069,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_thrown_ball.png"
  },
  {
   "tag": "dynamic_tumbling_body",
@@ -1085,7 +1085,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_tumbling_body.png"
  },
  {
   "tag": "dynamic_tunneling",
@@ -1101,7 +1101,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_tunneling.png"
  },
  {
   "tag": "dynamic_two_dumbbells",
@@ -1117,7 +1117,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_two_dumbbells.png"
  },
  {
   "tag": "dynamic_unequal_masses",
@@ -1133,7 +1133,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\dynamic_unequal_masses.png"
  },
  {
   "tag": "rust_bouncing_ball_restitution",
@@ -1245,7 +1245,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_01_elastic_head_on.png"
  },
  {
   "tag": "solveit_02_keplers_third_law",
@@ -1261,7 +1261,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_02_keplers_third_law.png"
  },
  {
   "tag": "solveit_03_three_conics",
@@ -1277,7 +1277,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_03_three_conics.png"
  },
  {
   "tag": "solveit_04_restitution_ladder",
@@ -1293,7 +1293,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_04_restitution_ladder.png"
  },
  {
   "tag": "solveit_05_cyclotron_bdf",
@@ -1309,7 +1309,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_05_cyclotron_bdf.png"
  },
  {
   "tag": "solveit_06_symplectic_vs_adaptive",
@@ -1325,7 +1325,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_06_symplectic_vs_adaptive.png"
  },
  {
   "tag": "solveit_07_dzhanibekov",
@@ -1341,7 +1341,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_07_dzhanibekov.png"
  },
  {
   "tag": "solveit_08_magnetic_torque",
@@ -1357,7 +1357,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_08_magnetic_torque.png"
  },
  {
   "tag": "solveit_09_newtons_cradle",
@@ -1373,7 +1373,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_09_newtons_cradle.png"
  },
  {
   "tag": "solveit_10_no_tunnelling",
@@ -1389,7 +1389,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_10_no_tunnelling.png"
  },
  {
   "tag": "solveit_11_lagrange_l4",
@@ -1405,7 +1405,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_11_lagrange_l4.png"
  },
  {
   "tag": "solveit_12_dumbbell_inertia",
@@ -1421,7 +1421,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_12_dumbbell_inertia.png"
  },
  {
   "tag": "solveit_13_tilted_torus",
@@ -1437,7 +1437,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_13_tilted_torus.png"
  },
  {
   "tag": "solveit_14_particle_in_a_box",
@@ -1453,7 +1453,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_14_particle_in_a_box.png"
  },
  {
   "tag": "solveit_15_tunnelling",
@@ -1469,7 +1469,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_15_tunnelling.png"
  },
  {
   "tag": "solveit_16_special_functions",
@@ -1485,7 +1485,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_16_special_functions.png"
  },
  {
   "tag": "solveit_17_pendulum_dae",
@@ -1501,7 +1501,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_17_pendulum_dae.png"
  },
  {
   "tag": "solveit_18_equilibrium_and_sensitivity",
@@ -1517,7 +1517,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_18_equilibrium_and_sensitivity.png"
  },
  {
   "tag": "solveit_19_hinged_door",
@@ -1533,7 +1533,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_19_hinged_door.png"
  },
  {
   "tag": "solveit_20_dataset_kepler_orbit",
@@ -1549,7 +1549,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_20_dataset_kepler_orbit.png"
  },
  {
   "tag": "solveit_21_dataset_free_fall_check",
@@ -1565,7 +1565,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_21_dataset_free_fall_check.png"
  },
  {
   "tag": "solveit_22_dataset_circular_binary",
@@ -1581,7 +1581,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_22_dataset_circular_binary.png"
  },
  {
   "tag": "solveit_23_dataset_restitution_rebounds",
@@ -1597,7 +1597,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_23_dataset_restitution_rebounds.png"
  },
  {
   "tag": "solveit_24_dataset_elastic_exchange",
@@ -1613,7 +1613,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_24_dataset_elastic_exchange.png"
  },
  {
   "tag": "solveit_25_dataset_helical_cyclotron",
@@ -1629,7 +1629,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_25_dataset_helical_cyclotron.png"
  },
  {
   "tag": "solveit_26_dataset_dzhanibekov_flip",
@@ -1645,7 +1645,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_26_dataset_dzhanibekov_flip.png"
  },
  {
   "tag": "solveit_27_dataset_record_switch",
@@ -1661,7 +1661,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_27_dataset_record_switch.png"
  },
  {
   "tag": "solveit_28_dataset_pendulum_drift",
@@ -1677,7 +1677,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_28_dataset_pendulum_drift.png"
  },
  {
   "tag": "solveit_29_dataset_box_rattle",
@@ -1693,7 +1693,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_29_dataset_box_rattle.png"
  },
  {
   "tag": "solveit_30_dataset_sql_surgery",
@@ -1709,7 +1709,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_30_dataset_sql_surgery.png"
  },
  {
   "tag": "solveit_31_dataset_attach_compare",
@@ -1725,7 +1725,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_31_dataset_attach_compare.png"
  },
  {
   "tag": "solveit_32_dataset_window_velocity",
@@ -1741,7 +1741,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_32_dataset_window_velocity.png"
  },
  {
   "tag": "solveit_33_dataset_lifecycle_tour",
@@ -1757,7 +1757,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_33_dataset_lifecycle_tour.png"
  },
  {
   "tag": "solveit_34_dataset_door_movies",
@@ -1773,7 +1773,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_34_dataset_door_movies.png"
  },
  {
   "tag": "solveit_35_dataset_spinning_torus",
@@ -1789,7 +1789,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_35_dataset_spinning_torus.png"
  },
  {
   "tag": "solveit_36_dataset_teacher_diff",
@@ -1805,7 +1805,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_36_dataset_teacher_diff.png"
  },
  {
   "tag": "solveit_37_dataset_map_spherical",
@@ -1821,7 +1821,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_37_dataset_map_spherical.png"
  },
  {
   "tag": "solveit_38_dataset_curvilinear_tour",
@@ -1837,7 +1837,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\solveit_38_dataset_curvilinear_tour.png"
  },
  {
   "tag": "video_ball_joint_chain",
@@ -1853,7 +1853,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_ball_joint_chain.png"
  },
  {
   "tag": "video_box_of_shapes",
@@ -1869,7 +1869,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_box_of_shapes.png"
  },
  {
   "tag": "video_cardan_compass",
@@ -1885,7 +1885,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_cardan_compass.png"
  },
  {
   "tag": "video_cardan_gear",
@@ -1901,7 +1901,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_cardan_gear.png"
  },
  {
   "tag": "video_double_pendulum_hinges",
@@ -1917,7 +1917,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_double_pendulum_hinges.png"
  },
  {
   "tag": "video_gyroscope_gimbal",
@@ -1933,7 +1933,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_gyroscope_gimbal.png"
  },
  {
   "tag": "video_kepler_ellipse",
@@ -1949,7 +1949,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_kepler_ellipse.png"
  },
  {
   "tag": "video_piston_crankshaft",
@@ -1965,7 +1965,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_piston_crankshaft.png"
  },
  {
   "tag": "video_rack_and_pinion",
@@ -1981,7 +1981,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_rack_and_pinion.png"
  },
  {
   "tag": "video_rod_pendulum_chain",
@@ -1997,7 +1997,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_rod_pendulum_chain.png"
  },
  {
   "tag": "video_spinning_top",
@@ -2013,7 +2013,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_spinning_top.png"
  },
  {
   "tag": "video_tumbling_racket",
@@ -2029,7 +2029,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_tumbling_racket.png"
  },
  {
   "tag": "video_universal_joint",
@@ -2045,7 +2045,7 @@
   "db": [],
   "scene_replay": true,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\video_universal_joint.png"
  },
  {
   "tag": "addfmt_test",
@@ -2337,7 +2337,7 @@
   ],
   "scene_replay": false,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\mercury_test2_jupiter_gr.png"
  },
  {
   "tag": "mercury_tidal_locking",
@@ -2357,6 +2357,6 @@
   ],
   "scene_replay": false,
   "executed": false,
-  "image": null
+  "image": "SolveIt_Notebooks_for_rust\\encyclopedia\\images\\mercury_tidal_locking.png"
  }
 ]

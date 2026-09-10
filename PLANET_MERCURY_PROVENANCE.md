@@ -4,6 +4,18 @@ This document records, in the repository's provenance convention, what the
 top-level `planet_Mercury/` directory is, where it came from, how it was
 verified, and every deviation made along the way. It is self-contained.
 
+**How to read this page (Windows 11 edition, 2026-09-09).** Sections 1–4 and 6
+are the import record as it was written on the macOS import machine
+(Apple Silicon, 2026-08-30), verbatim apart from bracketed or parenthesised
+editorial notes that point to §7: their measurements are macOS ones and are kept as
+lineage. Section 5 gives the complete Windows 11 reproduction commands, and
+section 7 is the dated Windows 11 re-verification of the same sub-project on
+this machine — its figures recorded side by side with the macOS ones, with the
+cause of every difference. This repository is
+https://github.com/once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0.git, ported from
+once-ere/rustSolveIt_macos-silicon_SUNDIALS_7_8_0 (macOS / Apple Silicon),
+itself ported from once-ere/rustSolveIt_Using_SUNDIALS_7_8_0 (Linux).
+
 ## 1. What was added
 
 `planet_Mercury/` — a complete, verified teaching-and-research sub-project that
@@ -19,7 +31,8 @@ SUNDIALS 7.8.0 CVODE as the only integrator. Contents:
   torque with its orbital back-reaction, and the Goldreich–Peale triaxial
   "handle" torque. CVODE BDF + Newton + dense at rtol 1e-12,
   atol [1e-3, 1e-6, 1e-10, 1e-10, 1e-14], max step 864000 s, with exact
-  root-finding on spin-ratio crossings. 15 analytic-expectation unit tests.
+  root-finding on spin-ratio crossings. 15 analytic-expectation unit tests
+  [editorial note: 15 at the test-1 import; 19 after test 2 — §6, §7].
 - `mercury_crosscheck/` — small GPL-3.0-or-later crate (links this repository's
   GPL `rebound_rust`/`reboundx_rust` ports, exactly like those imports
   themselves): independently reproduces the tidal despin rate with the
@@ -114,13 +127,119 @@ review-driven manifest-clearing hardening briefly deleted a sibling run's
 manifest on read access — caught by the end-to-end pipeline and fixed by
 splitting read-safe `run_dir` from owning-run `fresh_run_dir`.
 
-## 5. Reproduction
+## 5. Reproduction (Windows 11 — complete commands)
 
-From a clone of this repository:
-`cd planet_Mercury/mercury_rs && cargo build --release && cargo test --release`
-(19 tests), then follow `planet_Mercury/INSTRUCTIONS_FOR_TEACHERS_AND_STUDENTS.md`
-— one top-to-bottom notebook run (~1 hour) regenerates every dataset, database,
-check, and the display page, deterministically.
+Everything below is typed into **PowerShell** from a clone of this repository;
+where the Git Bash form differs it follows in parentheses. Prerequisites: the
+Rust toolchain from https://rustup.rs (on Windows the installer,
+`rustup-init.exe`, checks for the Visual Studio C++ Build Tools and offers to
+install them when they are missing — accept; they supply the MSVC linker that
+`rustc` locates by itself, no "Developer Command Prompt" is ever needed), `git`
+(https://git-scm.com/download/win), Python 3 from https://www.python.org
+(tick "Add python.exe to PATH"; the command is `python`, not `python3`), and an
+x86-64 CPU with FMA — the root `.cargo/config.toml` pins
+`-C target-feature=+fma`, which the Windows engine's deterministic libm
+requires, and cargo applies it to the sub-project's crates too because it finds
+that file by walking up from `planet_Mercury\mercury_rs`. No WSL2 is involved.
+
+**Get the repository and build + test the compute crate** (a few minutes;
+`2>&1 | Tee-Object <log>` shows the output and saves it — Git Bash:
+`2>&1 | tee <log>`):
+
+```powershell
+git clone https://github.com/once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0.git
+cd rustSolveIt_Win11_SUNDIALS_7_8_0
+cd planet_Mercury\mercury_rs
+cargo build --release 2>&1 | Tee-Object ..\..\logs\mercury_rs_build.log
+cargo test --release 2>&1 | Tee-Object ..\..\logs\mercury_rs_test.log
+cargo run --release -- print-config
+cd ..\..
+```
+
+(Git Bash: `cd planet_Mercury/mercury_rs`,
+`cargo build --release 2>&1 | tee ../../logs/mercury_rs_build.log`,
+`cargo test --release 2>&1 | tee ../../logs/mercury_rs_test.log`,
+`cargo run --release -- print-config`, `cd ../..`.) Expect zero warnings and
+the line `test result: ok. 19 passed; 0 failed` (the `Doc-tests mercury_rs`
+harness reporting `0 passed; 0 failed` is a normal empty harness); the binary
+is `planet_Mercury\mercury_rs\target\release\mercury_rs.exe`.
+
+**Independent cross-check** (GPL crate; links the repository's REBOUND /
+REBOUNDx ports):
+
+```powershell
+cd planet_Mercury\mercury_crosscheck
+cargo run --release 2>&1 | Tee-Object ..\..\logs\mercury_crosscheck.log
+cd ..\..
+```
+
+(This port's record of the same run is `logs\crosscheck_stress_launcher.log`,
+§7.2; `logs\mercury_crosscheck.log` is the name your own run will create.)
+
+(Git Bash: `cargo run --release 2>&1 | tee ../../logs/mercury_crosscheck.log`.)
+Expect the lines `relative difference = 2.511e-3`,
+`PASS - crosscheck.despin_rate: two independent formulations agree within 2%`
+and `SUCCESS`; an upstream REBOUNDx notice about a 4.5.0 tidal-potential fix
+also prints and is expected.
+
+**Both notebooks, headless** (no browser; fails loudly on any error; the first
+notebook is the long one — budget about an hour):
+
+```powershell
+cd planet_Mercury\notebook
+$env:MERCURY_NO_BROWSER = "1"
+python run_notebook.py mercury_tidal_locking.ipynb
+python check_notebook.py mercury_tidal_locking.ipynb
+python run_notebook.py mercury_test2_jupiter_gr.ipynb
+python check_notebook.py mercury_test2_jupiter_gr.ipynb
+Remove-Item Env:MERCURY_NO_BROWSER
+cd ..\..
+```
+
+(Git Bash: `cd planet_Mercury/notebook`,
+`MERCURY_NO_BROWSER=1 python run_notebook.py mercury_tidal_locking.ipynb`,
+`python check_notebook.py mercury_tidal_locking.ipynb`,
+`MERCURY_NO_BROWSER=1 python run_notebook.py mercury_test2_jupiter_gr.ipynb`,
+`python check_notebook.py mercury_test2_jupiter_gr.ipynb`, `cd ../..`.)
+Expect `ok mercury_tidal_locking.ipynb (18 cells)`, `1 ok, 0 failed`,
+`ok mercury_tidal_locking.ipynb: all structure rules pass`, and
+`ok mercury_test2_jupiter_gr.ipynb (17 cells)`, `1 ok, 0 failed`,
+`ok mercury_test2_jupiter_gr.ipynb: all structure rules pass`. One
+top-to-bottom run regenerates every dataset (`planet_Mercury\data\runs\`), both
+databases (`planet_Mercury\data\mercury_orbit.sqlite3`,
+`planet_Mercury\data\mercury_test2.sqlite3`), every check, and both display
+pages, deterministically; `data\` is regenerable and gitignored (DEV-6).
+
+**Open the display pages** (the notebooks open them themselves when
+`MERCURY_NO_BROWSER` is not set):
+
+```powershell
+Start-Process planet_Mercury\gui\mercury_orbit.html
+Start-Process planet_Mercury\gui\mercury_test2.html
+```
+
+(Git Bash: `start planet_Mercury/gui/mercury_orbit.html`,
+`start planet_Mercury/gui/mercury_test2.html`.) To re-bake a page alone after
+the data exist: `cd planet_Mercury; python gui\bake_page.py; python gui\bake_page2.py; cd ..`
+(Git Bash: `cd planet_Mercury && python gui/bake_page.py && python gui/bake_page2.py && cd ..`).
+
+**Interactive JupyterLab** (optional viewer; the notebooks' code cells use only
+Python's standard library; the venv is never "activated", its programs are
+called by path, so no PowerShell execution-policy change is needed):
+
+```powershell
+python -m venv planet_Mercury\notebook\.venv
+planet_Mercury\notebook\.venv\Scripts\pip.exe install jupyterlab
+cd planet_Mercury\notebook
+.venv\Scripts\jupyter.exe lab mercury_tidal_locking.ipynb
+```
+
+(Git Bash: `python -m venv planet_Mercury/notebook/.venv`,
+`planet_Mercury/notebook/.venv/Scripts/pip.exe install jupyterlab`,
+`cd planet_Mercury/notebook`, `.venv/Scripts/jupyter.exe lab mercury_tidal_locking.ipynb`.)
+The step-by-step classroom walkthrough, with troubleshooting, is
+`planet_Mercury/INSTRUCTIONS_FOR_TEACHERS_AND_STUDENTS.md` (it repeats every
+command above).
 
 ## 6. TEST 2 — Jupiter + Einstein (second commit, same day)
 
@@ -140,7 +259,7 @@ argument becomes 2(θ−f−ϖ) and the resonance angle γ₂ = 2θ−3M−2ϖ (
 leaves γ₂ exactly invariant — unit-tested). Only the tidal strength carries the
 documented 1000× movie compression; the GR and Jupiter rates are real.
 
-**Measured verification (this machine, 2026-08-30).** Gate A: GR alone
+**Measured verification (macOS import machine, Apple Silicon, 2026-08-30 — the Windows 11 figures are in §7).** Gate A: GR alone
 integrates to 42.983″/cy vs 42.983 analytic (rel. diff 7×10⁻¹³). Gate B:
 Jupiter alone gives forced-eccentricity amplitude 4.5438×10⁻³ and period
 808.8 kyr, both equal to the Laplace–Lagrange predictions. Full chain:
@@ -166,3 +285,157 @@ baker `planet_Mercury/gui/bake_page2.py` → `gui/mercury_test2.html`, four new
 analytic unit tests (19 total), and TEST-2 addenda in
 `planet_Mercury/plan/07_PROVENANCE_AND_DEVIATIONS.md` (Part 6) and
 `planet_Mercury/INSTRUCTIONS_FOR_TEACHERS_AND_STUDENTS.md` (Part G).
+
+## 7. Windows 11 re-verification (2026-09-09)
+
+Sections 1–4 and 6 above are the macOS-era import record and are unchanged;
+this section records the re-run of the whole sub-project on this Windows 11
+machine after the macOS project was ported onto the Windows engine. The
+vendored engine here is once-ere/SUNDIALS_7_8_Rust_port_for_Windows11; it
+differs from the Linux/macOS engine only in backend module sets and its public
+API is identical, so `mercury_rs/Cargo.toml`'s two path dependencies
+(`../../sundials_rs/crates/{sundials_core,cvode_rs}`) needed no change. Every
+number in this section was measured on this machine and is backed by a file
+under `logs/` (named per item); the macOS figures beside them are the values
+embedded in the committed macOS executions of the two notebooks.
+
+### 7.1 Machine and toolchain (measured)
+
+- Windows 11 Pro for Workstations, build 10.0.26200; Intel Core Ultra 9 275HX.
+- rustc 1.91.1 (ed61e7d7e 2025-11-07) / cargo 1.91.1, host
+  x86_64-pc-windows-msvc; the root `.cargo/config.toml` pins
+  `-C target-feature=+fma` (the Windows engine's deterministic libm requires
+  FMA), and cargo applies it to the sub-project's crates because it finds
+  that file by walking up from `planet_Mercury\mercury_rs`.
+- MSVC linker: Visual Studio 2026 Build Tools, MSVC 14.51.36231, located by
+  `rustc` automatically (no developer prompt). `mercury_rs` and
+  `mercury_crosscheck` are pure Rust — no C compiler takes part in building or
+  running them. (The only C compiled anywhere in this repository is (a) the
+  bundled SQLite amalgamation inside `dataset_tools`, built through the `cc`
+  crate, and (b) the REBOUND/REBOUNDx C reference harnesses of the rebound
+  gates — both with MSVC toolset 14.51.36231, `cl` banner 19.51.36256.) No
+  WSL2 compiler or linker was used anywhere.
+- Python 3.14.5 (default text encoding cp1252 — see 7.4); the notebooks'
+  code cells need nothing outside the standard library.
+
+### 7.2 Engine and crate gates (measured)
+
+- Engine untouched by the sub-project: `cargo test --workspace` 638 passed,
+  0 failed (`logs/test_final.log`; the macOS record in §3 says 622 — the
+  workspace has grown since); physics byte-identity gate
+  `bash tools/win_verify_physics.sh` exit 0 (`logs/win_verify_physics.log`).
+- `mercury_rs`: `cargo build --release` 0 warnings
+  (`logs/mercury_rs_build.log`); `cargo test --release` **19 passed, 0
+  failed** (`logs/mercury_rs_test.log`); `target\release\mercury_rs.exe`
+  1,104,384 bytes.
+- `mercury_crosscheck`: `cargo build --release` 0 warnings; the run printed
+  (`logs/crosscheck_stress_launcher.log`):
+
+  ```
+    spin ratio 100 x n, e = 0.20563, 200 orbits with IAS15 + tides_spin
+    measured  dOmega/dt = -3.652928e-18 rad/s^2  (REBOUNDx tides_spin)
+    predicted dOmega/dt = -3.643780e-18 rad/s^2  (Hut 1981 secular formula)
+    relative difference = 2.511e-3
+  PASS - crosscheck.despin_rate: two independent formulations agree within 2%
+  SUCCESS
+  ```
+
+  — 0.25 %, the same agreement §1 records for the macOS import.
+
+### 7.3 Notebooks (measured)
+
+Both notebooks were rebuilt by `build_notebook.py` / `build_notebook2.py`,
+executed headless by `run_notebook.py` under `MERCURY_NO_BROWSER=1`, and
+audited by `check_notebook.py` (`logs/mercury_notebook1.log`,
+`logs/mercury_notebook2.log`): `mercury_tidal_locking.ipynb` — `ok (18
+cells)`, `1 ok, 0 failed`, `all structure rules pass`;
+`mercury_test2_jupiter_gr.ipynb` — `ok (17 cells)`, `1 ok, 0 failed`, `all
+structure rules pass`. Every assertion of both verification gauntlets passes
+(test 1: `all_run_verdicts: 6/6 runs ended SUCCESS`; test 2: `5/5`), the
+display pages bake byte-identically twice, and the numbers are deterministic
+run to run on this machine. The executed notebooks carry the lines below as
+embedded outputs; the regenerated `data/` is not committed (DEV-6).
+
+**Test 1 — `mercury_tidal_locking.ipynb`, Windows 11 beside the committed
+macOS run** (identical lines are marked "same"):
+
+| Quantity | Windows 11 (this machine) | macOS (committed run) |
+|---|---|---|
+| Run A: final Ω/n after 10 Myr (Finding F1) | 178.9260 | same |
+| Run A: full-model proof segment, Ω/n | 181.446450 | 181.446443 |
+| Run B: stage handover | t = 3.7281 Myr | same |
+| Run B: root-found restart Ω/n (target 1.6) | 1.600000000000e+00 | 1.599999999963e+00 |
+| Run B: restart time | 4.4315 Myr | 4.4316 Myr |
+| Run B: samples recorded | 10762 rows | 10763 rows |
+| Run C: 64-branch capture fraction | 5/64 = 0.0781 ± 0.034 (68 %) | 10/64 = 0.1562 ± 0.045 |
+| Canonical capture time (movie time) | 4.6501 Myr | 4.6499 Myr |
+| Settled-era mean Ω/n | 1.5000000368 | 1.5000000498 |
+| Final P_orb / P_rot / solar day (observed 87.969 / 58.646 / 175.938 d) | 87.9678 / 58.6512 / 175.9896 d | 87.9678 / 58.6419 / 175.9061 d |
+| Two-thirds lock: settled-era mean P_rot/P_orb − 2/3, relative | 8.8204e-09 | 1.6579e-08 |
+| Residual-libration wiggle of the final instantaneous sample | 1.0236e-04 | 5.5741e-05 |
+| Ledger, pre-capture: crate check max drift (budget 1e-9) | 7.0764e-11 | 6.2675e-11 |
+| Ledger, pre-capture: notebook total-L drift (budget 1e-9) | 4.029e-10 | 3.947e-10 |
+| Ledger, locked era: drift vs the model's predicted leak | 8.821e-12 vs 1.134e-09 (crate: 8.7732e-12 vs 1.1343e-09) | 9.156e-12 vs 1.134e-09 (crate: 9.1007e-12 vs 1.1344e-09) |
+| Libration swing, notebook's 12 bins | 6.232 → 0.140 rad | 6.224 → 0.152 rad |
+| Libration swing, crate's early → late bin | 4.5684 → 0.0581 rad | 4.5822 → 0.0604 rad |
+| Run D: guaranteed capture (e = 0.285) | 765.2 kyr | 762.6 kyr |
+| Run D: libration period vs pendulum-exact | 27.46 yr vs 29.13 yr at amplitude 2.723 rad (rel diff 5.730e-02) | 27.52 yr vs 29.25 yr at 2.728 rad (5.897e-02) |
+| Run E: seam dΩ/dt, secular vs full | −5.310106e-20 vs −5.304468e-20 rad/s² (rel diff 1.062e-03) | −5.310106e-20 vs −5.303729e-20 (1.201e-03) |
+| Run E: end-state \|a_S − a_R\| / \|e_S − e_R\| | 1.393 m / 5.069e-12 | same |
+| Canonical run: CVODE steps / re-anchorings | 711041787 / 109388 | 711084473 / 109388 |
+| Verdicts | all PASS, 6/6 runs SUCCESS | all PASS, 6/6 runs SUCCESS |
+
+**Test 2 — `mercury_test2_jupiter_gr.ipynb`:**
+
+| Quantity | Windows 11 (this machine) | macOS (committed run) |
+|---|---|---|
+| Gate A: GR precession, measured vs analytic | 42.983 vs 42.983 ″/century (rel diff 7.193e-13) | same |
+| Gate B: forced-eccentricity amplitude (e 0.19654 .. 0.20563) | 4.5438e-03 = LL prediction | same |
+| Gate B: secular period | 808.8 kyr = LL prediction | same |
+| Movie run: stage handover | t = 3.7616 Myr | same |
+| Restart root Ω/n (target 1.6) and time | 1.600000000000e+00 at 4.4615 Myr | 1.599999999995e+00 at 4.4612 Myr |
+| 16-branch sweep | 5/16 captured = 0.3125 | 2/16 = 0.1250 |
+| Canonical capture time | 4.6781 Myr | 4.6779 Myr |
+| Settled mean Ω/n vs predicted 1.5 + ϖ̇/n = 1.5000003777 | 1.5000004081 (\|diff\| 3.05e-08; 4.081e-07 above 3/2; 43221 samples) | 1.5000004545 (7.69e-08; 4.545e-07; 43222 samples) |
+| Perihelion advance over the run | 54.56 rad = 203.21 ″/century vs predicted 203.22 | 54.57 rad = 203.21 vs 203.22 |
+| e range in the canonical run (swing amplitude) | 0.19846 .. 0.20563 (3.584e-03) | same |
+| Final P_orb / P_rot / solar day | 87.9678 / 58.6464 / 175.9463 d | 87.9678 / 58.6447 / 175.9314 d |
+| CVODE steps / re-anchorings | 687068258 / 108305 | 687207958 / 108503 |
+| Verdicts | all PASS, 5/5 runs SUCCESS | all PASS, 5/5 runs SUCCESS |
+
+### 7.4 Why the two columns differ, and why every gate still passes
+
+`mercury_rs` evaluates its tidal and triaxial torques — the right-hand side
+CVODE is handed — through the host C runtime's libm: Microsoft's UCRT on this
+machine, Apple's libm on the import machine. The two libraries round some
+transcendental results differently in the last bit, so the right-hand side
+differs at the 1e-16 level between the platforms. CVODE itself runs on the
+vendored deterministic engine and is not the source of any difference. Where
+the model is smooth those last-bit differences stay small (the run-A ratio,
+the GR rate and its 7.193e-13 residual, the Laplace–Lagrange amplitude and
+period, the secular-stage seam value −5.310106e-20 and the 109388
+re-anchorings are identical on both columns); near the 3:2 separatrix the
+model is chaotic and, as the notebook's own text and deviation DEV-3 state,
+capture is bit-level path-sensitive — so the phase-sweep tallies differ
+(5/64 vs 10/64 in test 1; 5/16 vs 2/16 in test 2; the notebook prints the
+64-flip / 16-flip error bars with them) and the canonical branch's capture
+time, settled ratio and final periods differ in their fourth to sixth
+significant digit. Every assertion of both gauntlets passes on both platforms
+because each one tests a physical expectation with its own tolerance, not a
+platform's last digits; the platform-specific numbers are deterministic run
+to run on each machine (the determinism gate — byte-identical repeat
+executions — holds here as it did there).
+
+### 7.5 What the port changed in the sub-project
+
+Only platform plumbing and prose; no physics, constants, tolerances or CLI
+runs changed. The notebook driver cell probes `mercury_rs.exe` before the
+extensionless name (the `MERCURY_BIN` override is still consulted first) and
+decodes the program's output as UTF-8 (`mercury_rs` prints UTF-8 em-dashes;
+Windows Python's default text decoding is cp1252, which garbled them); the
+setup prose in both notebooks and both display-page bakers is written for
+PowerShell; every builder writes its files with LF line endings. The
+pre-modification macOS originals of every edited file are kept under
+`.backups/2026-09-09/planet_Mercury/` (gitignored). The sub-project still
+carries no `.gitignore` of its own (D6): `planet_Mercury/data/` and
+`planet_Mercury/notebook/.venv/` are ignored from the repository root.

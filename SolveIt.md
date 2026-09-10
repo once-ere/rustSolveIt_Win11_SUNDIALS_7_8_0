@@ -1323,29 +1323,34 @@ Out[4]= obj0 as pivot
 In[5]:= new sphere as bob { mass = 1, radius = 0.05, position = [0.019998666693333084, -0.9998000066665778, 0] }
 Out[5]= obj1 as bob
 In[6]:= constrain pivot bob
-Out[6]= constraint0: obj0 <-> obj1 held at 1 (METHOD IDA is required to integrate it)
+Out[6]= constraint0: rod obj0 <-> obj1, 1 row(s) (METHOD IDA is required to integrate it)
 In[7]:= constraints
-Out[7]= constraint0: obj0 <-> obj1 length 1 (currently 1)
+Out[7]= constraint0: rod obj0 <-> obj1, 1 row(s)
+worst |g| = 0e0, worst |g_dot| = 0e0
 In[8]:= method ida
 Out[8]= method = IDA (constrained DAE, GGL index-2)
 In[9]:= run 2.0060666807106475 steps 200
-Out[9]= t = 2.0060666807106475 (339 solver steps, 200 snapshots, |dE/E| = 2.530e-12)
+Out[9]= t = 2.0060666807106475 (384 solver steps, 200 snapshots, |dE/E| = 6.942e-13)
 In[10]:= get bob.position
-Out[10]= [0.019998666320588818, -0.9998000066740419, 0]
+Out[10]= [0.019998666412318816, -0.999800006672206, 0]
 In[11]:= constraints
-Out[11]= constraint0: obj0 <-> obj1 length 1 (currently 1.0000000000000082)
+Out[11]= constraint0: rod obj0 <-> obj1, 1 row(s)
+worst |g| = 7.105427357601002e-15, worst |g_dot| = 2.892412673190032e-14
 ```
 
 **What to notice.** The bob started at `(0.019998666693333084,
-−0.9998000066665778)` and came back to `(0.019998666320588818,
-−0.9998000066740419)` — a closure of **3.7 × 10⁻¹⁰** after a full
-period. Energy held to 2.5 parts in 10¹².
+−0.9998000066665778)` and came back to `(0.019998666412318816,
+−0.999800006672206)` — a closure of **2.8 × 10⁻¹⁰** after a full
+period. Energy held to 7 parts in 10¹³.
 
-And the rod: `1.0000000000000082`. Eight parts in 10¹⁵ — one bit — after
-339 solver steps. That is not luck. The formulation carries *both* the
-rod's length and its rate of change as equations; the cheaper scheme that
-constrains only the acceleration lets the length drift quadratically, and
-you find out much later.
+And the rod. `constraints` reports every joint as a set of algebraic
+rows — a rod is one row, `g = |r| − L` — together with the worst residual
+and its rate `g_dot` across all rows: exactly `0e0` before the run, and
+`worst |g| = 7.105427357601002e-15` after it. Seven parts in 10¹⁵ after
+384 solver steps. That is not luck. The formulation carries *both* the
+rod's length (`g`) and its rate of change (`g_dot`) as equations; the
+cheaper scheme that constrains only the acceleration lets the length
+drift quadratically, and you find out much later.
 
 **The `inverse_mass = 0` on the pivot is what makes it a pendulum.** It
 marks the pivot as an anchor: immovable, and absorbing whatever the rod
@@ -1367,11 +1372,9 @@ a second exact answer hiding in it.
 
 ```
 In[6]:= constrain pivot bob
-Out[6]= constraint0: obj0 <-> obj1 held at 1 (METHOD IDA is required to integrate it)
+Out[6]= constraint0: rod obj0 <-> obj1, 1 row(s) (METHOD IDA is required to integrate it)
 In[7]:= equilibrium
-Out[7]= equilibrium found in 17 Newton iteration(s), 67 residual evaluation(s);
-        largest net force on any free body = 7.459152323898993e-13,
-        worst |g| = 1.9317880628477724e-14
+Out[7]= equilibrium found in 17 Newton iteration(s), 67 residual evaluation(s); largest net force on any free body = 7.459152323898993e-13, worst |g| = 1.9317880628477724e-14
 In[8]:= get bob.position
 Out[8]= [0.0000000000000735262479725006, -0.9999999999999807, 0]
 ```

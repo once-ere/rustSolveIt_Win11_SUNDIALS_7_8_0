@@ -48,7 +48,7 @@ perihelion correction. Both are reserved for a planned second test.
 ## 2. What will exist when the build is done (the deliverable inventory)
 
 Everything below is created inside the working folder
-`/Users/nsh/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/planet_Mercury/`:
+`/Users/youruser/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/planet_Mercury/`:
 
 ```
 planet_Mercury/
@@ -183,13 +183,13 @@ Two facts discovered during planning make this the one place where the assignmen
 letter needs a small, explicit resolution:
 
 1. The required build location
-   `/Users/nsh/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/planet_Mercury/`
+   `/Users/youruser/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/planet_Mercury/`
    sits in the **outer workspace folder**, which is **not a git repository** (a
    standard git command confirms that folder is not itself a git project — verified).
 2. The required push target
    `https://github.com/once-ere/rustSolveIt_macos-silicon_SUNDIALS_7_8_0.git` is
    already the `origin` remote of the **inner engine repository**
-   `/Users/nsh/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/`
+   `/Users/youruser/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/`
    (branch `main`, clean, in sync with origin — verified during planning).
 
 **Default resolution (D1):** build and verify everything at the required outer

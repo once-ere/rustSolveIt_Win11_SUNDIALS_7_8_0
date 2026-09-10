@@ -1,4 +1,4 @@
-   Compiling mercury_rs v0.1.0 (C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\planet_Mercury\mercury_rs)
+   Compiling mercury_rs v0.1.0 (C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\planet_Mercury\mercury_rs)
     Finished `release` profile [optimized] target(s) in 0.37s
      Running unittests src\lib.rs (target\release\deps\mercury_rs-aa583ff47e0a444c.exe)
 

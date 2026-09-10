@@ -1064,26 +1064,33 @@ In[4]:= new sphere as pivot { mass = 1, radius = 0.02,
 In[5]:= new sphere as bob   { mass = 1, radius = 0.05,
           position = [0.019998666693333084, -0.9998000066665778, 0] }
 In[6]:= constrain pivot bob
-Out[6]= constraint0: obj0 <-> obj1 held at 1
+Out[6]= constraint0: rod obj0 <-> obj1, 1 row(s)
         (METHOD IDA is required to integrate it)
+In[7]:= constraints
+Out[7]= constraint0: rod obj0 <-> obj1, 1 row(s)
+worst |g| = 0e0, worst |g_dot| = 0e0
 In[8]:= method ida
 Out[8]= method = IDA (constrained DAE, GGL index-2)
 In[9]:= run 2.0060666807106475 steps 200
-Out[9]= t = 2.0060666807106475 (339 solver steps, 200 snapshots,
-        |dE/E| = 2.530e-12)
+Out[9]= t = 2.0060666807106475 (384 solver steps, 200 snapshots,
+        |dE/E| = 6.942e-13)
 In[10]:= get bob.position
-Out[10]= [0.019998666320588818, -0.9998000066740419, 0]
+Out[10]= [0.019998666412318816, -0.999800006672206, 0]
 In[11]:= constraints
-Out[11]= constraint0: obj0 <-> obj1 length 1
-         (currently 1.0000000000000082)
+Out[11]= constraint0: rod obj0 <-> obj1, 1 row(s)
+worst |g| = 7.105427357601002e-15, worst |g_dot| = 2.892412673190032e-14
 \end{lstlisting}
 
-The bob came back to within $3.7\times10^{-10}$ after a full period, and
-the rod reads $1.0000000000000082$ --- eight parts in $10^{15}$, one
-bit, after 339 solver steps. That is not luck: the formulation carries
-\emph{both} the rod's length and its rate of change as equations. The
-cheaper scheme that constrains only the acceleration lets the length
-drift quadratically, and you find out much later.
+The bob came back to within $2.8\times10^{-10}$ after a full period, with
+energy held to 7 parts in $10^{13}$. \code{constraints} reports every
+joint as a set of algebraic rows --- a rod is one row, $g = |r| - L$ ---
+together with the worst residual and its rate $\dot g$ across all rows:
+exactly \code{0e0} before the run, and $7.105427357601002\times10^{-15}$
+after it --- seven parts in $10^{15}$ after 384 solver steps. That is not
+luck: the formulation carries \emph{both} the rod's length ($g$) and its
+rate of change ($\dot g$) as equations. The cheaper scheme that
+constrains only the acceleration lets the length drift quadratically, and
+you find out much later.
 
 The \code{inverse\_mass = 0} on the pivot is what makes it a pendulum
 rather than two bodies tumbling about their shared centre of mass joined

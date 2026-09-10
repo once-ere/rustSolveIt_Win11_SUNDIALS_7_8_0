@@ -4,7 +4,7 @@ Date: 2026-09-09 (measurement session 16:45–16:55 local; the C reference libra
 the eleven REBOUND harnesses were compiled earlier the same day, 08:01–08:02, by a
 previous session whose build logs sit beside this file and are cited below).
 
-Repository: `C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0`
+Repository: `C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0`
 (HEAD was `6d99370c036ad3b781661076430f6467869d75eb` throughout the measurements; at 16:57:47 a
 concurrent job in this repository committed `a5082b27db384084f5304c1d5ba1dffc7765a28b`, which under the
 measured trees changed only `.gitignore` and removed the 16 extensionless macOS harness binaries from
@@ -60,8 +60,8 @@ external command` first; it is noise from the developer-prompt script and has no
 
 | Tree | Location | Identity |
 |---|---|---|
-| REBOUND | `<repo>\rebound\rebound` = directory junction → `C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound` | `git log -1`: `dad5f97806ecbb408dcaff728851c64e67f9f6eb  Tue Aug 18 06:18:47 2026 -0700  Patch (#931)`; `git describe --tags`: `5.1.1-4-gdad5f978`; `src/rebound.c`: `reb_version_str = "5.1.1"`; branch `main`, remote `https://github.com/hannorein/rebound` |
-| REBOUNDx | `<repo>\reboundx` = junction → `C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\reboundx` | **not a git checkout** (no `.git`; the outer folder also holds `reboundx-main.zip`, the evident origin). `version.txt` = `5.1.0`; `src/core.c`: `rebx_version_str = "5.1.0"`; `changelog.md` tops out at "Version 5.1.0". No commit id can be reported. |
+| REBOUND | `<repo>\rebound\rebound` = directory junction → `C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound` | `git log -1`: `dad5f97806ecbb408dcaff728851c64e67f9f6eb  Tue Aug 18 06:18:47 2026 -0700  Patch (#931)`; `git describe --tags`: `5.1.1-4-gdad5f978`; `src/rebound.c`: `reb_version_str = "5.1.1"`; branch `main`, remote `https://github.com/hannorein/rebound` |
+| REBOUNDx | `<repo>\reboundx` = junction → `C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\reboundx` | **not a git checkout** (no `.git`; the outer folder also holds `reboundx-main.zip`, the evident origin). `version.txt` = `5.1.0`; `src/core.c`: `rebx_version_str = "5.1.0"`; `changelog.md` tops out at "Version 5.1.0". No commit id can be reported. |
 
 Both junctions already existed (created 08:00 by the previous session, `<JUNCTION>` per
 `dir /AL`); both paths are gitignored (`/rebound/`, `/reboundx/`) and were not git-added.

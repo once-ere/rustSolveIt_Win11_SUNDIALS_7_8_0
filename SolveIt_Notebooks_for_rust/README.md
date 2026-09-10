@@ -1,9 +1,8 @@
 # SolveIt_Notebooks_for_rust — the notebook encyclopedia
 
-**147 Jupyter notebooks** — 145/147 logged green so far on this Windows 11
+**147 Jupyter notebooks** — 147/147 executed green on this Windows 11
 machine (Intel Core Ultra 9 275HX, rustc/cargo 1.91.1 for
-`x86_64-pc-windows-msvc`, Python 3.14.5); the two Mercury copies are being
-re-executed after the UTF-8 driver fix and their verdicts are pending (see
+`x86_64-pc-windows-msvc`, Python 3.14.5; the verdict logs are listed under
 `_tools/` below). The set: the **128 posim-family copies**
 (38 SolveIt worked examples, 59 dynamics-and-Routh notebooks, 12 collision
 walkthroughs, 13 mechanism-video notebooks, 6 compiled Rust examples), the
@@ -15,13 +14,16 @@ subfolder with a companion `player_<tag>.py`, plus the encyclopedia itself:
   per notebook: description, execution verdict, GUI image, and every
   pointer (source, paired scene, movie, database, player). All three were
   rebuilt on this machine by `_tools/encyclo.py` (the PDF is printed by
-  headless Google Chrome) — the committed files are the builder's **dry
-  run** from before the Mercury re-execution: the header line says
-  "146/147 green" and `mercury_tidal_locking` reads "Executed: FAIL (4
-  code cells)" (the stale verdict of the interrupted first copy run),
-  while `mercury_test2_jupiter_gr` reads "PASS (17 code cells)" from the
-  macOS-era `exec_mercury2.log` that arrived with the encyclopedia. The
-  final rebuild after the Mercury verdicts replaces all three.
+  headless Google Chrome) in the final pass after the Mercury copies'
+  re-execution: `ENCYCLOPEDIA.md` 162,628 characters, `ENCYCLOPEDIA.html`
+  187,017 characters, `ENCYCLOPEDIA.pdf` 1,364,723 bytes (about 46
+  pages); header line "147/147 green", all 147 entries "Executed: PASS".
+  (The builder's earlier dry run had said "146/147 green" with
+  `mercury_tidal_locking` "Executed: FAIL (4 code cells)" — the stale
+  verdict of the interrupted first copy run — while its
+  `mercury_test2_jupiter_gr` "PASS" came from the macOS-era
+  `exec_mercury2.log` that arrived with the encyclopedia; both logs now
+  hold this machine's verdicts.)
 - `encyclopedia/images/` — **124 captured GUI screenshots**, one per
   GUI-family entry (38 solveit + 59 dynamic + 12 collision + 13 video +
   2 mercury); the 6 `rust_*` and the 17 rebound notebooks have textual
@@ -35,19 +37,17 @@ subfolder with a companion `player_<tag>.py`, plus the encyclopedia itself:
   logs the encyclopedia's verdicts come from — `exec_posim_0..3.log`
   (the 128 posim-family copies: 38/38, 59/59, 25/25, 6/6 ok),
   `exec_rebound.log` (17/17 ok), `exec_mercury.log` (the
-  `mercury_tidal_locking` copy) and `exec_mercury2.log` (the
-  `mercury_test2_jupiter_gr` copy) — both 0 bytes while their re-runs are
-  in progress, since `run_copy.py` prints its verdict at the end — plus
-  `shoot.log` and the macOS-era leftover `exec_rebound_retry.log` (one
-  verdict, `shearing_sheet` ok, agreeing with `exec_rebound.log`).
-  `encyclo.py` reads `exec_*.log` in filename order and the last verdict
-  seen for a tag wins, so a stale or foreign log that sorts later
-  overrides a fresh one; delete or rename such logs before the final
-  build. The `chunk_*.txt` files are the four-way split of the
-  copy list that the parallel run on this machine used.
-- `verify.py` on this tree (dry run, `logs/_bg_encyclo_dry.log`):
-  `ALL VERIFY GATES PASS (147 notebooks)`; the final pass after the
-  Mercury re-runs is pending.
+  `mercury_tidal_locking` copy: `ok … (18 cells)`, `1 ok, 0 failed`) and
+  `exec_mercury2.log` (the `mercury_test2_jupiter_gr` copy: `ok … (17
+  cells)`, `1 ok, 0 failed`), plus `shoot.log` and the macOS-era
+  leftover `exec_rebound_retry.log` (one verdict, `shearing_sheet` ok,
+  agreeing with `exec_rebound.log`). `encyclo.py` reads `exec_*.log` in
+  filename order and the last verdict seen for a tag wins, so a stale or
+  foreign log that sorts later overrides a fresh one; delete or rename
+  such logs before a rebuild. The `chunk_*.txt` files are the four-way
+  split of the copy list that the parallel run on this machine used.
+- `verify.py` on this tree (final pass, after the Mercury re-runs):
+  `ALL VERIFY GATES PASS (147 notebooks)`.
 
 Every notebook's **first cell** is its encyclopedia header (a markdown
 cell tagged `encyclopedia-header`) with five mandatory sections:

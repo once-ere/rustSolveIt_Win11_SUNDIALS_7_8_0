@@ -1,5 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex.fmt)
- restricted \write18 enabled.
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex.fmt) restricted \write18 enabled.
 entering extended mode
 (SolveIt.tex
 LaTeX2e <2023-11-01> patch level 1
@@ -8,8 +7,7 @@ L3 programming layer <2024-01-04>
 Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo))
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty)
@@ -18,14 +16,10 @@ Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
 For additional information on amsmath, use the `?' option.
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty)
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.sty)
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
+(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.sty)(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty)
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg))
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
@@ -45,28 +39,24 @@ ty)) (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.
 
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro.s
 ty) (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty)
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
+(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitle
 string.sty
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty))
 ) (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def)
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty)
+(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def)(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty)
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.s
 ty))
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty))
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty)
+(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty)
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilec
 heck.sty
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecou
 nter.sty)))
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty)
-(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd)
+(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty)(C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd)
 (C:\Users\youruser\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdfte
 x.def) (SolveIt.aux)
 *geometry* driver: auto-detecting
@@ -129,25 +119,19 @@ Overfull \hbox (6.79585pt too wide) in paragraph at lines 1190--1190
 []|\T1/lmtt/m/n/10.95 kepler_ellipse.html| 
 
 Underfull \hbox (badness 3884) in paragraph at lines 1191--1193
-[]|$\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 dE\OMS/lmsy/m/n/10.95 j\OML/lmm/m/
-it/10.95 =E \OT1/lmr/m/n/10.95 = 9\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 8 \OM
-S/lmsy/m/n/10.95 ^^B \OT1/lmr/m/n/10.95 10[]$\T1/lmr/m/n/10.95 ,
+[]|$\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 dE\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 =E \OT1/lmr/m/n/10.95 = 9\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 8 \OMS/lmsy/m/n/10.95 ^^B \OT1/lmr/m/n/10.95 10[]$\T1/lmr/m/n/10.95 ,
 
 Overfull \hbox (12.54459pt too wide) in paragraph at lines 1193--1193
 []|\T1/lmtt/m/n/10.95 tumbling_racket.html| 
 
 Underfull \hbox (badness 1762) in paragraph at lines 1194--1195
-[]|$\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 d\OMS/lmsy/m/n/10.95 j\OML/lmm/m/i
-t/10.95 L\OMS/lmsy/m/n/10.95 jj\OML/lmm/m/it/10.95 =\OMS/lmsy/m/n/10.95 j\OML/l
-mm/m/it/10.95 L\OMS/lmsy/m/n/10.95 j \OT1/lmr/m/n/10.95 = 0$ \T1/lmr/bx/n/10.95
- ex-actly\T1/lmr/m/n/10.95 ;
+[]|$\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 d\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 L\OMS/lmsy/m/n/10.95 jj\OML/lmm/m/it/10.95 =\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 L\OMS/lmsy/m/n/10.95 j \OT1/lmr/m/n/10.95 = 0$ \T1/lmr/bx/n/10.95 ex-actly\T1/lmr/m/n/10.95 ;
 
 Overfull \hbox (1.04712pt too wide) in paragraph at lines 1195--1195
 []|\T1/lmtt/m/n/10.95 box_of_shapes.html| 
 
 Underfull \hbox (badness 2401) in paragraph at lines 1197--1198
-[]|\T1/lmr/m/n/10.95 36 col-li-sions, $\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95
- dE\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 =E \OT1/lmr/m/n/10.95 =
+[]|\T1/lmr/m/n/10.95 36 col-li-sions, $\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 dE\OMS/lmsy/m/n/10.95 j\OML/lmm/m/it/10.95 =E \OT1/lmr/m/n/10.95 =
 
 Overfull \hbox (52.78572pt too wide) in paragraph at lines 1198--1198
 []|\T1/lmtt/m/n/10.95 double_pendulum_hinges.html| 
@@ -156,8 +140,7 @@ Overfull \hbox (12.54459pt too wide) in paragraph at lines 1202--1202
 []|\T1/lmtt/m/n/10.95 universal_joint.html| 
 
 Underfull \hbox (badness 1675) in paragraph at lines 1204--1206
-\OT1/lmr/m/n/10.95 0\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 6000004$ \T1/lmr/m/
-n/10.95 against a ge-o-
+\OT1/lmr/m/n/10.95 0\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 6000004$ \T1/lmr/m/n/10.95 against a ge-o-
 
 Overfull \hbox (18.29332pt too wide) in paragraph at lines 1206--1206
 []|\T1/lmtt/m/n/10.95 ball_joint_chain.html| 
@@ -172,9 +155,7 @@ Overfull \hbox (18.29332pt too wide) in paragraph at lines 1217--1217
 []|\T1/lmtt/m/n/10.95 gyroscope_gimbal.html| 
 
 Underfull \hbox (badness 1701) in paragraph at lines 1223--1225
-[]|\T1/lmr/m/n/10.95 line held to $\OT1/lmr/m/n/10.95 1\OML/lmm/m/it/10.95 :\OT
-1/lmr/m/n/10.95 1 \OMS/lmsy/m/n/10.95 ^^B \OT1/lmr/m/n/10.95 10[]$\T1/lmr/m/n/1
-0.95 ;
+[]|\T1/lmr/m/n/10.95 line held to $\OT1/lmr/m/n/10.95 1\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 1 \OMS/lmsy/m/n/10.95 ^^B \OT1/lmr/m/n/10.95 10[]$\T1/lmr/m/n/10.95 ;
 
 Overfull \hbox (12.54459pt too wide) in paragraph at lines 1225--1225
 []|\T1/lmtt/m/n/10.95 rack_and_pinion.html| 
@@ -186,32 +167,22 @@ Overfull \hbox (6.79585pt too wide) in paragraph at lines 1232--1232
 []|\T1/lmtt/m/n/10.95 cardan_compass.html| 
 
 Underfull \hbox (badness 10000) in paragraph at lines 1234--1236
-[]|\T1/lmr/m/n/10.95 periods $\OT1/lmr/m/n/10.95 1\OML/lmm/m/it/10.95 :\OT1/lmr
-/m/n/10.95 878587$ \T1/lmr/m/n/10.95 and
+[]|\T1/lmr/m/n/10.95 periods $\OT1/lmr/m/n/10.95 1\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 878587$ \T1/lmr/m/n/10.95 and
 
 Underfull \hbox (badness 10000) in paragraph at lines 1234--1236
-\OT1/lmr/m/n/10.95 2\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 307339$ \T1/lmr/m/n
-/10.95 s against
+\OT1/lmr/m/n/10.95 2\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 307339$ \T1/lmr/m/n/10.95 s against
 
 Underfull \hbox (badness 10000) in paragraph at lines 1234--1236
-\T1/lmr/m/n/10.95 mea-sured $\OT1/lmr/m/n/10.95 1\OML/lmm/m/it/10.95 :\OT1/lmr/
-m/n/10.95 883426$ \T1/lmr/m/n/10.95 and
+\T1/lmr/m/n/10.95 mea-sured $\OT1/lmr/m/n/10.95 1\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 883426$ \T1/lmr/m/n/10.95 and
 [21] [22]
 Overfull \hbox (16.23592pt too wide) in paragraph at lines 1292--1297
-\T1/lmr/m/n/10.95 Six ex-am-ple pro-grams, each print-ing \T1/lmtt/m/n/10.95 SU
-CCESS \T1/lmr/m/n/10.95 or \T1/lmtt/m/n/10.95 FAILURE \T1/lmr/m/n/10.95 and ex-
-it-ing nonzero if it fails: \T1/lmtt/m/n/10.95 kepler_orbit\T1/lmr/m/n/10.95 ,
+\T1/lmr/m/n/10.95 Six ex-am-ple pro-grams, each print-ing \T1/lmtt/m/n/10.95 SUCCESS \T1/lmr/m/n/10.95 or \T1/lmtt/m/n/10.95 FAILURE \T1/lmr/m/n/10.95 and ex-it-ing nonzero if it fails: \T1/lmtt/m/n/10.95 kepler_orbit\T1/lmr/m/n/10.95 ,
 
 Overfull \hbox (65.46307pt too wide) in paragraph at lines 1292--1297
-\T1/lmtt/m/n/10.95 outer_solar_system\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 tum
-bling_body\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 charged_in_b_field\T1/lmr/m/n/
-10.95 , \T1/lmtt/m/n/10.95 newtons_cradle\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95
- bouncing_ball_restitution\T1/lmr/m/n/10.95 . 
+\T1/lmtt/m/n/10.95 outer_solar_system\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 tumbling_body\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 charged_in_b_field\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 newtons_cradle\T1/lmr/m/n/10.95 , \T1/lmtt/m/n/10.95 bouncing_ball_restitution\T1/lmr/m/n/10.95 . 
 [23]
 Overfull \hbox (18.23682pt too wide) in paragraph at lines 1318--1322
-\T1/lmr/m/n/10.95 diffed. They are iden-ti-cal byte for byte. See \T1/lmtt/m/n/
-10.95 PORT_7.8.0_PROVENANCE.md \T1/lmr/m/n/10.95 and \T1/lmtt/m/n/10.95 evidenc
-e/port-7.8.0/\T1/lmr/m/n/10.95 . 
+\T1/lmr/m/n/10.95 diffed. They are iden-ti-cal byte for byte. See \T1/lmtt/m/n/10.95 PORT_7.8.0_PROVENANCE.md \T1/lmr/m/n/10.95 and \T1/lmtt/m/n/10.95 evidence/port-7.8.0/\T1/lmr/m/n/10.95 . 
 
 Underfull \hbox (badness 4168) in paragraph at lines 1334--1334
 []|\T1/lmtt/m/n/10.95 RUN \T1/lmr/m/n/10.95 over-shoots where you

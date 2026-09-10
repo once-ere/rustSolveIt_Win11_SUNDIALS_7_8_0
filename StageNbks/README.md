@@ -36,26 +36,33 @@ are never left without one.
 
 ## Build once
 
-From the repository root (the directory holding `Cargo.toml`):
+In PowerShell, clone the repository and move into its root (the directory
+holding `Cargo.toml`), then build:
 
-```bash
-git clone https://github.com/once-ere/rustSimulate.git
-```
-
-```bash
+```powershell
+git clone https://github.com/once-ere/rustSolveIt_Win11_SUNDIALS_7_8_0.git
+cd rustSolveIt_Win11_SUNDIALS_7_8_0
 cargo build -p posim --release
 ```
 
+(Git Bash: the same three lines.)
+
 There are no submodules and no crates to download — every dependency is
 vendored. The first build takes a few minutes; later runs are immediate. It
-produces `./target/release/posim`. If `cargo` is missing, install Rust from
-<https://rustup.rs> and reopen the terminal.
+produces `.\target\release\posim.exe`. If `cargo` is missing, install Rust
+from <https://rustup.rs> (the default `x86_64-pc-windows-msvc` toolchain; it
+needs the Visual Studio Build Tools "Desktop development with C++"
+workload for its linker) and reopen the terminal. The root
+`.cargo\config.toml` pins `-C target-feature=+fma`, which the vendored
+engine requires, so the CPU must support FMA.
 
 ## Run any notebook
 
-```bash
-./target/release/posim --notebook StageNbks/Stage_2C.posim
+```powershell
+.\target\release\posim.exe --notebook StageNbks\Stage_2C.posim
 ```
+
+(Git Bash: `./target/release/posim.exe --notebook StageNbks/Stage_2C.posim`.)
 
 Three forms exist, and the difference matters:
 
@@ -70,9 +77,11 @@ the file ends and takes any open scene window with it.
 
 To type commands by hand instead, start the bare interpreter:
 
-```bash
-./target/release/posim
+```powershell
+.\target\release\posim.exe
 ```
+
+(Git Bash: `./target/release/posim.exe`.)
 
 `HELP` prints the complete command language; `%quit` leaves. Other magics:
 `%history`, `%rerun <n>`, `%edit <n> <text>`, `%save <file>`, `%load <file>`,
@@ -80,9 +89,11 @@ To type commands by hand instead, start the bare interpreter:
 
 ## Running `Stage_2C.posim` as an interactive simulation
 
-```bash
-./target/release/posim --notebook StageNbks/Stage_2C.posim
+```powershell
+.\target\release\posim.exe --notebook StageNbks\Stage_2C.posim
 ```
+
+(Git Bash: `./target/release/posim.exe --notebook StageNbks/Stage_2C.posim`.)
 
 The notebook's last commands are `scene create`, `scene set_time_step
 0.0002`, `scene zoom 2`, `scene start`, `scene status`. They run
@@ -114,9 +125,11 @@ ends the session.
 
 ## Running `Stage_2H.posim` as an interactive simulation
 
-```bash
-./target/release/posim --notebook StageNbks/Stage_2H.posim
+```powershell
+.\target\release\posim.exe --notebook StageNbks\Stage_2H.posim
 ```
+
+(Git Bash: `./target/release/posim.exe --notebook StageNbks/Stage_2H.posim`.)
 
 Identical in form, with `scene set_time_step 0.005`, and it reports
 `showing 2 entities`. Everything in *The scene window* below applies
@@ -133,9 +146,11 @@ would open a window correctly reporting `showing 0 entities`. That is not a
 fault; there is genuinely no rigid body in this stage. The interactive
 viewer for a wavefunction is the HTML film:
 
-```bash
-./target/release/posim --notebook StageNbks/Stage_2A.posim
+```powershell
+.\target\release\posim.exe --notebook StageNbks\Stage_2A.posim
 ```
+
+(Git Bash: `./target/release/posim.exe --notebook StageNbks/Stage_2A.posim`.)
 
 It writes two films into this folder, so the two boundary conditions can be
 compared:
@@ -147,13 +162,14 @@ StageNbks/out_2A_cayley_reflecting.html
 
 Open one:
 
-```bash
-xdg-open StageNbks/out_2A_nash_periodic.html
+```powershell
+Start-Process StageNbks\out_2A_nash_periodic.html
 ```
 
-On macOS use `open`, on Windows `start`; or drag the file onto a browser
-window. Each file is self-contained HTML and JavaScript — no server, no
-network, no install.
+(Git Bash: `start StageNbks/out_2A_nash_periodic.html`.) On macOS use
+`open`, on Linux `xdg-open`; or drag the file onto a browser window. Each
+file is self-contained HTML and JavaScript — no server, no network, no
+install.
 
 `Stage_2B.posim` works identically and writes
 `StageNbks/out_2B_double_barrier.html`.
@@ -219,18 +235,32 @@ actually attempted, and it has two forms:
 (no browser was launched — open that address yourself)
 ```
 
-posim tries exactly one command, `xdg-open <url>`, which is a Linux/BSD
-utility. So:
+posim runs the opener of the platform it was built for — one command,
+chosen at compile time (`posim/src/scene/mod.rs`, `SceneHandle::start`):
 
-* **Linux/BSD** with `xdg-utils` — the browser opens by itself.
-* **macOS** — nothing opens, and nothing is broken: `xdg-open` does not
-  exist there, so you get the second line. Run `open http://127.0.0.1:<port>/`.
-* **Windows** — same, via `start http://127.0.0.1:<port>/`.
-* **Headless or SSH** — nothing opens. Forward the port and browse locally:
-  `ssh -L 41234:127.0.0.1:41234 <user>@<host>`.
+* **Windows** — `cmd /C start "" <url>`, which hands the address to the
+  default browser. `cmd` is always present, so the first line is what you
+  see here. If no window appears anyway, open the address yourself:
+  `Start-Process http://127.0.0.1:<port>/` (Git Bash:
+  `start http://127.0.0.1:<port>/`).
+* **macOS** — `open <url>`.
+* **Linux/BSD** — `xdg-open <url>`, from `xdg-utils`; without it the spawn
+  fails and you get the second line.
+* **Headless or SSH** — no window can appear on the remote machine. Forward
+  the port and browse locally: `ssh -L 41234:127.0.0.1:41234 <user>@<host>`.
 
-Setting `POSIM_NO_BROWSER` to any value suppresses the attempt entirely; the
-URL is still printed and still works. That is what the tests use.
+The second line is printed whenever no opener was spawned: the platform's
+opener binary is missing, or `POSIM_NO_BROWSER` is set. Setting
+`POSIM_NO_BROWSER` to any value suppresses the attempt entirely; the URL is
+still printed and still works. That is what the tests use. In PowerShell:
+
+```powershell
+$env:POSIM_NO_BROWSER = "1"
+.\target\release\posim.exe --notebook StageNbks\Stage_2C.posim
+Remove-Item Env:POSIM_NO_BROWSER
+```
+
+(Git Bash: `POSIM_NO_BROWSER=1 ./target/release/posim.exe --notebook StageNbks/Stage_2C.posim`.)
 
 The port is chosen by the OS each run. Pin it with `scene create 8080`. The
 page is served by posim itself over a websocket, bound to `127.0.0.1`, so it
@@ -309,17 +339,30 @@ clears that history deliberately, so Reverse is empty again after a Stop.
 | port already in use | `scene close`, then `scene create <another port>` |
 | page loads but never moves | playback is not running — press Start or type `scene start` |
 | bodies jump through each other | `dt` too large — `scene set_time_step <smaller>` |
-| no window appeared | read the middle line of `scene create`; on macOS/Windows open the URL yourself |
+| no window appeared | read the middle line of `scene create`; whichever form it shows, the address works — open it yourself with `Start-Process http://127.0.0.1:<port>/` (Git Bash: `start http://127.0.0.1:<port>/`) |
 
 ## Running all eleven
 
-```bash
-for f in StageNbks/*.posim; do echo "=== $f ==="; ./target/release/posim --notebook "$f" < /dev/null; done
+In PowerShell, from the repository root:
+
+```powershell
+$env:POSIM_NO_BROWSER = "1"
+Get-ChildItem StageNbks\*.posim | ForEach-Object { "=== $($_.Name) ==="; $null | .\target\release\posim.exe --notebook $_.FullName }
+Remove-Item Env:POSIM_NO_BROWSER
 ```
 
+(Git Bash:
+`for f in StageNbks/*.posim; do echo "=== $f ==="; POSIM_NO_BROWSER=1 ./target/release/posim.exe --notebook "$f" < /dev/null; done`.)
+
+Each notebook is run with an empty standard input, so the session ends at
+the prompt as soon as the file has been executed; `POSIM_NO_BROWSER` stops
+the three window-opening notebooks (`2C`, `2G`, `2H`) from each launching a
+browser tab during the sweep.
+
 All eleven run with **zero errors**, and that is enforced by the build:
-`scripts/certify_clean.sh` executes every notebook in this folder and fails
-if any emits an error line. The check costs about 14 seconds.
+`scripts/certify_clean.sh` (a Bash script; run it from Git Bash as
+`bash scripts/certify_clean.sh`) executes every notebook in this folder and
+fails if any emits an error line. The check costs about 14 seconds.
 
 That gate exists because the need was demonstrated rather than imagined.
 When these notebooks were first written, *running* them found two errors

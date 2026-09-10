@@ -336,7 +336,7 @@ def main():
     entries = json.loads(MANIFEST.read_text(encoding="utf-8"))
     v = verdicts()
     md = build_md(entries, v)
-    (ROOT / "ENCYCLOPEDIA.md").write_text(md, encoding="utf-8")
+    (ROOT / "ENCYCLOPEDIA.md").write_text(md, encoding="utf-8", newline="\n")
     body = md_to_html_body(md)
     html_doc = (
         "<!doctype html><meta charset='utf-8'>"
@@ -356,7 +356,7 @@ def main():
         "margin:6px 0;page-break-inside:avoid}"
         "ul{margin:6px 0}li{margin:2px 0}"
         "</style>" + body)
-    (ROOT / "ENCYCLOPEDIA.html").write_text(html_doc, encoding="utf-8")
+    (ROOT / "ENCYCLOPEDIA.html").write_text(html_doc, encoding="utf-8", newline="\n")
     r = subprocess.run(
         [chrome(), "--headless=new", "--disable-gpu",
          "--print-to-pdf=" + str(ROOT / "ENCYCLOPEDIA.pdf"),

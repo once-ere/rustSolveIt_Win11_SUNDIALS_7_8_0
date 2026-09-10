@@ -29,7 +29,7 @@ the slow, orbit-averaged part of a motion, as opposed to its fast wiggles.
 ## 1. The compute engine this project sits on
 
 The engine is the repository
-`/Users/nsh/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/`
+`/Users/youruser/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/`
 — a pure-Rust physics-simulation project whose **only** numerical-integration backend
 is a vendored, read-only, pure-Rust port of SUNDIALS 7.8.0 (the Lawrence Livermore
 National Laboratory ODE-solver suite), living in that repository's `sundials_rs/`

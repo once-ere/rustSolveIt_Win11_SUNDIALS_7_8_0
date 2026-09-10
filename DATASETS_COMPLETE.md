@@ -138,11 +138,11 @@ this as requirement R8.
 | gate | command (PowerShell) | measured result on this machine |
 |---|---|---|
 | sidecar tests | `cd dataset_tools; cargo test; cd ..` | **11 passed, 0 failed** (8 unit + 3 integration) |
-| 10-thread WAL stress | `.\dataset_tools\target\release\solveit_db.exe stress $env:TEMP\stress_demo.db 10 500` | expected `5000 expected, 5000 written, journal_mode=wal` (the macOS-measured line; not yet re-measured here) |
+| 10-thread WAL stress | `.\dataset_tools\target\release\solveit_db.exe stress $env:TEMP\stress_demo.db 10 500` | measured here: `stress: 10 threads x 500 rows = 5000 expected, 5000 written, journal_mode=wal` (`logs\crosscheck_stress_launcher.log`) |
 | workspace build | `cargo build --workspace --all-targets` | 0 errors, 0 warnings (release build likewise; `target\release\posim.exe` 5,705,216 bytes) |
 | sidecar build | `cd dataset_tools; cargo build --release; cd ..` | 0 warnings, 18.22 s; `dataset_tools\target\release\solveit_db.exe` 2,326,016 bytes |
-| workspace tests | `cargo test --workspace` | **638 passed, 0 failed** = 49 physical_object lib + 19 collision + 9 conservation + 42 constrained/DAE + 121 posim + 92 quantum + 240 special_functions + 11 vendored identities + 5 quantum doctests + 50 special_functions doctests (`logs\test.log`; the same 638 again after the last source change, the `.exe`-first sidecar finder — `logs\test_final.log`) |
-| physics byte-identity | `bash tools/win_verify_physics.sh` (Git Bash) | exit 0 — the three verdict lines are quoted below the table: collisions IDENTICAL; examples and dynamic notebooks IDENTICAL-MODULO-DOCUMENTED (the two long-pinned host-libm diffs) |
+| workspace tests | `cargo test --workspace` | **638 passed, 0 failed** = 49 physical_object lib + 19 collision + 9 conservation + 42 constrained/DAE + 121 posim + 92 quantum + 240 special_functions + 11 vendored identities + 5 quantum doctests + 50 special_functions doctests (`logs\test.log`; the same 638 again after the `.exe`-first sidecar finder and the `coords.rs` / `physical_object\src` clippy rewrites — `logs\test_final.log`, 16:53; the port's last source change, the 16:55 clippy edit of `posim\src\dataset.rs` (`dataset_map` copy loop → `copy_from_slice`) and `physical_object\tests\dae.rs`, is covered so far only by `logs\clippy_workspace.log`, a re-run pending) |
+| physics byte-identity | `bash tools/win_verify_physics.sh` (Git Bash) | exit 0 — the three verdict lines are quoted below the table: collisions IDENTICAL; examples and dynamic notebooks IDENTICAL-MODULO-DOCUMENTED (the two long-pinned diffs: a donor blank line in `outer_solar_system`'s examples log, and the last digits of the two quantum notebooks) |
 | 6 compiled examples | `cargo run -p physical_object --release --example <name>` | all print SUCCESS |
 | 12 collision scripts | loop below | 12/12 exit 0 |
 | 38 SolveIt scripts | loop below | 38/38 exit 0 (01–38; 20–38 are the dataset examples, 36–38 the trajectory-algebra / coordinate examples) — 50/50 scripts in all |
@@ -153,10 +153,10 @@ this as requirement R8.
 | wire protocol | `python jupyter\test_protocol.py` | all protocol checks passed |
 | JupyterLab kernel | `jupyter\.venv\Scripts\python.exe jupyter\test_kernel.py` with `$env:POSIM_NO_BROWSER = "1"` | 7/7 cells ok — all kernel checks passed, JupyterLab can drive this kernel |
 | datasets and movies vs the macOS files | byte comparison after all runs | movies **74/74 byte-identical**; datasets **245/252 byte-identical** — the 7 that differ are the curvilinear maps of examples 37–38 (see below) |
-| grammar.pdf | `pdflatex -interaction=nonstopmode grammar.tex` (×2) | 75 pages, 0 errors on macOS; the MiKTeX re-measurement is pending at the time of writing |
-| SolveIt.pdf | `pdflatex -interaction=nonstopmode SolveIt.tex` (×2) | 48 pages, 0 errors on macOS; the MiKTeX re-measurement is pending at the time of writing |
-| entity index | `python tools\verify_index_examples.py`; `python tools\verify_tierb_examples.py` | **PASS 1365/1365 (100.0%)**, 35 s wall clock; tier-B **`COMPILED 258/258 (100.0%)`**; the 123 command + 28 coordinate-builtin entry counts are the macOS final-pass figures, not re-counted here |
-| encyclopedia | `python SolveIt_Notebooks_for_rust\_tools\gen.py`, `run_copy.py`, then `shoot.py`, `encyclo.py`, `verify.py` | measured here: gen.py manifest **147** entries; posim-family copies re-executed ok — 02_solveit 38/38, 03_dynamics 59/59, 04+05 25/25, 06_rust 6/6 — and 07_rebound 17/17 ok; pending at the time of writing: the two 01_mercury copies, shoot.py, encyclo.py and verify.py (macOS: 124 GUI captures, 12.9 MB PDF, **ALL VERIFY GATES PASS (147 notebooks)** — the expected outcome, not a Windows measurement) |
+| grammar.pdf | `pdflatex -interaction=nonstopmode grammar.tex` (×2) | measured here with MiKTeX-pdfTeX 4.18: **74 pages** (970,144 bytes), zero errors (`logs\pdflatex_grammar_pass2.log`; macOS: 75 pages) |
+| SolveIt.pdf | `pdflatex -interaction=nonstopmode SolveIt.tex` (×2) | measured here: **49 pages** (693,477 bytes), zero errors (`logs\pdflatex_SolveIt_pass2.log`; macOS: 48 pages). Also rebuilt: scene_info.pdf 15 pages (388,864 bytes), physical_object_simulator.pdf 19 pages (523,088 bytes) |
+| entity index | `python tools\verify_index_examples.py`; `python tools\verify_tierb_examples.py` | **PASS 1365/1365 (100.0%)**, 35 s wall clock; tier-B **`COMPILED 258/258 (100.0%)`**; counted here in the regenerated `index_data\catalog.json`: **123** `command` entries and **28** coordinate builtins (of 101 `builtin` entries; 1,099 catalog entries in all) |
+| encyclopedia | `python SolveIt_Notebooks_for_rust\_tools\gen.py`, `run_copy.py`, then `shoot.py`, `encyclo.py`, `verify.py` | measured here: gen.py manifest **147** entries; posim-family copies re-executed ok — 02_solveit 38/38, 03_dynamics 59/59, 04+05 25/25, 06_rust 6/6 — and 07_rebound 17/17 ok; 01_mercury 2/2 after the UTF-8 driver fix (`_tools\exec_mercury.log`: `mercury_tidal_locking` 18 cells ok; `_tools\exec_mercury2.log`: `mercury_test2_jupiter_gr` 17 cells ok) — 147/147; `shoot.py --workers 4` **124 captured, 0 failed** (smallest image 18,039 bytes; `_tools\shoot.log`); final `encyclo.py`: `ENCYCLOPEDIA.md` 162,628 chars, `.html` 187,017 chars, `.pdf` 1,364,723 bytes (~46 pages), header "147/147 green"; `verify.py` **ALL VERIFY GATES PASS (147 notebooks)** (commit `5d87e8d`) |
 
 The physics gate's three verdict lines (`logs\win_verify_physics.log`;
 the gate's own outputs and the two pinned divergence diffs are in
@@ -241,7 +241,7 @@ PowerShell, from the repository root (Git Bash forms in the comments
 where they differ):
 
 ```powershell
-cd <path-to>\rustSolveIt_Win11_SUNDIALS_7_8_0
+cd C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0     # your clone
 
 # ---- build --------------------------------------------------------------
 cargo build --workspace --all-targets
@@ -254,8 +254,8 @@ cd dataset_tools; cargo test; cd ..             # 11 expected
 .\dataset_tools\target\release\solveit_db.exe stress $env:TEMP\stress_demo.db 10 500
 #   (Git Bash: ./dataset_tools/target/release/solveit_db.exe stress "$TEMP/stress_demo.db" 10 500)
 
-# ---- verify the physics is untouched (Git Bash) --------------------------
-bash tools/win_verify_physics.sh                # must exit 0
+# ---- verify the physics is untouched (a bash script; needs the --all-targets release build above) ----
+& "C:\Program Files\Git\bin\bash.exe" tools/win_verify_physics.sh   # must exit 0 (Git Bash: bash tools/win_verify_physics.sh)
 
 # ---- execute every example ------------------------------------------------
 cargo run -p physical_object --release --example kepler_orbit
@@ -303,7 +303,8 @@ pdflatex -interaction=nonstopmode SolveIt.tex
 pdflatex -interaction=nonstopmode SolveIt.tex
 
 # ---- the entity index ----------------------------------------------------------
-python tools\extract_rust_items.py > index_data\rust_items.jsonl
+$env:PYTHONUTF8 = "1"
+python tools\extract_rust_items.py > index_data\rust_items.jsonl   # PowerShell 7 or Git Bash: Windows PowerShell 5.1 writes `>` as UTF-16 (see the note below)
 python tools\build_commands.py
 python tools\build_tierb.py
 python tools\build_tierc.py
@@ -313,7 +314,9 @@ python tools\verify_index_examples.py
 python tools\verify_tierb_examples.py
 
 # ---- the encyclopedia (147 notebooks) ---------------------------------------------
-python SolveIt_Notebooks_for_rust\_tools\gen.py
+python SolveIt_Notebooks_for_rust\_tools\gen.py --refresh   # rebuild headers + players inside the executed copies, keeping outputs
+#   (a plain gen.py writes fresh, UNEXECUTED copies of all 147 — then every topic 0* must be
+#    re-executed, or verify.py's gate V4 fails; the posim-family re-execution below covers 02-06 only)
 #   the parallel copy-execution loop is a Git Bash command (xargs -P 4):
 #     ls SolveIt_Notebooks_for_rust/0[2-6]*/*/*.ipynb | xargs -P 4 -I{} \
 #         python SolveIt_Notebooks_for_rust/_tools/run_copy.py {}

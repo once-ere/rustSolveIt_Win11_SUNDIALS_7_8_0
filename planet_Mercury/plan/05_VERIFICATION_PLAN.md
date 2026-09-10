@@ -26,7 +26,7 @@ element and its contingency explicitly (gate 2.3).
 ## Gate 0 — Baseline: the engine is green BEFORE we start
 
 Run from the engine repository
-(`/Users/nsh/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/`):
+(`/Users/youruser/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/`):
 
 | # | Check | Command | Must show |
 |---|---|---|---|

@@ -8,19 +8,19 @@ operable program or batch file.
 ../../src/Makefile.defs:21: OpenGL not supported on Windows. Setting OPENGL=0
 "Cleaning up shared library librebound.dll ..."
 make -C ../../src/ clean
-make[1]: Entering directory `C:/Users/nsh/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
+make[1]: Entering directory `C:/Users/youruser/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
 "Removing object files *.obj ..."
 "Removing shared library librebound.dll ..."
-Could Not Find C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\src\*.so
+Could Not Find C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\src\*.so
 "Removing coverage files ..."
-Could Not Find C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\src\*.gcda
-Could Not Find C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\src\*.gcno
-make[1]: Leaving directory `C:/Users/nsh/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
+Could Not Find C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\src\*.gcda
+Could Not Find C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\src\*.gcno
+make[1]: Leaving directory `C:/Users/youruser/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
 "Cleaning up local directory ..."
 ../../src/Makefile.defs:21: OpenGL not supported on Windows. Setting OPENGL=0
 "Compiling shared library librebound.dll ..."
 make -C ../../src/
-make[1]: Entering directory `C:/Users/nsh/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
+make[1]: Entering directory `C:/Users/youruser/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
 "Compiling source file rebound.c ..."
 cl -c  /DBUILDINGLIBREBOUND /D_GNU_SOURCE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS /Ox /fp:precise   -DSERVER -DGITHASH=dad5f97806ecbb408dcaff728851c64e67f9f6eb /Fo:rebound.obj rebound.c
 Microsoft (R) C/C++ Optimizing Compiler Version 19.51.36256 for x64
@@ -253,8 +253,8 @@ frequency_analysis.obj
    Creating library librebound.lib and object librebound.exp
 ""        
 "The shared library rebound.obj has been created successfully."
-make[1]: Leaving directory `C:/Users/nsh/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
-Could Not Find C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\examples\shearing_sheet\librebound.dll
+make[1]: Leaving directory `C:/Users/youruser/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0/rebound/rebound/src'
+Could Not Find C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\rebound\rebound\examples\shearing_sheet\librebound.dll
 ..\..\src\librebound.dll
 ..\..\src\librebound.exp
 ..\..\src\librebound.lib

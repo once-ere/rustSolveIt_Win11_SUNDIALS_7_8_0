@@ -13,7 +13,7 @@ posim runs a notebook in three ways, and all three were used:
 |---|---|---|
 | **interactive REPL** | `cargo run -p posim` reading stdin (driven live through a FIFO during verification, with a real browser attached to the scene window) | the commands sent, then the captured `In[]/Out[]` transcript (a FIFO does not echo input text into the prompt line, so the inputs are listed first) |
 | **script batch** | `cargo run -p posim -- --script <file>` | the verbatim `In[]/Out[]` transcript, exactly as printed |
-| **machine mode** | `posim --machine`, one JSON request/reply per line (the JupyterLab kernel's protocol) | the requests sent and the verbatim reply lines |
+| **machine mode** | `.\target\release\posim.exe --machine` (Git Bash: `./target/release/posim.exe --machine`), one JSON request/reply per line (the JupyterLab kernel's protocol) | the requests sent and the verbatim reply lines |
 
 Every transcript below is **captured output, reproduced verbatim** —
 nothing is retyped or abridged unless explicitly marked. Deterministic
@@ -24,14 +24,18 @@ repository and matched byte-for-byte.
 *A later addition to the language, postdating every transcript in this
 file: the SQLite dataset layer (`DATASET ...`, `SQL "..."`,
 `MOVIE ...`), which records runs into `datasets/*.db` through the
-`solveit_db` sidecar (built with `cd dataset_tools && cargo build
---release`), passes arbitrary SQLite statements through verbatim, and
-derives browser movies from recordings. It is fully specified in
-`grammar.md` §5.14 with a complete worked session in `grammar.md` §13,
-demonstrated by SolveIt worked examples 20–35, and exercised by every
-one of the 125 Jupyter notebooks in `notebooks/`. The transcripts below
-predate it and are preserved unchanged — they remain byte-reproducible
-on the current build.*
+`solveit_db` sidecar (built from the repository root in PowerShell with
+`cd dataset_tools; cargo build --release; cd ..` — Git Bash:
+`cd dataset_tools && cargo build --release && cd ..` — which produces
+`dataset_tools\target\release\solveit_db.exe`), passes arbitrary SQLite
+statements through verbatim, and derives browser movies from recordings.
+It is fully specified in `grammar.md` §5.14 with a complete worked session
+in `grammar.md` §13, demonstrated by SolveIt worked examples 20–38 (of the
+38 SolveIt scripts in `scripts/solveit/`), and exercised by every one of
+the 128 Jupyter notebooks in `notebooks/` (each of which passes the same
+eight requirements checked by `notebooks/_build/nbcheck.py`). The
+transcripts below predate it and are preserved unchanged — they remain
+byte-reproducible on the current build.*
 
 ---
 

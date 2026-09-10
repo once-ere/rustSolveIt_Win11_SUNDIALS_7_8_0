@@ -1,0 +1,21 @@
+Certifying /c/Users/youruser/Developer/github/rustSolveIt_Win11_SUNDIALS_7_8_0/rustSolveIt_Win11_SUNDIALS_7_8_0
+HEAD: 5d87e8d Encyclopedia complete on Windows 11: 147/147 copies executed, 124 GUI captures, ENCYCLOPEDIA.md/.html/.pdf rebuilt, all six verify gates pass
+
+  [32mPASS[0m  no reference-tree files tracked
+  [32mPASS[0m  no reference-tree objects reachable in history
+  [32mPASS[0m  no encumbered-code signatures in tracked source
+  [32mPASS[0m  gitignore matches obsolete_or_historic/
+  [32mPASS[0m  gitignore matches SolveIt/
+  [32mPASS[0m  gitignore matches SolveIt_2026_MFC/
+  [32mPASS[0m  gitignore matches Stages_output/
+  [32mPASS[0m  no Stages_output files tracked
+  [32mPASS[0m  release build, 0 warnings
+  [32mPASS[0m  clippy --workspace --all-targets, 0 errors
+  [32mPASS[0m  all tests pass (638 assertions across the workspace)
+  [32mPASS[0m  documented test counts match the tree (638)
+  [32mPASS[0m  every StageNbks notebook executes without error
+  [32mPASS[0m  no stage notebook refers to another stage notebook
+  [32mPASS[0m  no retired claim has reappeared
+
+[32mCLEAN[0m — nothing encumbered is tracked or reachable.
+CERTIFY_EXIT=0

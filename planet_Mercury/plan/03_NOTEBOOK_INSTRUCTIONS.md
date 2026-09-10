@@ -61,7 +61,7 @@ Install, wait for it to finish, then re-run the command.
 Step B1 — get the project. Either you already have the workspace folder
 
 ```
-/Users/nsh/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/
+/Users/youruser/Developer/github/rustSolveIt_macos-silicon_SUNDIALS_7_8_0/
 ```
 
 (which contains `planet_Mercury/` beside the engine folder), or you clone the

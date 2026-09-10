@@ -89,7 +89,7 @@ total angular momentum exactly.
 
 | # | Note |
 |---|---|
-| N1 | The assignment's HARD RULES name the C reference as `/home/nsh/Developer/sundials-7.8.0/` — a Linux path that does not exist on this macOS machine (verified). The actual reference tree exists at `/Users/nsh/Developer/sundials-7.8.0/` (verified), which is also where the engine's own documentation points. The macOS path is used. |
+| N1 | The assignment's HARD RULES name the C reference as `/home/youruser/Developer/sundials-7.8.0/` — a Linux path that does not exist on this macOS machine (verified). The actual reference tree exists at `/Users/youruser/Developer/sundials-7.8.0/` (verified), which is also where the engine's own documentation points. The macOS path is used. |
 | N2 | "Tidal locking" for Mercury means the **3:2 spin-orbit resonance** (three spins per two orbits), not the Moon-style 1:1 lock; the source specification, the physics literature, and this plan all use it that way. The plan's displays make the distinction explicit for students. |
 | N3 | "rustSolveIt Jupyter notebook" is implemented the way every one of the engine project's own 109 notebooks is implemented — see decision D5 in Part 0 for the full statement. All physics computation is Rust; the notebook's standard-library Python is the conductor, database loader, and verifier. This is the project's native, verified notebook form. |
 | N4 | The workspace's global coding-rules file for TypeScript does not apply: this project contains no TypeScript. The display page's small amount of JavaScript follows the engine's own established page conventions (plain "vanilla" JavaScript, no frameworks, no network). |

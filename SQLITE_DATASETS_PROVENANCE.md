@@ -35,9 +35,9 @@ and `MACOS_PORT_COMPLETE.md`), the port of the Linux project
 the Windows 11 port of the macOS project; its vendored engine is
 `once-ere/SUNDIALS_7_8_Rust_port_for_Windows11` (public API identical
 to the Linux/macOS engine; the backend module sets differ). Everything
-on this page was then re-measured here, and the one place where the
-Windows figures differ from the macOS ones (§1, §6 and §7, the
-curvilinear maps of examples 37–38) is quantified exactly.
+on this page was then re-measured here, and the one class of difference
+between the Windows figures and the macOS ones — the curvilinear maps
+of examples 37–38 — is quantified exactly in §1, §6 and §7.
 
 This file is self-contained: the complete set of commands to build,
 test, verify, execute and display the dataset layer is given here in
@@ -119,7 +119,7 @@ Git Bash commands.
 ## 2. Build everything
 
 ```powershell
-cd <path-to>\rustSolveIt_Win11_SUNDIALS_7_8_0
+cd C:\work\rustSolveIt_Win11_SUNDIALS_7_8_0     # your clone
 
 # the simulator workspace (pure Rust, zero external crates, zero unsafe)
 cargo build --workspace --all-targets
@@ -179,11 +179,9 @@ The multithreaded demonstration, exactly as specified for the feature:
 
 (Git Bash: `./dataset_tools/target/release/solveit_db.exe stress "$TEMP/stress_demo.db" 10 500`.)
 
-Expected output (this is the line the macOS machine measured; the
-Windows re-measurement of this one command is pending at the time of
-writing — the same code path is exercised by the
-`ten_threads_through_one_pool_lose_nothing` test above, which passed
-here):
+Measured here (`logs\crosscheck_stress_launcher.log`; the same code
+path is also exercised by the `ten_threads_through_one_pool_lose_nothing`
+test above):
 
 ```
 stress: 10 threads x 500 rows = 5000 expected, 5000 written, journal_mode=wal
@@ -201,9 +199,15 @@ constrained/DAE + 121 posim + 92 quantum + 240 special_functions + 11
 vendored identities + 5 quantum doctests + 50 special_functions
 doctests (622 before the dataset layer, 631 before the coordinate
 layer; posim 112 → 121, special_functions 233 → 240 with the seven
-coordinate-map suites). Re-run after the last source change of this
-port — the `.exe`-first sidecar finder in `posim/src/dataset.rs` — the
-count is the same **638 passed, 0 failed** (`logs\test_final.log`).
+coordinate-map suites). Re-run after the `.exe`-first sidecar finder in
+`posim/src/dataset.rs` and after the `coords.rs` / `physical_object\src`
+clippy rewrites, the count is the same **638 passed, 0 failed**
+(`logs\test_final.log`, 16:53), and again after the port's last source
+change — the 16:55 clippy edit of `posim/src/dataset.rs` (the
+`dataset_map` copy loop became `copy_from_slice`, plus a
+`type_complexity` waiver) and of `physical_object/tests/dae.rs` — inside
+the certifier's own run: **638 passed, 0 failed** (`logs\certify_clean.log`;
+`logs\clippy_workspace.log` is clean).
 The new posim tests:
 `dataset_movie_and_sql_productions_compile`,
 `dataset_movie_and_sql_stay_identifiers_off_the_front`,
@@ -225,8 +229,8 @@ the 59 dynamic notebooks and diffs them against the Linux evidence in
 `evidence\port-7.8.0\` (it is a bash script; run it in Git Bash):
 
 ```powershell
-cargo build --release -p posim
-bash tools/win_verify_physics.sh
+cargo build --release --workspace --all-targets    # the script also runs the six example .exe files
+& "C:\Program Files\Git\bin\bash.exe" tools/win_verify_physics.sh   # Git Bash: bash tools/win_verify_physics.sh
 ```
 
 Measured (exit 0; `logs\win_verify_physics.log`, outputs in
@@ -238,10 +242,12 @@ IDENTICAL  collision-scripts-win11.log == collision-scripts-7.8.0.log
 IDENTICAL-MODULO-DOCUMENTED  dynamic-notebooks-win11.log vs dynamic-notebooks-7.8.0.log (pinned: accepted-divergences-dynamic.diff)
 ```
 
-(The two MODULO lines are the SAME two pre-existing pinned host-libm
-divergences — the quantum `double_slit`/`tunneling` last digit and the
-GEAR/RACK joint residual — documented in `evidence\win11\`; nothing
-new diverged.)
+(The two MODULO lines are the SAME two pre-existing pinned divergences —
+one blank line in the `outer_solar_system` section of the examples log
+(`accepted-divergences-examples.diff`, a donor-side line) and the
+last-digit differences of the two quantum notebooks
+(`accepted-divergences-dynamic.diff`, host libm) — documented in
+`evidence\win11\`; nothing new diverged.)
 
 ## 6. Run and verify every example
 
@@ -428,11 +434,12 @@ pdflatex -interaction=nonstopmode SolveIt.tex
 ```
 
 (MiKTeX's `pdflatex` — the first run may install missing packages on
-the fly; let it.) Measured on the macOS machine: **grammar.pdf 75
-pages**, **SolveIt.pdf 48 pages**, zero LaTeX errors in either final
-pass (`Select-String -Path grammar.log -Pattern '^!'` prints nothing;
-Git Bash `grep -c "^!" grammar.log` = 0). The MiKTeX re-measurement of
-the page counts on this machine is pending at the time of writing.
+the fly; let it.) Measured here with MiKTeX-pdfTeX 4.18: **grammar.pdf
+74 pages** (970,144 bytes), **SolveIt.pdf 49 pages** (693,477 bytes),
+zero LaTeX errors in either final pass (`Select-String -Path grammar.log
+-Pattern '^!'` prints nothing; Git Bash `grep -c "^!" grammar.log` = 0;
+`logs\pdflatex_grammar_pass2.log`, `logs\pdflatex_SolveIt_pass2.log`).
+The macOS machine had measured 75 and 48 pages.
 
 ## 11. The entity index and the encyclopedia
 
@@ -449,9 +456,11 @@ python tools\verify_index_examples.py
 python tools\verify_tierb_examples.py
 
 # the notebook encyclopedia (SolveIt_Notebooks_for_rust\, 147 notebooks)
-python SolveIt_Notebooks_for_rust\_tools\gen.py
-# execute every posim-family copy (the mercury and rebound families are
-# unchanged and keep their verified runs) — Git Bash, xargs -P 4:
+python SolveIt_Notebooks_for_rust\_tools\gen.py --refresh   # headers + players rebuilt INSIDE the executed copies, outputs kept
+# (a plain gen.py writes fresh, unexecuted copies of all 147 — then the
+#  01_mercury and 07_rebound copies must be re-executed too, or verify.py's
+#  gate V4 fails; with --refresh they keep their verified runs)
+# execute every posim-family copy — Git Bash, xargs -P 4:
 #   ls SolveIt_Notebooks_for_rust/0[2-6]*/*/*.ipynb | xargs -P 4 -I{} \
 #       python SolveIt_Notebooks_for_rust/_tools/run_copy.py {}
 $env:POSIM_NO_BROWSER = "1"
@@ -465,24 +474,29 @@ Measured on this machine, index: `verify_index_examples.py` ends
 (`logs\verify_index_examples.log`) and `verify_tierb_examples.py` ends
 **`COMPILED 258/258  (100.0%)`** (`logs\verify_tierb_examples.log`;
 tier-B grew with the public `special_functions::coords` module). The
-entry counts are the macOS machine's final-pass figures and are not
-re-counted here: **123 command entries** (the dataset layer added
+entry counts, counted here in the regenerated `index_data\catalog.json`
+(1,099 entries): **123 command entries** (the dataset layer added
 `cmd.dataset.*` ×11 + `cmd.sql` + `cmd.movie.*` ×4, then
 `cmd.dataset.{diff,sum,map}`) plus **28 coordinate-builtin entries**
-(`fn.cart_to_spherical` … `fn.bipolar_to_cart2`), and
-`index_of_entities.html` embedding 1623/1623 verified examples.
+(`fn.cart_to_spherical` … `fn.bipolar_to_cart2`, among 101 builtins),
+and `index_of_entities.html` embedding 1623/1623 verified examples
+(1365 runnable + 258 compiled).
 
 Encyclopedia, measured on this machine so far: gen.py writes the
 manifest with **147** entries; run_copy.py re-executes the posim-family
 copies ok — `02_solveit` 38/38, `03_dynamics` 59/59, `04` + `05`
 25/25, `06_rust` 6/6 (`_tools\exec_posim_0..3.log`) — and the rebound
-family `07_rebound` 17/17 ok (`_tools\exec_rebound.log`). Pending at
-the time of writing (the macOS machine's figures are given as the
-expected outcome, not as Windows measurements): the two `01_mercury`
-copies; shoot.py (macOS: **124** GUI images, 0 failed); encyclo.py
-(macOS: ENCYCLOPEDIA.md / .html / .pdf rebuilt, 12.9 MB PDF, Appendix B
-populated); verify.py (macOS: **`ALL VERIFY GATES PASS (147
-notebooks)`**).
+family `07_rebound` 17/17 ok (`_tools\exec_rebound.log`) and the two
+`01_mercury` copies, re-executed after the UTF-8 driver fix
+(`_tools\exec_mercury.log`: `mercury_tidal_locking` 18 cells ok;
+`_tools\exec_mercury2.log`: `mercury_test2_jupiter_gr` 17 cells ok) —
+**147/147 ok**; `shoot.py --workers 4` through headless Google Chrome:
+**124 captured, 0 failed**, smallest image 18,039 bytes
+(`_tools\shoot.log`); the final `encyclo.py` pass: `ENCYCLOPEDIA.md`
+162,628 characters, `ENCYCLOPEDIA.html` 187,017 characters,
+`ENCYCLOPEDIA.pdf` 1,364,723 bytes (about 46 pages), header line
+"147/147 green", all 147 entries "Executed: PASS"; `verify.py`: **`ALL
+VERIFY GATES PASS (147 notebooks)`** (committed as `5d87e8d`).
 
 ## 12. What is committed where
 

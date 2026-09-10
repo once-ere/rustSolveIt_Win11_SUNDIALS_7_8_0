@@ -18,7 +18,7 @@ Each documented fact traces to exactly one of these:
 |---|---|
 | the three invocation modes (`--notebook`, `--script`, bare) | `posim/src/main.rs:30-61` |
 | what `--notebook` leaves behind, and the sign-off text | `posim/src/notebook.rs`, `loaded_hint()` |
-| `xdg-open`, `$POSIM_NO_BROWSER`, the URL form | `posim/src/scene/mod.rs`, `SceneHandle::start` |
+| the per-platform browser opener (`cmd /C start ""` on Windows, `open` on macOS, `xdg-open` on Linux/BSD), `$POSIM_NO_BROWSER`, the URL form | `posim/src/scene/mod.rs`, `SceneHandle::start`; the same dispatch for dataset plot pages in `posim/src/dataset.rs`, `open_in_browser` |
 | the `scene create` reply, all three lines | `posim/src/vm.rs`, `SceneCmd::Create` arm |
 | toolbar button ids, labels, tooltips | `posim/src/scene/scene.html`, `#toolbar` |
 | key bindings | `posim/src/scene/scene.html`, the `keydown` listener |
@@ -61,14 +61,14 @@ or an explicit "(button only)".
 
 **`scene create` claimed a browser had opened when none had.** The reply
 line read `(opened in your browser; if no window appeared, open that address
-yourself)` unconditionally. posim tries exactly one command, `xdg-open`,
-which is a Linux/BSD utility: on macOS and Windows the spawn fails because
-the binary does not exist, and when `$POSIM_NO_BROWSER` is set no attempt is
-made at all. In all three cases the old line still announced success, and a
-reader on macOS would wait for a window that was never coming. Fixed at the
-source rather than papered over in prose: `SceneHandle` now carries
-`browser_launched`, set from whether the spawn actually succeeded, and the
-reply reads one of
+yourself)` unconditionally. At the time of that pass posim tried exactly one
+command, `xdg-open`, a Linux/BSD utility: on macOS and Windows the spawn
+failed because the binary does not exist, and when `$POSIM_NO_BROWSER` is
+set no attempt is made at all. In all three cases the old line still
+announced success, and a reader on macOS or Windows would wait for a window
+that was never coming. Fixed at the source rather than papered over in
+prose: `SceneHandle` now carries `browser_launched`, set from whether the
+spawn actually succeeded, and the reply reads one of
 
 ```
 (asked your desktop to open it; if no window appeared, open that address yourself)
@@ -78,6 +78,15 @@ reply reads one of
 Both paths were exercised. `scene_info.md`, `scene_info.tex` and
 `scene_info.pdf` were updated in the same pass, per the project's
 documentation-lockstep rule.
+
+Since that pass the opener itself has been made per-platform, chosen at
+compile time in `posim/src/scene/mod.rs` (`SceneHandle::start`) and, for
+dataset plot pages, in `posim/src/dataset.rs` (`open_in_browser`):
+`cmd /C start "" <url>` on Windows, `open <url>` on macOS, `xdg-open <url>`
+on Linux/BSD. `browser_launched` still reports the spawn's outcome, so the
+second line now appears only when `$POSIM_NO_BROWSER` is set or the
+platform's opener binary is missing — on Windows `cmd` is always present,
+so a Windows reader normally sees the first line.
 
 ## 3. Verification actually performed
 
@@ -166,11 +175,15 @@ Stated so the verification is not read as broader than it is.
 * **`--script` mode is not exercised for the animating notebooks**, because
   it exits immediately and takes the window with it. That is exactly why the
   documentation directs readers to `--notebook`.
-* **macOS and Windows behaviour is derived, not observed.** The claim that
-  nothing opens there follows from `xdg-open` being absent, and the reply
-  line is now driven by whether the spawn succeeded — so those systems will
-  print the honest variant. No macOS or Windows machine was available to
-  confirm it end to end.
+* **The browser launch itself is not observed by any gate.** posim now
+  dispatches per platform (`cmd /C start ""` on Windows, `open` on macOS,
+  `xdg-open` on Linux/BSD) and the reply line is driven by whether the
+  spawn succeeded. On this Windows 11 machine all eleven notebooks were
+  executed by `scripts/certify_clean.sh` (`PASS every StageNbks notebook
+  executes without error`, `logs/certify_clean_prelim.log`); that gate
+  greps the transcripts for error lines only and records nothing about
+  whether a browser window appeared. The macOS branch (`open`) is derived
+  from the source, not confirmed on a macOS machine here.
 * **The notebook gate cannot see this class of defect.** `certify_clean.sh`
   fails a notebook that errors. Every notebook in the previous pass ran
   clean and still documented the arrow keys backwards, because wrong prose

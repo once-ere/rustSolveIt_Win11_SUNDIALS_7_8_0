@@ -62,6 +62,6 @@
    Compiling hashlink v0.9.1
    Compiling rusqlite v0.32.1
    Compiling r2d2_sqlite v0.25.0
-   Compiling solveit_db v0.1.0 (C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\dataset_tools)
+   Compiling solveit_db v0.1.0 (C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\dataset_tools)
     Finished `release` profile [optimized] target(s) in 18.22s
 BUILD_EXIT=0

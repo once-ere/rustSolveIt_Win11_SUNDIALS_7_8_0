@@ -1,4 +1,4 @@
-   Compiling sundials_core v7.8.0 (C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\sundials_rs\crates\sundials_core)
-   Compiling cvode_rs v7.8.0 (C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\sundials_rs\crates\cvode_rs)
-   Compiling mercury_rs v0.1.0 (C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\planet_Mercury\mercury_rs)
+   Compiling sundials_core v7.8.0 (C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\sundials_rs\crates\sundials_core)
+   Compiling cvode_rs v7.8.0 (C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\sundials_rs\crates\cvode_rs)
+   Compiling mercury_rs v0.1.0 (C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\planet_Mercury\mercury_rs)
     Finished `release` profile [optimized] target(s) in 5.21s

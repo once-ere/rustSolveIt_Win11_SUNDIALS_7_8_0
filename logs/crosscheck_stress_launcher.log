@@ -1,5 +1,5 @@
 === mercury_crosscheck build+run ===
-   Compiling mercury_crosscheck v0.1.0 (C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\planet_Mercury\mercury_crosscheck)
+   Compiling mercury_crosscheck v0.1.0 (C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0\planet_Mercury\mercury_crosscheck)
     Finished `release` profile [optimized] target(s) in 2.41s
 BUILD_EXIT=0
 0
@@ -22,4 +22,4 @@ STRESS_EXIT=0
 Microsoft Windows [Version 10.0.26200.9445]
 (c) Microsoft Corporation. All rights reserved.
 
-C:\Users\nsh\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0>... (0 entries)
+C:\Users\youruser\Developer\github\rustSolveIt_Win11_SUNDIALS_7_8_0\rustSolveIt_Win11_SUNDIALS_7_8_0>... (0 entries)

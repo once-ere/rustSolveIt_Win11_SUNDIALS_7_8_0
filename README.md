@@ -1,4 +1,7 @@
 # rustSolveIt — on pure-Rust SUNDIALS 7.8.0, for Windows 11 (x86-64)
+This notebook is distributed as free software under the GNU General Public License.They are distributed in the hope that they will  be useful,but WITHOUT ANY WARRANTY;without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the GNU GPL for more details.
+
+Please  cite  this  work  and this web page if you use it.
 
 Pure-Rust physics simulator, the **Windows 11 (x86-64)** edition of the
 project. Its lineage is two ports deep (Linux → macOS → Windows), on top
